@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/sophia-stein/.claude/**)",
+      "Read(//home/sophia-stein/.claude/plugins/**)",
+      "Bash(git init *)",
+      "Bash(git checkout *)",
+      "Bash(npx *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: bootstrap Next.js 16.2.4 with App Router + Turbopack *)",
+      "Bash(git config *)"
+    ]
+  }
+}
