@@ -20,6 +20,10 @@ dist/
 # Claude Code + strategy docs (never public)
 .claude/
 docs/superpowers/
+.superpowers/
+
+# Worktrees
+.worktrees/
 
 # OS
 .DS_Store
