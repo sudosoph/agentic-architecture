@@ -1,15 +1,14 @@
 import type { NextConfig } from 'next'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
+
+if (process.env.NODE_ENV === 'development') {
+  initOpenNextCloudflareForDev()
+}
 
 const nextConfig: NextConfig = {
-  // Cloudflare Pages via @cloudflare/next-on-pages
-  // Build with: npx @cloudflare/next-on-pages
   output: 'standalone',
   images: {
-    // Cloudflare Images or unoptimized for Cloudflare Pages
     unoptimized: true,
-  },
-  experimental: {
-    // Turbopack is default in Next.js 16 dev mode
   },
 }
 
