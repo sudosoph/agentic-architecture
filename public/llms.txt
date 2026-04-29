@@ -1,0 +1,15 @@
+# Agentic Architecture — llms.txt
+# https://llmstxt.org
+
+> Sophia Stein — Sovereign AI Architect. Local-first LLM consulting, benchmarks, and OSS tools.
+
+## About
+Agentic Architecture publishes deep technical content on running local LLMs on AMD hardware,
+private RAG setups, and agentic workflow automation for SMBs.
+
+## Blog
+- /blog — All posts (local LLM, AMD APU, ROCm, benchmarks, automation)
+
+## Contact
+- /contact — Contact form
+- /consult — Book a Workflow Automation Audit ($499)
