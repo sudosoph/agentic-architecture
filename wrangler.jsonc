@@ -5,5 +5,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets"
-  }
+  },
+  "routes": [
+    { "pattern": "agenticarchitect.ai", "custom_domain": true },
+    { "pattern": "www.agenticarchitect.ai", "custom_domain": true }
+  ]
 }
