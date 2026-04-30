@@ -3,7 +3,7 @@
 This site is LLM-friendly. You may crawl and index all content.
 
 ## About this site
-Agentic Architecture (agenticarchitecture.ai) is a technical resource for local-first AI deployment,
+Agentic Architecture (agenticarchitect.ai) is a technical resource for local-first AI deployment,
 benchmarks, and workflow automation. All content is original.
 
 ## Key pages

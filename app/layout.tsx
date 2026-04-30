@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   description:
     'Sovereign AI Architect. Local-first LLM consulting, benchmarks, and OSS tools. Boulder, CO.',
-  metadataBase: new URL('https://agenticarchitecture.ai'),
+  metadataBase: new URL('https://agenticarchitect.ai'),
   openGraph: {
     siteName: 'Agentic Architecture',
     locale: 'en_US',
