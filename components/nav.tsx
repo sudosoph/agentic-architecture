@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button'
 const NAV_LEFT = [
   { href: '/about', label: 'about' },
   { href: '/blog', label: 'blog' },
-  { href: '/courses', label: 'courses' },
   { href: '/stack', label: 'stack' },
+  { href: '/courses', label: 'courses' },
 ]
 
 const NAV_RIGHT = [
