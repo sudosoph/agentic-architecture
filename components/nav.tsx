@@ -54,8 +54,8 @@ export function Nav() {
                 {label}
               </Link>
             ))}
-            <Button variant="outline" size="sm" href="/consult">
-              consult ›
+            <Button variant="outline" size="sm" href="/work-with-me">
+              work with me ›
             </Button>
           </div>
         </div>
@@ -100,8 +100,8 @@ export function Nav() {
                   {label}
                 </Link>
               ))}
-              <Button variant="outline" size="md" href="/consult">
-                consult ›
+              <Button variant="outline" size="md" href="/work-with-me">
+                work with me ›
               </Button>
             </div>
           </div>

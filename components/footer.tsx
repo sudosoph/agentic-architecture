@@ -8,7 +8,7 @@ const CONTENT_LINKS = [
 ]
 
 const WORK_LINKS = [
-  { href: '/consult', label: 'consult' },
+  { href: '/work-with-me', label: 'work with me' },
   { href: '/courses', label: 'courses' },
   { href: '/speaking', label: 'speaking' },
 ]

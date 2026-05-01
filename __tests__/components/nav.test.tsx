@@ -32,9 +32,9 @@ describe('Nav', () => {
     expect(screen.getByRole('link', { name: 'contact' })).toBeTruthy()
   })
 
-  it('renders consult link', () => {
+  it('renders work with me link', () => {
     render(<Nav />)
-    expect(screen.getByRole('link', { name: 'consult ›' })).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'work with me ›' })).toBeTruthy()
   })
 
   it('renders hamburger button', () => {

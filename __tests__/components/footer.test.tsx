@@ -23,9 +23,9 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: 'about' })).toBeTruthy()
   })
 
-  it('renders consult link in Work column', () => {
+  it('renders work with me link in Work column', () => {
     render(<Footer />)
-    expect(screen.getByRole('link', { name: 'consult' })).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'work with me' })).toBeTruthy()
   })
 
   it('renders X link in Connect column', () => {
