@@ -107,7 +107,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Newsletter signup at the bottom of every post · primary list-capture for syndicated traffic */}
           <div className="mt-16 pt-8 border-t border-border">
             <NewsletterSignup
-              source={`post:${post.slug}`}
+              source={`post:${slug}`}
               sub="If this was useful, the weekly notes go deeper. No drip sequences, no upsells."
             />
           </div>
