@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { compileMDX } from 'next-mdx-remote/rsc'
-import rehypePrettyCode from 'rehype-pretty-code'
 import type { Metadata } from 'next'
 import { getAllPosts, getPost } from '@/lib/mdx'
 import { getMDXComponents } from '@/lib/mdx-components'
@@ -33,13 +32,6 @@ export default async function BlogPostPage({ params }: Props) {
   const { content } = await compileMDX({
     source: post.content,
     components: getMDXComponents(),
-    options: {
-      mdxOptions: {
-        rehypePlugins: [
-          [rehypePrettyCode, { theme: 'tokyo-night', keepBackground: false }],
-        ],
-      },
-    },
   })
 
   const dateFormatted = new Date(post.frontmatter.publishedDate).toLocaleDateString('en-US', {
