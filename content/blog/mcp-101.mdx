@@ -1,0 +1,185 @@
+---
+title: "MCP 101: From Function Call to Driver Layer"
+slug: mcp-101
+publishedDate: "2026-05-06"
+description: "What the Model Context Protocol actually is, what it gets right, where it leaks, and why the local-first version is the cleaner story."
+tags: ["mcp", "agents", "protocols", "local-first", "ollama"]
+draft: false
+---
+
+**TL;DR.** The Model Context Protocol is the closest thing the agentic stack has to a POSIX-style boundary between the model and the world. It is JSON-RPC 2.0 over stdio or streamable HTTP, with a handshake that negotiates capabilities, a runtime tool catalog the host can subscribe to, and a recursive *sampling* primitive that lets a server call back into the host's model. That last detail is what makes it more than function calling — it's the protocol that lets tools and models be *coroutines*, which is the actual operating-system abstraction underneath. This post is the honest version of MCP in May 2026: what it is, what works, where the real footguns live, and what the local-first reading looks like for engineers running their own models.
+
+## What it actually is, in 60 seconds
+
+Model Context Protocol is a protocol for connecting LLM applications to the world outside the LLM. The latest revision is dated `2025-11-25` (the spec uses the date as the version string, which is a small but lovely choice). It defines:
+
+- **A wire format**: JSON-RPC 2.0 messages over a transport.
+- **Two transports**: `stdio` (subprocess, stdin/stdout) and **streamable HTTP** (the network-friendly option that replaced the original SSE-only transport in early 2025).
+- **Three roles**: a *host* (the LLM application — Claude Desktop, Cursor, Zed, Claude Code), a *client* (one inside the host per server), and a *server* (the thing exposing capabilities).
+- **Three server primitives**: `tools` (model-controlled functions), `resources` (readable context — files, DB rows, URIs, with optional subscription), `prompts` (user-controlled templates that show up as slash commands).
+- **Three client primitives**: `sampling` (the server asks the host's LLM to do an inference — recursive), `roots` (the server asks the client what filesystem boundaries it can operate in), `elicitation` (the server asks the user a question mid-execution).
+
+The official spec compares MCP to the **Language Server Protocol**, and that's the right reference. Before LSP, every editor implemented every language: N×M problem. After LSP, N+M. Every editor reads the protocol; every language ships one server. That's exactly the deal MCP is offering for AI hosts and tool sources. Forget USB-C and forget "function calling but better" — those are marketing analogies. LSP is the engineering one.
+
+But the deeper analogy I keep coming back to is *device drivers*. Each MCP server is a driver that exposes a uniform interface for some piece of the world (your filesystem, your git repo, your Postgres database, a web browser). The host is a kernel arbitrating between drivers and processes. The LLM is the userspace process making syscalls. The `roots` primitive negotiates filesystem boundaries — that is, mount points. The `tasks` capability (added in `2025-11-25`) is process management. The recursive `sampling` primitive is the syscall going *back into* the kernel from the driver. This is genuinely OS-shaped, and it's why I think the "MCP is just an API" critique misses the point.
+
+## The handshake, copy-pasteable
+
+This is the part most posts skip. Here's the actual exchange when an MCP client connects to a server:
+
+```json
+// 1. Client → server: initialize
+{"jsonrpc":"2.0","id":1,"method":"initialize",
+ "params":{"protocolVersion":"2025-11-25",
+  "capabilities":{
+    "roots":{"listChanged":true},
+    "sampling":{},
+    "elicitation":{}},
+  "clientInfo":{"name":"my-host","version":"1.0.0"}}}
+
+// 2. Server → client: capabilities mirror
+{"jsonrpc":"2.0","id":1,"result":{
+  "protocolVersion":"2025-11-25",
+  "capabilities":{
+    "tools":{"listChanged":true},
+    "resources":{"subscribe":true,"listChanged":true},
+    "prompts":{"listChanged":true},
+    "logging":{}},
+  "serverInfo":{"name":"my-server","version":"1.0.0"}}}
+
+// 3. Client → server: ack
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+```
+
+The two things to notice: capabilities are negotiated bilaterally (each side declares what it supports), and `listChanged` notifications mean the catalog is *live* — the server can push updates and the host must invalidate its cached tool list. A function-calling API can't do this.
+
+The actual config most users see is the `mcpServers` block in their host's settings file. A real one from a working setup:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/me/code"]
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "/Users/me/code/site"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "github": {
+      "type": "streamable_http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": { "Authorization": "Bearer ${GITHUB_PAT}" }
+    }
+  }
+}
+```
+
+Four stdio servers and one streamable-HTTP server in the same file. That mix-and-match is the whole pitch.
+
+## The ecosystem state, May 2026
+
+A snapshot of what's actually in production use:
+
+- **Reference servers** — the canonical Anthropic-published list at `github.com/modelcontextprotocol/servers` is now down to seven: `everything`, `fetch`, `filesystem`, `git`, `memory`, `sequential-thinking`, `time`. Notably *moved out* (now in the archived sibling repo): GitHub, GitLab, Slack, Postgres, SQLite, Sentry, Redis, Puppeteer, Google Drive, Google Maps, Brave Search, AWS KB Retrieval. They were superseded by *first-party* servers from those vendors. That's a sign of maturity, not deprecation.
+- **First-party heavyweights** — the GitHub MCP server (~30k stars, 80+ tools, hosted at `api.githubcopilot.com/mcp/`) and Microsoft's Playwright MCP (~32k stars, accessibility-tree-driven browser automation, no screenshots) are the two biggest. The Cloudflare Workers/KV/R2 servers ship with OAuth pre-wired.
+- **Bundling format** — `.mcpb` (formerly `.dxt`) is a zip with a manifest and a bundled server. Spiritually similar to a `.vsix` for VS Code or a `.crx` for Chrome. Single-click install for end users, distribution-ready.
+- **SDK story** — official SDKs in TypeScript, Python (FastMCP is the canonical wrapper), Go, Rust, Java, Kotlin, C#, Swift, Ruby. The Python *hello world* with FastMCP is genuinely about ten lines:
+
+  ```python
+  from mcp.server.fastmcp import FastMCP
+  mcp = FastMCP("HelloWorld")
+
+  @mcp.tool()
+  def hello(name: str = "World") -> str:
+      """Greet someone by name."""
+      return f"Hello, {name}!"
+
+  if __name__ == "__main__":
+      mcp.run(transport="stdio")
+  ```
+
+- **Client matrix** — Claude Desktop, Claude Code, Cursor, Cline (VS Code), Continue.dev, Zed, VS Code GitHub Copilot. All first-class. Ollama is the conspicuous exception — see below.
+
+## The 4-legged identity problem (this is the part nobody warns you about)
+
+Matthew Xu gave the sharpest talk on this at the AI Dev conference in San Francisco last week, and I haven't seen a clearer framing anywhere else. The short version:
+
+OAuth was designed for a triangle. User → app → identity provider. The app gets a token that represents the user, makes API calls, and APIs validate the token against scopes. Three legs, three actors, deterministic.
+
+Add an agent and an MCP server to that triangle and you get a square. **User → agent → MCP → API.** Suddenly the API has no idea who triggered the request. The MCP server is calling on behalf of an agent calling on behalf of a user — but the auth header at the API only sees the MCP server's credentials. Identity *gets lost mid-chain*, and the workarounds are all bad:
+
+- **Non-delegating client credentials**: the agent scraps user intent and the MCP server uses its own credentials. Works, but the API has no audit trail of who actually triggered the call.
+- **Pre-injected tokens**: the agent fetches every downstream token upfront. Requires the agent to know all downstream APIs in advance, which is impossible for agents that decide tools at runtime.
+- **Out-of-band login**: the user authorizes every tool at every step. UX disaster.
+- **Token exchange (RFC 8693)**: the actual right answer — the agent exchanges its user token for an audience-scoped token before each downstream call. Limited IdP support: Keycloak does it, Microsoft doesn't, Okta only via claims.
+
+The MCP spec, to its credit, codified the four RFCs that make this work end-to-end:
+- **RFC 9728** for resource metadata (the agent figures out which auth server to talk to),
+- **RFC 8414** for authorization-server metadata (endpoints, capabilities, sign-in keys),
+- **RFC 7591** for dynamic client registration (the agent registers itself programmatically),
+- **RFC 8693** for token exchange (audience-scoped tokens at every hop).
+
+In production, you stand up a *broker layer* that handles this entire dance, caches tokens, integrates with secret-management systems, and writes an immutable audit log of every hop in the chain. That's a week of infrastructure work. It is genuinely the right answer for cloud-agent systems and it is genuinely a lot of work.
+
+## The local-first angle (this is the part most posts miss entirely)
+
+Here's the thing about the 4-legged identity problem: **on a single-machine local setup, the equivalent of all of that is filesystem permissions and environment variables.** The MCP spec itself carves a quiet exception in for stdio transport:
+
+> "Implementations using a STDIO transport SHOULD NOT follow this specification, and instead retrieve credentials from the environment."
+
+That's the spec authors saying *if it's all on your machine, don't bother with OAuth*. Use the environment. Use file permissions. The protocol gets out of your way. This is the part of MCP I find most interesting and the angle I haven't seen written up: the protocol's value is independent of whether the model is yours. **The harness is sovereign even when the model isn't.** And when the model is also yours, the auth story collapses to almost nothing.
+
+Now the awkward part. **Ollama does not natively speak MCP.** Ollama implements its own tool-calling API, OpenAI-shaped, returning `tool_calls` on `/api/chat`. To use MCP servers with Ollama you need a bridge client — the community standard right now is `jonigl/mcp-client-for-ollama`. The architecture:
+
+1. The bridge reads a standard `mcpServers` config (same shape as Claude Desktop's).
+2. It calls `tools/list` on each MCP server, flattens the catalog into Ollama's `tools` array.
+3. User query → Ollama (with tools) → if `tool_calls` → bridge calls the appropriate MCP server's `tools/call` → results piped back → Ollama synthesizes.
+4. Supports stdio, SSE, and streamable HTTP transports.
+
+This works, and I run it daily. But there is a real gap here that nobody has filled: **the host application is doing work that should arguably be in Ollama itself.** As of May 2026 nobody has merged native MCP into Ollama upstream, and llama.cpp doesn't speak it directly either. There's an opportunity-shaped hole in the local-first stack. If you're a Go engineer reading this, that PR is worth more than most startup ideas.
+
+The corollary: when you can run MCP locally, the threat model collapses. Tushar Jain from Docker showed at AI Dev a per-agent MicroVM sandbox that limits what an agent can touch in a cloud setup. The local-native version is even simpler: don't give the agent network access in the first place. A local model running in a network-restricted container with only stdio MCP servers can write all the code it wants and exfiltrate exactly nothing. The lethal-trifecta attack — private data + untrusted content + exfiltration — only works if all three legs exist. Cut the network leg and the attack surface collapses.
+
+## The honest critiques
+
+I am bullish on MCP and I think you should be too, but the discourse is full of valid complaints and pretending otherwise costs credibility. The list:
+
+- **The security model is opt-in.** Most of the security guidance in the spec uses `SHOULD` instead of `MUST`. Treat the SHOULDs as MUSTs. Hosts that implement the bare-minimum version of the spec are buyable, and "buyable" here means "exploitable."
+- **Tool poisoning is a real attack class.** A malicious server can ship tool descriptions with hidden instructions the model reads as commands. The April 2025 Invariant Labs paper on this should be required reading. The mitigation is "trust your servers," which is fine but not what most users do.
+- **Confused-deputy and token-passthrough attacks** were the most-exploited footgun in 2025. The spec explicitly forbids passthrough now: "MCP servers MUST NOT accept any tokens that were not explicitly issued for the MCP server." Easy to violate accidentally.
+- **One-click install is arbitrary code execution.** The spec spells this out. A malicious startup command in a manifest is unrestricted shell access. Cursor and Claude Desktop do show the command, but most users click through. Sandboxing belongs at the host layer, and not all hosts implement it well.
+- **The MCP plateau.** Brandon Waselnuk from Unblocked called this out at AI Dev: more servers, same output quality. The agent doesn't know when to call which tool. He calls it the *satisfaction-of-search* problem — the agent finds the first matching answer and stops, even if it's wrong. The fix is curated context, not more servers. Connecting your agent to ten more MCP servers does not make it ten times smarter. Often it makes it slower.
+- **The token cost of MCP itself.** GitHub's official server exposes 80+ tools. Every turn of the conversation, the host has to remind the model that those tools exist, which costs tokens. There's a `--toolsets` flag for scoping precisely because this is a known footgun. Some teams have reverted to using the `gh` CLI directly because the agent already knows how to use it from training data and it costs roughly zero context.
+- **No standard tracing.** There's `logging` and progress notifications, but no spec-level OpenTelemetry support. Multi-hop topologies (host → MCP proxy → MCP server → upstream API) are hellish to debug. This will get fixed; it hasn't been yet.
+- **Auth complexity is real.** Doing OAuth correctly at every hop with PKCE + RFC 8707 + RFC 9728 + (DCR or CIMD) + RFC 8693 is not a weekend project. If you're standing up a remote MCP server with auth, budget a week.
+
+## What I'd build with it today
+
+If you're at the *what should I actually try* stage, here is the order I'd recommend:
+
+1. **Local stdio servers, no network.** Filesystem, git, memory. Configure them in Claude Code or Cursor. Watch the agent navigate your repo with intent. This is the "oh, that's what they mean" moment.
+2. **A custom server in FastMCP.** Pick one tedious internal task (export a CSV from your CRM, run a deploy script, look up a customer's billing status) and write a 30-line MCP server for it. The act of *naming the tool* is the unlock — once the agent has it, it'll use it correctly far more often than you expect.
+3. **The Ollama bridge.** Install `jonigl/mcp-client-for-ollama`, point it at the same `mcpServers` config, and run the same workflow against a local Qwen3 8B or GLM-4 9B. You'll lose some intelligence relative to Sonnet 4. You'll also cut your daily token spend to zero. For the 80% of tasks that are routing, classifying, and tool-calling, the local model is fine.
+4. **Sandboxing.** Once you trust the tools, tighten the noose. `docker/cagent` for containerized execution. Network egress disabled by default. Allowlist what you actually need. The blast radius shrinks dramatically.
+5. **A second client.** Run the same servers from two different clients. Cursor and Claude Code, or Claude Desktop and Zed. The protocol guarantees portability; treat that guarantee like a property test. Anything that breaks across clients is something you depended on that you shouldn't have.
+
+## What I'm watching
+
+Three threads:
+
+- **Native MCP in Ollama or llama.cpp.** Whoever lands this PR first removes the bridge-client tax for local users. There is genuine demand and no good upstream answer yet.
+- **MCP for agent-to-agent communication.** Vlad Luzin from Thenvoi gave a sharp talk at AI Dev arguing that MCP isn't actually a protocol for agents talking to each other — it's a protocol for an agent talking to its tools. Google's A2A is closer, but it has no registry yet and doesn't support multi-peer conversations. The shape of the answer here probably looks like "MCP plus a directory service plus identity," and the team that ships it cleanly will own the agentic mesh.
+- **Skills as the new package manager.** Anthropic's skills launch in late 2025 was — in the words of one panel I sat through last week — *a bigger deal than MCP*. A skill is a folder with a `SKILL.md` and some scripts; the model loads it on demand for the cost of a few tokens. There's a real chance skills become the unit of code reuse in the agentic era and MCP is the *protocol* underneath them. Both stories can be true.
+
+## The takeaway
+
+MCP is not magic. It's a wire format with a handshake and some good defaults. What makes it interesting is that it's the *first* wire format that treats the LLM as a first-class actor in a distributed system instead of a black box behind a single API call. The protocol gets the abstractions right: capabilities, recursion via sampling, runtime discovery, multi-transport. The implementation maturity is uneven — security is opt-in, tracing is missing, the auth story is heavy for what it does — but the shape is right.
+
+If you're a founder, you should be running it locally before you bother with the cloud version. If you're an engineer, you should write at least one server for something boring you do every week. If you're a security person, the lethal trifecta is the threat model that matters and you should already be auditing your host's sandboxing story.
+
+The full configs and the working Ollama bridge setup will land on [github.com/sudosoph](https://github.com/sudosoph) shortly. If you want a notification when the OSS tooling drops, the newsletter is the place. If you want it set up in your office by next week, [that's what consulting is for](/work-with-me).
