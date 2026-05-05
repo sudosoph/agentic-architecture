@@ -22,7 +22,7 @@ type Event = {
 // returns its own 404 (clean) rather than embedding a broken iframe here.
 const EVENTS: Event[] = [
   {
-    slug: '30min',
+    slug: 'scoping',
     title: '30-min Scoping Call',
     duration: '30 min · free',
     body: 'For founders, CTOs, and engineers thinking about a project. Bring the workflow you want to make agentic, the constraint you cannot move, and the question you want answered. No deck, no pitch.',

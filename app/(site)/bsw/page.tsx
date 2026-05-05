@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
-const CAL_URL = 'https://cal.com/sophia-stein/30min'
+const CAL_URL = 'https://cal.com/sophia-stein/scoping'
 const REPO_URL = 'https://github.com/sudosoph/bsw26-agentic-workflows'
 const SESSION_URL =
   'https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4'
