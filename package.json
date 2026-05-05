@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && opennextjs-cloudflare build",
-    "build:next": "next build",
+    "dev": "node scripts/generate-blog-manifest.mjs && next dev",
+    "build": "node scripts/generate-blog-manifest.mjs && next build && opennextjs-cloudflare build",
+    "build:next": "node scripts/generate-blog-manifest.mjs && next build",
     "deploy": "opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare preview",
     "start": "next start",
@@ -16,13 +16,11 @@
     "@keystatic/core": "^0.5.50",
     "class-variance-authority": "^0.7.1",
     "geist": "^1.7.0",
-    "gray-matter": "^4.0.3",
     "next": "16.2.4",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "rehype-pretty-code": "^0.14.3",
-    "resend": "^6.12.2",
     "shiki": "^4.0.2"
   },
   "devDependencies": {
