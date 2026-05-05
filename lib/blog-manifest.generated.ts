@@ -10,10 +10,10 @@ export const blogPosts: Array<{
   {
     "slug": "96gb-ram-thesis",
     "frontmatter": {
-      "title": "The 96GB RAM Thesis",
+      "title": "How 96GB of RAM Changed My Mind About Local AI",
       "slug": "96gb-ram-thesis",
       "publishedDate": "2026-04-28",
-      "description": "Achieving 28.4 t/s on AMD Strix Point via ROCm 7.3, and what it means for local agentic workflows.",
+      "description": "28.4 tokens per second on a laptop running GLM-4 9B, three cents of electricity per session, and the moment local inference stopped being a hobby.",
       "tags": [
         "benchmarks",
         "amd",
@@ -121,7 +121,7 @@ export const blogPosts: Array<{
   {
     "slug": "automated-competitive-intelligence",
     "frontmatter": {
-      "title": "Automated Competitive Intelligence",
+      "title": "Replacing Your Competitive-Intel PM With an Agent",
       "slug": "automated-competitive-intelligence",
       "publishedDate": "2026-04-21",
       "description": "Using Apify, Firecrawl, and a local model to monitor every move your competitors make in real time. With the architecture and the weekly digest format that actually gets read.",
@@ -173,7 +173,7 @@ export const blogPosts: Array<{
   {
     "slug": "below-the-waterline",
     "frontmatter": {
-      "title": "Below the Waterline",
+      "title": "Below the Waterline: What Decides Whether Your Agent Ships",
       "slug": "below-the-waterline",
       "publishedDate": "2026-05-03",
       "description": "The hidden engineering that decides whether your agent makes it to production. The 65/95 gap and the three foundations underneath it.",
@@ -263,7 +263,7 @@ export const blogPosts: Array<{
   {
     "slug": "coding-agent-infrastructure",
     "frontmatter": {
-      "title": "The Hidden Infrastructure for AI Coding Agents",
+      "title": "What Happens After Coding Agents Get Good",
       "slug": "coding-agent-infrastructure",
       "publishedDate": "2026-05-05",
       "description": "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work.",
@@ -362,7 +362,7 @@ export const blogPosts: Array<{
   {
     "slug": "document-ocr-for-agents",
     "frontmatter": {
-      "title": "Document OCR for Agents",
+      "title": "PDF Hell, Solved (For Agents)",
       "slug": "document-ocr-for-agents",
       "publishedDate": "2026-05-03",
       "description": "90% of enterprise data is locked in PDFs. The 2026 pipeline that gets it out is not RAG, not vision-only, and not the OCR you remember from 2018.",
@@ -414,7 +414,7 @@ export const blogPosts: Array<{
   {
     "slug": "ethical-autonomy",
     "frontmatter": {
-      "title": "Ethical Autonomy",
+      "title": "The August 2026 Deadline Most AI Teams Are Sleeping On",
       "slug": "ethical-autonomy",
       "publishedDate": "2026-05-05",
       "description": "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on.",
@@ -466,10 +466,10 @@ export const blogPosts: Array<{
   {
     "slug": "framework-for-builders",
     "frontmatter": {
-      "title": "Framework for Builders",
+      "title": "Why I Bet on a Framework Laptop in 2026",
       "slug": "framework-for-builders",
       "publishedDate": "2026-04-17",
-      "description": "The Framework 16 plus Strix Point is the 2026 gold standard for engineers who run their own AI infrastructure. Here is why, plus what Strix Halo changes.",
+      "description": "The repairable, AMD-powered laptop that runs my entire AI stack at three cents per session. Plus when Strix Halo changes the math.",
       "tags": [
         "hardware",
         "framework",
@@ -518,7 +518,7 @@ export const blogPosts: Array<{
   {
     "slug": "local-vs-cloud-inference",
     "frontmatter": {
-      "title": "Local vs Cloud Inference: The 2026 Cost-Benefit",
+      "title": "When to Run Locally and When to Pay Anthropic",
       "slug": "local-vs-cloud-inference",
       "publishedDate": "2026-04-18",
       "description": "Real numbers, real workloads, real break-even points. When local is the obvious answer, when cloud is, and the hybrid that wins for most teams.",
@@ -573,7 +573,7 @@ export const blogPosts: Array<{
   {
     "slug": "long-term-memory-for-agents",
     "frontmatter": {
-      "title": "Long-Term Memory for Agents",
+      "title": "How Agents Remember, and How They Forget",
       "slug": "long-term-memory-for-agents",
       "publishedDate": "2026-05-01",
       "description": "Why agents forget by default, what the four types of memory actually are, and how to build a system that compounds across sessions.",
@@ -748,7 +748,7 @@ export const blogPosts: Array<{
   {
     "slug": "reasoning-loops",
     "frontmatter": {
-      "title": "Reasoning Loops: Plan-and-Execute vs ReAct",
+      "title": "Plan-and-Execute vs ReAct: Picking Your Agent's Brain",
       "slug": "reasoning-loops",
       "publishedDate": "2026-04-26",
       "description": "The two dominant agent reasoning patterns in 2026, what they get right, where each one fails, and how to know which to pick.",
@@ -903,7 +903,7 @@ export const blogPosts: Array<{
   {
     "slug": "shadow-testing",
     "frontmatter": {
-      "title": "Shadow Testing",
+      "title": "Shadow Testing: From 70% to 98% in Four Weeks",
       "slug": "shadow-testing",
       "publishedDate": "2026-05-04",
       "description": "The single highest-leverage decision when shipping mission-critical autonomous agents. Production is the only truth.",
@@ -1049,7 +1049,7 @@ export const blogPosts: Array<{
   {
     "slug": "the-4-legged-identity",
     "frontmatter": {
-      "title": "The 4-Legged Identity Problem",
+      "title": "OAuth Was Built for Three Actors. Agents Are the Fourth.",
       "slug": "the-4-legged-identity",
       "publishedDate": "2026-05-05",
       "description": "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway.",
@@ -1208,7 +1208,7 @@ export const blogPosts: Array<{
   {
     "slug": "the-hitl-standard",
     "frontmatter": {
-      "title": "The HITL Standard",
+      "title": "Why Human-in-the-Loop Won 2026",
       "slug": "the-hitl-standard",
       "publishedDate": "2026-05-05",
       "description": "Why human-in-the-loop is the only ethical and profitable way to scale agentic AI in a world of bot fatigue.",
@@ -1255,7 +1255,7 @@ export const blogPosts: Array<{
   {
     "slug": "the-monorepo-advantage",
     "frontmatter": {
-      "title": "The Monorepo Advantage",
+      "title": "One Codebase, Five Products: The Monorepo Pattern",
       "slug": "the-monorepo-advantage",
       "publishedDate": "2026-04-27",
       "description": "Why AI-native teams are deploying micro-SaaS apps from a single codebase, and how to architect a SaaS factory that compounds.",

@@ -18,29 +18,14 @@ type Course = {
   status: 'Open' | 'Coming soon' | 'Cohort'
 }
 
+// Order: entry-point first (broadest audience), advancing into specialty / vertical / pro tracks.
 const COURSES: Course[] = [
   {
-    name: 'Local AI Foundations',
-    audience: 'Engineers + technical founders',
-    format: 'Self-paced · 4 hrs',
+    name: 'From Zero to Local AI Stack',
+    audience: 'Complete beginners',
+    format: 'Self-paced · 3 hrs',
     description:
-      'The honest version of "set up local AI." Hardware selection, ROCm/CUDA tuning, model selection, and the tradeoffs nobody puts in their YouTube tutorial.',
-    status: 'Coming soon',
-  },
-  {
-    name: 'AMD APU Optimization Masterclass',
-    audience: 'Hardware-curious engineers',
-    format: 'Live cohort · 4 weeks',
-    description:
-      'Deep dive on Strix Point, GART configuration, ROCm 7.3, and getting frontier-class tokens/sec out of the iGPU you already own. Small cohort, high intent.',
-    status: 'Coming soon',
-  },
-  {
-    name: 'Private Context Engineering',
-    audience: 'Developers',
-    format: 'Project-based · 6 hrs',
-    description:
-      'Standard RAG is dead in 2026 — it has been replaced by agentic retrieval, context engineering, and bifurcated reasoning loops. Ship a working private-knowledge agent on your own hardware that does it right. PDFs in, grounded answers out, zero cloud dependency.',
+      'For the SMB owner whose IT person retired in 2019 and now needs to run an AI agent. Pick a laptop, install three things, never touch the cloud. The least-technical version of the whole story.',
     status: 'Coming soon',
   },
   {
@@ -48,7 +33,15 @@ const COURSES: Course[] = [
     audience: 'SMB owners and ops',
     format: 'Self-paced · 3 hrs',
     description:
-      'For the operator who wants the agentic-workflow ROI without the AI Twitter hype. Costed examples, real templates, no jargon.',
+      'For the operator who wants the agentic-workflow ROI without the AI Twitter hype. Costed examples, real templates, no jargon. Ship the automations that recover the most hours per week.',
+    status: 'Coming soon',
+  },
+  {
+    name: 'Local AI Foundations',
+    audience: 'Engineers + technical founders',
+    format: 'Self-paced · 4 hrs',
+    description:
+      'The honest version of "set up local AI." Hardware selection, ROCm tuning, model selection across Qwen / Gemma / Kimi / DeepSeek, and the tradeoffs nobody puts in their YouTube tutorial.',
     status: 'Coming soon',
   },
   {
@@ -56,7 +49,7 @@ const COURSES: Course[] = [
     audience: 'Developers + ops',
     format: 'Self-paced · 5 hrs',
     description:
-      'The full local-first automation stack. Building reusable workflows that survive model upgrades and don\'t leak data to vendors.',
+      'The full local-first automation stack. Building reusable workflows that survive model upgrades and do not leak data to vendors. The course that turns "I have a Framework laptop" into "my business runs on it."',
     status: 'Coming soon',
   },
   {
@@ -64,15 +57,23 @@ const COURSES: Course[] = [
     audience: 'Solo founders + small teams',
     format: 'Live cohort · 4 weeks',
     description:
-      'Ship a production web product using the same stack that runs this site: Next.js + Cloudflare Workers + agentic dev loops. Intent-led, not slop-led.',
+      'Ship a production web product using the same stack that runs this site: Next.js + Cloudflare Workers + agentic dev loops. Intent-led, not slop-led. Cohort-paced with real-time review.',
     status: 'Coming soon',
   },
   {
-    name: 'Build Your AI Consulting Practice',
-    audience: 'Engineers going independent',
+    name: 'Private Context Engineering',
+    audience: 'Developers',
+    format: 'Project-based · 6 hrs',
+    description:
+      'Standard RAG is dead in 2026. It has been replaced by agentic retrieval, context engineering, and bifurcated reasoning loops. Ship a working private-knowledge agent on your own hardware that does it right. PDFs in, grounded answers out.',
+    status: 'Coming soon',
+  },
+  {
+    name: 'AMD APU Optimization Masterclass',
+    audience: 'Hardware-curious engineers',
     format: 'Live cohort · 4 weeks',
     description:
-      'How to position, price, and deliver agentic-AI engagements that compound. From first $499 audit to $50k retainer. Built from real engagements.',
+      'Deep dive on Strix Point, GART configuration, ROCm 7.3, and getting frontier-class tokens/sec out of the iGPU you already own. Small cohort, high intent. The course behind the 28.4 t/s benchmark.',
     status: 'Coming soon',
   },
   {
@@ -80,7 +81,7 @@ const COURSES: Course[] = [
     audience: 'Healthcare, legal, finance',
     format: 'Self-paced · 6 hrs',
     description:
-      'HIPAA, GDPR, and the architecture choices that keep auditors happy. The reason regulated SMBs run this stack is not vibes — it\'s compliance arithmetic.',
+      'HIPAA, GDPR, EU AI Act, and the architecture choices that keep auditors happy. The reason regulated SMBs run this stack is not vibes. It is compliance arithmetic.',
     status: 'Coming soon',
   },
   {
@@ -88,15 +89,15 @@ const COURSES: Course[] = [
     audience: 'Solo builders',
     format: 'Live · 30 days',
     description:
-      'A 30-day cohort that ships something. Twitch-recorded, accountability-driven, agent-assisted. The Pieter Levels arc, with a real production checklist.',
+      'A 30-day cohort that ships something. Twitch-recorded, accountability-driven, agent-assisted. The Pieter Levels arc, with a real production checklist and weekly demo days.',
     status: 'Coming soon',
   },
   {
-    name: 'From Zero to Local AI Stack',
-    audience: 'Complete beginners',
-    format: 'Self-paced · 3 hrs',
+    name: 'Build Your AI Architect Practice',
+    audience: 'Engineers going independent',
+    format: 'Live cohort · 4 weeks',
     description:
-      'For the SMB owner whose IT person retired in 2019 and now needs to run an AI agent. Pick a laptop, install three things, never touch the cloud.',
+      'How to position, price, and deliver agentic-AI engagements that compound. From first $499 audit to $50k retainer. Built from real engagements, not consulting-coach platitudes.',
     status: 'Coming soon',
   },
 ]

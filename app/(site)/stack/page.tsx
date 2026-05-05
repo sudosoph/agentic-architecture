@@ -175,6 +175,7 @@ const BIZOPS = [
   { name: 'Umami (self-hosted)', note: 'Privacy-friendly web analytics for the public site. Lighter touch than PostHog where session replay is overkill.' },
   { name: 'GlitchTip (self-hosted)', note: 'Sentry-compatible error tracking. ~5–6× cheaper than Sentry at scale, MIT-licensed.' },
   { name: 'Outline (self-hosted)', note: 'Team knowledge base. Notion alternative. Stores skills, runbooks, and the docs the coding agents read alongside the codebase.' },
+  { name: 'Vaultwarden (self-hosted)', note: 'Password manager. Bitwarden-compatible server, Rust rewrite, runs on the same Hetzner box as everything else. Where every API key the agent needs to rotate actually lives.' },
 ]
 
 const LAYER_NAV = [
