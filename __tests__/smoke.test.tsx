@@ -9,11 +9,11 @@ vi.mock('next/font/google', () => ({
 describe('HomePage smoke test', () => {
   it('renders without crashing', () => {
     render(<HomePage />)
-    expect(screen.getByRole('main')).toBeTruthy()
+    expect(screen.getByRole('heading', { level: 1 })).toBeTruthy()
   })
 
-  it('contains the brand name', () => {
+  it('contains the hero headline', () => {
     render(<HomePage />)
-    expect(screen.getByText(/Agentic Architecture/i)).toBeTruthy()
+    expect(screen.getByText(/Sovereign AI Architect/i)).toBeTruthy()
   })
 })
