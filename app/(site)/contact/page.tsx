@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { PageHeader } from '@/components/ui/page-header'
 import { ContactForm } from '@/components/site/contact-form'
 
@@ -14,7 +15,9 @@ export default function ContactPage() {
         title="contact"
         description="For consulting engagements, use the work with me page. For everything else, use the form below."
       />
-      <ContactForm />
+      <Suspense fallback={null}>
+        <ContactForm />
+      </Suspense>
     </div>
   )
 }

@@ -8,28 +8,32 @@ export const metadata: Metadata = {
     'Corporate AI training, speaking engagements, custom course creation, and agentic workflow consulting. Book a discovery call.',
 }
 
-const SERVICES = [
+type Service = {
+  name: string
+  description: string
+  price?: string
+  duration?: string
+}
+
+const ORG_SERVICES: Service[] = [
   {
     name: 'Corporate AI Training',
-    price: '$5k–$15k',
-    duration: 'half / full day',
     description:
       'On-site or remote workshops for engineering and ops teams. Hands-on labs covering local inference, agentic workflow design, MCP, and the cost math behind moving off frontier APIs. Materials and recordings included.',
   },
   {
     name: 'Speaking Engagements',
-    price: 'custom',
-    duration: 'keynote / talk',
     description:
       'Keynotes, conference talks, and podcast appearances on sovereign AI, agentic architecture, and the economics of local-first inference. Recent topics: the 96GB RAM thesis, MCP as an OS layer, the $0.01 micro-agent.',
   },
   {
     name: 'Custom Course Creation',
-    price: '$10k+',
-    duration: 'project',
     description:
-      'Built-for-you internal courses for engineering orgs. Curriculum design, recorded modules, hands-on exercises, and assessment. Useful when you need to ramp 50+ engineers on agentic tooling without sending them to a generic bootcamp.',
+      'Built-for-you internal courses for engineering orgs. Curriculum design, recorded modules, hands-on exercises, assessment. Useful when you need to ramp 50+ engineers on agentic tooling without sending them to a generic bootcamp.',
   },
+]
+
+const BUILDER_SERVICES: Service[] = [
   {
     name: 'Agentic Workflow Audit',
     price: '$499',
@@ -61,19 +65,42 @@ export default function WorkWithMePage() {
         description="I take a small number of engagements at a time. If you're serious about reducing cloud AI costs or building agentic infrastructure that actually works, let's talk."
       />
 
-      {/* Services */}
+      {/* For organizations */}
       <section>
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
-          Services
+        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
+          For organizations
         </h2>
+        <p className="font-mono text-xs text-muted mb-6">
+          Scoped per engagement — get in touch for a quote.
+        </p>
         <div className="divide-y divide-border">
-          {SERVICES.map(({ name, price, duration, description }) => (
+          {ORG_SERVICES.map(({ name, description }) => (
+            <div key={name} className="py-6 first:pt-0 last:pb-0">
+              <h3 className="font-mono text-sm text-fg mb-2">{name}</h3>
+              <p className="text-sm text-muted leading-relaxed">{description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* For founders & builders */}
+      <section className="border-t border-border pt-10">
+        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
+          For founders &amp; builders
+        </h2>
+        <p className="font-mono text-xs text-muted mb-6">
+          Productized — fixed scope, fixed price.
+        </p>
+        <div className="divide-y divide-border">
+          {BUILDER_SERVICES.map(({ name, price, duration, description }) => (
             <div key={name} className="py-6 first:pt-0 last:pb-0">
               <div className="flex items-start justify-between gap-4 mb-2">
                 <h3 className="font-mono text-sm text-fg">{name}</h3>
                 <div className="text-right shrink-0">
                   <span className="font-mono text-sm text-accent">{price}</span>
-                  <span className="font-mono text-xs text-muted ml-2">· {duration}</span>
+                  {duration && (
+                    <span className="font-mono text-xs text-muted ml-2">· {duration}</span>
+                  )}
                 </div>
               </div>
               <p className="text-sm text-muted leading-relaxed">{description}</p>

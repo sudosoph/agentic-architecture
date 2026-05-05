@@ -1,13 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
 export function ContactForm() {
+  const params = useSearchParams()
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    const s = params.get('subject')
+    const m = params.get('message')
+    if (s) setSubject(s)
+    if (m) setMessage(m)
+  }, [params])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -56,7 +67,20 @@ export function ContactForm() {
         <Field label="Name" name="name" type="text" required placeholder="Your name" />
         <Field label="Email" name="email" type="email" required placeholder="you@example.com" />
       </div>
-      <Field label="Subject" name="subject" type="text" placeholder="What's this about?" />
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="subject" className="font-mono text-xs text-muted uppercase tracking-widest">
+          Subject
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          type="text"
+          value={subject}
+          onChange={e => setSubject(e.target.value)}
+          placeholder="What's this about?"
+          className="bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-sans focus:outline-none focus:border-accent"
+        />
+      </div>
       <div className="flex flex-col gap-1.5">
         <label htmlFor="message" className="font-mono text-xs text-muted uppercase tracking-widest">
           Message <span className="text-pressure">*</span>
@@ -66,6 +90,8 @@ export function ContactForm() {
           name="message"
           required
           rows={6}
+          value={message}
+          onChange={e => setMessage(e.target.value)}
           placeholder="Your message..."
           className="bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-sans focus:outline-none focus:border-accent resize-none"
         />
