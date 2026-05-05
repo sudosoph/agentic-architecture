@@ -37,3 +37,4 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+bsw-content
