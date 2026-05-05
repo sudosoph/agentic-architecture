@@ -516,6 +516,53 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "hackathon-demo-failure",
+    "frontmatter": {
+      "title": "My Hackathon Demo Broke In Front of 200 People. It Was the Best Thing That Happened.",
+      "slug": "hackathon-demo-failure",
+      "publishedDate": "2026-05-04",
+      "description": "I was demoing my self-fixing documentation agent. It picked the wrong file. I narrated the fix live. Here is what I would tell past-me about live demos in 2026.",
+      "tags": [
+        "personal",
+        "hackathon",
+        "demos",
+        "agents"
+      ],
+      "draft": false
+    },
+    "html": "<p>The hackathon was on the back end of a long week. I had landed in NYC the night before, slept four hours, and walked into a room of about 200 people to demo my self-fixing documentation agent. I had run the demo twenty times in my hotel room. It worked every time.</p>\n<p>Of course the live one broke.</p>\n<h2 id=\"what-broke\">What broke</h2>\n<p>I had a glob pattern in my config that was supposed to match <code>docs/**/*.md</code>. Two days before, I had refactored my docs directory and a bunch of files moved into a <code>legacy/</code> subfolder I was planning to clean up after the trip. The glob pattern still matched them. The drift detector found drift in the legacy docs first because the legacy docs were the most stale. The agent confidently proposed a beautiful, well-written PR fixing documentation for code that had been deleted six months ago.</p>\n<p>Live. On the screen. In front of a room.</p>\n<p>There is a particular shade of cold sweat reserved for \"the demo just did something I cannot defend in real time.\"</p>\n<h2 id=\"what-i-did\">What I did</h2>\n<p>I noticed it about two seconds after the room did. Maybe four seconds.</p>\n<p>There were two ways forward. Cut to the next slide. Or talk through it.</p>\n<p>I talked through it. \"OK, so this is real. It picked the wrong file. Let me show you why.\"</p>\n<p>I opened the config in front of the room. Pointed at the glob pattern. Explained what I had done two days ago and why. Showed the trace from the drift detector that contained the bug. Updated the glob to exclude <code>legacy/</code>. Re-ran the demo. The agent did the right thing.</p>\n<p>The whole detour took about four minutes.</p>\n<h2 id=\"what-surprised-me\">What surprised me</h2>\n<p>The applause when the second run worked was bigger than what I would have gotten from a clean demo.</p>\n<p>People came up to me afterward. Not to ask about my model picks or my context-engineering technique. To ask how I debugged in real time. What I noticed first. How I knew not to panic. The story they wanted from me was the failure story, not the success story.</p>\n<p>The two best follow-up conversations I had at that conference both started with someone saying \"the way you handled the broken demo.\" Not \"the architecture you presented.\" Not \"the benchmark numbers you showed.\"</p>\n<h2 id=\"why-this-works-in-2026-specifically\">Why this works in 2026 specifically</h2>\n<p>I have been thinking about this for the week since. I think the reason live agent failures land well right now is specific to the moment the field is in.</p>\n<p>Everyone in the room has shipped an agent that did something embarrassing in front of someone. The Cursor support bot incident, the McDonald's drive-thru, the NYC chatbot. People have read those headlines. They have also seen their own internal version. <em>They know the agents are not perfect.</em> When you show up with a polished demo, you are denying a thing they all know to be true.</p>\n<p>When you show up with a real failure and debug it well, you are doing the thing they need to learn how to do. You are demonstrating the skill that will matter when their own production agent does something embarrassing at 3am.</p>\n<p>The clean demo is impressive once. The live debug is impressive forever.</p>\n<h2 id=\"what-i-would-tell-past-me\">What I would tell past-me</h2>\n<p>A short list, written for the hindsight version of me who walked into that room overprepared on the wrong axes.</p>\n<p><strong>Stop polishing the demo. Start preparing the debug.</strong> I had run my demo twenty times. I had not practiced what to do if it broke. The twenty-first run was the only one that mattered, and I was prepared for the wrong twenty-first run.</p>\n<p><strong>The agent's trace is your script.</strong> When the demo broke, what saved me was that I had built the agent with proper logging. I could open the trace and walk people through what had happened. If you are demoing an agent, your observability is your demo recovery plan.</p>\n<p><strong>Talk to the room, not the screen.</strong> During the four-minute detour, I made eye contact more than during the rest of the talk. The audience could see I was actually working through the problem, not performing it. That is the part they responded to.</p>\n<p><strong>Pre-write a \"this might break\" line.</strong> If I had opened with \"agents fail. Mine might fail in front of you. If it does, I will show you how I debug it\" the cold sweat would have been smaller. The audience would have been pre-aligned for the failure. This is now my default opening.</p>\n<p><strong>Bring the laptop you actually run on.</strong> Mine is a <a href=\"/blog/framework-for-builders\">Framework 16</a> with 96GB of RAM and ROCm 7.3. The live debug worked because I was running on the same setup I had been working on for three months. Not a special demo machine. Not an air-gapped sandbox. The actual stack. If your demo only works on a special machine, your demo is a special demo, and a special demo is a brittle demo.</p>\n<h2 id=\"what-i-am-going-to-do-differently\">What I am going to do differently</h2>\n<p>Next time I demo the <a href=\"/blog/self-fixing-docs-agent\">self-fixing documentation agent</a>, I am opening with the failure mode. Live. Deliberately. I will introduce a known bug into the config and let the agent stumble into it. Then I will fix it on stage. The successful run becomes the second act.</p>\n<p>The clean version is the version that does not match the audience's reality. The \"watch me break it and recover\" version is the version that does.</p>\n<h2 id=\"the-one-line-takeaway\">The one-line takeaway</h2>\n<p>If you are demoing an agent in 2026, your live recovery is more impressive than your live success. Plan for the failure. Practice the debug. Tell the audience the story.</p>\n<p>The hackathon broke me. It also gave me the version of the talk I am going to give for the rest of the year.</p>",
+    "toc": [
+      {
+        "id": "what-broke",
+        "text": "What broke"
+      },
+      {
+        "id": "what-i-did",
+        "text": "What I did"
+      },
+      {
+        "id": "what-surprised-me",
+        "text": "What surprised me"
+      },
+      {
+        "id": "why-this-works-in-2026-specifically",
+        "text": "Why this works in 2026 specifically"
+      },
+      {
+        "id": "what-i-would-tell-past-me",
+        "text": "What I would tell past-me"
+      },
+      {
+        "id": "what-i-am-going-to-do-differently",
+        "text": "What I am going to do differently"
+      },
+      {
+        "id": "the-one-line-takeaway",
+        "text": "The one-line takeaway"
+      }
+    ]
+  },
+  {
     "slug": "local-vs-cloud-inference",
     "frontmatter": {
       "title": "When to Run Locally and When to Pay Anthropic",
@@ -622,6 +669,49 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "marathon-month-recap",
+    "frontmatter": {
+      "title": "I Just Spent a Marathon Month at AI Conferences. Here Is What I Learned.",
+      "slug": "marathon-month-recap",
+      "publishedDate": "2026-05-05",
+      "description": "Four conferences and one hackathon in three weeks, presenting a self-fixing documentation agent. The honest field notes from the road.",
+      "tags": [
+        "conferences",
+        "personal",
+        "field-notes",
+        "agents"
+      ],
+      "draft": false
+    },
+    "html": "<p>I just got back from a stretch I will not be repeating any time soon. AI Dev SF on April 28-29. AI Agent Conference NYC on May 4. Boulder Startup Week in between. And a hackathon I demo-ed at on the back of a flight with two hours of sleep. Twelve flights. Three city changes. Four laptops opened. One agent I have been building for the last four months presented to about 600 people across the trip.</p>\n<p>This post is the honest version of what I learned. Not the conference highlight reel. The actual takeaways, including the things I got wrong.</p>\n<h2 id=\"what-i-was-presenting\">What I was presenting</h2>\n<p>The thing I have been building is a self-fixing documentation agent. Two modes: production and pre-release.</p>\n<p>In <strong>production mode</strong>, it watches the codebase against the docs. When code changes (a function signature, a config option, an environment variable, an API response shape), the agent detects the drift and proposes a doc update via PR. Conservative by default. Auto-merges only the trivial fixes (changed parameter names, updated default values). HITL for anything substantive.</p>\n<p>In <strong>pre-release / staging mode</strong>, the agent gets more aggressive. It can propose new docs for new features, draft migration guides for breaking changes, and surface \"you shipped this without docs\" warnings before the code merges to main. The threshold for proposing is lower because the threshold for shipping is also lower.</p>\n<p>The talk I gave was about why this dual-mode approach matters. Same agent. Two risk profiles. The post on this site that goes deeper is coming this week.</p>\n<h2 id=\"what-surprised-me\">What surprised me</h2>\n<p>Five things I did not expect.</p>\n<p><strong>1. Documentation is the most-asked-about agent use case at every conference, and almost nobody is shipping it well.</strong> I expected the questions to be about coding agents or RAG or evals. The pattern at every Q&#x26;A: someone asking how to make their stale docs agent-friendly. The category is wide open and underbuilt.</p>\n<p><strong>2. The \"agent failed in front of 200 people\" demo I was dreading went better than the polished one.</strong> The hackathon demo broke. The agent picked the wrong file to update because of a stale glob pattern in my config. I narrated the fix live, in front of the room, with the agent watching the trace. It worked the second time. People came up to me afterward not because the demo was clean but because the failure was honest.</p>\n<p><strong>3. The conversation gap between SF and NYC is real.</strong> SF was deep in tooling: which framework, which model, which inference stack. NYC was deep in deployment: which compliance framework, which audit pattern, which vendor. Same problems, different angle of attack. The teams winning long-term are running both lenses.</p>\n<p><strong>4. Local-first AI is no longer fringe.</strong> A year ago the local-first conversation was the smallest room. This year I had operators from three Fortune 500 companies asking how to set up Strix Halo desktops for their teams. The cost-and-privacy argument has finally landed.</p>\n<p><strong>5. The Boulder week was the best one.</strong> Not because the talks were better. Because the in-between time was better. SF and NYC are speed-dating. Boulder Startup Week is built for the 90-minute coffee that turns into a co-founder relationship. If you can only do one event a year, do this one.</p>\n<h2 id=\"the-pattern-across-all-four-events\">The pattern across all four events</h2>\n<p>The repeated theme, said in different words by different speakers:</p>\n<p><strong>Demo day is 65% complete. Production demands 95%.</strong> Venky Veeraraghavan from DataRobot said it. Sanjin Bicanic from Bain said it with different numbers. Andi Partovi from Veris AI said it as the case for simulation sandboxes. Every team I respect said some version of it in the hallway.</p>\n<p>The 30 points between demo and production is where the entire 2026 agentic AI industry is going to live. The teams that build the harness, the validators, the shadow-testing pipelines, and the governance scaffolding are the ones that ship to real customers. The teams that ship the model and call it done are the ones writing apology blog posts.</p>\n<h2 id=\"what-i-changed-about-my-own-setup-after-the-trip\">What I changed about my own setup after the trip</h2>\n<p>Three concrete changes I made the moment I got home.</p>\n<p><strong>I added shadow testing to my self-fixing doc agent.</strong> It now runs against a parallel snapshot of the docs for two weeks before any auto-merge gets enabled. The Bain HR Services case study at AI Agent NYC was the convincing argument. I had been telling clients to do this and not doing it myself.</p>\n<p><strong>I bought a Strix Halo mini-PC.</strong> The Framework 16 has been my daily for six months. The desktop is the upgrade for sustained workloads I want to leave running. The math at 128GB unified memory is just better for the swarm patterns I keep wanting to run.</p>\n<p><strong>I rewrote my hackathon demo script.</strong> The narrate-the-failure version is now my default. Showing a clean run is impressive once. Showing what happens when the agent hits a wall, and watching me debug it live, is impressive forever.</p>\n<h2 id=\"the-three-conversations-that-shaped-my-month\">The three conversations that shaped my month</h2>\n<p>I will write longer pieces on these. The capsule version:</p>\n<p><strong>The MCP-native-Ollama conversation.</strong> A small group of us at AI Dev SF spent forty minutes on the awkward fact that Ollama still does not speak MCP natively. The bridge client works. The integration would be cleaner upstream. We left agreeing someone should land that PR. Nobody has yet.</p>\n<p><strong>The \"we tried Cursor and went back\" conversation.</strong> Two engineers from a regulated-industry startup told me they had moved from Cursor to a local Claude Code setup with strict sandboxing because their auditor flagged the cloud-coding-agent data flow. This is going to keep happening.</p>\n<p><strong>The Boulder coffee where someone described their docs problem and accidentally described my product.</strong> A founder I had never met was describing the documentation-rot problem at his company. I let him talk for fifteen minutes before I told him I had built the thing. That is the best signal I have ever gotten that the product is solving a real problem.</p>\n<h2 id=\"what-i-am-bringing-back-to-my-own-work\">What I am bringing back to my own work</h2>\n<p>Three things I would tell past-me on day one of this trip.</p>\n<p>The 30 points between demo and production is the actual job. The model is the easy part. The harness is the work. Shadow testing is the unlock. Local-first is no longer a niche position. The 4-legged identity problem is going to bite every team that does not solve it. And the conversation in the hallway is worth more than the talk you flew across the country to give.</p>\n<p>I am tired. I am also better at this than I was a month ago. The next four weeks I am at the desk, shipping the things I learned the case for. If you are running an agentic system and any of this resonates, I am <a href=\"/contact\">reachable</a>. Most of the conversations from this trip are continuing in DM and email.</p>\n<p>More posts on the specific pieces this week.</p>",
+    "toc": [
+      {
+        "id": "what-i-was-presenting",
+        "text": "What I was presenting"
+      },
+      {
+        "id": "what-surprised-me",
+        "text": "What surprised me"
+      },
+      {
+        "id": "the-pattern-across-all-four-events",
+        "text": "The pattern across all four events"
+      },
+      {
+        "id": "what-i-changed-about-my-own-setup-after-the-trip",
+        "text": "What I changed about my own setup after the trip"
+      },
+      {
+        "id": "the-three-conversations-that-shaped-my-month",
+        "text": "The three conversations that shaped my month"
+      },
+      {
+        "id": "what-i-am-bringing-back-to-my-own-work",
+        "text": "What I am bringing back to my own work"
       }
     ]
   },
@@ -746,6 +836,57 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "pre-release-vs-prod-doc-agent",
+    "frontmatter": {
+      "title": "One Documentation Agent, Two Risk Profiles",
+      "slug": "pre-release-vs-prod-doc-agent",
+      "publishedDate": "2026-05-04",
+      "description": "Why my self-fixing docs agent runs differently against pre-release branches than against production. The mode bifurcation that lets the same agent be conservative AND aggressive.",
+      "tags": [
+        "agents",
+        "documentation",
+        "production",
+        "personal"
+      ],
+      "draft": false
+    },
+    "html": "<p>The question I got most often this month, from engineers who saw my <a href=\"/blog/self-fixing-docs-agent\">self-fixing documentation agent</a> demo: <em>how do you stop it from auto-merging the wrong thing into your live docs?</em></p>\n<p>The answer is the part I have been thinking about most. The same agent runs in two modes against two different sets of branches. Production mode is conservative, deliberately. Pre-release mode is aggressive, deliberately. Both are correct. The mode is the architecture decision; the agent is just the executor.</p>\n<p>This post is the case for the bifurcation, the actual config differences between the modes, and the honest list of where this approach falls down.</p>\n<h2 id=\"why-the-same-agent-has-to-behave-differently\">Why the same agent has to behave differently</h2>\n<p>Production code and pre-release code have different costs of being wrong, in opposite directions.</p>\n<p><strong>Production docs.</strong> Customers read them. A wrong production doc actively misleads someone in real time. The cost of a wrong update is high (customer confusion, support load, reputation hit). The cost of a <em>missing</em> update is medium (docs fall behind; customers eventually notice).</p>\n<p><strong>Pre-release docs.</strong> Internal team members and design partners read them. A wrong pre-release doc gets caught and fixed before shipping. The cost of a wrong update is low. The cost of a <em>missing</em> update is high (you ship to GA without docs, then everyone scrambles).</p>\n<p>Same drift signal in both places. Inverse risk profile. The agent has to know which side it is on.</p>\n<h2 id=\"the-mode-flag\">The mode flag</h2>\n<p>Each repo (or each branch) has a <code>.docagent.yml</code> config file. The mode is a one-line setting:</p>\n<pre><code class=\"language-yaml\">mode: production    # or: staging\nauto_merge: signature_only   # production\n# auto_merge: schema_safe    # staging\nverifier_strictness: high    # production\n# verifier_strictness: medium # staging\nprompt_set: prod             # or: staging\n</code></pre>\n<p>The mode flag drives three things:</p>\n<ol>\n<li><strong>Auto-merge threshold.</strong> Production auto-merges only single-symbol fixes (parameter renamed, default value updated, type widened). Staging auto-merges any fix where the verifier passes.</li>\n<li><strong>Verifier strictness.</strong> Production runs every check (compile, link, schema, examples-still-work). Staging runs the cheap checks only.</li>\n<li><strong>Prompt set.</strong> The prompts that drive the agent are different in each mode. Production prompts emphasize \"do not change the structure unless explicitly asked.\" Staging prompts emphasize \"if a section feels stale or incomplete, propose a rewrite.\"</li>\n</ol>\n<p>That is it. Four lines of config. Two modes. The rest of the agent is shared.</p>\n<h2 id=\"what-the-production-prompt-looks-like\">What the production prompt looks like</h2>\n<p>Trimmed for clarity. The actual one is longer.</p>\n<pre><code>You are updating documentation in a production repository.\n\nHard rules:\n- Do not rewrite sections you were not asked to update.\n- Do not change the document's voice or structure.\n- Do not add new sections without an explicit instruction.\n- Match the existing style precisely.\n\nWhen you receive a drift report:\n- Update only the specific symbols / values mentioned.\n- Preserve all surrounding prose.\n- If a code example breaks because of the drift, update the example to\n  match the new behavior. Do not invent example output.\n- If you would need to change more than one section to fix the drift,\n  surface a SCOPE_TOO_BROAD error instead.\n\nOutput format: a unified diff of the doc files only.\n</code></pre>\n<p>The \"SCOPE_TOO_BROAD error\" is the load-bearing line. It is the agent's permission to say no. When a drift would require restructuring, the agent does not silently restructure. It surfaces the work as an issue for a human.</p>\n<h2 id=\"what-the-staging-prompt-looks-like\">What the staging prompt looks like</h2>\n<p>Same skeleton, different tone.</p>\n<pre><code>You are updating documentation in a pre-release repository.\n\nThe code is in active development. Docs are expected to follow.\n\nWhen you receive a drift report:\n- Update affected symbols and values.\n- If a section is missing entirely (a public API was added without docs),\n  draft a stub for the new section in the existing doc style.\n- If a section reads as outdated or contradicts current behavior, flag\n  it for rewrite or rewrite it directly.\n- Suggest changelog entries for breaking changes.\n- Suggest migration notes if a public API contract changed.\n\nOutput format: unified diff plus an optional `notes` field listing\nsections that need human attention.\n</code></pre>\n<p>Same agent. Permission to do more. The verifier is more lenient because the cost of a wrong staging doc is recovered by the next staging build.</p>\n<h2 id=\"the-verifier-difference\">The verifier difference</h2>\n<p>Production verifier (every doc change passes all of these):</p>\n<pre><code>- Code blocks compile or run without error\n- Internal links resolve to valid anchors\n- External links return 2xx\n- Schema examples parse against the current schema\n- The doc's table-of-contents structure is unchanged\n- Word count change is within ±20% of the original\n</code></pre>\n<p>Staging verifier:</p>\n<pre><code>- Code blocks compile or run without error\n- Internal links resolve to valid anchors\n- (Other checks omitted)\n</code></pre>\n<p>Production protects structure. Staging only protects technical correctness. The structural-integrity checks are what stops the production agent from getting creative.</p>\n<h2 id=\"where-this-approach-falls-down\">Where this approach falls down</h2>\n<p>Three failure modes I have hit. Worth pre-empting if you build something similar.</p>\n<p><strong>The cross-repo case.</strong> When repo A's API changes and repo B's docs reference it, neither agent on its own catches the drift. Production mode in B does not see A's changes. Staging mode in B does not run because B did not change. Cross-repo dependency tracking is the next thing I am building. No clean answer yet.</p>\n<p><strong>The \"this whole page is now wrong\" case.</strong> Production mode is supposed to refuse this with SCOPE_TOO_BROAD. Sometimes it cannot detect that the page is wrong; it just sees a small drift and updates the small drift, leaving the rest of the page silently misleading. Mitigation: a separate weekly job runs <em>full-page audits</em> using a cheaper model (Gemma 4 26B MoE locally) to flag pages whose surrounding context no longer matches the symbols in them.</p>\n<p><strong>Style drift over time.</strong> Each agent edit shifts the doc's voice slightly toward the agent's default. Over a year, this compounds. Mitigation: a style-guide file that the agent reads on every run, plus periodic human review specifically for voice. The agent does not own the voice. The human owns the voice; the agent maintains the symbols.</p>\n<h2 id=\"what-i-learned-about-the-mode-pattern\">What I learned about the mode pattern</h2>\n<p>The bigger insight from building this is generalizable. <strong>Every agentic system that operates across multiple risk surfaces should be a single agent with multiple modes, not multiple agents.</strong></p>\n<p>The naive version of \"production agent and staging agent\" is two separate codepaths. Two prompts to maintain. Two test suites. Two deployment pipelines. The drift between them becomes its own bug class.</p>\n<p>The mode-flag version is one agent with one codepath. The mode is a config. The verifier is parameterized. The prompts are loaded from a <code>prompts/{mode}.md</code> file. Maintenance is dramatically simpler.</p>\n<p>This is the same pattern Anthropic uses internally for their <a href=\"https://www.anthropic.com/news/agent-skills\">skills system</a>: the skill is the unit of behavior; the context determines which skill loads. Same agent, different mode. I think this is going to be how all production agents are structured by 2027.</p>\n<h2 id=\"what-is-next\">What is next</h2>\n<p>The cross-repo case is the next milestone. After that, opening up the core. The prompts and verifier framework are mostly portable. The drift detector for TypeScript / Python / Go is the part that will take the most work to release publicly because it has a lot of language-specific edge cases baked in. Aiming for an open-source release within the quarter.</p>\n<p>If you are running into the same problem and want to compare notes, <a href=\"/contact\">reach out</a>. The conversations from this month convinced me that a meaningful number of teams are bumping into the same docs-rot problem at the same time, and the solution is one of those \"everyone should have it\" patterns rather than a competitive moat.</p>",
+    "toc": [
+      {
+        "id": "why-the-same-agent-has-to-behave-differently",
+        "text": "Why the same agent has to behave differently"
+      },
+      {
+        "id": "the-mode-flag",
+        "text": "The mode flag"
+      },
+      {
+        "id": "what-the-production-prompt-looks-like",
+        "text": "What the production prompt looks like"
+      },
+      {
+        "id": "what-the-staging-prompt-looks-like",
+        "text": "What the staging prompt looks like"
+      },
+      {
+        "id": "the-verifier-difference",
+        "text": "The verifier difference"
+      },
+      {
+        "id": "where-this-approach-falls-down",
+        "text": "Where this approach falls down"
+      },
+      {
+        "id": "what-i-learned-about-the-mode-pattern",
+        "text": "What I learned about the mode pattern"
+      },
+      {
+        "id": "what-is-next",
+        "text": "What is next"
+      }
+    ]
+  },
+  {
     "slug": "reasoning-loops",
     "frontmatter": {
       "title": "Plan-and-Execute vs ReAct: Picking Your Agent's Brain",
@@ -845,6 +986,57 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "self-fixing-docs-agent",
+    "frontmatter": {
+      "title": "I Built an Agent That Fixes Its Own Documentation. Here Is How.",
+      "slug": "self-fixing-docs-agent",
+      "publishedDate": "2026-05-04",
+      "description": "The thing I have been demoing all month: an agent that watches code change, detects when docs go stale, and proposes the fix. Architecture, prompts, and the bits that surprised me.",
+      "tags": [
+        "agents",
+        "documentation",
+        "personal",
+        "build-in-public"
+      ],
+      "draft": false
+    },
+    "html": "<p>I have been working on this for four months and demoing it for the last three weeks. It is the agent I keep getting asked about in hallway conversations. So here is the architecture, the prompts, and the parts that surprised me, written up properly.</p>\n<h2 id=\"why-i-built-this\">Why I built this</h2>\n<p>Documentation rots. You ship a feature, you write the docs, six weeks later the function signature changes and the docs are wrong. Six months later the docs are misleading. Twelve months later they are quietly making your customers angry. Every engineer reading this has felt it.</p>\n<p>The fix everyone hand-waves at is \"we should keep docs up to date.\" That is not a fix. It is a wish. The actual fix has to be a process that does not require the engineer who shipped the change to remember the docs exist.</p>\n<p>So I built one. The agent watches code changes, detects when the docs are now wrong, and proposes the fix as a PR. It catches the lazy version of the problem (this function takes three params now, not two) and the structural version (this whole flow has been replaced, the page should be rewritten).</p>\n<p>It runs in two modes because production and pre-release have very different risk profiles. More on that below.</p>\n<h2 id=\"the-architecture\">The architecture</h2>\n<pre><code>   ┌──────────────────┐\n   │  git commit /    │\n   │  PR opened       │\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐         ┌──────────────────┐\n   │  Drift detector  │ ←read───│  Docs index      │\n   │  (deterministic) │         │  (markdown,      │\n   │                  │         │   API specs,     │\n   │  - signature     │         │   examples)      │\n   │  - flag/env diff │         └──────────────────┘\n   │  - response shape│\n   │  - removed/added │\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐\n   │  Drift report    │\n   │  (structured)    │\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐\n   │  Mode router     │\n   │  - prod → safe   │\n   │  - staging → bold│\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐\n   │  Doc agent       │\n   │  (Qwen 3.6 27B   │\n   │   or Sonnet 4.5) │\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐\n   │  Verifier        │ ← schema, examples\n   │  (deterministic) │   compile, link check\n   └────────┬─────────┘\n            ↓\n   ┌──────────────────┐\n   │  PR / auto-merge │\n   └──────────────────┘\n</code></pre>\n<p>Six stages. The first and last are deterministic. The doc agent is the LLM. Verification between every step. Same shape as the <a href=\"/blog/shadow-testing\">Bain payroll architecture</a> at smaller scale.</p>\n<h2 id=\"the-drift-detector\">The drift detector</h2>\n<p>This is the load-bearing piece and the part that surprised me.</p>\n<p>I started by trying to have the LLM detect drift. \"Read this code change. Read these docs. Tell me what is now wrong.\" This worked, expensively, with high false-positive rates, and with hallucinations that confidently described drift that did not exist.</p>\n<p>I rewrote it as a deterministic step. The drift detector parses the diff, extracts structured changes (function signatures, config keys, environment variables, API response shapes), and matches them against a parsed index of the docs. The output is a structured drift report:</p>\n<pre><code class=\"language-json\">{\n  \"drifts\": [\n    {\n      \"type\": \"signature_change\",\n      \"symbol\": \"createUser\",\n      \"old\": \"(name: string, email: string)\",\n      \"new\": \"(name: string, email: string, role?: string)\",\n      \"doc_locations\": [\"docs/api/users.md:42\", \"docs/quickstart.md:108\"]\n    },\n    {\n      \"type\": \"removed_flag\",\n      \"flag\": \"USE_OLD_AUTH\",\n      \"doc_locations\": [\"docs/configuration.md:71\"]\n    }\n  ]\n}\n</code></pre>\n<p>The agent never has to reason about <em>what</em> drifted. It only has to write the doc fix for the drift the deterministic step already identified. False positive rate dropped to near-zero. Latency dropped 15x. Cost dropped 40x.</p>\n<p>This is a pattern worth generalizing: <strong>when an LLM reasoning step has a deterministic equivalent, use the deterministic equivalent.</strong> Reserve the LLM for the actual writing.</p>\n<h2 id=\"the-two-modes\">The two modes</h2>\n<p>This is the part everyone asks about at conferences.</p>\n<p><strong>Production mode.</strong> The agent runs against repos with shipped code. The drift detector runs on every PR to main. The threshold for auto-merging is high: only single-symbol fixes that pass automated verification (the example still compiles, the link still works, the schema still validates). Anything multi-section or substantive opens a PR for human review. Default-conservative.</p>\n<p><strong>Pre-release / staging mode.</strong> Different repo (or different branch). Different prompt. The agent gets to:</p>\n<ul>\n<li>Propose new doc sections for new features</li>\n<li>Suggest migration guides for breaking changes</li>\n<li>Surface \"this PR added a public API without docs\" warnings <em>before</em> merge</li>\n<li>Draft changelog entries</li>\n</ul>\n<p>The threshold for surfacing is lower because the cost of being wrong is lower. Pre-release docs that are not perfect get fixed before they ship. Production docs that are not perfect ship to customers.</p>\n<p>The mode selector is the simple one. A config in the repo. The agent reads it on startup. Same code path; different prompt and different verifier strictness.</p>\n<h2 id=\"the-verifier\">The verifier</h2>\n<p>Every doc change passes a verifier before merge. Three checks, each cheap and deterministic:</p>\n<ol>\n<li><strong>Code-block compilation.</strong> Any code block in the doc that the agent touched gets extracted and compiled (or run, for shell). If it fails, the change rolls back.</li>\n<li><strong>Link validation.</strong> Internal links must resolve to valid anchors. External links must return 2xx.</li>\n<li><strong>Schema validation.</strong> If the doc defines an API or config schema, the schema parses. If the agent broke the example to match the new signature, the example must still parse.</li>\n</ol>\n<p>These three checks catch about 95% of the agent's mistakes. The remaining 5% are taste-level (the doc is technically correct but reads badly). Those go to human review by default.</p>\n<h2 id=\"what-surprised-me\">What surprised me</h2>\n<p>Three things from the build.</p>\n<p><strong>The agent writes better docs than I do.</strong> Not because it is smarter. Because it is patient. It writes the boring parts (parameter descriptions, example invocations, edge case notes) that I always hand-wave through. The first time I reviewed a long doc the agent had written, I realized it had filled in three sections I had been planning to write \"later.\" Later was now.</p>\n<p><strong>Pre-release mode is the unlock.</strong> I built production mode first. The breakthrough was running it against pre-release branches and seeing it catch missing docs <em>before</em> the feature shipped. The org-level effect is that \"doc rot\" stops being a thing because docs never get behind the code in the first place. They get written at the same time, by the agent, reviewed by the human.</p>\n<p><strong>The deterministic drift detector pattern generalizes.</strong> I am now using the same pattern (deterministic structural diff plus LLM-only-for-the-prose) for changelog generation, release notes, migration guide drafting, and customer-facing API change announcements. Same shape every time.</p>\n<h2 id=\"what-does-not-work-yet\">What does not work yet</h2>\n<p>Honest list.</p>\n<p><strong>Multi-repo dependency drift.</strong> When repo A's API changes and repo B uses it, the agent does not yet detect that B's docs are now wrong. Cross-repo graph traversal is the next thing I am building.</p>\n<p><strong>Style consistency across orgs.</strong> The agent writes in the style of whatever it has read. If your existing docs are inconsistent, the agent's output is inconsistent. Style guides help; they are not perfect.</p>\n<p><strong>Vector vs dense retrieval for \"where is this documented.\"</strong> The doc index uses keyword matching with some semantic backup. Past about 2,000 doc pages, this gets wobbly. Vector + reranking is on the roadmap.</p>\n<h2 id=\"where-this-lives\">Where this lives</h2>\n<p>This agent has been running on a handful of repos for the last three months, including the repo that hosts this site. About 60% of doc updates ship with no human in the loop. About 35% open PRs that I review and merge. About 5% the agent flags as \"I am not sure\" and leaves alone.</p>\n<p>Open-sourcing the core is on the roadmap. The drift detector for TypeScript / Python / Go is mostly there. The verifier framework needs polishing. If you want to be early, <a href=\"/contact\">reach out</a>. I will get to a public release within the quarter.</p>\n<p>The talk version of this is what I have been giving at AI Dev SF, AI Agent Conference NYC, and Boulder Startup Week. The takeaway from the live audiences was unanimous: documentation is the most-asked-about agent use case in 2026, and it is the most underbuilt. So this is partly a writeup, and partly an invitation to anyone working on the same problem to compare notes.</p>",
+    "toc": [
+      {
+        "id": "why-i-built-this",
+        "text": "Why I built this"
+      },
+      {
+        "id": "the-architecture",
+        "text": "The architecture"
+      },
+      {
+        "id": "the-drift-detector",
+        "text": "The drift detector"
+      },
+      {
+        "id": "the-two-modes",
+        "text": "The two modes"
+      },
+      {
+        "id": "the-verifier",
+        "text": "The verifier"
+      },
+      {
+        "id": "what-surprised-me",
+        "text": "What surprised me"
+      },
+      {
+        "id": "what-does-not-work-yet",
+        "text": "What does not work yet"
+      },
+      {
+        "id": "where-this-lives",
+        "text": "Where this lives"
+      }
+    ]
+  },
+  {
     "slug": "self-healing-cicd",
     "frontmatter": {
       "title": "Self-Healing CI/CD",
@@ -897,6 +1089,57 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "seven-conversations",
+    "frontmatter": {
+      "title": "Seven Conversations That Changed My Mental Model This Month",
+      "slug": "seven-conversations",
+      "publishedDate": "2026-05-05",
+      "description": "Hallway moments from four conferences in three weeks. The chats that shifted how I think about agents, presented as honestly as I can write them.",
+      "tags": [
+        "personal",
+        "field-notes",
+        "conferences",
+        "agents"
+      ],
+      "draft": false
+    },
+    "html": "<p>I gave a talk at AI Dev SF, AI Agent Conference NYC, and a hackathon in Boulder this month. The talks are on YouTube somewhere. They are not the most useful thing I brought home.</p>\n<p>The most useful thing was the seven conversations I want to write up here. Some of these were strangers. Some were people whose work I have been reading for years. All of them shifted something in how I think about agents.</p>\n<h2 id=\"1-the-ollama-mcp-gap\">1. The Ollama-MCP gap</h2>\n<p>Where: a small group of about six of us standing in the hallway after Eda Zhou and Mahdi Ghodsi's \"Building Personal AI Agents with Open-Source Models\" session at AI Dev SF.</p>\n<p>The conversation: someone (engineer at a mid-size SaaS company) asked why his local Ollama setup could not just call MCP servers natively. The answer is the same one I have been writing about. Ollama implements its own tool-calling API, OpenAI-shaped, returning <code>tool_calls</code> on <code>/api/chat</code>. MCP is a different shape, and you need a <a href=\"/blog/mcp-101\">bridge client</a> to translate between them.</p>\n<p>What shifted for me: the bridge is not a temporary scaffolding. It is the de facto integration. Nobody has merged native MCP support into Ollama upstream because the bridge works well enough. The PR has been open for months. There is real value sitting on the table for whoever lands it. I am thinking seriously about contributing.</p>\n<h2 id=\"2-we-tried-cursor-and-went-back\">2. \"We tried Cursor and went back\"</h2>\n<p>Where: lunch line at AI Agent Conference NYC. The person ahead of me had a badge from a regulated-industry startup (medical, I think).</p>\n<p>The conversation: they had moved their dev team off Cursor onto a local Claude Code setup with strict sandboxing because their auditor flagged the cloud-coding-agent data flow as a SOC 2 risk. Their codebase contains patient-data-handling logic. Sending that codebase to a third-party model provider, even one that does not train on it, was a deal-breaker for their compliance posture.</p>\n<p>What shifted for me: I knew this was happening abstractly. Hearing it from a real engineer who had made the migration grounded it. Local-first dev environments are not a hobby anymore. They are a regulatory necessity for a meaningful slice of the market. The <a href=\"/blog/ethical-autonomy\">August 2026 EU AI Act deadline</a> is going to accelerate this. I should be writing more for this audience specifically.</p>\n<h2 id=\"3-the-founder-who-described-my-product-back-to-me\">3. The founder who described my product back to me</h2>\n<p>Where: Galvanize, Boulder, during BSW. A founder I had never met sat down across from me. We started with the polite \"what are you working on\" exchange.</p>\n<p>The conversation: he started describing his company's documentation problem. The team ships fast. The docs are always behind. They lose customer-success conversations because the docs do not match what the product actually does. They tried hiring a doc writer. The doc writer cannot keep up. They tried making engineers responsible. The engineers do not write docs.</p>\n<p>I let him talk for fifteen minutes before I said \"I have built the agent for that.\" His response: \"Wait, really?\"</p>\n<p>What shifted for me: I have been <a href=\"/blog/self-fixing-docs-agent\">building this thing</a> for four months and was starting to wonder if I had picked an obscure problem. I have not. The problem is universal. The reason I had been wondering is that nobody was complaining about it because everyone had given up on solving it. They have not given up because it is fine. They have given up because it has felt unsolvable until now.</p>\n<h2 id=\"4-the-token-cost-realization\">4. The token-cost realization</h2>\n<p>Where: post-keynote drinks at AI Agent NYC. Engineer from a Series A startup.</p>\n<p>The conversation: she pulled out her phone and showed me their monthly OpenAI bill. It was a number I do not want to repeat in a blog post but it had a comma in it. Their entire feature set was running on Sonnet 4.5 because they had picked it during prototyping and nobody had revisited the model choice as they scaled.</p>\n<p>We spent twenty minutes mapping which calls actually needed Sonnet and which could move to Haiku, Gemini Flash, or DeepSeek V4 Flash. Realistic estimate: 60% of their bill was misallocated.</p>\n<p>What shifted for me: I have been writing about <a href=\"/blog/local-vs-cloud-inference\">tier-aware model routing</a> but treating it as obvious advice. It is not obvious. Most teams pick a model in week one and never revisit. The reason my consulting calendar is full is that <em>every</em> growing AI-native team has this problem and most of them do not realize it yet.</p>\n<h2 id=\"5-the-simulation-sandbox-argument-i-lost\">5. The simulation-sandbox argument I lost</h2>\n<p>Where: dinner after AI Dev SF, with three engineers I had just met. Argument by the third bottle of wine.</p>\n<p>The conversation: I argued that for most agentic systems, <a href=\"/blog/shadow-testing\">shadow testing</a> plus good evals was sufficient. The simulation sandbox layer (à la Veris AI) was overkill except in regulated domains.</p>\n<p>The other side argued: simulation lets you test failure modes that production never produces. Adversarial users. Combinations of edge cases that have never happened together. By the time a failure mode appears in shadow mode, your reputation has already absorbed the variance from earlier surprises. Simulation gets you ahead of the surprise.</p>\n<p>What shifted for me: I think they are right. I have been treating simulation as the heaviest layer of testing. It is more like the <em>cheapest</em> layer because it lets you test things you cannot ethically test in production. I am rewriting my recommendation. The post is <a href=\"/blog/why-every-agent-needs-a-simulation-sandbox\">here</a>; my prior was that simulation came last; it should probably come first.</p>\n<h2 id=\"6-the-compliance-lawyer\">6. The compliance lawyer</h2>\n<p>Where: BSW, in a session I did not have on my schedule. I wandered in because the title caught my eye.</p>\n<p>The conversation: a compliance lawyer was describing how the EU AI Act's August 2026 deadline maps to product engineering decisions. Most of her examples were uncomfortably specific. \"If your agent makes a hiring recommendation, here is what your audit trail has to capture.\" \"If your agent moves money, here is what your intervention point has to look like.\"</p>\n<p>I had been treating compliance as a wrapper around the product. She framed it as the structure of the product. Build it differently from day one and the audit becomes routine. Bolt it on after the fact and you are rewriting major systems on a deadline.</p>\n<p>What shifted for me: I am redoing the <a href=\"/blog/the-4-legged-identity\">4-legged identity</a> writeup with explicit AI Act mapping. Compliance is not the boring part of the agent. It is the architecture.</p>\n<h2 id=\"7-the-barista\">7. The barista</h2>\n<p>Where: a coffee shop in Brooklyn, the morning after AI Agent NYC.</p>\n<p>The conversation: the barista asked what brought me to NYC. I said a conference about AI agents. He asked what an agent is. I gave the elevator pitch. He said \"OK, so it does what I do but for someone's email.\"</p>\n<p>What shifted for me: he was right. The version of the agent story that lands with non-technical people is not \"autonomous reasoning system.\" It is \"the helpful person you do not have to pay full-time.\" Every framing I have been using in talks is too technical. I am rewriting the opening of all my decks. The barista was a better technical writer than I have been.</p>\n<h2 id=\"what-i-am-bringing-back\">What I am bringing back</h2>\n<p>Seven conversations. Five action items.</p>\n<ol>\n<li>Look seriously at contributing native MCP to Ollama.</li>\n<li>Write more explicitly for the regulated-industry audience.</li>\n<li>Open up the documentation agent earlier than I had planned.</li>\n<li>Audit the simulation-sandbox vs shadow-testing recommendation in everything I have written about evals.</li>\n<li>Rewrite my opening framing. The barista won.</li>\n</ol>\n<p>The conferences themselves are tools. The hallway is the actual conference. I am writing this up because it is also a reminder to past-me, who was too anxious about her own talks to really show up to other people's. The expensive plane tickets bought the access. The conversations were free.</p>",
+    "toc": [
+      {
+        "id": "1-the-ollama-mcp-gap",
+        "text": "1. The Ollama-MCP gap"
+      },
+      {
+        "id": "2-we-tried-cursor-and-went-back",
+        "text": "2. \"We tried Cursor and went back\""
+      },
+      {
+        "id": "3-the-founder-who-described-my-product-back-to-me",
+        "text": "3. The founder who described my product back to me"
+      },
+      {
+        "id": "4-the-token-cost-realization",
+        "text": "4. The token-cost realization"
+      },
+      {
+        "id": "5-the-simulation-sandbox-argument-i-lost",
+        "text": "5. The simulation-sandbox argument I lost"
+      },
+      {
+        "id": "6-the-compliance-lawyer",
+        "text": "6. The compliance lawyer"
+      },
+      {
+        "id": "7-the-barista",
+        "text": "7. The barista"
+      },
+      {
+        "id": "what-i-am-bringing-back",
+        "text": "What I am bringing back"
       }
     ]
   },
@@ -1369,6 +1612,49 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "three-things-i-got-wrong",
+    "frontmatter": {
+      "title": "Three Things I Got Wrong About Agents This Year",
+      "slug": "three-things-i-got-wrong",
+      "publishedDate": "2026-05-05",
+      "description": "An honest list of where my prior was wrong, what changed my mind, and what I would tell past-me if I could send a Slack DM back to January.",
+      "tags": [
+        "personal",
+        "lessons",
+        "agents",
+        "build-in-public"
+      ],
+      "draft": false
+    },
+    "html": "<p>I have been working on agents full-time for about a year. Building, demoing, writing. The conferences this month forced me to be honest about a few things I had been wrong about. This is the public version of that audit.</p>\n<p>I am writing it because I think the most useful posts I read in 2025 were the ones where someone whose work I respected admitted what they had gotten wrong. They calibrated my own thinking faster than any \"here is the right answer\" post ever did. So this is my version of that for 2026.</p>\n<h2 id=\"1-i-underestimated-how-much-of-agentic-work-is-just-observability\">1. I underestimated how much of agentic work is just observability</h2>\n<p>What I thought: the interesting work was the agent itself. The model picks. The reasoning patterns. The tool design. Observability was the boring part you bolted on after.</p>\n<p>What changed: working on the <a href=\"/blog/self-fixing-docs-agent\">self-fixing documentation agent</a> for four months and watching it fail in ways I could not debug because my logging was inadequate. Then sitting through Charity Majors' <a href=\"https://charity.wtf/tag/observability-2-0/\">Observability 2.0</a> framing and realizing it maps almost perfectly onto the agent debugging problem. Then watching the Bain HR Services case study at AI Agent Conference NYC and seeing how their <a href=\"/blog/shadow-testing\">control tower</a> was the load-bearing piece, not the agent engine.</p>\n<p>What I would tell past-me: when you build an agent, build the observability first. Wide structured events. Trace correlation. The ability to replay any decision the agent made with the inputs that drove it. The agent itself is interchangeable. The logging is durable.</p>\n<p>The phrase that landed: <em>if you cannot see it, you cannot trust it.</em> Sanjin Bicanic at AI Agent NYC said this about the Bain payroll agent. It applies to every agent.</p>\n<h2 id=\"2-i-was-too-bullish-on-monolithic-god-model-agents-in-early-2025\">2. I was too bullish on monolithic god-model agents in early 2025</h2>\n<p>What I thought: when models got smart enough, you could just hand them a complex task and let the model figure out the decomposition. \"GPT-4 can handle this\" was my default. I built a few systems on this premise.</p>\n<p>What changed: production reality. The systems hit a wall around 65% accuracy and could not get past it. Every attempt to push past 65% required adding scaffolding. By the time the system hit 95%, the agent was no longer doing the work. The scaffolding was. The architecture had become a <a href=\"/blog/swarm-vs-monolith\">decomposed swarm</a> by accident, with the LLM only handling the parts that needed reasoning.</p>\n<p>What I would tell past-me: start with the swarm shape. Even if you only have one specialist, structure the system as if you will add more. The validators between specialists matter as much as the specialists themselves. The Bain HR Services architecture (8 LangGraph subgraphs, manager/worker pattern, validators between every step) is what production looks like. The \"smart god model that figures it out\" pattern is what the demo looks like.</p>\n<p>The harder admission: I sold this advice to clients in early 2025. I had to revise the recommendation publicly. That was awkward.</p>\n<h2 id=\"3-i-dismissed-local-first-too-early-in-my-own-life\">3. I dismissed local-first too early in my own life</h2>\n<p>What I thought: I built local-first AI infrastructure as my brand. I believed in it for clients. But for my own daily dev work, I was running Cursor on a MacBook Pro with cloud Claude Code. Convenient. Worked fine. The cobbler's kids had no shoes.</p>\n<p>What changed: I sat down with my own monthly bill in February and realized I was paying about $300/month in agent API calls. Annualized at $3,600 against a Framework 16 with Strix Point at ~$3,200, the laptop paid back in eleven months on cost alone. Plus the experiment-velocity dividend, which is the actual reason to switch.</p>\n<p>I switched in March. By April I was running Qwen 3.6 27B and Gemma 4 26B MoE locally for 90% of my daily work, with <a href=\"/blog/local-vs-cloud-inference\">Sonnet for the hard 10%</a>. My monthly bill dropped to about $40. My output got faster because I stopped rationing retries. The thing I had been telling clients to do was the thing I should have been doing.</p>\n<p>What I would tell past-me: take your own advice in your own life faster. The reason I had been hedging on local-first for myself was the convenience tax. The convenience tax was not actually that high. The math was not even close.</p>\n<h2 id=\"the-pattern-i-keep-seeing\">The pattern I keep seeing</h2>\n<p>These three are different mistakes but the same shape. In each case I was betting on a \"smart enough\" frontier (smart enough monitoring, smart enough model, smart enough cloud setup) and underweighting the structure that made the smart parts useful.</p>\n<p>The more I build, the more I think 2026 agentic AI is mostly about getting the structure right. The model gets a lot of credit. The structure does most of the work.</p>\n<h2 id=\"things-i-am-still-not-sure-about\">Things I am still not sure about</h2>\n<p>In the same spirit:</p>\n<ul>\n<li>I do not know whether <a href=\"/blog/reasoning-loops\">Plan-and-Execute or ReAct</a> is the better default for new builders. I have been recommending the hybrid. Still feels like I am hedging.</li>\n<li>I do not know if simulation sandboxes (Veris AI style) belong before or after shadow testing in the production rollout sequence. I argued one position at a dinner last week and lost.</li>\n<li>I do not know what the right local-model picks will be in three months. Qwen 3.6 and Gemma 4 are great today. The pace of releases means today's pick is dated.</li>\n<li>I do not know how to scale the <a href=\"/blog/self-fixing-docs-agent\">self-fixing doc agent</a> to multi-repo dependency drift cleanly. Working on it.</li>\n</ul>\n<p>If anyone reading this has a strong opinion on any of these, I want to hear it. The conversations are how I have been calibrating.</p>\n<h2 id=\"the-post-i-am-not-writing\">The post I am not writing</h2>\n<p>The temptation when you have been wrong is to overcorrect into \"now I am right\" stridency. I am trying to resist that. The 2026 version of me is going to be wrong about something else by 2027. The point of writing this is to be the kind of practitioner who admits the bug and fixes the prior, not the kind who pretends the prior was always correct.</p>\n<p>This post is on the site because the conversations this month convinced me that public revision is more useful than private revision. The teams whose work I respect most do this routinely. I am trying to do it more.</p>",
+    "toc": [
+      {
+        "id": "1-i-underestimated-how-much-of-agentic-work-is-just-observability",
+        "text": "1. I underestimated how much of agentic work is just observability"
+      },
+      {
+        "id": "2-i-was-too-bullish-on-monolithic-god-model-agents-in-early-2025",
+        "text": "2. I was too bullish on monolithic god-model agents in early 2025"
+      },
+      {
+        "id": "3-i-dismissed-local-first-too-early-in-my-own-life",
+        "text": "3. I dismissed local-first too early in my own life"
+      },
+      {
+        "id": "the-pattern-i-keep-seeing",
+        "text": "The pattern I keep seeing"
+      },
+      {
+        "id": "things-i-am-still-not-sure-about",
+        "text": "Things I am still not sure about"
+      },
+      {
+        "id": "the-post-i-am-not-writing",
+        "text": "The post I am not writing"
       }
     ]
   },

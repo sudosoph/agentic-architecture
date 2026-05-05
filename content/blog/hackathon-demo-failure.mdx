@@ -1,0 +1,76 @@
+---
+title: "My Hackathon Demo Broke In Front of 200 People. It Was the Best Thing That Happened."
+slug: hackathon-demo-failure
+publishedDate: "2026-05-04"
+description: "I was demoing my self-fixing documentation agent. It picked the wrong file. I narrated the fix live. Here is what I would tell past-me about live demos in 2026."
+tags: ["personal", "hackathon", "demos", "agents"]
+draft: false
+---
+
+The hackathon was on the back end of a long week. I had landed in NYC the night before, slept four hours, and walked into a room of about 200 people to demo my self-fixing documentation agent. I had run the demo twenty times in my hotel room. It worked every time.
+
+Of course the live one broke.
+
+## What broke
+
+I had a glob pattern in my config that was supposed to match `docs/**/*.md`. Two days before, I had refactored my docs directory and a bunch of files moved into a `legacy/` subfolder I was planning to clean up after the trip. The glob pattern still matched them. The drift detector found drift in the legacy docs first because the legacy docs were the most stale. The agent confidently proposed a beautiful, well-written PR fixing documentation for code that had been deleted six months ago.
+
+Live. On the screen. In front of a room.
+
+There is a particular shade of cold sweat reserved for "the demo just did something I cannot defend in real time."
+
+## What I did
+
+I noticed it about two seconds after the room did. Maybe four seconds.
+
+There were two ways forward. Cut to the next slide. Or talk through it.
+
+I talked through it. "OK, so this is real. It picked the wrong file. Let me show you why."
+
+I opened the config in front of the room. Pointed at the glob pattern. Explained what I had done two days ago and why. Showed the trace from the drift detector that contained the bug. Updated the glob to exclude `legacy/`. Re-ran the demo. The agent did the right thing.
+
+The whole detour took about four minutes.
+
+## What surprised me
+
+The applause when the second run worked was bigger than what I would have gotten from a clean demo.
+
+People came up to me afterward. Not to ask about my model picks or my context-engineering technique. To ask how I debugged in real time. What I noticed first. How I knew not to panic. The story they wanted from me was the failure story, not the success story.
+
+The two best follow-up conversations I had at that conference both started with someone saying "the way you handled the broken demo." Not "the architecture you presented." Not "the benchmark numbers you showed."
+
+## Why this works in 2026 specifically
+
+I have been thinking about this for the week since. I think the reason live agent failures land well right now is specific to the moment the field is in.
+
+Everyone in the room has shipped an agent that did something embarrassing in front of someone. The Cursor support bot incident, the McDonald's drive-thru, the NYC chatbot. People have read those headlines. They have also seen their own internal version. *They know the agents are not perfect.* When you show up with a polished demo, you are denying a thing they all know to be true.
+
+When you show up with a real failure and debug it well, you are doing the thing they need to learn how to do. You are demonstrating the skill that will matter when their own production agent does something embarrassing at 3am.
+
+The clean demo is impressive once. The live debug is impressive forever.
+
+## What I would tell past-me
+
+A short list, written for the hindsight version of me who walked into that room overprepared on the wrong axes.
+
+**Stop polishing the demo. Start preparing the debug.** I had run my demo twenty times. I had not practiced what to do if it broke. The twenty-first run was the only one that mattered, and I was prepared for the wrong twenty-first run.
+
+**The agent's trace is your script.** When the demo broke, what saved me was that I had built the agent with proper logging. I could open the trace and walk people through what had happened. If you are demoing an agent, your observability is your demo recovery plan.
+
+**Talk to the room, not the screen.** During the four-minute detour, I made eye contact more than during the rest of the talk. The audience could see I was actually working through the problem, not performing it. That is the part they responded to.
+
+**Pre-write a "this might break" line.** If I had opened with "agents fail. Mine might fail in front of you. If it does, I will show you how I debug it" the cold sweat would have been smaller. The audience would have been pre-aligned for the failure. This is now my default opening.
+
+**Bring the laptop you actually run on.** Mine is a [Framework 16](/blog/framework-for-builders) with 96GB of RAM and ROCm 7.3. The live debug worked because I was running on the same setup I had been working on for three months. Not a special demo machine. Not an air-gapped sandbox. The actual stack. If your demo only works on a special machine, your demo is a special demo, and a special demo is a brittle demo.
+
+## What I am going to do differently
+
+Next time I demo the [self-fixing documentation agent](/blog/self-fixing-docs-agent), I am opening with the failure mode. Live. Deliberately. I will introduce a known bug into the config and let the agent stumble into it. Then I will fix it on stage. The successful run becomes the second act.
+
+The clean version is the version that does not match the audience's reality. The "watch me break it and recover" version is the version that does.
+
+## The one-line takeaway
+
+If you are demoing an agent in 2026, your live recovery is more impressive than your live success. Plan for the failure. Practice the debug. Tell the audience the story.
+
+The hackathon broke me. It also gave me the version of the talk I am going to give for the rest of the year.

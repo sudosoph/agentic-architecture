@@ -1,0 +1,144 @@
+---
+title: "One Documentation Agent, Two Risk Profiles"
+slug: pre-release-vs-prod-doc-agent
+publishedDate: "2026-05-04"
+description: "Why my self-fixing docs agent runs differently against pre-release branches than against production. The mode bifurcation that lets the same agent be conservative AND aggressive."
+tags: ["agents", "documentation", "production", "personal"]
+draft: false
+---
+
+The question I got most often this month, from engineers who saw my [self-fixing documentation agent](/blog/self-fixing-docs-agent) demo: *how do you stop it from auto-merging the wrong thing into your live docs?*
+
+The answer is the part I have been thinking about most. The same agent runs in two modes against two different sets of branches. Production mode is conservative, deliberately. Pre-release mode is aggressive, deliberately. Both are correct. The mode is the architecture decision; the agent is just the executor.
+
+This post is the case for the bifurcation, the actual config differences between the modes, and the honest list of where this approach falls down.
+
+## Why the same agent has to behave differently
+
+Production code and pre-release code have different costs of being wrong, in opposite directions.
+
+**Production docs.** Customers read them. A wrong production doc actively misleads someone in real time. The cost of a wrong update is high (customer confusion, support load, reputation hit). The cost of a *missing* update is medium (docs fall behind; customers eventually notice).
+
+**Pre-release docs.** Internal team members and design partners read them. A wrong pre-release doc gets caught and fixed before shipping. The cost of a wrong update is low. The cost of a *missing* update is high (you ship to GA without docs, then everyone scrambles).
+
+Same drift signal in both places. Inverse risk profile. The agent has to know which side it is on.
+
+## The mode flag
+
+Each repo (or each branch) has a `.docagent.yml` config file. The mode is a one-line setting:
+
+```yaml
+mode: production    # or: staging
+auto_merge: signature_only   # production
+# auto_merge: schema_safe    # staging
+verifier_strictness: high    # production
+# verifier_strictness: medium # staging
+prompt_set: prod             # or: staging
+```
+
+The mode flag drives three things:
+
+1. **Auto-merge threshold.** Production auto-merges only single-symbol fixes (parameter renamed, default value updated, type widened). Staging auto-merges any fix where the verifier passes.
+2. **Verifier strictness.** Production runs every check (compile, link, schema, examples-still-work). Staging runs the cheap checks only.
+3. **Prompt set.** The prompts that drive the agent are different in each mode. Production prompts emphasize "do not change the structure unless explicitly asked." Staging prompts emphasize "if a section feels stale or incomplete, propose a rewrite."
+
+That is it. Four lines of config. Two modes. The rest of the agent is shared.
+
+## What the production prompt looks like
+
+Trimmed for clarity. The actual one is longer.
+
+```
+You are updating documentation in a production repository.
+
+Hard rules:
+- Do not rewrite sections you were not asked to update.
+- Do not change the document's voice or structure.
+- Do not add new sections without an explicit instruction.
+- Match the existing style precisely.
+
+When you receive a drift report:
+- Update only the specific symbols / values mentioned.
+- Preserve all surrounding prose.
+- If a code example breaks because of the drift, update the example to
+  match the new behavior. Do not invent example output.
+- If you would need to change more than one section to fix the drift,
+  surface a SCOPE_TOO_BROAD error instead.
+
+Output format: a unified diff of the doc files only.
+```
+
+The "SCOPE_TOO_BROAD error" is the load-bearing line. It is the agent's permission to say no. When a drift would require restructuring, the agent does not silently restructure. It surfaces the work as an issue for a human.
+
+## What the staging prompt looks like
+
+Same skeleton, different tone.
+
+```
+You are updating documentation in a pre-release repository.
+
+The code is in active development. Docs are expected to follow.
+
+When you receive a drift report:
+- Update affected symbols and values.
+- If a section is missing entirely (a public API was added without docs),
+  draft a stub for the new section in the existing doc style.
+- If a section reads as outdated or contradicts current behavior, flag
+  it for rewrite or rewrite it directly.
+- Suggest changelog entries for breaking changes.
+- Suggest migration notes if a public API contract changed.
+
+Output format: unified diff plus an optional `notes` field listing
+sections that need human attention.
+```
+
+Same agent. Permission to do more. The verifier is more lenient because the cost of a wrong staging doc is recovered by the next staging build.
+
+## The verifier difference
+
+Production verifier (every doc change passes all of these):
+
+```
+- Code blocks compile or run without error
+- Internal links resolve to valid anchors
+- External links return 2xx
+- Schema examples parse against the current schema
+- The doc's table-of-contents structure is unchanged
+- Word count change is within ±20% of the original
+```
+
+Staging verifier:
+
+```
+- Code blocks compile or run without error
+- Internal links resolve to valid anchors
+- (Other checks omitted)
+```
+
+Production protects structure. Staging only protects technical correctness. The structural-integrity checks are what stops the production agent from getting creative.
+
+## Where this approach falls down
+
+Three failure modes I have hit. Worth pre-empting if you build something similar.
+
+**The cross-repo case.** When repo A's API changes and repo B's docs reference it, neither agent on its own catches the drift. Production mode in B does not see A's changes. Staging mode in B does not run because B did not change. Cross-repo dependency tracking is the next thing I am building. No clean answer yet.
+
+**The "this whole page is now wrong" case.** Production mode is supposed to refuse this with SCOPE_TOO_BROAD. Sometimes it cannot detect that the page is wrong; it just sees a small drift and updates the small drift, leaving the rest of the page silently misleading. Mitigation: a separate weekly job runs *full-page audits* using a cheaper model (Gemma 4 26B MoE locally) to flag pages whose surrounding context no longer matches the symbols in them.
+
+**Style drift over time.** Each agent edit shifts the doc's voice slightly toward the agent's default. Over a year, this compounds. Mitigation: a style-guide file that the agent reads on every run, plus periodic human review specifically for voice. The agent does not own the voice. The human owns the voice; the agent maintains the symbols.
+
+## What I learned about the mode pattern
+
+The bigger insight from building this is generalizable. **Every agentic system that operates across multiple risk surfaces should be a single agent with multiple modes, not multiple agents.**
+
+The naive version of "production agent and staging agent" is two separate codepaths. Two prompts to maintain. Two test suites. Two deployment pipelines. The drift between them becomes its own bug class.
+
+The mode-flag version is one agent with one codepath. The mode is a config. The verifier is parameterized. The prompts are loaded from a `prompts/{mode}.md` file. Maintenance is dramatically simpler.
+
+This is the same pattern Anthropic uses internally for their [skills system](https://www.anthropic.com/news/agent-skills): the skill is the unit of behavior; the context determines which skill loads. Same agent, different mode. I think this is going to be how all production agents are structured by 2027.
+
+## What is next
+
+The cross-repo case is the next milestone. After that, opening up the core. The prompts and verifier framework are mostly portable. The drift detector for TypeScript / Python / Go is the part that will take the most work to release publicly because it has a lot of language-specific edge cases baked in. Aiming for an open-source release within the quarter.
+
+If you are running into the same problem and want to compare notes, [reach out](/contact). The conversations from this month convinced me that a meaningful number of teams are bumping into the same docs-rot problem at the same time, and the solution is one of those "everyone should have it" patterns rather than a competitive moat.

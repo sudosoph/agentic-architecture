@@ -1,0 +1,88 @@
+---
+title: "Seven Conversations That Changed My Mental Model This Month"
+slug: seven-conversations
+publishedDate: "2026-05-05"
+description: "Hallway moments from four conferences in three weeks. The chats that shifted how I think about agents, presented as honestly as I can write them."
+tags: ["personal", "field-notes", "conferences", "agents"]
+draft: false
+---
+
+I gave a talk at AI Dev SF, AI Agent Conference NYC, and a hackathon in Boulder this month. The talks are on YouTube somewhere. They are not the most useful thing I brought home.
+
+The most useful thing was the seven conversations I want to write up here. Some of these were strangers. Some were people whose work I have been reading for years. All of them shifted something in how I think about agents.
+
+## 1. The Ollama-MCP gap
+
+Where: a small group of about six of us standing in the hallway after Eda Zhou and Mahdi Ghodsi's "Building Personal AI Agents with Open-Source Models" session at AI Dev SF.
+
+The conversation: someone (engineer at a mid-size SaaS company) asked why his local Ollama setup could not just call MCP servers natively. The answer is the same one I have been writing about. Ollama implements its own tool-calling API, OpenAI-shaped, returning `tool_calls` on `/api/chat`. MCP is a different shape, and you need a [bridge client](/blog/mcp-101) to translate between them.
+
+What shifted for me: the bridge is not a temporary scaffolding. It is the de facto integration. Nobody has merged native MCP support into Ollama upstream because the bridge works well enough. The PR has been open for months. There is real value sitting on the table for whoever lands it. I am thinking seriously about contributing.
+
+## 2. "We tried Cursor and went back"
+
+Where: lunch line at AI Agent Conference NYC. The person ahead of me had a badge from a regulated-industry startup (medical, I think).
+
+The conversation: they had moved their dev team off Cursor onto a local Claude Code setup with strict sandboxing because their auditor flagged the cloud-coding-agent data flow as a SOC 2 risk. Their codebase contains patient-data-handling logic. Sending that codebase to a third-party model provider, even one that does not train on it, was a deal-breaker for their compliance posture.
+
+What shifted for me: I knew this was happening abstractly. Hearing it from a real engineer who had made the migration grounded it. Local-first dev environments are not a hobby anymore. They are a regulatory necessity for a meaningful slice of the market. The [August 2026 EU AI Act deadline](/blog/ethical-autonomy) is going to accelerate this. I should be writing more for this audience specifically.
+
+## 3. The founder who described my product back to me
+
+Where: Galvanize, Boulder, during BSW. A founder I had never met sat down across from me. We started with the polite "what are you working on" exchange.
+
+The conversation: he started describing his company's documentation problem. The team ships fast. The docs are always behind. They lose customer-success conversations because the docs do not match what the product actually does. They tried hiring a doc writer. The doc writer cannot keep up. They tried making engineers responsible. The engineers do not write docs.
+
+I let him talk for fifteen minutes before I said "I have built the agent for that." His response: "Wait, really?"
+
+What shifted for me: I have been [building this thing](/blog/self-fixing-docs-agent) for four months and was starting to wonder if I had picked an obscure problem. I have not. The problem is universal. The reason I had been wondering is that nobody was complaining about it because everyone had given up on solving it. They have not given up because it is fine. They have given up because it has felt unsolvable until now.
+
+## 4. The token-cost realization
+
+Where: post-keynote drinks at AI Agent NYC. Engineer from a Series A startup.
+
+The conversation: she pulled out her phone and showed me their monthly OpenAI bill. It was a number I do not want to repeat in a blog post but it had a comma in it. Their entire feature set was running on Sonnet 4.5 because they had picked it during prototyping and nobody had revisited the model choice as they scaled.
+
+We spent twenty minutes mapping which calls actually needed Sonnet and which could move to Haiku, Gemini Flash, or DeepSeek V4 Flash. Realistic estimate: 60% of their bill was misallocated.
+
+What shifted for me: I have been writing about [tier-aware model routing](/blog/local-vs-cloud-inference) but treating it as obvious advice. It is not obvious. Most teams pick a model in week one and never revisit. The reason my consulting calendar is full is that *every* growing AI-native team has this problem and most of them do not realize it yet.
+
+## 5. The simulation-sandbox argument I lost
+
+Where: dinner after AI Dev SF, with three engineers I had just met. Argument by the third bottle of wine.
+
+The conversation: I argued that for most agentic systems, [shadow testing](/blog/shadow-testing) plus good evals was sufficient. The simulation sandbox layer (à la Veris AI) was overkill except in regulated domains.
+
+The other side argued: simulation lets you test failure modes that production never produces. Adversarial users. Combinations of edge cases that have never happened together. By the time a failure mode appears in shadow mode, your reputation has already absorbed the variance from earlier surprises. Simulation gets you ahead of the surprise.
+
+What shifted for me: I think they are right. I have been treating simulation as the heaviest layer of testing. It is more like the *cheapest* layer because it lets you test things you cannot ethically test in production. I am rewriting my recommendation. The post is [here](/blog/why-every-agent-needs-a-simulation-sandbox); my prior was that simulation came last; it should probably come first.
+
+## 6. The compliance lawyer
+
+Where: BSW, in a session I did not have on my schedule. I wandered in because the title caught my eye.
+
+The conversation: a compliance lawyer was describing how the EU AI Act's August 2026 deadline maps to product engineering decisions. Most of her examples were uncomfortably specific. "If your agent makes a hiring recommendation, here is what your audit trail has to capture." "If your agent moves money, here is what your intervention point has to look like."
+
+I had been treating compliance as a wrapper around the product. She framed it as the structure of the product. Build it differently from day one and the audit becomes routine. Bolt it on after the fact and you are rewriting major systems on a deadline.
+
+What shifted for me: I am redoing the [4-legged identity](/blog/the-4-legged-identity) writeup with explicit AI Act mapping. Compliance is not the boring part of the agent. It is the architecture.
+
+## 7. The barista
+
+Where: a coffee shop in Brooklyn, the morning after AI Agent NYC.
+
+The conversation: the barista asked what brought me to NYC. I said a conference about AI agents. He asked what an agent is. I gave the elevator pitch. He said "OK, so it does what I do but for someone's email."
+
+What shifted for me: he was right. The version of the agent story that lands with non-technical people is not "autonomous reasoning system." It is "the helpful person you do not have to pay full-time." Every framing I have been using in talks is too technical. I am rewriting the opening of all my decks. The barista was a better technical writer than I have been.
+
+## What I am bringing back
+
+Seven conversations. Five action items.
+
+1. Look seriously at contributing native MCP to Ollama.
+2. Write more explicitly for the regulated-industry audience.
+3. Open up the documentation agent earlier than I had planned.
+4. Audit the simulation-sandbox vs shadow-testing recommendation in everything I have written about evals.
+5. Rewrite my opening framing. The barista won.
+
+The conferences themselves are tools. The hallway is the actual conference. I am writing this up because it is also a reminder to past-me, who was too anxious about her own talks to really show up to other people's. The expensive plane tickets bought the access. The conversations were free.
