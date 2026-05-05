@@ -1,15 +1,14 @@
-import { Resend } from 'resend'
-
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 const TO = 'sophia@agenticarchitecture.ai'
 const FROM = 'hello@agenticarchitecture.ai'
 
 export async function POST(request: Request) {
-  if (!process.env.RESEND_API_KEY) {
+  const key = process.env.RESEND_API_KEY
+  if (!key) {
     return Response.json({ error: 'Email service not configured' }, { status: 503 })
   }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+
   let body: unknown
   try {
     body = await request.json()
@@ -31,17 +30,25 @@ export async function POST(request: Request) {
     ? subject.trim()
     : `Contact form — ${name.trim()}`
 
-  try {
-    await resend.emails.send({
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${key}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       from: FROM,
       to: TO,
-      replyTo: email.trim(),
+      reply_to: email.trim(),
       subject: subjectLine,
       text: `From: ${name.trim()} <${email.trim()}>\n\n${message.trim()}`,
-    })
-    return Response.json({ ok: true })
-  } catch (err) {
-    console.error('[contact] resend error', err)
+    }),
+  })
+
+  if (!res.ok) {
+    console.error('[contact] resend error', res.status, await res.text().catch(() => ''))
     return Response.json({ error: 'Failed to send message' }, { status: 500 })
   }
+
+  return Response.json({ ok: true })
 }
