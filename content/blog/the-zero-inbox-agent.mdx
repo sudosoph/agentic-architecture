@@ -1,0 +1,168 @@
+---
+title: "The Zero-Inbox Agent"
+slug: the-zero-inbox-agent
+publishedDate: "2026-05-15"
+description: "Triage that does not just summarize. It prepares the drafts and fetches the data, and you approve. The 60-line config that actually works."
+tags: ["agents", "n8n", "ollama", "inbox", "automation"]
+draft: false
+---
+
+**TL;DR.** Inbox summarizers are the wrong product. The right product reads every inbound, classifies it, drafts the reply, fetches the data the reply needs, and queues it for one-tap approval. The agent does the work. You make the decision. Here is the architecture I run on a 96GB Strix Point laptop, the n8n flow that ties it together, and the four classification buckets that actually matter.
+
+## Why summarization fails
+
+Three reasons summarizers do not save you time.
+
+**You still read the email.** A summary tells you what the email is about, which you mostly already knew from the subject line. The work was never reading the email. The work was deciding what to do about it and then doing it.
+
+**The hard part is the response, not the read.** "Customer asking about pricing for the enterprise tier" is a one-second decision. Drafting the reply with the right pricing, the right context, the right tone, the right links: that is the fifteen minutes.
+
+**Summaries lose the artifacts.** Half of replying to a serious email is fetching the deck, the contract, the support ticket history, the customer's last invoice. A summary throws away the surface area where you would actually save time.
+
+The right pattern is *triage plus draft plus retrieval*. The agent does all three in advance. You spend ten seconds per email approving, editing, or escalating.
+
+## The four buckets
+
+Every email lands in one of four buckets. The agent is a router that decides which.
+
+**1. Auto-action.** The agent can finish the work without you. Out-of-office bouncebacks. Calendar acceptance for known recurring meetings. "Got it, will do" on certain low-stakes confirmations. About 15% of inbound for me.
+
+**2. Drafted-for-approval.** The agent drafts a complete reply. Fetches relevant context. Queues for one-tap send. About 50% of inbound. This bucket is where the time savings live.
+
+**3. Surface-with-context.** The agent cannot draft (decision needed, sensitive content, unclear ask) but it can prepare the artifacts. "Customer is asking about churn. Here are their last three tickets, their MRR, and the renewal date." You write the reply, but the research is already done. About 25%.
+
+**4. Escalate.** The agent flagged it as too important or too uncertain to handle alone. Surfaces it with no draft. About 10%.
+
+The 15/50/25/10 split is approximate but stable across the people I have set this up for. Knowledge workers get more #2 and #3. Founders get more #4.
+
+## The architecture
+
+The full stack runs locally on the Framework 16. No customer email leaves the machine.
+
+```
+Fastmail / IMAP
+   ↓
+n8n flow trigger (every 5 minutes)
+   ↓
+[Stage 1] Classifier
+   - Local model: Gemma 4 E4B (fast)
+   - Output: bucket (1/2/3/4) + confidence
+   ↓
+   ↓ (if bucket 2 or 3)
+[Stage 2] Context fetcher
+   - MCP servers: customer DB, calendar, support tool, file storage
+   - Returns: relevant artifacts, last interaction history, key facts
+   ↓
+[Stage 3] Drafter
+   - Local model: Qwen 3.6 27B
+   - Inputs: original email + fetched context + voice rules
+   - Output: full draft reply
+   ↓
+[Stage 4] Queue
+   - Drafts land in a review interface (a tiny web app or Slack DM)
+   - One-tap: approve / edit / escalate / discard
+   ↓
+[Stage 5] Send
+   - Approved drafts go via Resend API
+   - Logged to the episodic memory store
+```
+
+Five stages. Three local models. Two MCP servers. One human approval loop.
+
+## The classifier
+
+Stage 1 is the smallest and most-called part. Speed matters here. Gemma 4 E4B is the right pick: ~4.5B effective parameters, sub-second response on the iGPU, accurate enough on a four-class problem.
+
+The classifier prompt:
+
+```
+You are a classifier. Given an inbound email, output ONLY one of:
+{ "bucket": 1, "confidence": 0-1, "reason": "..." }
+
+Buckets:
+1 = auto-action (the agent can finish without human input)
+2 = drafted-for-approval (agent will draft a complete reply)
+3 = surface-with-context (decision needed, but research can be prepared)
+4 = escalate (too important or too uncertain to draft)
+
+Decision criteria:
+- Anything involving money, contracts, or legal: bucket 4
+- Anything from a top-50 contact (see USERS.md): bucket 3 or 4
+- Calendar acceptances for recurring meetings: bucket 1
+- Vendor confirmations and out-of-office: bucket 1
+- Customer questions where a knowledge-base answer exists: bucket 2
+- Ambiguity: prefer the higher bucket
+```
+
+Confidence below 0.7 forces a bucket promotion (2→3, 3→4). Better to over-escalate than auto-send the wrong reply.
+
+## The context fetcher
+
+Stage 2 only runs for buckets 2 and 3. The MCP servers it calls vary by your setup. A typical mix:
+
+- **Customer database** (Postgres MCP): pull last interaction, current plan, MRR.
+- **Support tool** (Linear or Help Scout MCP): last 3 tickets and their resolution.
+- **Calendar** (CalDAV MCP): next 7 days of relevant meetings.
+- **File storage** (filesystem MCP): scoped access to the contract or doc directory.
+
+The fetcher prompt is short. The agent decides which sources to query based on classifier output and the email content.
+
+## The drafter
+
+Stage 3 is where Qwen 3.6 27B earns its disk space. The classifier picked the bucket. The fetcher returned the artifacts. The drafter combines them with two more inputs: the conversation history with this sender, and the voice rules.
+
+Voice rules live in `voice.md`. Mine includes things like:
+
+```
+- Do not start emails with "I hope this finds you well."
+- Use the recipient's first name once, in the opening.
+- Keep first paragraph to two sentences.
+- If the reply is "no," say "no" in the first line, then explain.
+- Sign off with "Sophia," not "Best,".
+```
+
+That five-line file is the difference between drafts that sound like me and drafts that sound like a customer-success bot.
+
+## The review interface
+
+The simplest review interface is a Slack DM. n8n posts the draft to a private channel with three buttons: Approve, Edit, Escalate. One-tap workflows for the 80% case where the draft is right or close to right. Edit opens a webview. Escalate kicks the email back to you with the artifacts attached.
+
+I started with Slack. After two weeks I built a tiny local web app that shows the original email side-by-side with the draft and the fetched artifacts. Better information density. The Slack version is fine to start.
+
+## The numbers from running this
+
+After three weeks of this in production on my own inbox:
+
+- **Inbound emails per day**: ~80 (counting newsletters and notifications)
+- **Auto-actioned**: 12 (15%)
+- **Drafted and approved**: 38 (47%)
+- **Surfaced with context**: 22 (28%)
+- **Escalated**: 8 (10%)
+- **Time savings per day**: ~95 minutes (measured by Toggl before and after)
+- **Mistakes worth fixing**: 4 in three weeks. None were sent (the human-in-the-loop caught them all).
+
+The 95 minutes is the headline. The 4 mistakes is the warning label. Both matter.
+
+## What goes wrong
+
+Honest list.
+
+**The voice rules are load-bearing.** Without them the drafts read like ChatGPT. Spend an hour writing them. Update them every time you reject a draft for tone reasons.
+
+**Context fetcher latency.** Each MCP call adds 200-500ms. Three serial calls feels slow. Run them in parallel. n8n's parallel-branch execution is the right shape.
+
+**Calendar invites are the worst category.** Confidence is high enough to auto-action but the consequences of a wrong accept are real (double-booking, accepting something that conflicts with a deadline). I keep these in bucket 1 only when they match a known recurring pattern.
+
+**The escalate bucket gets ignored.** Once you have eight new-thing emails per day surfacing without a draft, you stop reviewing them. Fix: a separate queue with a daily count and a hard rule to clear it before the day ends.
+
+## Local-first is the only sane substrate for this
+
+This agent reads every email I receive. The model picks up confidential conversations, contract negotiations, internal back-channels with employees. None of it leaves the laptop. No third-party API sees it. No vendor's training pipeline benefits from it.
+
+On a cloud-only setup, you face one of two bad options: send everything to a third party (and trust their data policy), or run a heavily-restricted version that only handles non-sensitive email. The local stack is the only one that does the full job without making the privacy tradeoff.
+
+The frontier API is still on the menu for the rare case where Qwen 3.6 cannot draft well enough. In three weeks of running this I have not yet escalated a draft to Sonnet for a quality reason. The quality bar is lower than people assume once the agent is doing triage and retrieval, not synthesis.
+
+## The takeaway
+
+A summarizer tells you what is in your inbox. A zero-inbox agent finishes the work. The architecture is five stages, three local models, two MCP servers. The first useful version takes a weekend to build and recovers an hour and a half a day. The voice rules are the part that decides whether it sounds like you. Write them.

@@ -1,0 +1,118 @@
+---
+title: "Long-Term Memory for Agents"
+slug: long-term-memory-for-agents
+publishedDate: "2026-05-14"
+description: "Why agents forget by default, what the four types of memory actually are, and how to build a system that compounds across sessions."
+tags: ["memory", "agents", "context-engineering", "neo4j"]
+draft: false
+---
+
+**TL;DR.** Most agentic systems start every session as if they have never met you. The fix is not a bigger context window. It is borrowing the four-memory model from neuroscience (procedural, episodic, semantic, contextual) and building a stack where each type is stored in the right place, retrieved by the right query, and evicted when stale. Here is the architecture I run, the mistakes I made first, and the open-source pieces that hold it together.
+
+## Why agents forget
+
+Three reasons by default. Worth being precise about which one is biting you.
+
+**Stateless models.** Every API call to Sonnet, GPT-5, or any local model is a fresh process. The model has no recollection of yesterday. Whatever the agent "remembers" is what was loaded back into context at the start of this turn.
+
+**Naive context stuffing.** Most teams "add memory" by appending recent conversation history to the system prompt. This works for ten turns and breaks at fifty. The 40K-token wall hits, the model drifts, and the relevant fact from three days ago gets summarized into uselessness.
+
+**No write-side discipline.** Reading from memory is the easy half. Writing is harder: deciding what to keep, what to discard, what to compress, what to update. Most teams skip the write side and pretend the read side will save them.
+
+The fix is structural. Different memory types live in different stores, get retrieved by different queries, and have different lifecycles.
+
+## The four types
+
+Borrowed wholesale from cognitive science. The Replit founders, Oracle's AI team, and several speakers at AI Dev SF have all converged on this taxonomy. It works because it actually maps to the storage decisions you have to make.
+
+| Type        | What it is                                  | Where it lives                |
+|-------------|---------------------------------------------|-------------------------------|
+| Procedural  | How to do things (skills, recipes, scripts) | Markdown files, code repos    |
+| Episodic    | Specific events ("on Tuesday we shipped X") | Append-only log, vector store |
+| Semantic    | Abstract knowledge ("Postgres is faster")   | Knowledge graph (Neo4j)       |
+| Contextual  | The current session's working memory        | In-context, ephemeral         |
+
+Each one needs a different store, a different retrieval pattern, and a different write policy. The mistake teams make is using a vector store for everything. Vector stores are good for episodic and semantic. They are bad for procedural (you do not retrieve a recipe by similarity to a query) and bad for contextual (it is supposed to be ephemeral).
+
+## Procedural memory: skills and code
+
+Procedural memory is "how to do things." A skill that knows how to bump the version number, regenerate the changelog, and tag the commit. A markdown file that describes the deploy process. A `.cursorrules` file that encodes taste.
+
+These are not retrieved by similarity. They are retrieved by name. The agent says "run the release skill" and the harness loads `release/SKILL.md` from disk. No embeddings. No vector search.
+
+The right store is the filesystem (or a git repo). The right write policy is "human-curated." You write skills deliberately. You version them. You delete them when they go stale.
+
+Anthropic's October 2025 skills launch is the production version of this. A skill is a folder with a `SKILL.md` plus scripts and resources. The model loads it on demand for the cost of a few tokens. Genuinely a bigger deal than MCP for the long-term-memory problem.
+
+## Episodic memory: what happened, when
+
+Episodic memory is "what happened on Tuesday." A specific event, with a timestamp, that the agent might want to recall later. Conversations, tool calls, decisions, errors.
+
+The right store is an append-only log plus a vector index over the log entries. The log gives you "what happened" with a timestamp. The vector index gives you "find similar events" by semantic query.
+
+The write policy is "log everything, decide later what to surface." Storage is cheap. Tokens are not. You can always run a summarization pass later. You cannot recover an event you failed to log.
+
+A practical setup:
+
+```
+agent_events/
+  2026-05-13/
+    sessions/
+      14:32-claude-code-debug.jsonl
+      16:01-research-agent-fanout.jsonl
+    decisions/
+      14:35-chose-qwen-over-gemma.md
+```
+
+JSONL files for raw event streams. Markdown for human-readable summaries the agent itself writes at session end. A vector index built nightly over both.
+
+## Semantic memory: the knowledge graph
+
+Semantic memory is "Postgres is faster than MongoDB for this workload." Abstract, durable, true beyond a single session. The kind of fact that should compound across months.
+
+The right store is a knowledge graph. Neo4j is the production-grade choice. Property graphs map naturally to "node A relates to node B via relationship C with property D." Postgres is wrong: the relations matter as much as the entities. A vector store is wrong: similarity is not the right query.
+
+The write policy is "extract from episodic memory, deduplicate, version with confidence scores." When a session produces a durable insight ("we tried CrewAI and it worked better than LangGraph for this shape of workflow"), it gets written into the graph with a timestamp, a confidence score, and a link back to the episodic event that produced it.
+
+The Refold AI talk at AI Dev SF on April 29 was the best framing of this I have heard. Every execution enriches the graph. Confidence decays at ~5% per 30 days unless reinforced. Decisions are first-class records, not derived from logs.
+
+## Contextual memory: the current session
+
+Contextual memory is what the agent currently has loaded. The system prompt, the tool catalog, the recent turns, the active retrieved documents. It lives in the model's context window and dies when the session ends.
+
+The write policy is aggressive eviction. Past 40K tokens, the model drifts. The job of contextual memory management is to keep the window tight: summarize old turns, evict tools that have not been called, drop retrieval results that did not get used.
+
+Brandon Waselnuk from Unblocked called the failure mode "satisfaction-of-search bias" at AI Dev SF. The agent finds the first matching result and stops, even if it is wrong. The fix is not more context. It is *better* context, scoped to what the current task needs.
+
+## The retrieval flow
+
+A real query that touches all four types: the agent is asked to "fix the same bug we hit last Tuesday."
+
+1. **Procedural.** Load `debug/SKILL.md` by name. The skill describes how to debug systematically.
+2. **Episodic.** Vector query the event log for "bug Tuesday." Returns three candidate events from last week.
+3. **Semantic.** Query the knowledge graph for facts related to those events ("we run Qwen 3.6 27B on ROCm 7.3," "the bug class is iGPU memory overflow").
+4. **Contextual.** Load the most relevant 5K tokens of the three into the working window. Discard the rest.
+
+The agent now has procedural knowledge of how to debug, specific recall of what happened Tuesday, semantic knowledge of the system, and a tight working context. Total context: under 15K tokens. The model is sharp. The query is grounded.
+
+## What goes wrong first
+
+Three failure modes I have hit. Worth pre-empting.
+
+**Conflating episodic with semantic.** Storing every conversation in Neo4j produces a graph with millions of low-value nodes. The graph stops being queryable. Keep episodic in append-only logs. Promote to semantic only when it earns it.
+
+**No eviction policy.** The vector store grows unbounded. Retrieval gets slower. Old facts compete with new ones for relevance. Build the eviction loop on day one. Confidence-decay over time. Drop entries below a threshold weekly.
+
+**Reading the world model as if it were ground truth.** The agent's semantic memory is the agent's *belief*. It is not necessarily correct. Always preserve the link back to the episodic event that produced the belief. When you need to verify, you can replay the original.
+
+## Local-first changes the calculus
+
+A long-running memory system on metered API rates is expensive. Every retrieval is a token charge. Every summarization is a token charge. At episodic-log scale (hundreds of events per day), the costs add up to a real line item.
+
+On hardware you own, the writes are free. You can re-summarize the entire month's episodic log at the end of every week and not feel it. The agent gets the benefit of compounding memory without the bill that makes memory feel expensive.
+
+The semantic graph (Neo4j) and the episodic log (filesystem + vector index) both run locally on the same Framework 16 that runs the model. No network egress. No third-party data. The "personal" in personal AI agent means the agent's memory is also yours.
+
+## The takeaway
+
+Memory is not a context-window problem. It is a storage-and-retrieval problem with four different shapes. Pick the right store per type, write deliberately, evict aggressively, and your agent compounds. Skip any of those and your agent forgets you every Monday morning, no matter how big the model gets.

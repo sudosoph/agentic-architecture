@@ -1,0 +1,241 @@
+---
+title: "Personal AI Agents on AMD"
+slug: personal-ai-agents-on-amd
+publishedDate: "2026-05-13"
+description: "The build, the OpenClaw config, and the first agent worth running. End to end on a Framework 16 with 96GB unified memory."
+tags: ["amd", "rocm", "openclaw", "agents", "local-first"]
+draft: false
+---
+
+**TL;DR.** A working personal AI agent on AMD hardware in 2026 looks like this: ROCm 7.3 + Vulkan as fallback, Ollama serving Qwen 3.6 27B and Gemma 4 26B MoE, OpenClaw as the persistent terminal harness, an MCP bridge for tool calling, and a six-file project memory the agent reads at every session. This post is the end-to-end build. Every command runs. Every file is the actual contents. The first useful agent boots in under an hour.
+
+## What "personal" actually means
+
+Three things this post is not. Not "build a chatbot." Not "fine-tune a model." Not "use Claude for free." A personal agent in 2026 is a long-running process on your own machine that does work for you across sessions. It remembers what you told it. It calls tools. It writes files. It survives reboots. The model is interchangeable.
+
+Three things it is. A model server (Ollama). A harness with persistence (OpenClaw). A tool layer (MCP bridge). The middle one is where most teams stall.
+
+## The hardware floor
+
+The minimum that actually works:
+
+- AMD APU with RDNA 3 or 3.5 (Phoenix, Hawk Point, Strix Point, Strix Halo). Or NVIDIA, but this post is the AMD path.
+- 64GB+ unified memory. 96GB is the sweet spot. 128GB if you can.
+- 1TB+ NVMe for models.
+- Ubuntu 26.04 LTS or any current distro with kernel 6.11+.
+
+A maxed Framework 16 costs ~$3,200 once. The math against ~$200/month of cloud agent calls is straightforward.
+
+## The base layer (15 minutes)
+
+Install ROCm 7.3:
+
+```bash
+sudo apt update
+sudo apt install python3-setuptools python3-wheel
+wget https://repo.radeon.com/amdgpu-install/7.3/ubuntu/noble/amdgpu-install_7.3.x_all.deb
+sudo apt install ./amdgpu-install_7.3.x_all.deb
+sudo amdgpu-install -y --usecase=rocm
+sudo usermod -aG render,video $USER
+```
+
+Reboot. Verify both GPUs visible:
+
+```bash
+rocminfo | grep gfx
+# expected: gfx1150 (iGPU), gfx1102 (RX 7700S)
+```
+
+Set GART for the iGPU. In `/etc/default/grub`:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amdgpu.gttsize=92160"
+```
+
+`92160` is 90GB. Update grub, reboot. The iGPU now sees 90GB as VRAM.
+
+## The model server (10 minutes)
+
+Install Ollama:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Pull the two models that earn their disk space first:
+
+```bash
+ollama pull qwen3.6:27b
+ollama pull gemma4:26b
+```
+
+Test:
+
+```bash
+ollama run qwen3.6:27b "List three reasons local inference matters in 2026."
+```
+
+If that returns at sustained tokens-per-sec without falling back to CPU, the GPU path is wired up.
+
+## The MCP bridge (Ollama does not speak MCP natively)
+
+This is the gap. Ollama's tool-calling API is OpenAI-shaped, not MCP. To use MCP servers (filesystem, git, postgres, the entire MCP ecosystem) with a local model, install the bridge:
+
+```bash
+pipx install mcp-client-for-ollama
+```
+
+Configure it with the same `mcpServers` shape Claude Desktop uses. `~/.config/mcp-bridge/config.json`:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/me/agent-workspace"]
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "/home/me/agent-workspace"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    }
+  }
+}
+```
+
+Three stdio servers. No network. No OAuth. The agent can read, write, and remember inside one scoped directory.
+
+## The harness (OpenClaw)
+
+OpenClaw is an application, not a framework. It runs persistently in a terminal across multiple sessions, reads markdown config files, and exposes hooks for tool calls. Install:
+
+```bash
+curl -fsSL https://openclaw.ai/install | sh
+```
+
+The first run prompts for a model. Point it at the local Ollama instance:
+
+```bash
+openclaw init --model qwen3.6:27b --provider ollama --base-url http://localhost:11434
+```
+
+OpenClaw expects six markdown files in the agent's home directory. They are the project memory.
+
+## The six files
+
+Every personal agent has the same six files. The contents differ. The shape does not.
+
+**SOUL.md** (who the agent is):
+
+```markdown
+You are a focused engineering assistant for Sophia. Direct, technical,
+opinionated. You suggest the simplest thing that works. You ask one
+clarifying question only when the answer materially changes the
+output. You do not flatter.
+```
+
+**AGENTS.md** (how it operates):
+
+```markdown
+- Default to writing no comments. Only add a comment when the WHY is
+  non-obvious.
+- Three similar lines is better than a premature abstraction.
+- Run tests before declaring a task done.
+- If a tool call fails, surface the error verbatim. Do not silently retry.
+- Update MEMORY.md at the end of each session with anything that should
+  persist.
+```
+
+**IDENTITY.md** (what the agent presents externally):
+
+```markdown
+name: Architect's Assistant
+role: technical assistant
+visible to: Sophia only
+```
+
+**USERS.md** (who the agent is talking to):
+
+```markdown
+Sophia Stein. AI Architect, Boulder CO. Works in Next.js, Python, Rust.
+Hardware: Framework 16 with Strix Point and 96GB. Daily models: Qwen
+3.6 27B, Gemma 4. Frontier APIs reserved for ~5% of turns.
+```
+
+**TOOLS.md** (the local environment):
+
+```markdown
+ssh hosts: hetzner-vps (production)
+git remotes: github.com/sudosoph/*
+package managers: uv (Python), pnpm (JS), cargo (Rust)
+preferred shell: zsh on Ubuntu 26.04
+```
+
+**MEMORY.md** (curated long-term memory across sessions):
+
+```markdown
+## Persistent context
+- The site uses Next.js 16 (App Router, Turbopack). Many APIs differ
+  from training data; check node_modules/next/dist/docs/ before writing.
+- Blog posts are MDX in content/blog/. They go through a build-time
+  manifest script (scripts/generate-blog-manifest.mjs).
+- Cloudflare Workers free tier is the deployment target. 3 MiB gzip
+  limit on the worker bundle.
+```
+
+The agent reads all six files at every session start. The `MEMORY.md` is the only one that gets written to during a session.
+
+## The first agent worth running
+
+Start small. The first agent should automate one thing you do daily that you do not enjoy. For me, that was reviewing the morning queue: GitHub notifications, Linear tickets, calendar invites, important emails.
+
+Create a skill in `~/.openclaw/skills/morning-brief/SKILL.md`:
+
+```markdown
+---
+name: morning-brief
+trigger: /brief
+---
+
+You are running the morning brief. In this order:
+
+1. Pull the last 24 hours of GitHub notifications via `gh api notifications`.
+2. Read open Linear tickets assigned to me via the Linear MCP server.
+3. Check today's calendar events via the calendar MCP server.
+4. Surface anything time-sensitive in the inbox via the Fastmail MCP.
+
+Output a single 5-line summary at the top, then the details below.
+Do not include items that need no action. Do not be polite about it.
+Pasting noise is worse than skipping items.
+```
+
+Run it:
+
+```bash
+openclaw
+> /brief
+```
+
+Five seconds later, a summary that took fifteen minutes the day before.
+
+## The honest tradeoffs
+
+The local stack is not strictly easier than the cloud stack. The honest list:
+
+- **Setup is real.** ROCm + Ollama + bridge + OpenClaw is two hours the first time. Cloud Claude Desktop is fifteen minutes.
+- **Models drift.** Local Qwen 3.6 is excellent for tool-calling and routing. It is not Sonnet 4.5 on hard reasoning. The hybrid pattern (95% local, 5% Claude or GPT-5) is the answer.
+- **Ollama still does not speak MCP natively.** The bridge works. Native support would be cleaner. The PR is open. Whoever lands it first gets adoption.
+- **Vulkan vs ROCm tradeoffs.** ROCm is faster but pickier. Vulkan is universal and slightly slower. Keep both built. Switch via env var when one fails.
+
+## What this unlocks
+
+The personal agent that runs locally costs electricity. ~65W under sustained load times the hours per day you actually use it. Three cents a session. The behavioral consequence: you stop rationing. Long-running research loops, overnight refactors, parallel agents fanning out across tasks. None of it adds to the bill.
+
+The frontier API is still on the menu when a turn genuinely needs the smartest model in the world. The point is not that local replaces frontier. The point is that local handles the 95% of work the frontier does not earn.
+
+## The takeaway
+
+A working personal agent in 2026 is two hours of setup, six markdown files, and a model that fits on a laptop. The teams shipping in 2026 figured out which 5% of their turns belong on Claude or GPT-5 and moved the other 95% home. Start with the morning brief. Add a skill a week. By August you will not remember how the cloud-only version felt.
