@@ -22,8 +22,6 @@ export function generateStaticParams() {
   return getAllPosts().map(post => ({ slug: post.slug }))
 }
 
-export const dynamicParams = false
-
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
   const post = getPost(slug)
