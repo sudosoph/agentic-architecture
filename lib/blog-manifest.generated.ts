@@ -1,7 +1,7 @@
 // AUTO-GENERATED — do not edit manually; regenerated on every build via scripts/generate-blog-manifest.mjs
 import type { PostFrontmatter } from './mdx'
 
-export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; content: string }> = [
+export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; html: string }> = [
   {
     "slug": "96gb-ram-thesis",
     "frontmatter": {
@@ -17,6 +17,6 @@ export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; cont
       ],
       "draft": false
     },
-    "content": "\nLocal inference just crossed a threshold that changes what's possible for agentic systems.\n\n{/* Full article content goes here */}\n"
+    "html": "<p>Local inference just crossed a threshold that changes what's possible for agentic systems.</p>"
   }
 ]

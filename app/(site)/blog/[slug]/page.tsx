@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation'
-import { compileMDX } from 'next-mdx-remote/rsc'
 import type { Metadata } from 'next'
 import { getAllPosts, getPost } from '@/lib/mdx'
-import { getMDXComponents } from '@/lib/mdx-components'
 import { PageHeader } from '@/components/ui/page-header'
 import { Badge } from '@/components/ui/badge'
 
@@ -26,11 +24,6 @@ export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
   const post = getPost(slug)
   if (!post) notFound()
-
-  const { content } = await compileMDX({
-    source: post.content,
-    components: getMDXComponents(),
-  })
 
   const dateFormatted = new Date(post.frontmatter.publishedDate).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -65,22 +58,22 @@ export default async function BlogPostPage({ params }: Props) {
         }}
       />
       <article>
-      <PageHeader
-        title={post.frontmatter.title}
-        meta={dateFormatted}
-        description={post.frontmatter.description}
-      />
-      {post.frontmatter.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-4">
-          {post.frontmatter.tags.map(tag => (
-            <Badge key={tag} variant="tag">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      )}
-      <div className="prose mt-10">{content}</div>
-    </article>
+        <PageHeader
+          title={post.frontmatter.title}
+          meta={dateFormatted}
+          description={post.frontmatter.description}
+        />
+        {post.frontmatter.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {post.frontmatter.tags.map(tag => (
+              <Badge key={tag} variant="tag">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
+        <div className="prose mt-10" dangerouslySetInnerHTML={{ __html: post.html }} />
+      </article>
     </>
   )
 }

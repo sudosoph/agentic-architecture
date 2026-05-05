@@ -22,7 +22,7 @@ export function getAllPosts(): PostMeta[] {
     .map(({ frontmatter: { draft: _draft, ...rest }, slug }) => ({ ...rest, slug }))
 }
 
-export function getPost(slug: string): { frontmatter: PostFrontmatter; content: string } | null {
+export function getPost(slug: string): { frontmatter: PostFrontmatter; html: string } | null {
   const post = blogPosts.find(p => p.slug === slug)
-  return post ? { frontmatter: post.frontmatter, content: post.content } : null
+  return post ? { frontmatter: post.frontmatter, html: post.html } : null
 }

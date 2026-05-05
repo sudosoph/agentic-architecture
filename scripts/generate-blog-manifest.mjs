@@ -1,8 +1,15 @@
-// Reads all MDX files from content/blog and writes a static manifest that
-// can be imported at runtime without any fs calls (required for CF Workers).
+// Reads all MDX files from content/blog, renders MDX → HTML at build time,
+// and writes a static manifest. The HTML is embedded so the Worker never
+// needs to call compileMDX (which uses eval/new Function and is blocked
+// in the CF Workers runtime).
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkMdx from 'remark-mdx'
+import remarkRehype from 'remark-rehype'
+import rehypeStringify from 'rehype-stringify'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
@@ -32,19 +39,34 @@ function parseFrontmatter(raw) {
   return { data, content }
 }
 
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkMdx)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeStringify, { allowDangerousHtml: true })
+
+async function mdxToHtml(content) {
+  const stripped = content.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+  const file = await processor.process(stripped)
+  return String(file)
+}
+
 const files = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.mdx'))
-const posts = files.map(filename => {
-  const slug = filename.replace(/\.mdx$/, '')
-  const raw = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
-  const { data, content } = parseFrontmatter(raw)
-  return { slug, frontmatter: data, content }
-})
+const posts = await Promise.all(
+  files.map(async filename => {
+    const slug = filename.replace(/\.mdx$/, '')
+    const raw = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
+    const { data, content } = parseFrontmatter(raw)
+    const html = await mdxToHtml(content)
+    return { slug, frontmatter: data, html }
+  })
+)
 
 const json = JSON.stringify(posts, null, 2)
 const code = `// AUTO-GENERATED — do not edit manually; regenerated on every build via scripts/generate-blog-manifest.mjs
 import type { PostFrontmatter } from './mdx'
 
-export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; content: string }> = ${json}
+export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; html: string }> = ${json}
 `
 
 fs.writeFileSync(OUT_FILE, code)
