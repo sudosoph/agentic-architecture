@@ -26,7 +26,34 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-surface border-b border-border">
       <nav className="max-w-5xl mx-auto px-6 h-12 flex items-center justify-between">
-        <Link href="/" className="font-mono text-sm text-fg">
+        <Link href="/" className="flex items-center gap-2 font-mono text-sm text-fg group">
+          <svg
+            width="20"
+            height="16"
+            viewBox="0 0 20 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="shrink-0"
+          >
+            <path
+              d="M4 1 L1 1 L1 15 L4 15"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              className="text-muted group-hover:text-fg transition-colors"
+            />
+            <path
+              d="M16 1 L19 1 L19 15 L16 15"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              className="text-muted group-hover:text-fg transition-colors"
+            />
+            <circle cx="10" cy="8" r="2.2" className="fill-bench" />
+          </svg>
           Agentic Architect
         </Link>
 

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/mdx'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 const PROFESSIONAL_SERVICE_LD = {
@@ -37,7 +36,7 @@ export default function HomePage() {
           __html: JSON.stringify(PROFESSIONAL_SERVICE_LD).replace(/</g, '\\u003c'),
         }}
       />
-      <div className="space-y-16">
+      <div className="space-y-12">
         {/* Hero */}
         <section className="pt-8 pb-4 border-b border-border">
           <div className="flex items-center gap-2 mb-3">
@@ -53,29 +52,38 @@ export default function HomePage() {
           </h1>
           <p className="text-muted text-sm leading-relaxed max-w-xl mb-6">
             I design and ship agentic systems that run on hardware you own. Local
-            inference, smaller models, deliberate architecture. The benchmarks
-            below are real.
+            inference, smaller models, deliberate architecture. The benchmark
+            below is real.
           </p>
 
           {/* Benchmark callout */}
-          <div className="inline-flex items-center gap-3 border border-border bg-surface px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-3 border border-border bg-surface px-4 py-2">
             <span className="font-mono text-bench text-lg font-bold">28.4 t/s</span>
             <span className="font-mono text-muted text-xs">
               GLM-4 9B Q8_0 · ROCm 7.3 · 90GB GART · AMD Strix Point
             </span>
           </div>
-
-          <div className="flex flex-wrap gap-3">
-            <Button variant="primary" size="md" href="/work-with-me">
-              work with me ›
-            </Button>
-            <Button variant="outline" size="md" href="/blog">
-              read the blog →
-            </Button>
-          </div>
         </section>
 
-        {/* BSW talk callout */}
+        {/* PRIMARY CTA: Newsletter signup */}
+        <NewsletterSignup source="homepage" />
+
+        {/* Secondary navigation links */}
+        <section className="flex flex-wrap items-center gap-4 text-sm">
+          <Link href="/blog" className="font-mono text-accent hover:underline">
+            read the blog →
+          </Link>
+          <span className="font-mono text-muted">·</span>
+          <Link href="/library" className="font-mono text-accent hover:underline">
+            free guides →
+          </Link>
+          <span className="font-mono text-muted">·</span>
+          <Link href="/work-with-me" className="font-mono text-accent hover:underline">
+            work with me →
+          </Link>
+        </section>
+
+        {/* BSW talk callout · expires Thu May 7 */}
         <section className="border border-border bg-surface p-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -145,9 +153,6 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-
-        {/* Newsletter */}
-        <NewsletterSignup source="homepage" />
 
         {/* Recent posts */}
         {posts.length > 0 && (

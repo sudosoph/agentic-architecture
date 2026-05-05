@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 const CAL_URL = 'https://cal.com/sophia-stein/scoping'
+// Dedicated BSW attendee perk · 5 free 30-min audits, capped on cal.com.
+// Same URL the printed QR codes and the BSW repo README use.
+const BSW_AUDIT_URL = 'https://cal.com/sophia-stein/architect-audit-bsw'
 const REPO_URL = 'https://github.com/sudosoph/bsw26-agentic-workflows'
 const SESSION_URL =
   'https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4'
@@ -112,24 +115,22 @@ export default function BswPage() {
       {/* Workshop attendee offer */}
       <section className="border border-accent/40 bg-surface p-5">
         <p className="font-mono text-xs text-accent uppercase tracking-widest mb-2">
-          Workshop attendees · 5 seats
+          Workshop attendees · 5 free audits
         </p>
         <p className="font-mono text-sm text-fg leading-relaxed mb-3">
-          The first five workshop attendees to book a scoping call get it free.
-          A real working session on your agentic workflow, not a sales pitch.
+          The first five workshop attendees get a free 30-minute architecture
+          audit. A real working session on your agentic workflow, not a sales
+          pitch. Capped on Cal, first-come first-served.
         </p>
-        <p className="font-mono text-xs text-muted leading-relaxed mb-3">
-          Use code <span className="text-bench">BSW26</span> when you book. First-come, first-served.
-        </p>
-        <Button variant="primary" size="md" href={`${CAL_URL}?coupon=BSW26`}>
-          claim a free seat ›
+        <Button variant="primary" size="md" href={BSW_AUDIT_URL}>
+          claim a free audit ›
         </Button>
       </section>
 
       {/* Quick CTAs */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Button variant="outline" size="md" href={CAL_URL}>
-          book a regular 30-min call →
+          regular scoping call →
         </Button>
         <Button variant="outline" size="md" href={REPO_URL}>
           github repo →
