@@ -5,7 +5,7 @@ import { ContactForm } from '@/components/site/contact-form'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with Sophia Stein, project inquiries, collaboration, or general questions.',
+  description: 'Send a note. Resource requests, sponsorship inquiries, workshop follow-ups, or general questions all land in the same inbox.',
 }
 
 export default function ContactPage() {
@@ -13,7 +13,7 @@ export default function ContactPage() {
     <div className="space-y-8">
       <PageHeader
         title="contact"
-        description="For project inquiries, use the work with me page. For everything else, use the form below."
+        description="Resource requests, sponsorship inquiries, workshop follow-ups, anything else. All land in the same inbox. Reply usually within a business day."
       />
       <Suspense fallback={null}>
         <ContactForm />

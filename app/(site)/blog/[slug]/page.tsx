@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getAllPosts, getPost } from '@/lib/mdx'
 import { PageHeader } from '@/components/ui/page-header'
 import { Badge } from '@/components/ui/badge'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -101,6 +103,24 @@ export default async function BlogPostPage({ params }: Props) {
             className="prose mt-10"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
+
+          {/* Newsletter signup at the bottom of every post · primary list-capture for syndicated traffic */}
+          <div className="mt-16 pt-8 border-t border-border">
+            <NewsletterSignup
+              source={`post:${post.slug}`}
+              sub="If this was useful, the weekly notes go deeper. No drip sequences, no upsells."
+            />
+          </div>
+
+          {/* Back to blog · simple nav out of the post */}
+          <div className="mt-8 flex items-center justify-between font-mono text-xs">
+            <Link href="/blog" className="text-accent hover:underline">
+              ← all posts
+            </Link>
+            <Link href="/rss.xml" className="text-muted hover:text-accent">
+              RSS ↗
+            </Link>
+          </div>
         </div>
 
         {/* Desktop sticky TOC */}

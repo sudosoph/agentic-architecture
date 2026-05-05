@@ -4,21 +4,20 @@ const CONTENT_LINKS = [
   { href: '/about', label: 'about' },
   { href: '/blog', label: 'blog' },
   { href: '/stack', label: 'stack' },
-  { href: '/changelog', label: 'changelog' },
+  { href: '/guides', label: 'guides' },
 ]
 
 const WORK_LINKS = [
   { href: '/work-with-me', label: 'work with me' },
+  { href: '/book', label: 'book a call' },
   { href: '/library', label: 'library' },
   { href: '/courses', label: 'courses' },
   { href: '/sponsor', label: 'sponsor' },
 ]
 
 const CONNECT_LINKS = [
-  { href: 'https://x.com/agenticarchitect', label: 'X ↗', accent: false },
-  { href: 'https://github.com/agenticarchitect', label: 'GitHub ↗', accent: false },
-  { href: 'https://agenticarchitect.substack.com', label: 'Substack ↗', accent: false },
-  { href: 'https://discord.gg/agenticarchitect', label: 'Discord ↗', accent: false },
+  { href: 'https://github.com/sudosoph', label: 'GitHub ↗', accent: false },
+  { href: '/contact', label: 'contact', accent: false },
   { href: '/rss.xml', label: 'RSS ↗', accent: true },
 ]
 
