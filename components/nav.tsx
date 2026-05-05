@@ -14,6 +14,7 @@ const NAV_LEFT = [
 ]
 
 const NAV_RIGHT = [
+  { href: '/book', label: 'book' },
   { href: '/contact', label: 'contact' },
 ]
 

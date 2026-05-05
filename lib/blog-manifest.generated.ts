@@ -265,7 +265,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Coding Agent Infrastructure in Production",
       "slug": "coding-agent-infrastructure",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-05-04",
       "description": "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work.",
       "tags": [
         "coding-agents",
@@ -313,7 +313,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "The Death of the Junior Dev",
       "slug": "death-of-the-junior-dev",
-      "publishedDate": "2026-05-04",
+      "publishedDate": "2026-04-29",
       "description": "What agentic workflows are actually doing to entry-level engineering, and what to do about it.",
       "tags": [
         "careers",
@@ -412,7 +412,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Notes on the EU AI Act Deadline for Agentic Systems",
       "slug": "ethical-autonomy",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-05-02",
       "description": "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on.",
       "tags": [
         "ethics",
@@ -1043,7 +1043,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "OAuth Was Built for Three Actors. Agents Are the Fourth.",
       "slug": "the-4-legged-identity",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-05-01",
       "description": "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway.",
       "tags": [
         "identity",
@@ -1202,7 +1202,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Notes on Human-in-the-Loop",
       "slug": "the-hitl-standard",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-05-04",
       "description": "Why human-in-the-loop is the only ethical and profitable way to scale agentic AI in a world of bot fatigue.",
       "tags": [
         "hitl",
@@ -1523,7 +1523,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Simulation Sandboxes for Agents",
       "slug": "why-every-agent-needs-a-simulation-sandbox",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-04-30",
       "description": "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one.",
       "tags": [
         "agents",

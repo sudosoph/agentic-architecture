@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Benchmarks, field notes, and technical essays on local AI infrastructure, agentic architecture, and the cost economics of 2026 AI.',
+  description: 'Field notes on agentic architecture, local-first AI, and what is actually working in 2026. Patterns, tradeoffs, and the quiet engineering work behind the systems that ship.',
 }
 
 // Themes are curated collections that group related tags into reader-friendly buckets.
@@ -94,7 +94,7 @@ export default async function BlogPage({
     <div>
       <PageHeader
         title="blog"
-        description="Benchmarks, field notes, and technical essays on local AI infrastructure, agentic architecture, and the cost economics of 2026 AI."
+        description="Field notes on agentic architecture, local-first AI, and what is actually working in 2026. Patterns, tradeoffs, and the quiet engineering work behind the systems that ship."
       />
 
       {/* Theme filter chips */}
@@ -154,8 +154,9 @@ export default async function BlogPage({
               >
                 <article>
                   <div className="flex items-start justify-between gap-4">
-                    <h2 className="font-mono text-base text-fg group-hover:text-accent transition-colors">
-                      {post.title}
+                    <h2 className="font-mono text-base text-fg group-hover:text-accent transition-colors flex items-baseline gap-2">
+                      <span className="text-bench shrink-0" aria-hidden="true">›</span>
+                      <span>{post.title}</span>
                     </h2>
                     <time
                       dateTime={post.publishedDate}
