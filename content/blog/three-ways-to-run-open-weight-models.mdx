@@ -1,0 +1,135 @@
+---
+title: "Three Ways to Run Open-Weight Models in 2026, Compared"
+slug: three-ways-to-run-open-weight-models
+publishedDate: "2026-05-05"
+description: "Local hardware vs rented GPUs vs serverless OSS APIs. Real prices, real benchmarks, and the workload-shape question that decides which path is right."
+tags: ["local-models", "open-weights", "cloud", "benchmarks", "cost"]
+draft: false
+---
+
+**TL;DR.** Open-weight models in 2026 (Qwen 3.6 27B, Gemma 4 31B, Kimi K2.6, DeepSeek V4) have closed enough of the quality gap with frontier proprietary models that the question is no longer *should I run open*. It is *which deployment path*. There are three: own the hardware, rent the GPU, pay per token to a managed serverless host. Each has different unit economics, latency, sovereignty, and setup complexity. This post is the actual numbers from May 2026, the tradeoff matrix, and the workload-shape questions that decide which path is right for you.
+
+## The three paths
+
+| Path                   | Example                              | Cost shape           | Setup time |
+|------------------------|--------------------------------------|----------------------|------------|
+| **Own hardware**       | Framework 16, Strix Halo, Mac Studio | Capex + electricity  | A weekend  |
+| **Rent the GPU**       | RunPod, Modal, Lambda Labs           | Per hour ($1-$3 H100)| An afternoon |
+| **Serverless OSS API** | Together AI, Fireworks, Replicate    | Per token ($0.10-$3/M)| 10 minutes |
+
+Each one solves a different problem. Picking the wrong one is the most common mistake I see at the start of an engagement.
+
+## Path 1: Own hardware
+
+What you buy: a workstation or laptop with enough unified memory to hold the model. The serious 2026 options:
+
+- **Framework 16 with Strix Point + 96GB DDR5** (~$3,200). Ceiling: 27B Dense at Q5_K_M. The everyday option, fully repairable.
+- **Framework Desktop with Strix Halo + 128GB LPDDR5X** (~$2,000 base). Ceiling: 70B-class at heavier quantization. Better bandwidth at ~256 GB/s.
+- **Mac Studio M3 Ultra + 96GB-512GB unified** ($4,800-$10k+). MLX support is excellent. Pricing is roughly 2x equivalent AMD.
+
+**What it costs to run.** Electricity. ~65W under sustained load at $0.13/kWh = three cents per active hour. Annualized at 4 hours/day: under $50/year of variable cost.
+
+**What it costs to *not* run it well.** Setup time: a weekend if you have done it before, longer if not. ROCm 7.3, GART config, llama.cpp HIP build, model download. The full path is in [The 96GB RAM Thesis](/blog/96gb-ram-thesis) and [Why I Bet on a Framework Laptop in 2026](/blog/framework-for-builders).
+
+**Where it wins.** Privacy-sensitive workloads. Long-running unattended loops. High fan-out research agents. Anything that compounds because retries and parallel runs are free. The behavioral consequence is bigger than the cost number: you stop rationing.
+
+**Where it loses.** Bursty workloads (the hardware sits idle). Frontier-grade reasoning (Opus 4.x and GPT-5 still beat anything that fits on a laptop on the hardest 5% of turns). Teams without an engineer who wants to own the stack.
+
+## Path 2: Rent the GPU
+
+What you buy: hourly access to a GPU instance running your choice of model. The serious 2026 providers:
+
+| Provider     | H100 on-demand | H100 spot  | Notes                        |
+|--------------|----------------|------------|------------------------------|
+| RunPod       | $2.49/hr       | $1.49/hr   | Cheapest serious option      |
+| Lambda Labs  | $2.99/hr       | varies     | Strong reliability story     |
+| Modal        | varies         | $1.50-$2/hr| Serverless-flavored, scales to zero |
+| Together AI  | $1.95/hr (rsv) | n/a        | Available via dedicated endpoints |
+
+(Sources: [RunPod pricing](https://www.runpod.io/pricing), [Lambda Labs](https://lambdalabs.com/), comparison aggregator [getdeploying.com/gpus/nvidia-h100](https://getdeploying.com/gpus/nvidia-h100).)
+
+**What it costs to run.** A single H100 spot instance at $1.49/hr running 8 hours a day = $360/month. Same instance running 24/7 at on-demand rates = ~$1,800/month. Multiply by the number of GPUs you need for the model.
+
+**Model fit on a single H100 (80GB):** Qwen 3.6 27B Dense at FP16 fits comfortably. Gemma 4 31B Dense fits with care. DeepSeek V4 Flash (284B / 13B active) fits at INT4. DeepSeek V4 Pro (1.6T) needs multi-GPU.
+
+**Where it wins.** Workloads that need a specific model not available on serverless. Bursty workloads where scale-to-zero matters (Modal). Teams with engineers but without the patience for hardware procurement. Compliance scenarios where you need control over the runtime but cannot justify capex.
+
+**Where it loses.** Per-token cost economics. By the time you are running 24/7 at on-demand rates, you have spent more in twelve months than a Strix Halo desktop would have cost. Cold-start latency on serverless GPU. The operational tax of managing inference servers (vLLM tuning, batching, autoscaling).
+
+## Path 3: Serverless OSS API
+
+What you buy: per-token access to open-weight models hosted by someone else. The serious 2026 providers:
+
+| Model              | Together AI ($/M in/out) | Fireworks ($/M in/out) | DeepInfra ($/M) |
+|--------------------|--------------------------|-------------------------|-----------------|
+| Llama 3.3 70B      | $0.88 / $0.88            | $0.90 / $0.90          | comparable      |
+| Qwen 3.6 27B       | ~$0.30 / $0.60           | ~$0.30 / $0.60         | comparable      |
+| Gemma 4 26B MoE    | $0.90 / $0.90            | $0.90 / $0.90          | comparable      |
+| DeepSeek V4 Flash  | $0.14 / $0.28            | $0.14 / $0.28          | comparable      |
+| Llama 3.1 8B       | $0.18 / $0.18            | $0.20 / $0.20          | comparable      |
+
+(Sources: [Together AI pricing](https://www.together.ai/pricing), [Fireworks](https://fireworks.ai/pricing), comparison [pricepertoken.com](https://pricepertoken.com/endpoints/compare/fireworks-vs-together).)
+
+**What it costs to run.** A heavy agentic dev loop that runs ~6.5M input + 432K output tokens per session costs roughly $1.03 on DeepSeek V4 Flash (versus $26 on Sonnet 4.5). Lighter classification + routing workloads stay under $10/month for most teams.
+
+**Where it wins.** You want to try a specific open-weight model without buying anything. Variable workload where capex makes no sense. Fast time-to-first-call (10 minutes vs a weekend). Latency is good (the providers have done the vLLM tuning).
+
+**Where it loses.** Sovereignty. The provider sees every prompt and response. Some have data-retention policies you may not love (read them). For regulated workloads that cannot send data to third parties, this path is a non-starter regardless of price.
+
+## The actual benchmarks (May 2026)
+
+Pricing is half the question. The other half is whether the model is good enough to do the job. The current open-weight frontier:
+
+| Model              | SWE-bench Verified | AIME 2026 (math) | GPQA  | Context |
+|--------------------|--------------------|------------------|-------|---------|
+| Qwen 3.6 27B Dense | **77.2%**          | 81.4%            | 87.8% | 262K    |
+| Gemma 4 31B Dense  | ~75%               | **89.2%**        | 84.3% | 256K    |
+| Kimi K2.6 (1T MoE) | 80.2%              | 88.5%            | high  | 262K    |
+| DeepSeek V4 Pro    | high (Codeforces 3,206) | high        | high  | 1M      |
+| Claude Opus 4.6    | 80.8%              | 85+%             | high  | 200K    |
+
+(Source: [Qwen 3.6 review](https://www.buildfastwithai.com/blogs/qwen3-6-27b-review-2026), [model comparisons on benchlm.ai](https://benchlm.ai/compare/gemma-4-31b-vs-qwen3-6-27b), [Kimi K2.6 launch coverage](https://www.kimi.com/ai-models/kimi-k2-6).)
+
+Two things to notice. **The 27B Dense Qwen 3.6 is within four points of Claude Opus on coding.** Five years ago that would have been a research milestone. In 2026 it is a model you can download for free. Second: **the model that wins on coding (Qwen 3.6) loses on math (Gemma 4 wins).** There is no single best open model. You pick by workload.
+
+## The matrix
+
+The decision is rarely "one path." Most production teams use a hybrid. The matrix that helps decide:
+
+| Question                                     | Answer favors             |
+|----------------------------------------------|----------------------------|
+| Is the data sensitive?                       | Own hardware              |
+| Is the workload bursty?                      | Serverless API or rented spot |
+| Is monthly volume above 50M tokens?          | Own hardware or rented    |
+| Is monthly volume below 5M tokens?           | Serverless API            |
+| Do you have an engineer who likes hardware?  | Own hardware              |
+| Do you need it working by Friday?            | Serverless API            |
+| Are you fan-out heavy (many parallel agents)?| Own hardware              |
+| Are you single-user, low-latency?            | Serverless API            |
+
+There is no clean answer. Most production teams I work with split the workload. Sensitive and high-volume goes local. Bursty and experimental goes serverless. Specialized models that need specific tuning go on rented GPUs.
+
+## A worked example
+
+A two-person AI-native startup with the following profile:
+- 10M tokens of agentic dev work per month per engineer
+- Customer-facing product makes ~2M API calls per day at ~500 tokens each
+- Internal automations (triage, classification) ~500 calls per hour, 24/7
+
+The right split:
+
+- **Local** for the dev work. Two Framework 16 laptops at $3,200 each. Annual electricity ~$50 per laptop. Replaces what would have been $400-600/month each on metered API.
+- **Serverless API (Fireworks Llama 3.1 8B at $0.20/M)** for the customer-facing product. ~$200/month. Cheaper than dedicated infrastructure at this volume.
+- **Local + scheduled local jobs** for the 24/7 internal automations. Run on a Strix Halo desktop (~$2,000) under their desk. ~$80/year electricity. Replaces what would have been ~$300/month on serverless.
+
+Total monthly variable: ~$210. Capex: ~$8,400 amortized over 5 years = ~$140/month. **Total ~$350/month for the entire stack.** A SaaS-only equivalent of this stack would run $1,500-$2,500/month.
+
+The savings are real but the bigger effect is behavioral. When the dev loop is electricity, you stop rationing retries. When the internal automation is electricity, you stop pruning experiments. The teams that ship in 2026 are the teams that can run an experiment without scheduling a budget meeting first.
+
+## What I would tell past-me
+
+A year ago I picked one path and stuck with it. That was a mistake. The right answer is workload-shaped. The matrix above is what I use now to decide for each workload, individually, on the same project.
+
+If you are deciding for the first time today, the order I would try is: spin up an account on Fireworks or Together this afternoon and run your workload through Qwen 3.6 27B for $5. If the quality is there and the cost makes sense, you have your answer. If the cost is going to scale into real money, evaluate whether you have an engineer who would enjoy owning the hardware, and at what volume the laptop pays back. The break-even is usually around $200-300/month of cloud spend.
+
+The mistake to avoid is picking by ideology. Pure local is a tax on optionality. Pure cloud is a tax on margin. The hybrid is what production looks like.
