@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 }
 
 const STEPS = [
-  'Pick the project that fits, or book a 30-minute scoping call if you are not sure.',
-  'I reply within 1–2 business days with a fit assessment.',
-  'If it is a match, we schedule a 30-minute scoping call. Free, low-pressure.',
+  'Pick the project that fits, or book a free 30-minute call if you are not sure.',
+  'I reply within 1 to 2 business days with a fit assessment.',
+  'If it is a match, we schedule a free 30 minutes to walk through the work together. No sales.',
   'Proposal, deposit, work starts. Most projects close within a week.',
 ]
 
@@ -50,7 +50,7 @@ const ORG_SERVICES = [
       'Built-for-you internal courses for engineering orgs. Curriculum design, recorded modules, hands-on exercises, assessment. Useful when you need to ramp 50+ engineers on agentic tooling without sending them to a generic bootcamp.',
   },
   {
-    name: 'Speaking Engagements',
+    name: 'Speaking & Workshops',
     duration: 'keynote · talk · podcast',
     description:
       'Recent topics: how 96GB of RAM changed my mind about local AI, MCP as a driver layer, the $0.01 micro-agent, agentic workflows for lean founders. Boulder Startup Week alum.',
@@ -65,7 +65,7 @@ export default function WorkWithMePage() {
         description="I take a small number of projects at a time. If you are serious about reducing cloud AI costs, building agentic infrastructure that actually works, or rolling out AI to your team, let us talk."
       />
 
-      {/* How it works — comes first */}
+      {/* How it works · comes first */}
       <section>
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
           How it works
@@ -80,7 +80,7 @@ export default function WorkWithMePage() {
         </ol>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button variant="primary" size="md" href="/book">
-            book a scoping call ›
+            book a free 30-min call ›
           </Button>
           <Button variant="ghost" size="md" href="/contact">
             send a message

@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette — Industrial Brutalism "Zinc Luxe" */
+  /* Palette · Industrial Brutalism "Zinc Luxe" */
   --color-bg:        var(--color-zinc-950);  /* #09090b */
   --color-surface:   var(--color-zinc-900);  /* #18181b */
   --color-border:    var(--color-zinc-800);  /* #27272a */
   --color-text:      var(--color-zinc-100);  /* #f4f4f5 */
   --color-muted:     var(--color-zinc-400);  /* #a1a1aa */
-  --color-accent:    var(--color-amber-400); /* #fbbf24 — CTA, links, highlights */
-  --color-online:    var(--color-emerald-400); /* #34d399 — system online */
-  --color-bench:     var(--color-cyan-400);  /* #22d3ee — metrics, code, benchmarks */
-  --color-pressure:  var(--color-rose-400);  /* #fb7185 — errors, offline, warnings */
+  --color-accent:    var(--color-amber-400); /* #fbbf24 · CTA, links, highlights */
+  --color-online:    var(--color-emerald-400); /* #34d399 · system online */
+  --color-bench:     var(--color-cyan-400);  /* #22d3ee · metrics, code, benchmarks */
+  --color-pressure:  var(--color-rose-400);  /* #fb7185 · errors, offline, warnings */
 
-  /* Shape — zero radius, no exceptions */
+  /* Shape · zero radius, no exceptions */
   --radius: 0px;
 
   /* Typography */
@@ -34,7 +34,7 @@ html {
   color: var(--color-bg);
 }
 
-/* Scrollbar — minimal, on-brand */
+/* Scrollbar · minimal, on-brand */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -48,7 +48,7 @@ html {
   background: var(--color-muted);
 }
 
-/* Prose — MDX post body */
+/* Prose · MDX post body */
 .prose {
   color: var(--color-muted);
   max-width: 65ch;

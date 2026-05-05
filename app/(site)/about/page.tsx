@@ -7,7 +7,14 @@ export const metadata: Metadata = {
     'Sophia Stein. AI Architect in Boulder, CO. Local-first agentic infrastructure, OSS tools, technical writing.',
 }
 
-const NOW = [
+type NowItem = {
+  label: string
+  body: React.ReactNode
+  href?: string
+  external?: boolean
+}
+
+const NOW: NowItem[] = [
   {
     label: 'Writing',
     body: 'A 90-minute audit for finding agent-ready tasks',
@@ -16,8 +23,7 @@ const NOW = [
   {
     label: 'Speaking',
     body: 'Boulder Startup Week 2026, agentic architecture for lean teams',
-    href: 'https://boulderstartupweek.com/',
-    external: true,
+    href: '/bsw',
   },
   {
     label: 'Shipping',
@@ -27,8 +33,18 @@ const NOW = [
   },
   {
     label: 'Reading',
-    body: 'Conference notes from AI Dev SF and AI Agent Conference NYC',
-    href: '/blog?theme=local-models',
+    body: (
+      <>
+        Conference notes from{' '}
+        <Link href="/blog/ai-dev-sf-takeaways" className="text-accent hover:underline">
+          AI Dev SF
+        </Link>{' '}
+        and{' '}
+        <Link href="/blog/ai-agent-conf-nyc-takeaways" className="text-accent hover:underline">
+          AI Agent Conference NYC
+        </Link>
+      </>
+    ),
   },
 ]
 
@@ -74,21 +90,35 @@ export default function AboutPage() {
           Now
         </h2>
         <div className="divide-y divide-border">
-          {NOW.map(({ label, body, href, external }) => (
-            <Link
-              key={label}
-              href={href}
-              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="flex items-baseline gap-4 py-3 first:pt-0 last:pb-0 group"
-            >
-              <span className="font-mono text-xs text-bench uppercase tracking-wider shrink-0 w-20">
-                {label}
-              </span>
-              <span className="text-sm text-muted leading-relaxed group-hover:text-accent transition-colors">
-                {body}
-              </span>
-            </Link>
-          ))}
+          {NOW.map(({ label, body, href, external }) => {
+            const inner = (
+              <>
+                <span className="font-mono text-xs text-bench uppercase tracking-wider shrink-0 w-20">
+                  {label}
+                </span>
+                <span className="text-sm text-muted leading-relaxed">
+                  {body}
+                </span>
+              </>
+            )
+            if (!href) {
+              return (
+                <div key={label} className="flex items-baseline gap-4 py-3 first:pt-0 last:pb-0">
+                  {inner}
+                </div>
+              )
+            }
+            return (
+              <Link
+                key={label}
+                href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="flex items-baseline gap-4 py-3 first:pt-0 last:pb-0 group hover:bg-surface transition-colors"
+              >
+                {inner}
+              </Link>
+            )
+          })}
         </div>
       </section>
 
