@@ -3,11 +3,40 @@ import { getAllPosts } from '@/lib/mdx'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
+const PROFESSIONAL_SERVICE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Agentic Architecture',
+  description: 'Local-first LLM infrastructure consulting, benchmarks, and open-source tools.',
+  url: 'https://agenticarchitecture.ai',
+  founder: {
+    '@type': 'Person',
+    name: 'Sophia Stein',
+    jobTitle: 'AI Engineer & Consultant',
+    url: 'https://agenticarchitecture.ai/about',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Boulder',
+    addressRegion: 'CO',
+    addressCountry: 'US',
+  },
+  priceRange: '$$',
+  serviceType: 'AI Consulting',
+}
+
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 3)
 
   return (
-    <div className="space-y-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(PROFESSIONAL_SERVICE_LD).replace(/</g, '\\u003c'),
+        }}
+      />
+      <div className="space-y-16">
       {/* Hero */}
       <section className="pt-8 pb-4 border-b border-border">
         <p className="font-mono text-xs text-muted mb-3 tracking-widest uppercase">
@@ -129,5 +158,6 @@ export default function HomePage() {
         </section>
       )}
     </div>
+    </>
   )
 }

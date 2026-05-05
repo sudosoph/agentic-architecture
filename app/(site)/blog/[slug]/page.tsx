@@ -48,8 +48,33 @@ export default async function BlogPostPage({ params }: Props) {
     day: 'numeric',
   })
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    datePublished: post.frontmatter.publishedDate,
+    author: {
+      '@type': 'Person',
+      name: 'Sophia Stein',
+      url: 'https://agenticarchitecture.ai/about',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Agentic Architecture',
+      url: 'https://agenticarchitecture.ai',
+    },
+  }
+
   return (
-    <article>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <article>
       <PageHeader
         title={post.frontmatter.title}
         meta={dateFormatted}
@@ -66,5 +91,6 @@ export default async function BlogPostPage({ params }: Props) {
       )}
       <div className="prose mt-10">{content}</div>
     </article>
+    </>
   )
 }
