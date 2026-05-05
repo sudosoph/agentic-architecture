@@ -102,6 +102,8 @@ The failure-mode chart, generalized:
 | ReAct               | Environment is unpredictable                | Loops are long; context drifts              |
 | Plan-and-Execute    | Task decomposes deterministically up front  | Plans become brittle as reality changes     |
 
+Geoffrey Litt's [Code Like a Surgeon](https://www.geoffreylitt.com/) framing (October 2025) lands on a related distinction: the human's job is to delegate the secondary, mechanical work to agents while concentrating on the primary high-leverage design and coding work. ReAct fits the secondary tasks. Plan-and-Execute fits the primary tasks. The combination is the hybrid below.
+
 ## The hybrid that wins in production
 
 The pattern most production systems actually use is a hybrid: **plan-then-ReAct-each-step**.

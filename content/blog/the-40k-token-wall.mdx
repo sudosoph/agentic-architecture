@@ -11,7 +11,7 @@ draft: false
 
 ## The headline number
 
-Jeff Huber from Chroma published research on this in late 2025 and reinforced it at AI Dev SF on April 28. Their team ran production-tuned evals across multiple frontier models with controlled context lengths.
+Jeff Huber from Chroma published research on this in late 2025 and reinforced it at AI Dev SF on April 28. Their team ran production-tuned evals across multiple frontier models with controlled context lengths. Eugene Yan's [Evaluating Long-Context Q&A Systems](https://eugeneyan.com/writing/evals/) (June 2025) reaches the same conclusion from the eval-design side: long-context benchmarks consistently overstate what production-tuned systems can rely on.
 
 The finding: even the strongest 2026 models drift past about 40K tokens of context. Not crash. Not refuse. Just *get worse*. Slower retrieval inside the window. Lower precision on extraction. More likely to confidently misquote earlier turns. The exact threshold varies by model and by task, but the inflection point sits between 30K and 50K consistently.
 

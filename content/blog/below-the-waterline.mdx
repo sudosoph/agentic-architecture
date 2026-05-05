@@ -29,7 +29,7 @@ Three things that take a quarter to build, never get marketed, and are the diffe
 
 ## Foundation 1: developer experience
 
-The work nobody puts on a slide. Auth standardization, logging consistency, error patterns, CI/CD for agent deployment, observability that tells you why something broke (not just that it did).
+The work nobody puts on a slide. Auth standardization, logging consistency, error patterns, CI/CD for agent deployment, observability that tells you why something broke (not just that it did). Charity Majors made the canonical case for this with her [Observability 2.0](https://charity.wtf/tag/observability-2-0/) framing: arbitrarily-wide structured events, single source of truth, no more three-pillars (metrics + logs + traces) silos that destroy the relational context. For agentic systems, that exact model is the one that scales.
 
 The right framing is *augment, don't rewrite*. A team that shipped a working agent in three weeks should not throw it away to bolt on enterprise readiness. The platform layer adds trace analysis, A/B testing for prompt variations, observability hooks, governance interceptors, and security policies *around* the existing agent code. The agent itself does not change.
 

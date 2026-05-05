@@ -24,9 +24,11 @@ The cost of a marginal line of code dropped an order of magnitude in 2025 and is
 
 Andrej Karpathy coined the term in February 2025. The original was specifically about a throwaway weekend mode: forget the code exists, copy-paste error messages back, accept-all-diffs. Not a methodology. A holiday from methodology.
 
-What it turned into is contested. The disillusionment piece everyone links is Alberto Fortin's May 2025 post: months of LLM-led coding produced what he described as ten junior-mid developers locked in a room without seeing the other nine. Inconsistent naming. Duplicated logic. Architectural drift. He went back to pen-and-paper planning.
+By April 2026, Karpathy himself had moved on. At [Sequoia AI Ascent 2026](https://karpathy.bearblog.dev/sequoia-ascent-2026/) he framed three paradigms: Software 1.0 (explicit code), Software 2.0 (trained networks), Software 3.0 (prompting LLM interpreters). His take on the original term: *vibe coding was the warmup. Agentic engineering is the actual job.* The replacement is more disciplined, more spec-driven, more reviewable.
 
-Both are correct. Vibe coding works perfectly for projects you don't have to maintain. It fails predictably for systems that have to live.
+The disillusionment piece in between is Alberto Fortin's May 2025 post: months of LLM-led coding produced what he described as ten junior-mid developers locked in a room without seeing the other nine. Inconsistent naming. Duplicated logic. Architectural drift. He went back to pen-and-paper planning. Steve Yegge made the underlying point earlier in his Sourcegraph piece [Cheating is All You Need](https://sourcegraph.com/blog/cheating-is-all-you-need): the worry that you cannot trust LLM-generated code misses the point, because *we have always built the discipline of software engineering around code we cannot trust*. Reviewers, linters, types, tests, CI: those are the answer, not "do not use LLMs."
+
+Vibe coding works perfectly for projects you do not have to maintain. It fails predictably for systems that have to live.
 
 What founders need is a third thing: a discipline that takes the velocity and pays the small upfront tax that makes the output maintainable. Call it intent-led coding. The shift is small in words and large in consequence.
 

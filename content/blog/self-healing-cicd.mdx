@@ -123,6 +123,8 @@ Three things that have gone wrong. Worth pre-empting.
 
 **The agent fixed a symptom instead of a cause.** The CI job was OOM-killed. The agent bumped the runner memory. Six weeks later the same job at 2× memory was OOM-killed again. The actual fix was a memory leak in a test setup. Symptom-fixing was the wrong remediation class. The fix is to prefer escalation over remediation when the failure type is "infrastructure" or "resource."
 
+The observability discipline this requires is what Charity Majors at Honeycomb calls [Observability 2.0](https://charity.wtf/tag/observability-2-0/): arbitrarily-wide structured events, not the old three-pillars split. For agentic systems specifically, the [feedback loop pattern](https://www.honeycomb.io/blog/observability-age-of-ai) (Prompt → Deploy → Observe → Analyze → Optimize → Redeploy) is the production version of what self-healing pipelines automate.
+
 ## What to instrument
 
 Three signals worth wiring up.
