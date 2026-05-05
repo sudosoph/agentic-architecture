@@ -74,6 +74,39 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* BSW talk callout */}
+        <section className="border border-border bg-surface p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <p className="font-mono text-xs text-bench uppercase tracking-widest mb-1">
+                Speaking next · Boulder Startup Week 2026
+              </p>
+              <p className="font-mono text-sm text-fg">
+                Architecting Agentic Workflows for the Lean 2026 Startup
+              </p>
+              <p className="font-mono text-xs text-muted mt-1">
+                Thu May 7 · 11:00 AM · RegenHub
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/bsw"
+                className="font-mono text-xs px-3 py-1.5 border border-border text-muted hover:text-accent hover:border-accent transition-colors"
+              >
+                materials
+              </Link>
+              <Link
+                href="https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs px-3 py-1.5 border border-accent text-accent hover:bg-surface transition-colors"
+              >
+                rsvp ↗
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* What I do */}
         <section>
           <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">

@@ -9,6 +9,7 @@ const NAV_LEFT = [
   { href: '/about', label: 'about' },
   { href: '/blog', label: 'blog' },
   { href: '/guides', label: 'guides' },
+  { href: '/library', label: 'library' },
   { href: '/stack', label: 'stack' },
   { href: '/courses', label: 'courses' },
 ]

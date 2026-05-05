@@ -16,16 +16,18 @@ type Guide = {
   description: string
   href?: string
   meta?: string
+  external?: boolean
 }
 
 const GUIDES: Guide[] = [
   {
     slug: 'bsw-2026',
-    title: 'Boulder Startup Week 2026: Agentic Architecture for Lean Teams',
+    title: 'Boulder Startup Week 2026: Architecting Agentic Workflows for the Lean 2026 Startup',
     status: 'talk',
     description:
-      'Slides, demo repo, and the workshop materials from my BSW 2026 session. The talk: how a two-person team ships agentic systems that compound. The workshop: build your first local-first agent in 90 minutes.',
-    meta: 'May 2026',
+      'Workshop on May 7, 2026 at RegenHub. The full session page (with slides, n8n templates, tutorial, handouts, and the GitHub repo) is at /bsw.',
+    meta: 'May 7, 2026',
+    href: '/bsw',
   },
   {
     slug: 'local-ai-from-scratch',
@@ -93,20 +95,41 @@ export default function GuidesPage() {
           Catalog
         </h2>
         <div className="divide-y divide-border">
-          {GUIDES.map(({ slug, title, status, description, meta }) => (
-            <div key={slug} className="py-6 first:pt-0 last:pb-0">
-              <div className="flex items-start justify-between gap-4 mb-2">
-                <h3 className="font-mono text-sm text-fg">{title}</h3>
-                <div className="flex items-center gap-2 shrink-0">
-                  {meta && (
-                    <span className="font-mono text-xs text-muted">{meta}</span>
-                  )}
-                  <Badge variant="tag">{STATUS_LABELS[status]}</Badge>
+          {GUIDES.map(({ slug, title, status, description, meta, href, external }) => {
+            const content = (
+              <>
+                <div className="flex items-start justify-between gap-4 mb-2">
+                  <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
+                    {title}
+                  </h3>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {meta && (
+                      <span className="font-mono text-xs text-muted">{meta}</span>
+                    )}
+                    <Badge variant="tag">{STATUS_LABELS[status]}</Badge>
+                  </div>
                 </div>
+                <p className="text-sm text-muted leading-relaxed">{description}</p>
+              </>
+            )
+            if (href) {
+              return (
+                <Link
+                  key={slug}
+                  href={href}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="block py-6 first:pt-0 last:pb-0 group"
+                >
+                  {content}
+                </Link>
+              )
+            }
+            return (
+              <div key={slug} className="py-6 first:pt-0 last:pb-0">
+                {content}
               </div>
-              <p className="text-sm text-muted leading-relaxed">{description}</p>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </section>
 
