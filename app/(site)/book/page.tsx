@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 // Replace this with your real Cal.com username when you sign up.
 // Format: 'username' OR 'username/event-type' (e.g. 'sophiastein/30min').
-const CAL_USERNAME = 'sophiastein'
+const CAL_USERNAME = 'sophia-stein'
 const CAL_URL = `https://cal.com/${CAL_USERNAME}`
 
 export const metadata: Metadata = {

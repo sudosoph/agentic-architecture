@@ -2,19 +2,29 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-const CAL_URL = 'https://cal.com/sophiastein/30min'
+const CAL_URL = 'https://cal.com/sophia-stein/30min'
 const REPO_URL = 'https://github.com/sudosoph/bsw26-agentic-workflows'
+const SESSION_URL =
+  'https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4'
 
 export const metadata: Metadata = {
   title: 'Boulder Startup Week 2026',
   description:
-    'BSW 2026: Agentic workflows for lean teams. Slides, n8n templates, tutorial, and demo repo from the talk.',
+    'Architecting Agentic Workflows for the Lean 2026 Startup. A workshop at Boulder Startup Week 2026, May 7 at RegenHub. Slides, n8n templates, and demo repo.',
+}
+
+const SESSION = {
+  title: 'Architecting Agentic Workflows for the Lean 2026 Startup',
+  date: 'Thursday, May 7, 2026',
+  time: '11:00 AM – 12:00 PM',
+  venue: 'RegenHub',
+  tags: ['AI', 'Growth', 'Founder-Specific', 'SaaS'],
 }
 
 const RESOURCES = [
   {
     label: 'Slides',
-    body: 'The deck I presented at BSW. Local-first agentic patterns for two-person teams.',
+    body: 'The deck. Local-first agentic patterns for two-person teams.',
     href: `${REPO_URL}/blob/main/slides/index.html`,
   },
   {
@@ -24,7 +34,7 @@ const RESOURCES = [
   },
   {
     label: 'n8n templates',
-    body: 'Importable workflow JSONs covering inbox triage, competitive monitoring, and a research agent.',
+    body: 'Importable workflow JSONs covering inbox triage, competitive monitoring, and the Growth Agent we build live.',
     href: `${REPO_URL}/tree/main/n8n`,
   },
   {
@@ -34,8 +44,23 @@ const RESOURCES = [
   },
   {
     label: 'Handouts',
-    body: 'One-page references handed out at the talk. Worth printing.',
+    body: 'One-page references handed out at the workshop. Worth printing.',
     href: `${REPO_URL}/tree/main/handouts`,
+  },
+]
+
+const TAKEAWAYS = [
+  {
+    title: 'A Blueprint for Autonomy',
+    body: 'A step-by-step framework to identify which 20% of your manual tasks can be 80% automated using current agentic tools.',
+  },
+  {
+    title: 'Live Build-Along',
+    body: 'We map out a Growth Agent workflow together. Participants can adapt it for their own ventures immediately.',
+  },
+  {
+    title: 'The Human-in-the-Loop Standard',
+    body: 'How to maintain brand voice and ethical oversight while scaling output 10x.',
   },
 ]
 
@@ -47,16 +72,43 @@ export default function BswPage() {
           Boulder Startup Week 2026
         </p>
         <h1 className="font-mono text-2xl text-fg mb-3">
-          Agentic Workflows for Lean Teams
+          {SESSION.title}
         </h1>
         <p className="text-sm text-muted leading-relaxed">
-          The talk and workshop materials in one place. Everything is open and
-          on GitHub. If you came from the QR code at the venue, you are in the
-          right spot.
+          A workshop for early-stage founders, product managers, and lean
+          growth teams who are tired of basic chat interfaces and want to
+          build systems that actually work. If you came from the QR code at
+          the venue, you are in the right spot.
         </p>
       </section>
 
-      {/* Quick links: book + repo */}
+      {/* Session card */}
+      <section className="border border-border bg-surface p-5 space-y-2">
+        <div className="flex items-baseline gap-3 font-mono text-sm">
+          <span className="text-bench shrink-0">when</span>
+          <span className="text-fg">{SESSION.date} · {SESSION.time}</span>
+        </div>
+        <div className="flex items-baseline gap-3 font-mono text-sm">
+          <span className="text-bench shrink-0">where</span>
+          <span className="text-fg">{SESSION.venue}</span>
+        </div>
+        <div className="flex items-baseline gap-3 font-mono text-sm">
+          <span className="text-bench shrink-0">tags</span>
+          <span className="text-muted">{SESSION.tags.join(' · ')}</span>
+        </div>
+        <div className="pt-3">
+          <Link
+            href={SESSION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-accent hover:underline"
+          >
+            rsvp on revel ↗
+          </Link>
+        </div>
+      </section>
+
+      {/* Quick CTAs */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Button variant="primary" size="md" href={CAL_URL}>
           book a 30-min call ›
@@ -66,10 +118,30 @@ export default function BswPage() {
         </Button>
       </section>
 
-      {/* Resources */}
+      {/* What you will leave with */}
       <section>
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-          Talk resources
+          What you will leave with
+        </h2>
+        <div className="divide-y divide-border">
+          {TAKEAWAYS.map(({ title, body }) => (
+            <div key={title} className="py-4 first:pt-0 last:pb-0">
+              <h3 className="font-mono text-sm text-fg mb-1">{title}</h3>
+              <p className="text-sm text-muted leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-muted leading-relaxed mt-4">
+          Whether you are a technical founder or a non-technical visionary,
+          you will leave with a practical roadmap. Stop chatting with AI and
+          start building with it.
+        </p>
+      </section>
+
+      {/* Resources */}
+      <section className="border-t border-border pt-8">
+        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
+          Workshop materials
         </h2>
         <div className="divide-y divide-border">
           {RESOURCES.map(({ label, body, href }) => (
@@ -95,7 +167,7 @@ export default function BswPage() {
       {/* Newsletter pull */}
       <section className="border border-border bg-surface p-6">
         <p className="font-mono text-sm text-fg mb-1">
-          Want the writeup of the talk?
+          Want the writeup of the workshop?
         </p>
         <p className="font-mono text-xs text-muted leading-relaxed mb-4">
           The Architect&apos;s Notebook is the weekly companion to this work.{' '}
@@ -104,7 +176,7 @@ export default function BswPage() {
         <Button
           variant="primary"
           size="md"
-          href="/contact?subject=Newsletter%20signup%20-%20BSW%202026&message=Add%20me%20to%20The%20Architect%27s%20Notebook.%20I%20heard%20the%20BSW%20talk."
+          href="/contact?subject=Newsletter%20signup%20-%20BSW%202026&message=Add%20me%20to%20The%20Architect%27s%20Notebook.%20I%20attended%20the%20BSW%20workshop%20on%20May%207."
         >
           subscribe ›
         </Button>
@@ -117,19 +189,22 @@ export default function BswPage() {
         </h2>
         <ul className="space-y-2 text-sm">
           <li>
-            <Link href="/blog/three-ways-to-run-open-weight-models" className="text-accent hover:underline">
-              Three Ways to Run Open Weights for Pennies
-            </Link>
-          </li>
-          <li>
             <Link href="/blog/the-agentic-audit" className="text-accent hover:underline">
               Find Your Agent-Ready Tasks in 90 Minutes
             </Link>
+            <span className="text-muted">, the framework behind the workshop blueprint</span>
           </li>
           <li>
-            <Link href="/blog/local-vs-cloud-inference" className="text-accent hover:underline">
-              When to Run Locally and When to Pay Anthropic
+            <Link href="/blog/three-ways-to-run-open-weight-models" className="text-accent hover:underline">
+              Three Ways to Run Open Weights for Pennies
             </Link>
+            <span className="text-muted">, the cost math for the agents you build</span>
+          </li>
+          <li>
+            <Link href="/blog/the-hitl-standard" className="text-accent hover:underline">
+              Notes on Human-in-the-Loop
+            </Link>
+            <span className="text-muted">, the standard we build the agents around</span>
           </li>
           <li>
             <Link href="/blog?theme=local-models" className="text-accent hover:underline">
