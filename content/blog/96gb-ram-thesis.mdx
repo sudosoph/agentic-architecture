@@ -36,7 +36,7 @@ A few notes on each line, because all of them are load-bearing:
 
 **96GB, not 64, not 128.** 64GB hits a wall the moment you want to keep a 9B model resident, run a context window over 32k, *and* leave headroom for VS Code + Chrome + n8n + a vector DB. 128GB exists as a Framework 16 option, but only as 2 × 64GB DDR5-5200 — slower, and the marginal $400 buys you tokens you will never spend on inference. You get more value buying a second NVMe and offloading swap there.
 
-**Ubuntu 24.04 kernel 6.11.** ROCm 7.3 builds cleanly here. Kernel 6.8 (the 24.04 GA kernel) needs the HWE stack to get DKMS happy with the AMDGPU driver for Strix Point — not hard, but a tripwire. Just install the OEM kernel and stop.
+**Ubuntu 26.04 LTS (Resolute Raccoon).** GNOME 50 on Wayland-only, memory-safe Rust coreutils, systemd 259 with mandatory cgroup v2, TPM-backed disk encryption out of the box. ROCm 7.3 builds cleanly. The 26.04 kernel ships AMDGPU support for Strix Point in the GA tree — no HWE stack juggling, no DKMS gymnastics. If you are still on 24.04, this release is worth the upgrade for the AMD path alone.
 
 ## The 90GB GART trick
 
@@ -98,7 +98,7 @@ The `AMDGPU_TARGETS` list is the part that matters. You're telling the HIP compi
 
 ## The benchmark
 
-The model is GLM-4 9B Q8_0 — Zhipu AI's 9B-parameter Chinese-and-English instruction-tuned model, quantized to 8-bit. It is, in my testing, the best open model under 10B for tool-calling and structured output as of April 2026. Llama 3.3 8B and Qwen 3 8B are close on raw reasoning; GLM-4 wins on instruction adherence inside agentic loops, which is the metric that matters here.
+The model is GLM-4 9B Q8_0 — Zhipu AI's 9B-parameter Chinese-and-English instruction-tuned model, quantized to 8-bit. It was, at the time I ran this benchmark, the best open model under 10B for tool-calling and structured output. The 2026 frontier has since shifted to Qwen 3.6 (the 27B Dense variant beats Qwen's own 397B MoE on agentic coding) and Gemma 4 (E4B for fast routing, 26B MoE for high-throughput agents). I run those now for daily work; GLM-4 stays in the rotation as the headline benchmark because it is the apples-to-apples comparison everyone else has run too.
 
 ```bash
 # Pin to the iGPU so the benchmark is honest about what Strix Point can do
@@ -176,4 +176,4 @@ Three things on the radar:
 
 The 96GB number is not the point. The point is that the line between "local inference is a hobby" and "local inference is the production substrate for my agentic stack" gets crossed somewhere around 96GB of fast unified memory paired with ROCm 7.3-class drivers. That line was crossed for me in April 2026. If you are still architecting your agents around token budgets in 2026, you are paying a tax that the giants are charging because they can.
 
-The full configuration — kernel params, ROCm version, model files, llama.cpp flags, n8n workflows that drive this stack — will land in [`apu-config`](https://github.com/sudosoph) shortly. If you want a heads-up when the OSS tooling drops, the newsletter is the place. If you want the same setup in your office by next week, [that's what consulting is for](/work-with-me).
+The full configuration — kernel params, ROCm version, model files, llama.cpp HIP flags, n8n workflows that drive this stack — will land in [`apu-config`](https://github.com/sudosoph) shortly. If you want a heads-up when the OSS tooling drops, the newsletter is the place. If you want the same setup running in your office by next week, [that is what an engagement looks like](/work-with-me).

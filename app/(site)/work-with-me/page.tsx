@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 export const metadata: Metadata = {
   title: 'Work With Me',
   description:
-    'Corporate AI training, speaking engagements, custom course creation, and agentic workflow consulting. Book a discovery call.',
+    'Corporate AI training, speaking engagements, custom course creation, and agentic-architecture engagements. Book a discovery call.',
 }
 
 type Service = {

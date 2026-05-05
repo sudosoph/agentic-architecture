@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 export const metadata: Metadata = {
   title: 'Stack',
   description:
-    'The exact hardware, OSS tools, and models powering Agentic Architecture. Reproducible, auditable, local-first.',
+    'The exact hardware, software, and open-weight models I run. Reproducible, auditable, local-first. May 2026.',
 }
 
 const HARDWARE = [
@@ -17,12 +17,12 @@ const HARDWARE = [
   {
     name: 'Radeon RX 7700S',
     spec: '8GB GDDR6 · 100W TGP · Navi 33',
-    note: 'Discrete GPU module for cold starts and bursty image/video workloads.',
+    note: 'Discrete GPU module for cold starts and bursty image / video workloads.',
   },
   {
     name: 'Memory',
     spec: '96GB DDR5-5600 (2 × 48GB SO-DIMM)',
-    note: 'The number that matters. 90GB carved as GART feeds the iGPU.',
+    note: 'The number that matters. 90GB carved as GART feeds the iGPU directly out of system RAM.',
   },
   {
     name: 'Storage',
@@ -38,12 +38,12 @@ const HARDWARE = [
 
 const SOFTWARE = [
   {
-    name: 'Ubuntu 24.04 + kernel 6.11',
-    note: 'Boring on purpose. ROCm and DKMS are happy here.',
+    name: 'Ubuntu 26.04 LTS (Resolute Raccoon)',
+    note: 'GNOME 50 on Wayland-only, memory-safe Rust coreutils, systemd 259, TPM-backed disk encryption. Boring on purpose.',
   },
   {
     name: 'ROCm 7.3',
-    note: 'First release where Strix Point + RDNA 3.5 is genuinely supported.',
+    note: 'First release where Strix Point + RDNA 3.5 is genuinely supported as a pair, not a science project.',
   },
   {
     name: 'llama.cpp (HIP backend)',
@@ -51,19 +51,19 @@ const SOFTWARE = [
   },
   {
     name: 'Ollama',
-    note: 'Model server. Wrapped by an MCP bridge for tool-using agents.',
+    note: 'Model server. Wrapped by an MCP bridge for tool-using agents (because Ollama still does not speak MCP natively).',
   },
   {
     name: 'n8n (self-hosted)',
-    note: 'The factory floor for every recurring agentic workflow.',
+    note: 'The factory floor for every recurring agentic workflow. Templates ship with the newsletter.',
   },
   {
     name: 'Claude Code · Codex · OpenClaw',
-    note: 'Coding agents, in that order of daily use.',
+    note: 'Coding agents, in that order of daily use. Each one rotates through depending on the task.',
   },
   {
     name: 'Postgres + pgvector',
-    note: 'Default for vector storage when a use case outgrows flat files.',
+    note: 'Default for vector storage when a use case outgrows flat files. Boring, fast, audit-friendly.',
   },
   {
     name: 'Caddy + Tailscale',
@@ -71,12 +71,38 @@ const SOFTWARE = [
   },
 ]
 
-const MODELS = [
-  { name: 'GLM-4 9B Q8_0', use: 'Default agentic loop. Best instruction-following under 10B in my testing.' },
-  { name: 'Qwen 3 8B / 32B', use: 'Tool-calling and structured output. The 32B at Q4_K_M is the smartest model that still fits comfortably.' },
-  { name: 'Llama 3.3 8B', use: 'Tied with Qwen for fastest tool-heavy loops. Honest baseline.' },
-  { name: 'Gemma 3 27B Q4_K_M', use: 'When I want a slower, more thoughtful single-shot answer.' },
-  { name: 'Frontier APIs (Claude / GPT-5)', use: 'Reserved for the ~5% of turns where I genuinely need the smartest model in the world. A well-designed loop calls the frontier ~once per session.' },
+const MODELS_LOCAL = [
+  {
+    name: 'Qwen 3.6 27B Dense',
+    use: 'My default for agentic coding loops. Hits 77.2% on SWE-bench Verified — the 27B Dense actually beats Qwen\'s own 397B MoE flagship on coding tasks. Apache 2.0. Runs at Q5_K_M with room for full context.',
+  },
+  {
+    name: 'Gemma 4 31B Dense',
+    use: 'Default for UI generation with Tailwind. Google trained the family heavily on frontend code; the 31B Dense lands #3 on the open Arena leaderboard, ahead of every other open model with weights you can actually download. Apache 2.0.',
+  },
+  {
+    name: 'Gemma 4 26B MoE (3.8B active)',
+    use: 'Same family, MoE variant. Activates 3.8B of 26B per token, so latency feels like a small model with the quality of a big one. The right pick when I am running parallel agents and want throughput.',
+  },
+  {
+    name: 'Gemma 4 E4B',
+    use: 'On-device variant (~4.5B effective). The fast one. Tool routing, classification, structured-output extraction — anything that does not need depth.',
+  },
+]
+
+const MODELS_API = [
+  {
+    name: 'Kimi K2.6 (Moonshot AI)',
+    use: 'Best open-weights model I have found for natural-language → Awwwards-grade UI. Coding-driven design — ships React + Tailwind production code with animations, not mockups. 1T MoE / 32B active / 256K context / Modified MIT. Too big for local; I call it via API for interface work.',
+  },
+  {
+    name: 'DeepSeek V4 (Flash + Pro)',
+    use: 'Multimodal and spatial reasoning. V4 vision uses ~10× fewer KV-cache entries than Claude vision and beats GPT-5.4 on maze navigation 67% to 50%. Diagram parsing, screenshot-to-code, document extraction. 1M context, MIT. API for now; the 284B Flash might fit local at heavy quantization eventually.',
+  },
+  {
+    name: 'Frontier API (Claude / GPT-5)',
+    use: 'Reserved for the ~5% of agentic turns that genuinely need the smartest model in the world. A well-designed loop calls the frontier ~once per session, not eighty times.',
+  },
 ]
 
 export default function StackPage() {
@@ -84,7 +110,8 @@ export default function StackPage() {
     <div className="space-y-12">
       <PageHeader
         title="stack"
-        description="The exact hardware, software, and models powering this site, my agents, and every consulting engagement. Reproducible, auditable, local-first."
+        meta="May 2026 · subject to drift"
+        description="The exact hardware, software, and open-weight models I run. Reproducible, auditable, local-first. Prices and pretty diagrams not included."
       />
 
       <section>
@@ -122,11 +149,37 @@ export default function StackPage() {
       </section>
 
       <section className="border-t border-border pt-10">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-          Models I actually use
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
+            Open-weight models I run locally
+          </h2>
+          <Badge variant="tag">Apache 2.0</Badge>
+        </div>
+        <p className="text-xs text-muted mb-4 leading-relaxed">
+          I do not run Llama. The 2026 open-weight frontier shifted decisively to Qwen, Gemma, Kimi, and DeepSeek.
+        </p>
         <div className="divide-y divide-border">
-          {MODELS.map(({ name, use }) => (
+          {MODELS_LOCAL.map(({ name, use }) => (
+            <div key={name} className="py-5 first:pt-0 last:pb-0">
+              <h3 className="font-mono text-sm text-fg mb-1">{name}</h3>
+              <p className="text-sm text-muted leading-relaxed">{use}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-border pt-10">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
+            Models I call via API
+          </h2>
+          <Badge variant="tag">when local won't cut it</Badge>
+        </div>
+        <p className="text-xs text-muted mb-4 leading-relaxed">
+          A 1T-parameter MoE does not fit on a laptop. For the tasks where it earns the bill, I pay the bill.
+        </p>
+        <div className="divide-y divide-border">
+          {MODELS_API.map(({ name, use }) => (
             <div key={name} className="py-5 first:pt-0 last:pb-0">
               <h3 className="font-mono text-sm text-fg mb-1">{name}</h3>
               <p className="text-sm text-muted leading-relaxed">{use}</p>
@@ -140,8 +193,8 @@ export default function StackPage() {
           Configs &amp; dotfiles
         </h2>
         <p className="text-sm text-muted leading-relaxed">
-          The ROCm install commands, GART kernel parameters, llama.cpp build flags, and n8n workflow templates
-          will land on{' '}
+          The ROCm install commands, GART kernel parameters, llama.cpp HIP build flags, n8n workflow templates,
+          and the MCP bridge config for Ollama will land on{' '}
           <a
             href="https://github.com/sudosoph"
             target="_blank"

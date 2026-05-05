@@ -164,7 +164,7 @@ If you're at the *what should I actually try* stage, here is the order I'd recom
 
 1. **Local stdio servers, no network.** Filesystem, git, memory. Configure them in Claude Code or Cursor. Watch the agent navigate your repo with intent. This is the "oh, that's what they mean" moment.
 2. **A custom server in FastMCP.** Pick one tedious internal task (export a CSV from your CRM, run a deploy script, look up a customer's billing status) and write a 30-line MCP server for it. The act of *naming the tool* is the unlock — once the agent has it, it'll use it correctly far more often than you expect.
-3. **The Ollama bridge.** Install `jonigl/mcp-client-for-ollama`, point it at the same `mcpServers` config, and run the same workflow against a local Qwen3 8B or GLM-4 9B. You'll lose some intelligence relative to Sonnet 4. You'll also cut your daily token spend to zero. For the 80% of tasks that are routing, classifying, and tool-calling, the local model is fine.
+3. **The Ollama bridge.** Install `jonigl/mcp-client-for-ollama`, point it at the same `mcpServers` config, and run the same workflow against a local Qwen 3.6 27B or Gemma 4 26B MoE. You'll lose some intelligence relative to Sonnet 4. You'll also cut your daily token spend to zero. For the 80% of tasks that are routing, classifying, and tool-calling, the local model is fine.
 4. **Sandboxing.** Once you trust the tools, tighten the noose. `docker/cagent` for containerized execution. Network egress disabled by default. Allowlist what you actually need. The blast radius shrinks dramatically.
 5. **A second client.** Run the same servers from two different clients. Cursor and Claude Code, or Claude Desktop and Zed. The protocol guarantees portability; treat that guarantee like a property test. Anything that breaks across clients is something you depended on that you shouldn't have.
 
@@ -182,4 +182,4 @@ MCP is not magic. It's a wire format with a handshake and some good defaults. Wh
 
 If you're a founder, you should be running it locally before you bother with the cloud version. If you're an engineer, you should write at least one server for something boring you do every week. If you're a security person, the lethal trifecta is the threat model that matters and you should already be auditing your host's sandboxing story.
 
-The full configs and the working Ollama bridge setup will land on [github.com/sudosoph](https://github.com/sudosoph) shortly. If you want a notification when the OSS tooling drops, the newsletter is the place. If you want it set up in your office by next week, [that's what consulting is for](/work-with-me).
+The full configs and the working Ollama bridge setup will land on [github.com/sudosoph](https://github.com/sudosoph) shortly. If you want a notification when the OSS tooling drops, the newsletter is the place. If you want it set up in your office by next week, [that is what an engagement looks like](/work-with-me).

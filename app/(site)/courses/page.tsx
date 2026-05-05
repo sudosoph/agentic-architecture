@@ -36,11 +36,11 @@ const COURSES: Course[] = [
     status: 'Coming soon',
   },
   {
-    name: 'Private RAG from Scratch',
+    name: 'Private Context Engineering',
     audience: 'Developers',
     format: 'Project-based · 6 hrs',
     description:
-      'Ship a working private-RAG app on your own hardware. PDFs in, grounded answers out, zero cloud dependency. Code-along, not lecture.',
+      'Standard RAG is dead in 2026 — it has been replaced by agentic retrieval, context engineering, and bifurcated reasoning loops. Ship a working private-knowledge agent on your own hardware that does it right. PDFs in, grounded answers out, zero cloud dependency.',
     status: 'Coming soon',
   },
   {

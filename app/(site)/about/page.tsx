@@ -1,20 +1,19 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { PageHeader } from '@/components/ui/page-header'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Sophia Stein — Sovereign AI Architect. Local-first LLM infrastructure, consulting, and open-source tools from Boulder, CO.',
+    'Sophia Stein — AI Architect. Local-first LLM infrastructure, agentic systems, and OSS tools from Boulder, CO.',
 }
 
-const STACK = [
-  { label: 'Hardware', items: ['Framework 16', 'Ryzen AI 9 HX 370 (Strix Point)', 'Radeon 890M / RX 7700S', '96GB DDR5'] },
-  { label: 'Inference', items: ['ROCm 7.3', 'llama.cpp (HIP)', '90GB GART pool', '28.4 t/s GLM-4 9B Q8_0'] },
-  { label: 'OS / Tools', items: ['Ubuntu 26.04', 'Ollama', 'Open WebUI', 'n8n', 'OpenClaw'] },
-  { label: 'Site Stack', items: ['Next.js 16', 'Tailwind 4', 'Cloudflare Workers', 'Keystatic CMS'] },
+const NOW = [
+  { label: 'Now writing', body: 'The Agentic Audit — a 20% / 80% framework for finding agent-ready tasks in any business.' },
+  { label: 'Now shipping', body: 'apu-config — one-command AMD APU optimizer for ROCm 7.3, GART tuning, and llama.cpp HIP builds.' },
+  { label: 'Now reading', body: 'Conference notes from AI Agent Conference NYC and AI Dev SF, parsed into the next ten posts.' },
+  { label: 'Now speaking', body: 'Boulder Startup Week 2026 · agentic architecture for lean teams.' },
 ]
 
 export default function AboutPage() {
@@ -23,67 +22,65 @@ export default function AboutPage() {
       <PageHeader
         title="about"
         meta="Sophia Stein · Boulder, CO"
-        description="I build local-first AI infrastructure and help engineers and businesses stop depending on cloud APIs."
+        description="I design and ship local-first AI infrastructure. Same agents I build for clients run my business — booking, payments, content, triage."
       />
 
       {/* Bio */}
       <section className="space-y-4 text-sm text-muted leading-relaxed max-w-2xl">
         <p>
-          I'm an AI engineer and consultant focused on one thing: making powerful language
-          models run locally, reliably, and fast. Not as a philosophical stance — as a practical
-          advantage. Local inference is cheaper, faster for latency-sensitive workloads, and
-          gives you data ownership that no cloud provider can match.
+          I'm an AI architect. Not a researcher, not a hype merchant, not a
+          consultant who reads about AI on flights — a builder who designs
+          agentic systems for lean teams and ships them on hardware they own.
+          The benchmarks on this site are real numbers from this laptop. The
+          OSS projects are the same tools I use to run my business.
         </p>
         <p>
-          My current workstation runs{' '}
-          <span className="font-mono text-bench">28.4 t/s</span> on GLM-4 9B Q8_0 using ROCm 7.3
-          with a 90GB GART pool on an AMD Strix Point APU. That's production-grade throughput on
-          a laptop form factor. The benchmark matters because it's the proof of concept — every
-          client I work with gets a setup that actually performs.
+          The work falls into three audiences. <strong className="text-fg">Engineers and
+          technical founders</strong> who want depth — reproducible benchmarks, real
+          configurations, the protocols underneath the marketing. <strong className="text-fg">Operating
+          businesses</strong> who want a different answer than another monthly bill from
+          OpenAI — automated workflows on local infrastructure that get cheaper
+          as the models get better. <strong className="text-fg">Organizations</strong> that need
+          their engineers ramped on agentic tooling without sending them to a
+          generic bootcamp.
         </p>
         <p>
-          I work across two audiences. Engineers who want depth: reproducible benchmarks,
-          open-source tooling, the real configuration behind the numbers. And SMBs who want a
-          different answer: stop sending $500/month to OpenAI, run the equivalent model locally,
-          automate the workflows that are eating your team's time.
-        </p>
-        <p>
-          The third thing, and the one I find most interesting: this business runs on the same
-          agents I build for clients. Booking, payments, content syndication, inbox triage,
-          community management — all agentic, all local where possible. I'm not available 24/7.
-          My agents are. Every workflow I automate for myself becomes a blog post, then an OSS
-          tool, then a consulting offering.
+          The thing I find most interesting, and the practice that informs everything
+          I write: this business runs on the same agents I build for clients. Booking,
+          payments, content syndication, inbox triage, community moderation — all
+          agentic, all local where local makes sense. I'm not available 24/7. My
+          agents are. Every workflow I automate for myself becomes a blog post,
+          then an OSS tool, then an engagement.
         </p>
       </section>
 
-      {/* Stack */}
+      {/* Now */}
       <section>
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
-          Current Stack
+          Now
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border">
-          {STACK.map(({ label, items }) => (
-            <div key={label} className="bg-bg p-5">
-              <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-3">
+        <div className="divide-y divide-border">
+          {NOW.map(({ label, body }) => (
+            <div key={label} className="py-4 first:pt-0 last:pb-0 flex items-baseline gap-4">
+              <span className="font-mono text-xs text-bench uppercase tracking-wider shrink-0 w-32">
                 {label}
-              </h3>
-              <div className="flex flex-wrap gap-1.5">
-                {items.map(item => (
-                  <Badge key={item} variant="tag">
-                    {item}
-                  </Badge>
-                ))}
-              </div>
+              </span>
+              <span className="text-sm text-muted leading-relaxed">{body}</span>
             </div>
           ))}
         </div>
+        <p className="font-mono text-xs text-muted mt-4">
+          For the full hardware + software + models I run, see{' '}
+          <Link href="/stack" className="text-accent hover:underline">/stack</Link>.
+        </p>
       </section>
 
       {/* Philosophy */}
       <section className="border-l-2 border-accent pl-5">
         <p className="font-mono text-sm text-fg leading-relaxed">
-          "The goal is sovereign compute — infrastructure you control, that improves
-          continuously, and that compounds into an unfair advantage."
+          "Sovereign compute is not a philosophy. It is the cheapest, fastest, and
+          most defensible substrate for running agentic systems in 2026 — and the
+          only one that compounds in your favor."
         </p>
       </section>
 
