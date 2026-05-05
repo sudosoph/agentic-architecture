@@ -5,44 +5,51 @@ import { Button } from '@/components/ui/button'
 export const metadata: Metadata = {
   title: 'Work With Me',
   description:
-    'Consulting on local LLM infrastructure, agentic workflow automation, and AI cost reduction. From $299/hr.',
+    'Corporate AI training, speaking engagements, custom course creation, and agentic workflow consulting. Book a discovery call.',
 }
 
 const SERVICES = [
   {
-    name: 'Workflow Automation Audit',
+    name: 'Corporate AI Training',
+    price: '$5k–$15k',
+    duration: 'half / full day',
+    description:
+      'On-site or remote workshops for engineering and ops teams. Hands-on labs covering local inference, agentic workflow design, MCP, and the cost math behind moving off frontier APIs. Materials and recordings included.',
+  },
+  {
+    name: 'Speaking Engagements',
+    price: 'custom',
+    duration: 'keynote / talk',
+    description:
+      'Keynotes, conference talks, and podcast appearances on sovereign AI, agentic architecture, and the economics of local-first inference. Recent topics: the 96GB RAM thesis, MCP as an OS layer, the $0.01 micro-agent.',
+  },
+  {
+    name: 'Custom Course Creation',
+    price: '$10k+',
+    duration: 'project',
+    description:
+      'Built-for-you internal courses for engineering orgs. Curriculum design, recorded modules, hands-on exercises, and assessment. Useful when you need to ramp 50+ engineers on agentic tooling without sending them to a generic bootcamp.',
+  },
+  {
+    name: 'Agentic Workflow Audit',
     price: '$499',
     duration: '90 min',
     description:
-      'We map your current AI spend, identify the highest-ROI automation targets, and you leave with a concrete action plan. SMB entry point.',
+      'We map your current AI spend, identify the 20% of your tasks that are agent-ready, and you leave with a concrete action plan. The SMB entry point.',
   },
   {
-    name: 'Local LLM Setup',
-    price: '$1,500–$3,000',
+    name: 'Done-for-You Build',
+    price: '$2k–$5k',
     duration: 'project',
     description:
-      'Full local inference stack: hardware selection or audit, ROCm/CUDA tuning, model selection, Ollama/Open WebUI config, benchmarking report.',
+      'End-to-end agentic workflow implementation. Local-first where it makes sense, n8n + MCP for orchestration, and your existing tools wired in. Delivered, documented, and running.',
   },
   {
-    name: 'Done-for-You Workflow Build',
-    price: '$2,000–$5,000',
-    duration: 'project',
-    description:
-      'End-to-end agentic workflow implementation using n8n, local LLMs, and your existing tools. Delivered, documented, and running.',
-  },
-  {
-    name: 'Hourly Consulting',
-    price: '$299–$500/hr',
+    name: 'Hourly / Retainer',
+    price: '$299–$500/hr · $500/mo',
     duration: 'flexible',
     description:
-      'Architecture reviews, debugging sessions, code reviews, or strategic calls. Book a block and use it as needed.',
-  },
-  {
-    name: 'Monthly Retainer',
-    price: '$500/mo',
-    duration: 'ongoing',
-    description:
-      'For SMBs who want ongoing access: async Q&A, monthly office hours call, priority response, and a living automation roadmap.',
+      'Architecture reviews, debugging sessions, or ongoing async access. The retainer is built for SMBs who want a phone-a-friend for AI decisions and a living automation roadmap.',
   },
 ]
 
