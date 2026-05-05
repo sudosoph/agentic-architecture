@@ -40,7 +40,7 @@ The first version is auto-generated and ignored. The second one earns a reply.
 
 ## The architecture
 
-Three stages, each running locally on the Framework 16 unless explicitly noted.
+Three stages, glued together with n8n.
 
 ```
 [Stage 1] Target list
@@ -51,11 +51,11 @@ Three stages, each running locally on the Framework 16 unless explicitly noted.
 [Stage 2] Research agent
    - Apify MCP server: scrapes news, LinkedIn, careers page
    - Firecrawl MCP server: deep crawl of company site
-   - Local model: Qwen 3.6 27B (research and structuring)
+   - Tool-calling LLM (research and structuring)
    - Output: dossier per prospect (markdown, ~1KB each)
 
 [Stage 3] Drafter
-   - Local model: Qwen 3.6 27B (with voice rules)
+   - Drafting LLM (with voice rules)
    - Inputs: dossier + voice.md + ICP-specific opener templates
    - Output: drafted opener + 2 follow-ups, queued for human review
 ```
@@ -120,10 +120,10 @@ Dossier:
 {paste dossier here}
 
 Offer:
-Sophia helps growth-stage companies set up local-first AI infrastructure
-that cuts cloud-API spend by 70-90% without losing capability. Recent
-work: 28.4 t/s sustained on a Framework 16, ~$3 a day for what was a
-$3,000/mo OpenAI bill.
+Sophia is an AI Architect who helps growth-stage companies design
+agentic systems that compound. Recent work: rebuilt a customer-success
+team's triage agent so a 3-person team handles 8x the inbound at the
+same headcount.
 
 Draft three variants. The human will pick one or none.
 ```

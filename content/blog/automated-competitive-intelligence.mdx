@@ -31,7 +31,7 @@ The frequencies match the rate of actual change. Pricing pages are the highest-l
 
 ## The architecture
 
-Three stages, all running locally on a Framework 16 plus a small Hetzner box for the cron jobs.
+Three stages, an n8n-driven cron-and-queue architecture you can host anywhere.
 
 ```
 [Stage 1] Schedulers (n8n cron flows)
@@ -45,7 +45,7 @@ Three stages, all running locally on a Framework 16 plus a small Hetzner box for
    - Stored as dated snapshots in Postgres
    - Diff computed against last snapshot
 
-[Stage 3] Classifier + summarizer (local model: Qwen 3.6 27B)
+[Stage 3] Classifier + summarizer (small tool-calling model)
    - Classifies each diff into one of five categories
    - Summarizes the diff in one sentence
    - Scores it for signal strength (0-3)

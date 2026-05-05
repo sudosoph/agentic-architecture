@@ -90,7 +90,7 @@ A real query that touches all four types: the agent is asked to "fix the same bu
 
 1. **Procedural.** Load `debug/SKILL.md` by name. The skill describes how to debug systematically.
 2. **Episodic.** Vector query the event log for "bug Tuesday." Returns three candidate events from last week.
-3. **Semantic.** Query the knowledge graph for facts related to those events ("we run Qwen 3.6 27B on ROCm 7.3," "the bug class is iGPU memory overflow").
+3. **Semantic.** Query the knowledge graph for facts related to those events ("the team uses Postgres with pgvector," "the bug class is connection-pool exhaustion").
 4. **Contextual.** Load the most relevant 5K tokens of the three into the working window. Discard the rest.
 
 The agent now has procedural knowledge of how to debug, specific recall of what happened Tuesday, semantic knowledge of the system, and a tight working context. Total context: under 15K tokens. The model is sharp. The query is grounded.

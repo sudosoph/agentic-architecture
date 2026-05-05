@@ -89,16 +89,6 @@ What the panel mentioned, with annotations.
 
 **[Linear MCP server](https://linear.app/changelog)** : first-party. The right way to give a coding agent ticket context.
 
-## Where local-first matters here
-
-The coding agent that runs locally is fundamentally different from the one that runs cloud-only. Two specifics.
-
-**Source code does not leave the machine.** Most cloud coding harnesses send your codebase to the model provider. For regulated industries, internal tools, and any project where the code itself is sensitive, this is a non-starter. Local Qwen 3.6 27B running on a [Framework 16](/blog/framework-for-builders) handles 95% of coding-agent workloads without anything leaving the laptop.
-
-**The cost curve is different.** A team running 5 engineers at heavy daily Sonnet 4.5 usage is paying $50-100/day in API costs. The same team on a hybrid local-first setup uses local for the routing and tool-calling 80% of work and Sonnet for the hard 20%. Cost drops by 60-70% with the same shipping velocity.
-
-The hybrid stack is the actual production answer. Pure-cloud is a tax. Pure-local misses the 5% where frontier models still earn the bill.
-
 ## The takeaway
 
 The coding agent is solved. The infrastructure around the coding agent is what decides which teams ship. Skills as the durable onboarding artifact. Review pipelines that filter before the human looks. Daily automation that compounds. Cost-effective harness that routes per-task. None of this is research. All of it is shipping in 2026 production teams. The teams investing in the harness are pulling ahead. The teams thinking the model is the work are about to find out otherwise.

@@ -105,20 +105,6 @@ Three things to notice:
 
 This is the industrial version of multi-agent. The hobbyist version (let agents call each other dynamically) is what fails in production.
 
-## The local-first dividend
-
-The swarm pattern was always the right architecture. What changed in 2026 is that the cost per agent dropped to a level where the swarm is also the cheapest. Two axes:
-
-**Cheap cloud models.** DeepSeek V4 Flash at $0.14/$0.28 per million is below the floor where most teams' break-even-vs-self-host calculations used to sit. Five DeepSeek workers per turn cost what one Sonnet 4.5 turn costs.
-
-**Local fan-out is free.** On a Framework 16 with 96GB unified memory running Qwen 3.6 27B for the executor and Gemma 4 26B MoE for the parallel workers, the entire swarm runs at electricity rates. ~65W sustained × 4 hours × $0.13/kWh = three cents per session. The fan-out cost is not "how many agents." It is how many tokens per second the hardware sustains. On a maxed-out APU, enough to keep five workers fed in parallel.
-
-What this unlocks:
-
-- Critics get to be expensive. Three turns of the critic arguing with the executor is the largest quality unlock in agentic design. Paywalled by token cost on metered APIs. Free at home.
-- Loops can run unattended. A research agent that wakes every 15 minutes is a $300/month subscription on cloud APIs and the same as leaving Slack open at home.
-- Experiments stop being budget meetings.
-
 ## When the monolith still wins
 
 The honest list:
