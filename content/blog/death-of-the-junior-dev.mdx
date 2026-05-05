@@ -1,0 +1,80 @@
+---
+title: "The Death of the Junior Dev"
+slug: death-of-the-junior-dev
+publishedDate: "2026-05-12"
+description: "What agentic workflows are actually doing to entry-level engineering, and what to do about it."
+tags: ["careers", "agents", "ai-native-teams", "hiring"]
+draft: false
+---
+
+**TL;DR.** The hiring data is unambiguous. AI-native startups are shipping with 4 to 6 engineers what used to take 30 to 50. A defense-tech startup recently sold at over $30M ARR with 4 engineers. CrewAI ships 42% AI-authored code. Google ships 75%. The story everyone wants to tell is "junior devs are dead." That story is wrong in one important way and right in another. The actual change is that the rung labeled junior was always doing the work LLMs are best at. The rung is going away. The career path is not.
+
+## What changed
+
+Three numbers from the last six months establish the trend:
+
+- **Google: over 75% of code AI-authored** (Paige Bailey, AI Dev SF, April 28).
+- **CrewAI: 42% AI-authored last week** (Joe Moura, AI Agent Conf NYC, May 4).
+- **Defense-tech startup at $30M ARR with 4 engineers** (Jai Das, Sapphire Ventures).
+
+The marginal-cost-of-code curve dropped an order of magnitude in 2025 and dropped again in 2026. The job that used to be "implement the spec the senior wrote" is now an LLM doing it in five seconds. That job was 80% of what entry-level engineering looked like. It is gone.
+
+## What did not change
+
+A few things the discourse keeps getting wrong.
+
+**The senior career path is not gone.** The work senior engineers do (architecture decisions, system design, debugging cross-system failures, mentoring, code review at depth, product instinct) is the work LLMs are worst at. That work is more valuable now, not less, because there is more code being produced and someone has to review it.
+
+**The product-management bottleneck is real.** Andrew Ng made this point at AI Dev SF: when the SWE feedback loop speeds up 10x, every other function (PM, design, legal, marketing) becomes the bottleneck. The PM-to-engineer ratio is trending toward 1:1. The fastest teams collapse PM and engineer into the same person.
+
+**The reviewing job is the new job.** Marc Brooker from AWS framed this at AI Dev SF: agentic AI is gated by defects, not capability. Every team I have worked with this year is hitting the same wall, review throughput, not generation throughput. Senior engineers spend their day reading diffs, not writing them.
+
+**Entry-level hiring still happens.** It happens differently. The companies hiring juniors today are looking for a different shape than the ones hiring two years ago.
+
+## What junior devs should actually do
+
+Tactical, ranked by leverage.
+
+1. **Become an excellent reviewer.** The job is not writing code. It is judging code. Read every diff slowly until you can tell, in 30 seconds, whether the agent did the right thing. If you cannot tell, you do not know the codebase well enough yet, and that is the gap to close.
+
+2. **Write the specifications, not just the code.** Take a vague intent ("we should make this faster") and turn it into a concrete agent-runnable plan ("here are the three places to look, here are the constraints, here is the success metric"). This is closer to what a tech lead used to do than what a junior used to do. Doing it earlier in your career is the unlock.
+
+3. **Master one harness, then a second.** Pick Claude Code or Cursor or Codex. Get fluent enough that the harness is invisible. Then learn a second one. The teams shipping fastest rotate between two harnesses depending on the task. Knowing only one is the new "I only know vim."
+
+4. **Understand the system, not just the file.** Old job: implement the function. New job: understand why the function exists, what calls it, what it depends on, what changes downstream when it changes. The agent will write the function. You will own the consequences.
+
+5. **Debug at the boundary between systems.** Where two services meet, where the agent and the human meet, where the model and the tool meet. The bugs in 2026 systems live at boundaries. The training data is thin. Engineers who can debug there are scarce.
+
+6. **Develop product instinct early.** When the engineer-to-PM ratio is 1:1, the engineers who can decide what to build are dramatically more valuable than the ones who can only decide how to build it.
+
+## What seniors should do
+
+The senior job changed less than the junior job, but it changed enough that ignoring it is malpractice.
+
+1. **Mentor differently.** The traditional path (let the junior write code, review it, give feedback) is being replaced by the AI feedback loop. Your mentees will get fast tactical feedback from the agent. Your job is the slow strategic feedback the agent cannot give: judgment about what not to build, taste about what feels right, context about why the code is shaped the way it is.
+
+2. **Author the constraints.** AGENTS.md, CLAUDE.md, .cursorrules, project memory, hooks. These are the new architecture documents. They encode the team's taste in a form the agents read. Senior engineers who do not author these are leaving the most leveraged work on the table.
+
+3. **Run the per-component evals.** A monolithic agent is a black box. A decomposed swarm has measurable boundaries. Senior engineering in 2026 includes setting up the eval harness that tells you whether the team is shipping at 65% or 95% accuracy, per component.
+
+4. **Get fluent with two stacks, cloud and local.** The teams that win in 2026 run hybrid: 95% local for routing/classifying/drafting, 5% frontier API for the genuinely hard turns. Senior engineers who only know cloud are paying a tax. Senior engineers who only know local are missing the 5%. Both fluencies are required.
+
+## What hiring managers should do
+
+Three rules I have watched work.
+
+1. **Stop hiring juniors to write code.** The role does not exist anymore. The job that did exist (write the spec the senior gave you) is the job the agent does in seconds at near-zero cost. Hiring for it produces frustration on both sides.
+
+2. **Hire generalists with one deep skill.** The shape that works in AI-native teams is the T: deep in one technical area (frontend, infra, data, ML), wide everywhere else (product, design, sales, ops). Specialists with no T are overfit. Generalists with no spike are unmoored. T-shaped people are scarce and the AI-native teams pay above market for them.
+
+3. **Hire for taste, not throughput.** Throughput is an LLM problem. Taste is a person problem. Test for it: ask candidates to review a deliberately bad agent-generated PR. The ones who flag the right things, in the right order, with the right tone, are the ones who can actually do the new job.
+
+## The honest part
+
+The painful side is real. Entry-level CS jobs are down. Bootcamp graduates without distinguishing skills are struggling. The supply of new graduates has not adjusted. The demand has shifted to a shape most CS programs have not started teaching for.
+
+The optimistic side is also real. Per-engineer ARR is going up. Small teams with the right composition are doing things that needed venture rounds eighteen months ago. The career path of shipping product end-to-end as a generalist is more accessible than it has been in twenty years. The barrier moved from headcount to taste.
+
+## The takeaway
+
+The job did not die. The rung did. If you are a junior dev, climb to the rung that exists by becoming an excellent reviewer, an early product thinker, and the person on the team who can debug across system boundaries. If you are a senior, your work just got more leveraged. If you are hiring, hire for the shape of the work you actually have, not the org chart you used to have.

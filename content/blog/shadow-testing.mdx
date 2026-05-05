@@ -1,0 +1,118 @@
+---
+title: "Shadow Testing"
+slug: shadow-testing
+publishedDate: "2026-05-09"
+description: "The single highest-leverage decision when shipping mission-critical autonomous agents. Production is the only truth."
+tags: ["agents", "production", "testing", "evals"]
+draft: false
+---
+
+**TL;DR.** A real production agent processing 1-in-10 US private payrolls hit 100% accuracy on golden tests in month one, then dropped to 70% the moment it saw live traffic. Six months later it shipped at 98%. The single highest-leverage decision in that entire engineering effort was running shadow mode in parallel with humans for four weeks before anyone touched a customer. Production is the only truth. If you are not shadow testing, you are guessing.
+
+## The number that should be on every agent team's wall
+
+Bain & Company shipped production data at AI Agent Conference NYC on May 4. The system: an autonomous payroll agent that reads inbound customer emails, enters hours into the system of record, and replies to the client. Built for an HR services company that handles 1-in-10 private payrolls in the US.
+
+Architecture: 8 LangGraph subgraphs, manager/worker pattern. MCP servers connecting to core systems. Schema and plausibility validators between every step. A control tower for live + shadow traffic in one view.
+
+The accuracy curve over six months:
+
+| Month | Stage              | Accuracy |
+|-------|--------------------|----------|
+| 1     | Golden tests       | ~100%    |
+| 2-4   | Offline historical | drops to ~85% |
+| 5-6   | Shadow mode (live) | 70% → 98% |
+
+The drop from 100% to 70% is the part nobody talks about. The recovery from 70% to 98% is the part that actually ships systems.
+
+## Why offline evals lie
+
+Three reasons golden tests over-predict.
+
+**Selection bias.** Curated datasets are picked by the team building the system. They look like the problem the team thinks they are solving. Real customers do not write emails the way the data scientist imagined.
+
+**No interlock cases.** Two requests arrive in different time zones. Two human teams pick up the same ticket simultaneously. Two systems try to commit conflicting state. None of that exists in your historical extract because the original logs already deduplicated. The agent meets it for the first time in production.
+
+**Distribution drift.** The real distribution of inputs changes month to month. Last quarter's data is already stale. By the time the agent ships, the curated set is six months behind.
+
+The cure is not better historical data. It is *parallel testing in production with no customer exposure*.
+
+## What shadow mode actually is
+
+Shadow mode means the agent receives every real production input, processes it, records its output, and is *prevented from acting*. Read-only access to source systems. No writes. No customer-facing replies. No money moves. Outputs go to a shadow database. Humans handle the actual work in parallel. An auto-evaluator compares the two after the human finishes.
+
+Concretely, the Bain payroll setup:
+
+```
+Real customer email
+       ↓
+   ┌───┴───┐
+   ▼       ▼
+Human   AI agent (shadow)
+specialist  ↓
+   ↓     [read-only access]
+   ↓     [records all actions]
+   ↓     [no writes]
+   ▼       ▼
+ Real    Shadow
+ ticket  database
+   ↓       ↓
+   └───┬───┘
+       ▼
+  Auto-evaluator
+       ↓
+  Pass / Fail / Edge case
+```
+
+Three thousand emails per day, four weeks straight. No customer ever saw the agent's output. The team learned where it broke without anyone losing money.
+
+## The signals shadow mode actually produces
+
+Two signals that matter, both invisible offline:
+
+**AI correct + human correct.** The agent agrees with the gold standard on real inputs. This is the green path. Tells you which categories of input the agent can handle autonomously.
+
+**AI correct + human wrong.** The agent does the right thing where the human escalated, took a shortcut, or made a mistake. This was the surprise in the Bain data. About 5% of the time the agent was *more correct than the specialist*. Useful, because it is the only honest signal that autonomy can be increased on a category.
+
+The other two cases (AI wrong + human correct, both wrong) are the negative signals. They tell you what to fix and what to escalate.
+
+You cannot get either of the positive signals from offline evals. The human is not there to compare against. Production is the only place both signals exist together.
+
+## Edge cases shadow mode catches
+
+Real inputs from the Bain four-week shadow run. None of these existed in any historical extract:
+
+- Customer requested payroll for a period that was already closed (historical pay period). Required escalation.
+- Customer sent the same request twice from different time zones. Two specialists picked it up simultaneously. Interlock condition.
+- Typos in employee names ("Bob" when nobody named Bob exists, but Robert does).
+- Vague references ("new hire from Monday").
+- Mixed regional time formats in one thread.
+- Conflicting instructions inside one email thread (request, then partial retraction, then amendment).
+- Hand-drawn notes in attachment screenshots.
+- Impossible numbers (negative hours, unrealistic rates).
+
+Every one of these is the kind of thing a competent engineer would say "of course we will handle that" and then fail to handle. Shadow mode forces the team to actually catch them, in real distribution, before any customer is exposed.
+
+## What to instrument
+
+The accuracy number is the headline. The infrastructure that produces it is the substance. Five things every shadow setup needs:
+
+1. **Read-only adapters** for every source-of-truth system. The agent must see the same data the human sees, but cannot mutate it.
+2. **Action recording** at every subgraph boundary. Not just final output. The actions the agent *would* have taken at each step, with the inputs that drove the decision.
+3. **Auto-evaluator hooks** that fire after the human ticket closes. Compare AI shadow trace to human resolution. Score per-step, not just per-outcome.
+4. **A control tower** for fleet visibility. Live and shadow traffic in one view. Sankey diagrams of path outcomes. Per-interaction log exploration. Without this, only the engineer who built the agent understands what is happening.
+5. **A killswitch** (Service Bus pattern). The moment shadow exposes a class of failure you cannot fix forward, the killswitch stops new shadow traces from being generated. You investigate, fix, then resume.
+
+## When local-first matters here
+
+Shadow mode generates production-volume traces of agent reasoning. At Bain's 3K emails per day, that is 3K full agent traces. Each trace contains the system prompt, the tool catalog, the reasoning history, the validator outputs, the action plan, the diff to the would-be system state.
+
+On a metered API, paying full Sonnet 4.5 rates to generate shadow traces at 3K per day is a budget item. ~6.5M input + 432K output per session, multiplied by enough developers running shadow tests, is real money.
+
+On hardware you own, shadow mode is electricity. You run the agent in shadow against the same volume the production system sees, for as long as you want, at no marginal cost. You can leave it shadow-running through the night for a month while you tune. The Bain team had four weeks at 3K/day. Most teams never get there because the API bill kills the experiment first.
+
+## The takeaway
+
+If you skip one thing in this list, skip golden tests. They are useful as smoke tests but they over-predict and waste time. If you skip nothing, run them, then offline historical, then shadow. The shadow phase is where mission-critical autonomy is earned. The 70% number you see when shadow first goes live is not the agent failing. It is the curated dataset being wrong about the real world.
+
+The secret to successful agents in enterprise is not the agents. It is the scaffolding around the agents that lets you trust them, and shadow mode is the scaffolding that converts demos into production systems.

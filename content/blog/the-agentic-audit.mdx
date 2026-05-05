@@ -1,0 +1,116 @@
+---
+title: "The Agentic Audit"
+slug: the-agentic-audit
+publishedDate: "2026-05-11"
+description: "A framework for finding which 20% of your tasks are agent-ready, before you spend a dollar on building agents."
+tags: ["smb", "agents", "audit", "automation"]
+draft: false
+---
+
+**TL;DR.** Most companies trying to add agents lose the first six months building agents for tasks that should not have been automated. The fastest 30% of business value in 2026 comes from finding the *right* tasks before writing any code. This is the framework I run on every engagement: a 90-minute audit that classifies tasks across four axes, ranks them by agent-readiness score, and produces a punch list of the three to five workflows worth building first. No code, no model picks, no tools. Just decisions.
+
+## Why most agentic projects fail
+
+A finding from the AI Agent Conference NYC trust paradox panel: G2's latest report shows that the majority of buyers needed *more* human oversight than vendors promised. Same report: 9 of 10 of those same buyers said they would aggressively expand agent autonomy in the next year if they could.
+
+Both are true and both come from the same root cause. The buyers are not building agents for the wrong tasks because the agents are bad. They are building for the wrong tasks because they never decided which tasks were ready.
+
+The audit fixes the upstream decision. It does not need an LLM. It does not need an MCP server. It needs an honest 90 minutes with the people who do the actual work.
+
+## The four axes
+
+Every task in a business sits at coordinates on four scales. Score each from 1 to 5.
+
+**1. Task volume.** How many times per week does this happen?
+
+- 1 = once a quarter or less
+- 3 = several times a week
+- 5 = many times a day
+
+Volume drives ROI. An agent that runs once a quarter is rarely worth building. An agent that runs 200 times a day pays back fast.
+
+**2. Variability.** Does the task look the same every time, or different?
+
+- 1 = wild variation, every instance is different
+- 3 = predictable patterns with edge cases
+- 5 = same shape every time
+
+High variability is where naive automation fails and where agents earn the bill (LLMs handle variation deterministic scripts cannot). Very low variability is a deterministic-script job and does not need an LLM.
+
+**3. Consequence of error.** What happens if the agent gets it wrong?
+
+- 1 = catastrophic (money moves, regulated decision, legal exposure)
+- 3 = visible but recoverable
+- 5 = nobody notices
+
+The consequence axis controls the autonomy ceiling. High-consequence tasks need shadow testing, validators, and human-in-the-loop checkpoints. Low-consequence tasks can ship straight to production.
+
+**4. Existing structured signal.** Is the input data already structured, or do you have to extract it from email, PDFs, screenshots, voice?
+
+- 1 = unstructured, free-text inputs from anywhere
+- 3 = mostly structured with some extraction needed
+- 5 = clean API or database row in, clean output out
+
+Structured input is the cheapest agent to build. Unstructured input is where the modern stack earns its keep, but it costs more to ship and validate.
+
+## The agent-readiness score
+
+The score is not just the sum. It is a weighted formula that matches what actually predicts success in production:
+
+```
+agent_readiness = (volume × 2) + variability + (6 - consequence) + structured_signal
+```
+
+A few notes:
+- Volume counts double. ROI is dominated by frequency.
+- Consequence is *inverted* (`6 - consequence`). Lower consequence is better for early agents.
+- Variability and structured signal contribute equally.
+
+Maximum score: 25. Minimum: 5.
+
+## What the score actually means
+
+Tasks land in four buckets:
+
+| Score | Bucket                          | Action                              |
+|-------|---------------------------------|-------------------------------------|
+| 20-25 | **Ship now**                    | Build first. Highest ROI / lowest risk. |
+| 14-19 | **Ship with HITL**              | Build but require human approval per run. |
+| 8-13  | **Re-frame**                    | Decompose; usually a high-consequence task with a low-consequence subtask hiding inside. |
+| 5-7   | **Don't automate**              | Either too rare or too brittle. Spend the time on something else. |
+
+The Re-frame bucket is the part most teams skip. A senior accountant signing off on payroll is consequence-1 (catastrophic if wrong). The accountant *checking* employee hours against time-clock data before signing is consequence-4 and structured-signal-4. The first task is not agent-ready. The second is. *Decomposition unlocks tasks the original framing buried.*
+
+## Running the audit in 90 minutes
+
+Three phases.
+
+**Phase 1: list tasks (30 min).** With one operator from the team, list every task that recurs. Not categories. Not departments. Tasks. "Reply to inbound vendor follow-up." "Triage support tickets to the right queue." "Reconcile the bank statement against the QuickBooks export." Aim for 30 to 50 tasks. Most companies underestimate by half.
+
+**Phase 2: score (40 min).** Score each task across the four axes. Do this fast. Two-minute averages, not deep analysis. The score is wrong on individual tasks but converges to the right answer in aggregate.
+
+**Phase 3: rank and re-frame (20 min).** Sort by score. Look at the top 10 and the bottom 10. The top 10 are the candidates. The Re-frame bucket (scores 8-13) is the second pass: pick three, decompose them into subtasks, score the subtasks, and see if any sub-task makes it into the top 10.
+
+You leave the audit with a ranked list of 3 to 5 workflows that should ship first. No code. No model picks. No tools. Just decisions.
+
+## Two examples from real engagements
+
+**Customer-service ticket triage** (real engagement, March 2026). Volume 5, variability 3, consequence 4, structured signal 4. Score: `(5×2) + 3 + (6-4) + 4 = 19`. Ship with HITL. Built it. Two-week ramp from 0% to 60% auto-routed correctly. Human approves; agent learns from the override.
+
+**Outbound sales sequencing** (different engagement, April 2026). Volume 4, variability 2, consequence 3, structured signal 2. Score: `(4×2) + 2 + (6-3) + 2 = 15`. Borderline. Decomposed: the *research* sub-step (scrape news + LinkedIn + financials before drafting) scored 23. The *send* sub-step scored 8. Built the research agent, kept human-on-send. Higher revenue per outbound than the same team had ever produced.
+
+In both cases, the value came from picking the right thing to build, not from picking the right model.
+
+## The local-first angle
+
+A workflow audit is hardware-independent. Where local-first matters is the next phase: actually building the agents the audit identifies.
+
+For high-volume / low-consequence workflows in the Ship-now bucket, local inference flips the cost curve. A research agent that runs 200 times a day on Sonnet 4.5 is a ~$200/month line item. The same agent on a Framework 16 with Qwen 3.6 27B running locally is electricity. The audit identifies the workflow. Local-first determines whether the workflow is profitable to run unattended.
+
+For high-consequence tasks (Re-frame bucket, Ship-with-HITL bucket), local-first matters for a different reason: data sovereignty. Healthcare, legal, finance, and regulated SMBs do not get to send customer data to a third-party API. The agent has to run somewhere they own. The audit identifies *what* to build. Local-first is the *only* substrate for these audiences.
+
+## The takeaway
+
+You do not have an agent problem. You have a prioritization problem. The teams that ship agents in 2026 are the teams that decided which 5 workflows to build before they decided which 5 tools to use. The audit is the cheapest hour you will spend on agentic AI, and it is the hour that determines whether the next 50 hours produce return.
+
+Run it on your own business this week. The framework is short enough to fit on one page. The work it saves is months.
