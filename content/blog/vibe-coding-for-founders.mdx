@@ -77,16 +77,6 @@ There is no seventh thing.
 
 **Your moat shifts from speed to taste.** When any founder can have a working prototype by Friday, the prototypes that win are the ones that feel right. Strong opinions in the UI. One-tenth the surface area but the right tenth. Error messages that read like a person wrote them. Taste is the constraint that doesn't fit in `.cursorrules`. It comes from you.
 
-## The local-first angle
-
-The piece I have not seen anyone else write: vibe coding gets cheaper and safer when the agent runs locally.
-
-- **Token cost is the silent killer of long loops.** A busy agentic dev loop runs $20 to $60 per developer per day on Sonnet 4.5. On the Framework 16 with 96GB unified memory, the same loop is electricity. Three cents. You stop rationing retries, which means you stop trimming the part of the loop where quality lives.
-- **Sandboxing is structurally easier when nothing leaves the machine.** A local model in a network-restricted container can write all the code it wants and exfiltrate exactly nothing. Threat model collapses.
-- **The 4-legged identity problem disappears at home.** OAuth, RFC 8693 token exchange, dual IdP integration: all the auth complexity of cloud agents reduces to filesystem permissions and environment variables on a single-machine setup.
-
-A founder who keeps 95% of their agentic dev loop on their own hardware ships faster, cheaper, with a smaller threat surface. The 5% that genuinely needs Claude or GPT-5 gets called by name, once per session.
-
 ## Failures to plan for
 
 Things I have hit in the last six months:

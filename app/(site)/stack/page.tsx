@@ -163,13 +163,14 @@ const WEB_STACK = [
 
 const BIZOPS = [
   { name: 'Stalwart Mail (self-hosted)', note: 'Open-source mail server. The Fastmail / Google Workspace alternative when you want to own the inbox the agent reads.' },
-  { name: 'Resend', note: 'Transactional email API. Edge-friendly, no SDK needed, the only piece I do not self-host because deliverability is a full-time job.' },
+  { name: 'Plunk (self-hosted)', note: 'Open-source transactional email, MIT-licensed. The Resend alternative when you want to own deliverability instead of paying for it. Resend is the managed fallback if you do not want to run a mail relay.' },
   { name: 'Listmonk (self-hosted)', note: 'Newsletter platform. Sends The Architect\'s Notebook. Replaces Buttondown / Substack at near-zero marginal cost.' },
   { name: 'Cal.com (self-hosted)', note: 'Open-source booking. Calendly replacement. Routes inbound calls through n8n with agent-prepared context before the meeting.' },
   { name: 'Chatwoot (self-hosted)', note: 'Customer service plus live chat widget. Inbound conversations route through the triage agent before reaching me.' },
   { name: 'EspoCRM (self-hosted)', note: 'Open-source CRM. The HubSpot alternative when you want the agent to read and write customer state without sending everything to a vendor.' },
-  { name: 'Stripe', note: 'Billing. Engagements, courses, and products invoice through here. The one piece of the stack where the cost of self-hosting exceeds the cost of paying.' },
-  { name: 'Linear', note: 'Issue tracking. Their MCP server lets the planner agent read tickets directly and turn them into agent-runnable specs.' },
+  { name: 'Plane (self-hosted)', note: 'Open-source issue tracking. The Linear alternative when you want the polish without the per-seat tax. AGPL-licensed.' },
+  { name: 'Stripe + Lago', note: 'Stripe for the payment processor (no real OSS alternative for moving money — banking is regulated). Lago for the billing infrastructure on top: usage metering, invoicing, plan management, MIT-licensed and self-hostable.' },
+  { name: 'Mercury · Relay · Bunq', note: 'Founder-friendly business banking. Mercury and Relay (US) for free no-fee operating accounts. Bunq Business (EU) for all-in-one. Wise Business for multi-currency. None are OSS but these are the choices that do not nickel-and-dime.' },
   { name: 'PostHog (self-hosted)', note: 'Product analytics, session replay, feature flags, surveys. Replaces ~$300/month of SaaS at zero marginal cost.' },
   { name: 'Umami (self-hosted)', note: 'Privacy-friendly web analytics for the public site. Lighter touch than PostHog where session replay is overkill.' },
   { name: 'GlitchTip (self-hosted)', note: 'Sentry-compatible error tracking. ~5–6× cheaper than Sentry at scale, MIT-licensed.' },

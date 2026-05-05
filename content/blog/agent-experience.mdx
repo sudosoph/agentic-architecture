@@ -1,0 +1,99 @@
+---
+title: "AX: When Your Users Are Agents"
+slug: agent-experience
+publishedDate: "2026-05-22"
+description: "Agent Experience is the new SEO. Here is what it means, what changes, and the four-step audit to figure out how your product looks to the agents already using it."
+tags: ["ax", "agents", "ux", "seo", "design"]
+draft: false
+---
+
+**TL;DR.** A meaningful share of the traffic to your product is no longer human. Coding agents read your docs. Browser agents fill out your forms. Research agents scrape your pricing page. Sean Roberts from Netlify framed this at AI Dev SF on April 28: AX (Agent Experience) is becoming as load-bearing as UX, and it is the new relevance signal. The early web rewarded a website. Search engines rewarded top ranking. AI agents reward AX. This post is what AX actually is, the four-step audit to evaluate yours, and the open-source tooling to automate it.
+
+## The relevance ladder
+
+| Era                  | Signal that mattered    | Who decided        |
+|----------------------|-------------------------|--------------------|
+| Early web            | Having a website        | The user           |
+| Search era           | Top search ranking      | Google's algorithm |
+| AI agent era         | Agent experience (AX)   | The agent          |
+
+In 2026, when a user wants to know your pricing, they often do not visit your pricing page. Their agent visits it on their behalf. The agent reads, parses, summarizes, and reports back. If your pricing page is laid out in a way the agent cannot reliably parse, you lose the lead before the user ever forms an opinion.
+
+Sean Roberts' framing: *agents are now your customers*. Build for them as customers. Most teams' designers are too human-UX-focused to notice when an agent stalls on a step a human would breeze through.
+
+## What AX actually means
+
+AX is the holistic experience an agent has when interacting with a product. Four pillars:
+
+**1. Discoverability.** Can the agent find what it needs without ten round-trips? An llms.txt file at the root, structured docs in `.md`, a sitemap that surfaces machine-readable resources.
+
+**2. Comprehensibility.** Can the agent parse what it finds? Tables in actual HTML tables, not images. Pricing in structured data, not flexbox-positioned overlapping divs. Forms with semantic field names.
+
+**3. Operability.** Can the agent do what it came to do? APIs documented with examples. CLIs that work without GUI assumptions. MCP servers exposing key actions. Clear error messages when actions fail.
+
+**4. Reliability.** Does the agent's experience hold up over time and across versions? Stable URLs. Versioned APIs. Predictable response shapes. Avoid breaking changes that turn a working agent integration into a silent regression.
+
+Most products do well on one or two of these and badly on the others. AX is the discipline of treating all four as first-class.
+
+## The four-step audit
+
+A 90-minute exercise that gives you a real read on where your AX stands. Run it with one engineer and a fresh terminal.
+
+**Step 1: identify your agent traffic.** Log lines, network data, user-agent strings. Look for `Claude/`, `ChatGPT/`, `Cursor/`, `Perplexity/`, plus the increasingly common headless-Chromium and Puppeteer signatures from custom agents. If you cannot identify any agent traffic, you are not measuring it. Add an agent-flag column to your access logs today.
+
+**Step 2: enumerate the use cases customers want to delegate.** Ask three customers what they wish their agent could do with your product. Read your support tickets for "I tried to get my agent to..." patterns. Common use cases that always show up: pricing lookup, account state retrieval, ticket creation, data export, plan management.
+
+**Step 3: verify the agent can actually do those things.** This is where most teams discover they are bad at AX. Open a fresh Claude Code or Cursor session. Point it at your product. Ask it to do each use case from step 2. Watch it stumble. Note where.
+
+**Step 4: ship the fixes.** Add llms.txt. Convert pricing layout to a real `<table>`. Document the API with copy-pasteable examples. Build the MCP server for the top three actions. Repeat the audit quarterly.
+
+The pattern that works: AX joins the SDLC the same way UX did fifteen years ago. Every shipped feature gets an AX pass before it ships, not after.
+
+## The open-source tooling
+
+Sean Roberts' team at Netlify open-sourced AXIS (Agent Experience Interaction Scoring) at [github.com/netlify/axis](https://github.com/netlify/axis). It is the first piece of standardized AX automation: pick an environment, an agent, and a prompt; define what success looks like; run scenarios; produce a score and a report. Baseline your changes.
+
+Other tools worth knowing:
+
+- **llms.txt**. the markdown-based file that tells agents how to navigate your site. Specification at [llmstxt.org](https://llmstxt.org).
+- **Agents.json**. schema for declaring agent-actionable endpoints. Like robots.txt but for actions rather than crawl permissions.
+- **MCP**. the Model Context Protocol. The most leveraged AX investment a SaaS product can make in 2026. Ship a first-party MCP server for your product and every Claude Desktop and Cursor user gets agent access for free.
+
+## What changes about how you build
+
+Three concrete shifts, ranked by leverage.
+
+**Documentation becomes machine-readable first.** llms.txt at the root of your site. README files that work as agent context. API docs with actual code blocks (not screenshots of code). Stop generating PDFs that the agent has to OCR.
+
+**Forms get semantic.** Field names like `customer_email` instead of `field_2`. Labels via `<label for="...">` instead of placeholder text. A11y is AX. The same patterns that help screen readers help agents.
+
+**APIs get first-class treatment.** Every UI affordance should have an API affordance. Cal.com is the textbook example: every booking the GUI can do, the API can do. Most B2B SaaS products fail this. Fix it.
+
+The Datadog "Bezos API mandate for agents" framing from AI Dev SF: every team must complete tasks through agent-friendly interfaces. No human-only GUI manipulation, no direct database reads, no back-doors. The teams that adopt this internally become AX-good externally as a side effect.
+
+## What this does not mean
+
+A few things AX is not.
+
+**It is not lowest-common-denominator design.** A great human UX and a great AX are not in tension. They are usually reinforcing. Both reward clarity, structure, and consistent affordances.
+
+**It is not "remove the GUI."** Humans are still customers. The GUI matters. AX means the agent can also do what the human can do, not that the human is replaced.
+
+**It is not a one-time project.** Agent capabilities improve every month. What was good AX in January 2026 is mediocre by July. The audit is quarterly because the bar moves.
+
+## Where the AGEO discipline fits
+
+AX is closely related to (and increasingly indistinguishable from) what some teams are calling AGEO: AI Generative Engine Optimization. The 2024 SEO discipline of "rank well on Google" is being replaced by "show up correctly when an LLM cites you." Same instincts, different optimizer.
+
+The signals that matter for AGEO:
+- Specific, citable claims with numbers and dates
+- Structured headings (H1/H2/H3 hierarchy)
+- Author attribution
+- Real names of products and people, in unambiguous text
+- Inline links to primary sources
+
+These are the same signals that produce good AX for an agent reading the page. The two disciplines converge.
+
+## The takeaway
+
+The traffic to your product in 2026 is increasingly written by agents, read by agents, and acted on by agents. The teams that audit AX deliberately and ship the fixes are showing up correctly in the experience layer that matters now. The teams that are still optimizing for Lighthouse scores and human-only flows are losing relevance one Cursor query at a time.

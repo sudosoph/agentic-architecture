@@ -1,0 +1,126 @@
+---
+title: "Document OCR for Agents"
+slug: document-ocr-for-agents
+publishedDate: "2026-05-23"
+description: "90% of enterprise data is locked in PDFs. The 2026 pipeline that gets it out is not RAG, not vision-only, and not the OCR you remember from 2018."
+tags: ["ocr", "agents", "documents", "vlm", "llamaindex"]
+draft: false
+---
+
+**TL;DR.** Roughly 90% of enterprise data lives in PDFs, scans, screenshots, and other formats that were not designed for machines to read. The 2026 pipeline that finally gets it out reliably is hybrid: deterministic computer vision for layout and tables, vision-language models for the long tail (handwriting, charts, weird scans), agentic verification between every step. Adit Abraham from Reducto and Jerry Liu from LlamaIndex both made the same case at AI Dev SF: model harness is everything, and agents acting on bad documents do not just produce wrong answers, they produce wrong outcomes.
+
+## Why PDFs are still hard
+
+Three reasons that have not changed in five years and one that has.
+
+**PDFs are an image format, not a document format.** Even text-based PDFs represent text as glyphs at x/y coordinates. There is no concept of a paragraph, a table, or a reading order. Everything downstream is reconstruction.
+
+**Reading order is a guess.** A two-column layout reads left column top to bottom, then right column top to bottom. PDF generators do not guarantee this. The same source PDF can produce different reading orders across Adobe Reader, Preview, and pdfminer.
+
+**Tables are not tables.** Most PDFs represent tables as a grid of lines plus text positioned inside cells. Detecting "this is a table" requires inferring structure from layout. Detecting "these two cells are merged" is harder.
+
+**What changed: VLMs got good.** Vision-language models in 2026 read handwritten text more reliably than humans, parse merged table cells, interpret charts. But they fail silently in confidence. They will read a number wrong and explain confidently why their reading is correct.
+
+## The hybrid pipeline that works
+
+Pure deterministic CV (the 2018 OCR stack) handles the easy 80% but breaks on the long tail. Pure VLM-based extraction handles the long tail but fails silently and costs more. The pattern that ships in 2026 combines both:
+
+```
+PDF page
+   ↓
+[Layout detection]            ← classical CV
+   ↓
+[Region classification]       ← classical CV
+   - text blocks
+   - tables
+   - figures / charts
+   - signatures
+   ↓
+[Per-region extraction]
+   - text blocks → CV-based OCR
+   - tables → table-aware extractor
+   - charts → VLM (because pixels matter)
+   - signatures → VLM (because handwriting)
+   ↓
+[Verification]                ← agentic loop
+   - subtotal validators
+   - schema checks
+   - cross-reference consistency
+   ↓
+[Structured output]
+```
+
+Each stage has a clear contract. Each stage has its own evaluation. Failures are localized to specific stages, not the system as a whole.
+
+## Why each layer matters
+
+**Layout detection (deterministic CV).** Outputs are deterministic and traceable. Object detection, layout understanding, reading order, table segmentation: these are where classical vision still leads. You want a deterministic decision about "this is a table at coordinates X,Y,W,H" because the rest of the pipeline branches on it.
+
+**Per-region extraction.** Mix of techniques per region type:
+
+| Region type     | Best extractor                          |
+|-----------------|-----------------------------------------|
+| Text body       | OCR engines (Tesseract, PaddleOCR)      |
+| Table           | Table-aware extractors (Reducto, Camelot) |
+| Chart / graph   | VLM with explicit chart prompt          |
+| Signature       | VLM with bounding-box grounding         |
+| Handwritten note | VLM with text-extraction prompt        |
+
+Different region types have different best tools. A monolithic VLM-only pipeline is overkill on text bodies and underwhelming on charts. The hybrid splits the work.
+
+**Verification.** This is where agentic loops earn their bill. After extraction, an agent runs validators:
+
+- **Subtotal validation.** If the document has a sum, do the line items add to it?
+- **Schema validation.** If the output schema requires a date, is the extracted value parseable as a date?
+- **Cross-reference.** If page 3 references "the contract date above," does that match what was extracted on page 1?
+
+Validators that fail trigger re-extraction, often with a different technique on the failed region. The classical-CV layer extracted a number wrong; the VLM gets a second pass at that specific bounding box.
+
+## Why frontier models alone do not solve this
+
+A common 2026 question: "Can I just throw a 200-page PDF at GPT-5 vision and get the structured output?"
+
+Empirically, no.
+
+- **Increased thinking does not improve accuracy on documents.** GPT-5.2 with thinking mode increases latency and cost but barely moves quality. Frontier models are trained on coding and reasoning, not on vision-heavy document parsing.
+- **Raw VLM APIs lack the metadata production needs.** No bounding boxes. No confidence scores per field. No traceback to source location for citation. When the agent needs to cite the page-and-paragraph the answer came from, the raw VLM output cannot provide it.
+- **Long PDFs blow past the 40K token wall.** Past about 30 pages of dense text, the model drifts. Same context-rot problem as conversational agents.
+- **Silent failures dominate.** A confident wrong answer is worse than a refused answer. Frontier models are trained to be confident.
+
+The right unit of work is per-region with verification, not per-document.
+
+## Open-source pieces worth knowing
+
+Three pieces of the pipeline that are now legitimately good in OSS:
+
+**LlamaIndex / LiteParse.** [github.com/run-llama/liteparse](https://github.com/run-llama/liteparse) is a CLI-native, model-free document parser. Light, fast, agent-pairable. Runs the deterministic CV layer well. Does not solve the long tail (no VLM), but pairs cleanly with one for the 20% the deterministic layer cannot handle.
+
+**Marker.** [github.com/VikParuchuri/marker](https://github.com/VikParuchuri/marker) is a PDF-to-markdown converter that uses surya (a small VLM trained for document layout). Strong on tables and equations. Fast.
+
+**OlmOCR.** AllenAI's open-source document OCR system. Trained specifically on document-extraction tasks rather than general vision.
+
+For agentic verification on top, **Pydantic AI** ([pydantic.ai](https://pydantic.ai)) plus a small validator-only model (Gemma 4 26B MoE works for this) handles the schema-and-plausibility loop without sending documents to a frontier API.
+
+## The benchmark to watch
+
+ParseBench at [parsebench.ai](https://parsebench.ai) is the most comprehensive enterprise document benchmark out today. 2,000 human-verified pages. 167,000 test rules. Measures across tables, charts, content faithfulness, and semantic formatting.
+
+Numbers from the May 2026 leaderboard:
+- Reducto: high (specialized parser, paid)
+- Gemini without thinking: high
+- LlamaParse: high
+- LiteParse + VLM hybrid: competitive
+
+No parser hits 100%. The benchmark is meant to be hard. The point is not which one wins; it is that even the best are well below human accuracy and the gap matters in production.
+
+## Failure modes that ship
+
+Three things to instrument before the document pipeline goes to production:
+
+1. **Confidence scores per field.** Every extracted value should have an associated confidence. Below threshold triggers human review or re-extraction.
+2. **Source-location citations.** Every extracted value should know which page, which bounding box, which paragraph it came from. Without this, an auditor or end-user cannot verify the claim. With this, the agent's output is genuinely auditable.
+3. **Per-stage evaluation.** The pipeline has 5+ stages. A failure at stage 2 is qualitatively different from a failure at stage 4. Eval each stage separately. End-to-end accuracy is a derived metric, not a debugging tool.
+
+## The takeaway
+
+The 2026 document pipeline is hybrid by design. Deterministic CV for the layout and the tables. VLMs for the long tail. Agentic verification between every step. The teams that ship document-heavy agents at production accuracy are the ones who realized the model harness is the work, and the model itself is interchangeable.

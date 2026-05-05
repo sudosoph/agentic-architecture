@@ -105,14 +105,6 @@ Three failure modes I have hit. Worth pre-empting.
 
 **Reading the world model as if it were ground truth.** The agent's semantic memory is the agent's *belief*. It is not necessarily correct. Always preserve the link back to the episodic event that produced the belief. When you need to verify, you can replay the original.
 
-## Local-first changes the calculus
-
-A long-running memory system on metered API rates is expensive. Every retrieval is a token charge. Every summarization is a token charge. At episodic-log scale (hundreds of events per day), the costs add up to a real line item.
-
-On hardware you own, the writes are free. You can re-summarize the entire month's episodic log at the end of every week and not feel it. The agent gets the benefit of compounding memory without the bill that makes memory feel expensive.
-
-The semantic graph (Neo4j) and the episodic log (filesystem + vector index) both run locally on the same Framework 16 that runs the model. No network egress. No third-party data. The "personal" in personal AI agent means the agent's memory is also yours.
-
 ## The takeaway
 
 Memory is not a context-window problem. It is a storage-and-retrieval problem with four different shapes. Pick the right store per type, write deliberately, evict aggressively, and your agent compounds. Skip any of those and your agent forgets you every Monday morning, no matter how big the model gets.

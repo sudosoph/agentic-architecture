@@ -66,14 +66,6 @@ If you are debugging agentic loops, the things that actually matter are not the 
 4. **Per-tool token cost.** Which MCP server is paying the most token tax for the value it delivers? Some tools are 90% catalog overhead and 10% actual use. Cut them.
 5. **Cache hit rate.** Anthropic's prompt cache (5-min and 1-hour TTLs) gives 10x cost reduction on cached prefixes. If your hit rate is low, your prompt structure is wrong (dynamic content at the front, static at the back).
 
-## The local-first move
-
-The bigger context window is not just a quality liability. It is a cost liability. Past 40K tokens, every turn is paying for context you cannot fully use, billed at the same rate as productive context.
-
-On hardware you own, the same loop is electricity, and you can afford to be aggressive about scoping. A local agent at 10K tokens beats a cloud agent at 200K tokens on cost, latency, and quality. The model running on a Framework 16 with 96GB unified memory is a Qwen 3.6 27B or a Gemma 4 26B MoE. Smaller than Opus. Sharp inside its window. Cheap enough to leave running through every retrieval loop.
-
-The pattern for sub-frontier tasks: keep the context tight, the loop tighter, the model local. Reach for the cloud only when a single turn genuinely needs the smartest model in the world. Most do not.
-
 ## The takeaway
 
 The strongest signal that a team has actually shipped an agentic system in production is what they say when you mention million-token context windows. The teams that have shipped roll their eyes. The teams that have not are still excited about it.

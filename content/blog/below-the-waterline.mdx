@@ -93,18 +93,6 @@ The user sees a stable contract: their tier, their guaranteed capacity, their pr
 
 This pattern is the reason DeepSeek V4 Flash at $0.14/$0.28 per million tokens is reshaping the industry. A token factory that can route 60% of its volume to DeepSeek and 35% to local inference and 5% to frontier APIs has fundamentally different economics than a competitor stuck on a single provider.
 
-## Why local-first sits underneath all three
-
-The three foundations are not optional. They are also significantly easier to build when meaningful inference is local.
-
-**Developer experience is easier locally.** Logging, tracing, debugging are all simpler when the model runs on the same machine as the platform middleware. Cloud-only setups multiply network hops, multiply failure modes, and force you to reproduce production conditions in a sandbox before debugging.
-
-**Agent identity is simpler locally.** The 4-legged identity problem (user, agent, MCP, API) becomes the 1-legged identity problem (just file permissions and env vars) when everything runs on a single machine. The MCP spec itself acknowledges this: stdio transport explicitly opts out of OAuth.
-
-**Token-factory economics is built on local inference.** The token factory that can route 35% of traffic to local hardware has a structural margin advantage over competitors who cannot. The capital expense is a one-time hardware cost. The variable cost is electricity.
-
-A team that ignores local-first builds the same three foundations as a team that embraces it. The local-first team builds them once, runs them at lower marginal cost, and serves regulated customers cloud-only competitors cannot reach.
-
 ## The takeaway
 
 The thing that goes on the slide is the agent. The thing that decides whether the agent makes it to production is the developer experience, the identity model, and the token-factory economics underneath it. None of those three has marketing appeal. All three are quarter-long projects. The teams that make it across the 65/95 gap in 2026 are the ones that started those quarter-long projects last year. The teams that did not are about to learn that demo day was the easy part.

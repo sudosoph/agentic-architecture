@@ -1,0 +1,161 @@
+---
+title: "Reasoning Loops: Plan-and-Execute vs ReAct"
+slug: reasoning-loops
+publishedDate: "2026-05-21"
+description: "The two dominant agent reasoning patterns in 2026, what they get right, where each one fails, and how to know which to pick."
+tags: ["agents", "patterns", "react", "plan-and-execute", "design"]
+draft: false
+---
+
+**TL;DR.** Two agent reasoning patterns dominate production systems in 2026. **ReAct** (Reason + Act) is the OG: think one step, act one step, observe, repeat. **Plan-and-Execute** flips it: plan all the steps up front, execute the plan, replan only on failure. The frameworks treat them as interchangeable. They are not. This post is the case for picking the right pattern for your task, the case for the hybrid that actually wins in production, and the failure modes each one hides.
+
+## The two patterns, side by side
+
+ReAct ([Yao et al., 2022](https://arxiv.org/abs/2210.03629)):
+
+```
+loop:
+  thought   ← LLM(observation history)
+  action    ← LLM(thought)
+  observation ← env(action)
+  if done: break
+```
+
+Plan-and-Execute ([Wang et al., 2023](https://arxiv.org/abs/2305.04091)):
+
+```
+plan      ← LLM(task)         # all steps up front
+results = []
+for step in plan:
+  action  ← LLM(step, results)
+  result  ← env(action)
+  results.append(result)
+if not done: replan(task, results)
+```
+
+The structural difference is *when* the model decides what to do next. ReAct decides one step at a time, with full context of what it just observed. Plan-and-Execute decides the whole sequence up front, then executes blindly until something breaks.
+
+## Where ReAct wins
+
+ReAct shines when the environment is unpredictable.
+
+- **Long-running tool use.** When tools return data the model has not seen before, the next-best action depends on what the previous tool returned. ReAct can adapt mid-loop. Plan-and-Execute would have to replan.
+- **Conversational agents.** Each user turn is a new observation. ReAct fits the shape naturally. Plan-and-Execute feels stilted because plans are constantly invalidated by user input.
+- **Exploration tasks.** "Find me the cheapest flight" is not a task with a known plan. The agent has to try one search, see the results, refine the query, try again. ReAct is the entire pattern.
+
+The signature ReAct prompt looks like:
+
+```
+Question: {task}
+
+Thought: I need to figure out X. Let me look up Y.
+Action: search("Y")
+Observation: <results>
+
+Thought: Based on Y, I should now try Z.
+Action: query("Z")
+Observation: <result>
+
+Thought: I have enough to answer.
+Final answer: ...
+```
+
+The visible Thought / Action / Observation interleave is the load-bearing pattern. It forces the model to commit to a reasoning step before the next action, which makes the agent's behavior debuggable and the failure modes traceable to specific reasoning steps.
+
+## Where Plan-and-Execute wins
+
+Plan-and-Execute shines when the task is decomposable up front.
+
+- **Code refactors.** "Rename `userId` to `customerId` across the codebase" decomposes into a known sequence: search for usages, edit files, run tests, commit. The plan is stable. Replanning is rare.
+- **Document workflows.** "Generate a quarterly report from these three data sources" is a well-defined pipeline. The plan can be written and executed without surprises.
+- **Long-running batch jobs.** When latency per step matters and replanning is expensive, having the plan committed up front is faster.
+- **High fan-out tasks.** Plan once, dispatch ten parallel workers, gather results. ReAct cannot fan out cleanly because each step depends on the previous observation.
+
+The signature Plan-and-Execute prompt:
+
+```
+Task: {task}
+
+Plan:
+1. Identify all files containing `userId`
+2. Replace with `customerId` in each
+3. Run the test suite
+4. If tests pass, commit; else collect failures and replan
+
+Now executing step 1...
+```
+
+The plan is explicit. The model produces a checklist before any tool gets called. This makes the agent's intentions auditable in advance.
+
+## The failure modes
+
+Each pattern has a signature failure mode. Worth knowing both.
+
+**ReAct's failure: drift through the loop.** Each step adds context. Past about 30 steps, the model is reasoning over its own past reasoning more than over the task. Self-reinforcing wrong paths become harder to escape because the failed reasoning is visible to subsequent steps. Mitigation: cap iteration count (5-10 typical), summarize history aggressively, evict old observations.
+
+**Plan-and-Execute's failure: brittle plans.** A plan written before any execution does not know what the world looks like. Step 3 assumes step 2 succeeded in a specific way it might not have. The agent executes a plan that started failing at step 2 but does not notice until step 7. Mitigation: validators between every step, hard fail-fast on plan-violation, replan on any unexpected observation.
+
+The failure-mode chart, generalized:
+
+| Pattern             | Best when                                    | Fails when                                  |
+|---------------------|----------------------------------------------|---------------------------------------------|
+| ReAct               | Environment is unpredictable                | Loops are long; context drifts              |
+| Plan-and-Execute    | Task decomposes deterministically up front  | Plans become brittle as reality changes     |
+
+## The hybrid that wins in production
+
+The pattern most production systems actually use is a hybrid: **plan-then-ReAct-each-step**.
+
+```
+plan      ← LLM(task)
+results = []
+for step in plan:
+  # ReAct sub-loop inside each plan step
+  while not step_complete:
+    thought   ← LLM(step, results, sub_observations)
+    action    ← LLM(thought)
+    observation ← env(action)
+    sub_observations.append(observation)
+  results.append(step_result)
+  if step_failed: replan(task, results)
+```
+
+The outer plan gives the agent a clear roadmap and lets validators run between steps. The inner ReAct sub-loop handles the unpredictable parts of any individual step. This is what shipped in the Bain HR Services payroll agent (8 LangGraph subgraphs, plan-shaped outer, ReAct-shaped inner). It is what Anthropic's "Building Effective Agents" post recommends. It is what every system I have shipped this year ended up looking like after the first refactor.
+
+## Picking between them
+
+Three rules I have watched hold.
+
+**1. If a task is naturally decomposable into 3-5 known steps, lead with Plan-and-Execute.** Code refactors, document pipelines, structured extraction. The plan-as-artifact is a feature, not overhead. It also makes the agent reviewable before any action.
+
+**2. If a task has an unknown number of steps and unpredictable observations, lead with ReAct.** Conversational agents, exploration, debugging. The visible thought trace is the debugging surface.
+
+**3. If the task has both (most production tasks do), use the hybrid.** Plan the structure. ReAct the substance. Validate the seams.
+
+Pure ReAct in production is rare and usually a sign the team has not invested in plan structure. Pure Plan-and-Execute in production is rare and usually a sign the team has not invested in step-level adaptiveness. The hybrid is the modal pattern.
+
+## Framework support, May 2026
+
+Where each pattern lives in the major frameworks:
+
+| Framework      | Native pattern             | Hybrid support       |
+|----------------|----------------------------|----------------------|
+| LangChain ReAct| ReAct                      | Limited              |
+| LangGraph      | Either, via state machines | Excellent (graph-shaped) |
+| CrewAI         | Plan-and-Execute (crews)   | Via subagent crews   |
+| AutoGen        | ReAct (conversational)     | Via group chat       |
+| Anthropic Skills | Either, named workflows  | Via skill composition |
+
+LangGraph is the cleanest fit for the hybrid because graphs naturally express plan-shaped outer loops with ReAct-shaped inner nodes. CrewAI ships well-tuned defaults for plan-then-execute crews. The Anthropic skills system lets you compose either pattern as a named, reusable artifact.
+
+## What to instrument
+
+Three signals worth wiring up regardless of pattern:
+
+1. **Loop iteration count.** ReAct loops should hit a hard cap. Plan-and-Execute should never loop more than the plan's step count plus replans. If you are seeing 50+ iterations, the agent is stuck.
+2. **Plan adherence rate.** For Plan-and-Execute, measure the percentage of plans that complete without replan. Below 60% is a sign the planner is over-specifying. Above 95% is a sign the task is too simple to need a plan.
+3. **Reasoning-trace length per step.** For ReAct, watch the length of the Thought blocks. When they balloon (200+ words for a single step), the model is rationalizing instead of reasoning. Compress the input context.
+
+## The takeaway
+
+The framework you pick decides the default pattern. The pattern decides the failure mode. The failure mode decides whether the agent ships. Pick deliberately. Use the hybrid in production. Validate the seams. The teams that treat ReAct and Plan-and-Execute as interchangeable are the ones whose agents drift past iteration 30 in the wrong direction at 3am.

@@ -150,16 +150,6 @@ Two rules I learned the painful way.
 
 **Cap research depth.** Apify and Firecrawl will let you scrape a company until the agent has 500KB of context per target. Past about 1500 words of dossier, the drafter starts hallucinating connections that do not exist. Cap the dossier hard. Quality of facts beats quantity.
 
-## Local-first matters here for two reasons
-
-This agent reads competitor databases, scrapes LinkedIn, pulls funding data, and stores prospect information. None of that should leave the machine. Two specific risks:
-
-**Privacy law.** GDPR, CCPA, and several state laws limit what you can store about prospects without explicit consent. Cloud-only setups send everything to a third-party AI provider, which materially increases compliance surface area. Local processing keeps the data inside your jurisdiction.
-
-**Competitive intelligence leakage.** If you are researching competitors, sending those queries to a cloud LLM creates training-data exposure (depending on the provider's policy). On a local model, the queries never leave the machine.
-
-The cost angle is also real but secondary. A 50-prospect dossier run on Sonnet costs $5-10. The same run locally is electricity. The compounding effect over a year is meaningful. The privacy effect is what actually matters.
-
 ## The takeaway
 
 The cold email industry is not dead. The volume version of cold email is dead. The replacement is a small number of well-researched, well-drafted, human-approved emails per day, supported by an agent that does the eight hours of research a real SDR used to spend their morning on. The economics work. The reputation cost is lower. The deliverability is better. The skill that matters is writing the voice rules and reviewing the drafts. Both are jobs the founder is already qualified to do.

@@ -103,14 +103,6 @@ The accuracy number is the headline. The infrastructure that produces it is the 
 4. **A control tower** for fleet visibility. Live and shadow traffic in one view. Sankey diagrams of path outcomes. Per-interaction log exploration. Without this, only the engineer who built the agent understands what is happening.
 5. **A killswitch** (Service Bus pattern). The moment shadow exposes a class of failure you cannot fix forward, the killswitch stops new shadow traces from being generated. You investigate, fix, then resume.
 
-## When local-first matters here
-
-Shadow mode generates production-volume traces of agent reasoning. At Bain's 3K emails per day, that is 3K full agent traces. Each trace contains the system prompt, the tool catalog, the reasoning history, the validator outputs, the action plan, the diff to the would-be system state.
-
-On a metered API, paying full Sonnet 4.5 rates to generate shadow traces at 3K per day is a budget item. ~6.5M input + 432K output per session, multiplied by enough developers running shadow tests, is real money.
-
-On hardware you own, shadow mode is electricity. You run the agent in shadow against the same volume the production system sees, for as long as you want, at no marginal cost. You can leave it shadow-running through the night for a month while you tune. The Bain team had four weeks at 3K/day. Most teams never get there because the API bill kills the experiment first.
-
 ## The takeaway
 
 If you skip one thing in this list, skip golden tests. They are useful as smoke tests but they over-predict and waste time. If you skip nothing, run them, then offline historical, then shadow. The shadow phase is where mission-critical autonomy is earned. The 70% number you see when shadow first goes live is not the agent failing. It is the curated dataset being wrong about the real world.

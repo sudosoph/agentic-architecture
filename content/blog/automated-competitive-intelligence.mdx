@@ -137,14 +137,6 @@ Three failure modes.
 
 **Classifier drift.** After three months, the classifier starts marking things as noise that should be signal because the same edit pattern repeats. Re-baseline the prompt quarterly. Add new examples of edge cases that snuck through.
 
-## Why local-first matters here
-
-This agent reads competitor data, stores their pricing history, and tracks their hiring patterns. None of that is illegal but all of it is sensitive. Cloud-only setups send every classification call to a third-party LLM. If the third-party LLM is run by a company that is also run by an investor in your competitor, you have a problem. (This is not hypothetical. The investor concentration in AI is real.)
-
-Running classification locally on Qwen 3.6 27B means the queries never leave your machine. Your competitor-tracking strategy is your competitor-tracking strategy, not a feature in some LLM provider's product roadmap.
-
-The cost angle is real but secondary. A daily classification run on Sonnet costs $5-10. Weekly across five competitors is $50-100/month. On hardware you own, the same volume is electricity. The privacy angle is what actually decides this.
-
 ## The takeaway
 
 Competitive intelligence in 2026 is a small agent reading the web on a schedule, classifying what matters, and delivering a digest worth opening. Build it once. Maintain the prompt quarterly. Read the digest on Sunday evening. The competitors who are still on Google Alerts are sending email volume. The competitors who built this two quarters ago are taking their lunch.

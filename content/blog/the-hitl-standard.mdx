@@ -88,14 +88,6 @@ Three rules I have watched hold across engagements.
 
 **3. Variable pricing matches variable value.** SaaS-style flat licenses do not work for agentic AI because the variable cost (inference) is not zero. The teams shipping in 2026 charge for outcomes (per-task, per-resolved-ticket, per-completed-job), not seats. The HITL pattern fits this model: the human is the gate that defines the outcome.
 
-## The local-first connection
-
-A meaningful percentage of HITL friction is review latency. The human is approving 80 items in a sitting and the queue is bottlenecked on context.
-
-When the agent runs locally, the artifacts the human needs to approve are pre-fetched, structured, and presented in a tight review interface (a Slack DM, a tiny web app, an inbox plugin). When the agent runs cloud-only with metered API calls, every review item is also a token bill, which means teams ration the context they pre-fetch, which means the human spends more time looking up artifacts manually.
-
-The local-first stack makes the HITL experience materially faster because nothing is rate-limited. The agent can pre-compute as much context per review item as the human will ever need, and the marginal cost is electricity.
-
 ## The takeaway
 
 The autonomy ladder has five rungs. Most production tasks belong on rung 2 or 3. Climb deliberately, with explicit graduation criteria. Sell on capacity, not replacement. Enter where the existing pain is high enough to absorb the new pain of AI imperfection. The teams shipping in 2026 are the ones who realized HITL is the standard, not the failure mode. The teams trying to take humans out of the loop entirely are about to learn that the regulatory environment is going to put them back in anyway.
