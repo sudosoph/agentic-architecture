@@ -1,5 +1,5 @@
 ---
-title: "Three Ways to Run Open-Weight Models in 2026, Compared"
+title: "Three Ways to Run Open Weights for Pennies"
 slug: three-ways-to-run-open-weight-models
 publishedDate: "2026-05-05"
 description: "Local hardware vs rented GPUs vs serverless OSS APIs. Real prices, real benchmarks, and the workload-shape question that decides which path is right."
@@ -111,25 +111,22 @@ There is no clean answer. Most production teams I work with split the workload. 
 
 ## A worked example
 
-A two-person AI-native startup with the following profile:
-- 10M tokens of agentic dev work per month per engineer
-- Customer-facing product makes ~2M API calls per day at ~500 tokens each
-- Internal automations (triage, classification) ~500 calls per hour, 24/7
+A two-person AI-native startup running 10M tokens/month/engineer of dev work, ~2M customer-facing API calls/day at ~500 tokens each, plus 24/7 internal triage at ~500 calls/hr.
 
 The right split:
 
-- **Local** for the dev work. Two Framework 16 laptops at $3,200 each. Annual electricity ~$50 per laptop. Replaces what would have been $400-600/month each on metered API.
-- **Serverless API (Fireworks Llama 3.1 8B at $0.20/M)** for the customer-facing product. ~$200/month. Cheaper than dedicated infrastructure at this volume.
-- **Local + scheduled local jobs** for the 24/7 internal automations. Run on a Strix Halo desktop (~$2,000) under their desk. ~$80/year electricity. Replaces what would have been ~$300/month on serverless.
+- **Local** for dev work. Two Framework 16 laptops. Replaces $400-600/month each on metered API.
+- **Serverless** (Fireworks Llama 3.1 8B at $0.20/M) for the customer-facing product. ~$200/month.
+- **Rented spot GPU** for the 24/7 triage. ~$360/month at RunPod spot rates, scales down off-peak.
 
-Total monthly variable: ~$210. Capex: ~$8,400 amortized over 5 years = ~$140/month. **Total ~$350/month for the entire stack.** A SaaS-only equivalent of this stack would run $1,500-$2,500/month.
+Total monthly variable: ~$560. Capex: ~$6,400 amortized over 5 years = ~$110/month. **Total ~$670/month for the entire stack.** A pure-SaaS equivalent runs $1,500-$2,500/month at this volume.
 
-The savings are real but the bigger effect is behavioral. When the dev loop is electricity, you stop rationing retries. When the internal automation is electricity, you stop pruning experiments. The teams that ship in 2026 are the teams that can run an experiment without scheduling a budget meeting first.
+The savings are real. The bigger effect is behavioral: when the dev loop is electricity and the burst loop is spot pricing, you stop rationing retries. The teams that ship in 2026 run experiments without scheduling budget meetings first.
 
-## What I would tell past-me
+## How to actually decide
 
-A year ago I picked one path and stuck with it. That was a mistake. The right answer is workload-shaped. The matrix above is what I use now to decide for each workload, individually, on the same project.
+Pick by workload, not by ideology.
 
-If you are deciding for the first time today, the order I would try is: spin up an account on Fireworks or Together this afternoon and run your workload through Qwen 3.6 27B for $5. If the quality is there and the cost makes sense, you have your answer. If the cost is going to scale into real money, evaluate whether you have an engineer who would enjoy owning the hardware, and at what volume the laptop pays back. The break-even is usually around $200-300/month of cloud spend.
+Spin up a Fireworks or Together account this afternoon, run your workload through Qwen 3.6 27B for $5. If quality is there and the cost makes sense, you have your answer. If cost is going to scale into real money, evaluate whether you have an engineer who would enjoy owning the hardware. Break-even is usually around $200-300/month of cloud spend.
 
-The mistake to avoid is picking by ideology. Pure local is a tax on optionality. Pure cloud is a tax on margin. The hybrid is what production looks like.
+Pure local is a tax on optionality. Pure cloud is a tax on margin. Hybrid is what production looks like.
