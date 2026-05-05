@@ -64,7 +64,7 @@ export default function AboutPage() {
         <p>
           For the gear and tooling I actually run, see{' '}
           <Link href="/stack" className="text-accent hover:underline">/stack</Link>.
-          For engagements, see{' '}
+          For project work, see{' '}
           <Link href="/work-with-me" className="text-accent hover:underline">/work-with-me</Link>.
         </p>
       </section>

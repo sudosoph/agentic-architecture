@@ -5,14 +5,14 @@ import { Button } from '@/components/ui/button'
 export const metadata: Metadata = {
   title: 'Work With Me',
   description:
-    'Agentic-architecture engagements for founders, operators, and organizations. Workflow audits, done-for-you builds, corporate AI training, custom course creation, and speaking. Boulder, CO.',
+    'Agentic-architecture projects for founders, operators, and organizations. Workflow audits, done-for-you builds, corporate AI training, custom course creation, and speaking. Boulder, CO.',
 }
 
 const STEPS = [
-  'Pick the engagement that fits, or book a 30-minute scoping call if you are not sure.',
+  'Pick the project that fits, or book a 30-minute scoping call if you are not sure.',
   'I reply within 1–2 business days with a fit assessment.',
   'If it is a match, we schedule a 30-minute scoping call. Free, low-pressure.',
-  'Proposal, deposit, work starts. Most engagements close within a week.',
+  'Proposal, deposit, work starts. Most projects close within a week.',
 ]
 
 const BUILDER_SERVICES = [
@@ -62,7 +62,7 @@ export default function WorkWithMePage() {
     <div className="space-y-12">
       <PageHeader
         title="work with me"
-        description="I take a small number of engagements at a time. If you are serious about reducing cloud AI costs, building agentic infrastructure that actually works, or rolling out AI to your team, let us talk."
+        description="I take a small number of projects at a time. If you are serious about reducing cloud AI costs, building agentic infrastructure that actually works, or rolling out AI to your team, let us talk."
       />
 
       {/* How it works — comes first */}
@@ -94,7 +94,7 @@ export default function WorkWithMePage() {
           For founders &amp; builders
         </h2>
         <p className="font-mono text-xs text-muted mb-6">
-          Productized engagements. Fixed scope.
+          Productized projects. Fixed scope.
         </p>
         <div className="divide-y divide-border">
           {BUILDER_SERVICES.map(({ name, duration, description }) => (
@@ -115,7 +115,7 @@ export default function WorkWithMePage() {
           For organizations
         </h2>
         <p className="font-mono text-xs text-muted mb-6">
-          Scoped per engagement.
+          Scoped per project.
         </p>
         <div className="divide-y divide-border">
           {ORG_SERVICES.map(({ name, duration, description }) => (

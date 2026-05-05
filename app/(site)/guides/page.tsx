@@ -80,7 +80,7 @@ export default function GuidesPage() {
             <p className="font-mono text-xs text-muted leading-relaxed">
               I run workshops and corporate trainings on local AI setup,
               agentic patterns, and the cost economics of running open weights
-              in 2026. Most engagements are a half or full day.
+              in 2026. Most projects are a half or full day.
             </p>
           </div>
           <Button variant="primary" size="md" href="/work-with-me">

@@ -26,7 +26,7 @@ const TRACKS = [
   },
   {
     name: 'Build your AI Architect practice',
-    outcome: 'Position, price, and deliver agentic-AI engagements that compound. From first audit to retainer.',
+    outcome: 'Position, price, and deliver agentic-AI projects that compound. From first audit to retainer.',
     audience: 'Engineers going independent',
   },
 ]
@@ -38,7 +38,7 @@ export default function CoursesPage() {
         <h1 className="font-mono text-2xl text-fg mb-2">courses</h1>
         <p className="text-sm text-muted leading-relaxed">
           Self-paced and cohort-based courses on local AI infrastructure and
-          agentic workflows. Built from real engagements, not generic
+          agentic workflows. Built from real projects, not generic
           curriculum. The first cohort opens this summer.
         </p>
       </section>

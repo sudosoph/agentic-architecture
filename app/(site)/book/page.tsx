@@ -54,7 +54,7 @@ export default function BookPage() {
         </h2>
         <ul className="space-y-2 text-sm text-muted leading-relaxed">
           <li>1. You describe the situation. Honest is better than polished.</li>
-          <li>2. I ask the questions I would ask any new engagement.</li>
+          <li>2. I ask the questions I would ask any new project.</li>
           <li>3. We figure out if it is a good fit. If yes, I send a proposal within 48 hours.</li>
           <li>4. If not, you leave with a one-page action plan you can take to anyone.</li>
         </ul>

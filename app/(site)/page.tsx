@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getAllPosts } from '@/lib/mdx'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 const PROFESSIONAL_SERVICE_LD = {
   '@context': 'https://schema.org',
@@ -116,7 +117,7 @@ export default function HomePage() {
             {[
               {
                 label: 'Architecture',
-                body: 'Hands-on engagements: agentic system design, local LLM infrastructure, cost teardowns. Corporate trainings + custom course creation for orgs.',
+                body: 'Hands-on projects: agentic system design, local LLM infrastructure, cost teardowns. Corporate trainings + custom course creation for orgs.',
                 href: '/work-with-me',
               },
               {
@@ -126,7 +127,7 @@ export default function HomePage() {
               },
               {
                 label: 'Field Notes',
-                body: 'Benchmarks, deep dives, and what is actually working in 2026. Written from the engagements, not the marketing decks.',
+                body: 'Benchmarks, deep dives, and what is actually working in 2026. Written from the projects, not the marketing decks.',
                 href: '/blog',
               },
             ].map(({ label, body, href }) => (
@@ -146,29 +147,7 @@ export default function HomePage() {
         </section>
 
         {/* Newsletter */}
-        <section className="border border-border bg-surface p-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="max-w-xl">
-              <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
-                The Architect's Notebook
-              </p>
-              <p className="font-mono text-sm text-fg leading-relaxed mb-1">
-                Weekly deep dive on agentic architecture for lean founders.
-              </p>
-              <p className="font-mono text-xs text-muted leading-relaxed">
-                n8n templates · cost teardowns · what is actually working in 2026.{' '}
-                <span className="text-accent">Free for Boulder Startup Week attendees.</span>
-              </p>
-            </div>
-            <Button
-              variant="primary"
-              size="md"
-              href="/contact?subject=Newsletter%20signup&message=Add%20me%20to%20The%20Architect%27s%20Notebook.%0A%0AHow%20I%20heard%20about%20it%3A%20"
-            >
-              subscribe ›
-            </Button>
-          </div>
-        </section>
+        <NewsletterSignup source="homepage" />
 
         {/* Recent posts */}
         {posts.length > 0 && (

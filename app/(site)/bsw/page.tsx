@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 const CAL_URL = 'https://cal.com/sophia-stein/30min'
 const REPO_URL = 'https://github.com/sudosoph/bsw26-agentic-workflows'
@@ -165,22 +166,10 @@ export default function BswPage() {
       </section>
 
       {/* Newsletter pull */}
-      <section className="border border-border bg-surface p-6">
-        <p className="font-mono text-sm text-fg mb-1">
-          Want the writeup of the workshop?
-        </p>
-        <p className="font-mono text-xs text-muted leading-relaxed mb-4">
-          The Architect&apos;s Notebook is the weekly companion to this work.{' '}
-          <span className="text-accent">Free for BSW attendees.</span>
-        </p>
-        <Button
-          variant="primary"
-          size="md"
-          href="/contact?subject=Newsletter%20signup%20-%20BSW%202026&message=Add%20me%20to%20The%20Architect%27s%20Notebook.%20I%20attended%20the%20BSW%20workshop%20on%20May%207."
-        >
-          subscribe ›
-        </Button>
-      </section>
+      <NewsletterSignup
+        source="bsw"
+        sub="Want the writeup of the workshop?"
+      />
 
       {/* Related reading */}
       <section className="pt-4 border-t border-border">
