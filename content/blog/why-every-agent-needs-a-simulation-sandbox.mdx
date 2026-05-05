@@ -1,0 +1,115 @@
+---
+title: "Why Every Agent Needs a Simulation Sandbox"
+slug: why-every-agent-needs-a-simulation-sandbox
+publishedDate: "2026-05-27"
+description: "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one."
+tags: ["agents", "testing", "simulation", "evals", "production"]
+draft: false
+---
+
+**TL;DR.** Agents that take real-world action (move money, send emails, edit databases) cannot be tested with golden datasets. They need simulation environments that look like production but are not real, where the agent makes mistakes safely and the team learns from them. Andi Partovi from Veris AI made the case at AI Dev SF on April 28: every AI agent needs a simulation sandbox. The teams that have built one are shipping autonomous agents into regulated enterprises. The teams that have not are explaining to their customers why their bot invented a usage policy.
+
+## The incidents that should have been caught in simulation
+
+Three real failures from the last 18 months. All preventable. All public.
+
+**Cursor's support bot, April 2025.** [The bot hallucinated a fake login policy](https://www.theregister.com/2025/04/18/cursor_ai_support_bot_lies/) and told customers their accounts were locked. The "Sam" name on the email was AI-generated. Customers cancelled subscriptions. The [Hacker News thread](https://news.ycombinator.com/item?id=43683012) hit the front page. Cursor's co-founder apologized publicly and now labels AI responses. The pattern would have been caught by red-team simulation: feed adversarial customer questions to the bot in a sandbox, watch it invent answers it should not invent.
+
+**McDonald's AI drive-thru, 2024.** Order mishaps led to the trial being shut down. A simulation environment with realistic noisy audio, mumbled orders, and abrupt context switches would have surfaced the failure modes before any customer was charged for 240 chicken nuggets.
+
+**The NYC chatbot, 2024.** The official New York City small-business chatbot told operators to break the law (allowed cash-only when illegal, told landlords they could discriminate). [Markup investigation](https://themarkup.org/news/2024/03/29/nyc-ai-chatbot-tells-businesses-to-break-the-law) caught it. Same root cause: untested edge cases met live distribution.
+
+The pattern across all three: the agents passed their internal tests, then met the real world and broke. Internal tests were not the right shape of test.
+
+## Why golden datasets do not work for agents
+
+Three reasons golden datasets over-predict on agent quality.
+
+**Agents are non-deterministic.** Same input, different output across runs. Any single-run accuracy measurement is noise. You need scale, repeats, and statistical confidence.
+
+**Tests must be interactive.** A traditional unit test has a fixed input and a fixed expected output. An agent loop has an *environment* the agent acts on, which changes mid-run. The agent's third action depends on the result of the second action. Static input/output pairs cannot capture this.
+
+**Labels are dynamic.** You often do not know the correct answer beforehand. If an agent is asked to "find the cheapest flight," the right answer depends on what is available right now. The validator has to be a function of the world state, not a fixed string.
+
+**Real users are unpredictable.** They argue. They change their mind mid-conversation. They try to convince the agent to do things it should not. They paste in adversarial prompts. Static test sets do not capture this distribution.
+
+The cure is **simulation**: a high-fidelity replica of the environment the agent will encounter in production, where adversarial inputs, edge cases, and realistic actor behavior can all be generated at scale.
+
+## What a simulation environment actually contains
+
+Five components. Each one a real engineering investment.
+
+**1. The agent under test.** Wired to call simulated services instead of real ones. Same code path; different downstream connections.
+
+**2. Synthetic users.** Not nice, polite, foundation-model-default users. *Frustrated* users. *Confused* users. Users who argue. Users who try to manipulate. Users who paste in prompt injections. Generating realistic adversarial actors is a real ML problem.
+
+**3. Simulated tools and services.** The CRM the agent updates. The email system it sends through. The database it queries. All replicas, with realistic data shapes, latency, and failure modes (including network errors, partial responses, throttling).
+
+**4. Test scenario generation.** Combinations of starting state plus user behavior plus tool failures. Not handwritten tests. Generated cases that mix and match failure modes. The space of possible scenarios is large; you generate thousands and rank by coverage.
+
+**5. The grader.** After the run completes, a separate process evaluates whether the agent did the right thing. Often LLM-judged for nuanced criteria. Always programmatic for verifiable criteria (the right number transferred between accounts, the right field updated in the right row).
+
+The best framing of this comes from [Veris AI's blog](https://veris.ai/blog/building-an-agent-you-need-an-environment): *agents are defined within their environments, not independently*. You cannot test an agent in isolation. You can only test an agent-plus-environment pair.
+
+## The Markov decision frame
+
+Worth knowing the formal language. An agent in production lives in a **POMDP**: Partially Observable Markov Decision Process. The agent sees part of the world state, takes an action, the state changes, the agent gets a reward (or doesn't), repeat.
+
+```
+   ┌─────────────────────┐
+   │    Environment      │
+   │  (partially seen)   │
+   └─────┬───────────────┘
+         │ observation       
+         ↓                   
+   ┌──────────────┐  action  
+   │    Agent     │ ──────▶  
+   └──────────────┘          
+         ↑                   
+         │ reward            
+         │                   
+   ┌─────┴───────────────┐
+   │  Reward function    │
+   │  (often hidden)     │
+   └─────────────────────┘
+```
+
+The classical solved-environment example is chess: fully observable. The interesting agentic case is everything but chess: partial observation, hidden state, dynamic adversaries.
+
+A simulation environment lets the team probe the POMDP at scale: vary the hidden state, vary the adversaries, vary the reward signal, watch how the agent behaves across all of them.
+
+## What to build first
+
+You do not need Veris AI's full platform on day one. Three pieces are the minimum viable simulation:
+
+**1. A staging copy of every external system.** Not pointing at production. A separate database, a separate email queue, a separate billing sandbox. Stripe ships [a test mode](https://docs.stripe.com/test-mode) for exactly this. Most SaaS APIs offer sandbox keys. Use them.
+
+**2. Synthetic-user-as-a-service.** A second agent whose job is to play the customer. Give it personas (calm, frustrated, manipulative). Have it generate test conversations. Score the production agent on how well it handled each.
+
+**3. A grader.** Often a third agent. Sometimes a Python script. Always programmatic where possible (the field has a specific value, the math adds up). LLM-judged where necessary (the tone is appropriate, the response is not condescending).
+
+These three pieces, glued together, give you a sandbox you can iterate against. Veris AI's commercial platform adds polish and scale. The OSS-and-glue version gets you 70% of the value.
+
+## Open-source tooling
+
+Pieces of the simulation stack you can use in 2026:
+
+- **[Veris CLI](https://pypi.org/project/veris-cli/).** The command-line side of Veris AI's platform. Free for small-scale use, paid for enterprise volume. SOC 2 Type II for regulated data.
+- **[LangChain Smith](https://smith.langchain.com).** Eval and tracing platform with synthetic user generation in the newer SDK versions.
+- **[Inspect AI](https://inspect.ai-safety-institute.org.uk/)**. UK AI Safety Institute's open-source eval framework. Originally built for safety testing, now used widely for agentic evals.
+- **[OpenAI Evals](https://github.com/openai/evals).** Older but battle-tested. Good baseline for static evals; pair with synthetic-user generation for agentic shape.
+- **[Pydantic AI](https://pydantic.ai).** Schema-driven agent framework. Pairs naturally with simulation because every agent action is structurally validated.
+
+## What this connects to
+
+The simulation pattern is the natural complement to two other practices on this site.
+
+[Shadow testing](/blog/shadow-testing) is what comes after simulation: once the agent passes simulation at high fidelity, run it in shadow mode against real production traffic with no customer exposure. The Bain HR Services payroll agent went simulation → offline historical → shadow → ramped production over six months. The simulation phase caught the failure modes before any real customer was exposed.
+
+[The HITL standard](/blog/the-hitl-standard) is about who approves what during graduated rollouts. Simulation is what makes the graduation criteria meaningful. Without simulation, you are graduating the agent based on hope. With simulation, you are graduating it based on coverage of failure modes.
+
+[Below the waterline](/blog/below-the-waterline) is about the infrastructure that decides whether agents make it to production at all. The simulation harness is one of the three foundations (alongside identity and token-factory economics).
+
+## The takeaway
+
+The 2026 teams shipping autonomous agents into production are running them through thousands of simulated scenarios first. The teams writing news headlines about hallucinated policies and wrong drive-thru orders are testing with golden datasets and crossing their fingers. The infrastructure investment for a real simulation environment is real, and it is the difference between agents that ship at 65% and agents that ship at 95%.

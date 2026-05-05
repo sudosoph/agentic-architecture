@@ -1,0 +1,108 @@
+---
+title: "Framework for Builders"
+slug: framework-for-builders
+publishedDate: "2026-05-25"
+description: "The Framework 16 plus Strix Point is the 2026 gold standard for engineers who run their own AI infrastructure. Here is why, plus what Strix Halo changes."
+tags: ["hardware", "framework", "amd", "strix-point", "strix-halo"]
+draft: false
+---
+
+**TL;DR.** The Framework 16 with the Ryzen AI 9 HX 370 (Strix Point) and 96GB DDR5 is the most defensible laptop choice for engineers running local AI in 2026. Repairable, upgradeable, [first-class ROCm 7.3 support](/blog/96gb-ram-thesis), and unified memory bandwidth that comes within striking distance of an M3 Ultra. The newer Framework Desktop with Strix Halo (Ryzen AI Max+ 395) takes the same playbook to 128GB. This post is the case for both, the tradeoffs they each carry, and what to actually buy in May 2026.
+
+## Why this hardware
+
+Three things matter for a 2026 builder laptop. Most reviews evaluate one or two and miss the third.
+
+**Unified memory at scale.** Discrete GPU VRAM stops being the constraint when the iGPU can address system RAM directly. The Strix Point platform on Framework 16 supports 96GB DDR5-5600. The Strix Halo platform on the [Framework Desktop](https://frame.work/desktop) supports up to 128GB LPDDR5X. Either configuration runs models that simply do not fit on consumer NVIDIA cards.
+
+**Software support that is no longer a science project.** ROCm 7.3 (April 2026) is the first release where Strix Point + RDNA 3.5 is properly supported. Earlier releases crashed on `gfx1150` under load. [Phoronix tested the Strix Halo path against Intel Core Ultra 9 285K on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) and the results are competitive. AMD on Linux for AI is real now.
+
+**Repair and ownership.** The Framework 16 is the only mainstream laptop in 2026 where you can swap the GPU module, replace the keyboard, upgrade memory, and read your own service manual. That matters more in 2026 than it did in 2018 because the hardware you buy is going to be running AI workloads for five years and sustained inference is hard on components.
+
+The combination is the load-bearing argument. Other laptops have one or two. Framework has all three.
+
+## The Strix Point spec, May 2026
+
+What I run, with the rationale:
+
+| Component | Choice                      | Why                                     |
+|-----------|-----------------------------|-----------------------------------------|
+| SoC       | Ryzen AI 9 HX 370           | RDNA 3.5 iGPU, XDNA 2 NPU, 12C/24T      |
+| dGPU      | Radeon RX 7700S (8GB)       | Module for bursty image / video         |
+| RAM       | 2 × 48GB DDR5-5600          | 96GB total, supported by ROCm 7.3       |
+| Storage   | 4TB Gen 4 + 2TB Gen 4       | Models, datasets, vector indexes        |
+| Display   | 16" 165Hz 2560×1600         | Default                                 |
+| OS        | Ubuntu 26.04 LTS            | AMDGPU support in GA tree               |
+
+The spec produces 28.4 t/s sustained on GLM-4 9B Q8_0 with 90GB GART carved out for the iGPU. Full benchmark and config in [The 96GB RAM Thesis](/blog/96gb-ram-thesis).
+
+The dGPU module is optional. The iGPU handles sustained inference. The dGPU handles bursty workloads and the rare image-generation task. Buy it if you do video work; skip it if you do not.
+
+## The Strix Halo upgrade path
+
+[Strix Halo](https://www.servethehome.com/framework-desktop-review-a-solid-amd-strix-halo/) is the bigger sibling. Same RDNA 3.5 architecture, but dramatically more memory bandwidth and capacity:
+
+| Spec               | Strix Point (laptop)  | Strix Halo (desktop)        |
+|--------------------|-----------------------|-----------------------------|
+| iGPU compute units | 16                    | 32 (Radeon 8060S)           |
+| Max memory         | 96GB DDR5             | 128GB LPDDR5X (96GB to GPU) |
+| Memory bandwidth   | ~89 GB/s              | ~256 GB/s                   |
+| TDP                | ~55W (laptop)         | ~120W (desktop)             |
+| Form factor        | Framework 16          | Framework Desktop, mini-PCs |
+
+The bandwidth jump is the headline. Strix Halo runs 70B-class models at usable speed because it can move tokens fast enough. Strix Point cannot. [Community LLM benchmarks on Level1Techs](https://forum.level1techs.com/t/strix-halo-ryzen-ai-max-395-llm-benchmark-results/233796) and [the Framework Community thread](https://community.frame.work/t/amd-strix-halo-ryzen-ai-max-395-gpu-llm-performance-tests/72521) confirm the practical numbers.
+
+## Which to buy in May 2026
+
+Honest decision tree.
+
+**Framework 16 with Strix Point** if:
+- You need a laptop (travel, conferences, working from cafes).
+- Your model ceiling is 27B Dense at Q4-Q5 (Qwen 3.6, Gemma 4).
+- You want the cheapest path into the 96GB unified-memory regime.
+- Repair-and-upgrade matters to you. The Framework 16 is the only laptop you can fully service yourself.
+
+**Framework Desktop with Strix Halo** if:
+- You can run a desktop. Most of your actual work happens at one location.
+- You want headroom for 70B+ models, including DeepSeek V4 Flash at heavier quantization.
+- You will eventually want multi-machine local inference (fan out across two boxes).
+- Pricing: $1,999 base for 128GB, which is striking once you compare against [Mac Studio M3 Ultra at $4,800 for the same memory](https://www.apple.com/shop/buy-mac/mac-studio).
+
+**Both, eventually.** The pattern most engineers I know are converging on: laptop for travel and meetings, desktop for sustained workloads at home. Same OS, same models, same dotfiles. The local-first stack scales horizontally.
+
+## What other laptops cannot do
+
+Worth being specific about why this is a Framework recommendation, not a generic "buy AMD" recommendation.
+
+**Apple Silicon (M3/M4 Ultra).** Mac Studio is the closest analog: unified memory, strong inference, well-supported in MLX and llama.cpp. Two real disadvantages. Pricing is roughly 2.4× Framework Desktop for the same memory. And Apple's developer-tooling story (sandboxing, kernel extensions, low-level GPU access) is more constrained for the long-tail use cases.
+
+**NVIDIA discrete (RTX 5090, etc).** Faster per-token than any AMD setup. But VRAM ceilings (32GB on a 5090) cap your model size in a way unified memory does not. You also pay top dollar for the card and run hot under sustained AI load.
+
+**Intel Core Ultra (Lunar Lake, Arrow Lake).** Phoronix's testing of [Arrow Lake against Strix Halo on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) shows AMD ahead on the AI workloads that matter. Intel's Arc graphics drivers are still catching up on Linux.
+
+**Generic Windows laptops.** Repairability and Linux support are both worse than Framework. The sustainable-engineering argument loses its anchor.
+
+## Software setup notes
+
+A few things worth documenting once and forgetting about. Full installation lives in [The 96GB RAM Thesis](/blog/96gb-ram-thesis), but the highlights:
+
+- **Ubuntu 26.04 LTS, not 24.04.** AMDGPU support for Strix Point ships in the GA tree on 26.04. Skip the HWE stack juggling.
+- **GART config.** `amdgpu.gttsize=92160` in the kernel command line. Gives the iGPU 90GB to address.
+- **ROCm 7.3, not 7.2.** Earlier releases crashed on `gfx1150` under load.
+- **llama.cpp built from source.** Prebuilt binaries miss the `gfx1150` target. Build with `-DAMDGPU_TARGETS="gfx1150;gfx1102"` so the same binary handles both GPUs.
+- **Vulkan as fallback.** The cross-platform GPU runtime is now competitive on AMD. When ROCm misbehaves on a particular model or quant, switch backends.
+
+## What is coming next
+
+Two threads worth tracking:
+
+- **ROCm 8.0** is rumored Q3 2026 with first-class XDNA 2 NPU offload for the matmul-heavy parts of attention. If it ships on time, the iGPU stops being the bottleneck on long-context turns.
+- **Strix Halo successor (Gorgon Halo).** [UltrabookReview's roundup](https://www.ultrabookreview.com/70442-amd-strix-halo-laptops/) tracks the pipeline. Higher core counts, more cache, same unified-memory pattern. Late 2026 is the likely window.
+
+For now, what is shipping in May 2026 is enough. Framework 16 with Strix Point handles the 90% of agentic-dev workloads I run daily. Strix Halo desktops handle the 10% that need heavier models.
+
+## The takeaway
+
+Buy the Framework 16 with Strix Point if you want one machine that travels and runs serious local AI. Buy the Framework Desktop with Strix Halo if you want a home base that can run 70B-class models at usable speed. Buy both if you can. The hardware is no longer the bottleneck. The bottleneck is the [agentic loop design](/blog/swarm-vs-monolith) running on top of it.
+
+For the full software setup, the [GART tuning, ROCm install, and llama.cpp HIP build](/blog/96gb-ram-thesis) live in a separate post. For the day-to-day [personal agent build](/blog/personal-ai-agents-on-amd) on this hardware, see the OpenClaw + MCP bridge writeup.

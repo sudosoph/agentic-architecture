@@ -210,6 +210,57 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "boulders-ai-frontier",
+    "frontmatter": {
+      "title": "Boulder's AI Frontier",
+      "slug": "boulders-ai-frontier",
+      "publishedDate": "2026-05-28",
+      "description": "What is actually shipping out of the Boulder AI scene in May 2026, what is on the schedule for Boulder Startup Week, and why the Give First culture matters for agentic builders.",
+      "tags": [
+        "boulder",
+        "community",
+        "ai-agents",
+        "startup-week"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> Boulder is running the highest startup-creation rate in the United States outside Stanford. The AI scene here is small enough to know by name and dense enough to ship. <a href=\"https://boulderstartupweek.com/\">Boulder Startup Week 2026</a> ran May 4-8 with the strongest agentic-AI lineup the event has ever had. This is the May 2026 dispatch: who is shipping, what to attend, and the Give First culture that makes this scene work.</p>\n<h2 id=\"the-number-that-explains-why-this-matters\">The number that explains why this matters</h2>\n<p>The University of Colorado Boulder launched 35 new startups from university research in fiscal 2024, the highest number in the United States outside Stanford. <a href=\"https://www.colorado.edu/venturepartners/\">Venture Partners at CU Boulder</a> ran a multi-day investor showcase in March 2026 highlighting the Inter-Mountain West pipeline. The throughput is real, and a meaningful share of it is AI.</p>\n<p>Boulder is not San Francisco. It is also not trying to be. The advantage is a smaller scene that is easier to traverse: one well-attended meetup and you have met half the people working on your problem.</p>\n<h2 id=\"boulder-startup-week-2026\">Boulder Startup Week 2026</h2>\n<p><a href=\"https://boulderstartupweek.com/\">BSW</a> ran May 4-8 with several hundred sessions across the city. The agentic-AI lineup that mattered:</p>\n<ul>\n<li><strong>Reinforcement Learning for Agents.</strong> A technical session that paired well with the production-deployment talks happening across the schedule.</li>\n<li><strong>Building AI Products That Work.</strong> Practitioner panel on the gap between prototype and production. The same gap <a href=\"/blog/below-the-waterline\">Below the Waterline</a> frames around the 65/95 problem.</li>\n<li><strong>AI Builders Meetup.</strong> Informal, builder-focused, the highest signal-to-noise event of the week.</li>\n<li><strong>The Give First track</strong>. Brad Feld's perennial Boulder principle, tactical sessions on how senior operators here actually mentor early-stage founders.</li>\n</ul>\n<p>Free for attendees. Hosted citywide. The schedule structure (community-led sessions, no central gatekeeper) is unusual and is the reason BSW consistently produces real introductions instead of pitch competitions.</p>\n<h2 id=\"what-is-shipping-out-of-the-local-scene\">What is shipping out of the local scene</h2>\n<p>Three categories worth tracking, with named companies. Not exhaustive, just the ones I have seen ship something real in 2026.</p>\n<p><strong>Agentic infrastructure.</strong></p>\n<ul>\n<li><em>Ramsi</em>. agentic AI for hotel pricing. 24/7 dynamic pricing on a foundational pricing model. Hospitality is a vertical local AI keeps showing up in.</li>\n<li>Several stealth-mode agentic-coding teams that surfaced briefly during BSW and went back to building.</li>\n</ul>\n<p><strong>Vertical AI agents.</strong></p>\n<ul>\n<li>A handful of Boulder companies in legal, healthcare, and outdoor-industry verticals where local-first inference and data sovereignty matter. The compliance argument writes itself for these audiences.</li>\n</ul>\n<p><strong>Open-source tooling.</strong></p>\n<ul>\n<li>Boulder has historically punched above its weight in OSS. The pattern continues. Several of the local agentic-frameworks contributors are based here.</li>\n</ul>\n<p>The honest read: Boulder does not produce a foundation-model lab. It does produce a steady stream of vertical-AI startups that ship.</p>\n<h2 id=\"where-to-actually-meet-people\">Where to actually meet people</h2>\n<p>Three recurring venues that matter.</p>\n<p><strong><a href=\"https://denver-boulder.aitinkerers.org/\">Denver-Boulder AI Tinkerers</a></strong>. monthly meetups with live demos of agentic workflows and local-model execution. The right venue for engineers building on top of <a href=\"/blog/local-vs-cloud-inference\">open-weight models</a> like Qwen 3.6 and Gemma 4. Practitioner-heavy.</p>\n<p><strong><a href=\"https://boulder.codes/\">boulder.codes</a></strong>. the Builders' Room during BSW, year-round informal community for engineers shipping in Boulder. Less polish, more substance.</p>\n<p><strong>Galvanize</strong>. the coworking space that has been the de facto founder-hub for a decade. AI events show up here continuously.</p>\n<h2 id=\"why-the-give-first-culture-matters-for-builders\">Why the Give First culture matters for builders</h2>\n<p>Brad Feld's <a href=\"https://feld.com/archives/2017/04/give-first-much-more-than-an-attitude.html\">Give First</a> principle is a Boulder export and the reason new builders here ramp faster than they should. The ratio of \"founders willing to spend an hour with you\" to \"founders who treat their time like a sales-qualified meeting\" is unusually high. This compounds for AI builders in three ways.</p>\n<p><strong>Faster pattern recognition.</strong> Mistakes in agentic AI are expensive (token bills, customer trust, regulatory exposure). Being two coffees away from someone who already burned that mistake is genuinely worth more in 2026 than it was in 2018.</p>\n<p><strong>Better hiring.</strong> The Boulder talent pool is small enough that a personal introduction is worth more than a job board. Senior agentic engineers find each other through the meetups, not through LinkedIn.</p>\n<p><strong>Real cross-pollination.</strong> A vertical-AI startup in legal tech and a foundation-model researcher and a <a href=\"/blog/framework-for-builders\">local-first infrastructure builder</a> can all be in the same room at the same meetup. That happens because the city is small. It does not happen at SF AI events.</p>\n<h2 id=\"what-i-am-working-on-out-of-boulder\">What I am working on out of Boulder</h2>\n<p>For transparency about my own positioning in this scene: I run Agentic Architecture out of Boulder, focused on local-first AI infrastructure for engineers and SMBs. The <a href=\"/stack\">stack</a> is local-first by design, the <a href=\"/blog/framework-for-builders\">hardware</a> is what I actually run, the <a href=\"/work-with-me\">work I take on</a> covers training, speaking, course creation, and agentic-build engagements.</p>\n<p>The Architect's Notebook (subscribe link on the homepage) is a weekly deep dive on agentic architecture for lean founders. Free for BSW attendees. The notebook is where the longer-form analysis from these monthly Boulder dispatches will live.</p>\n<h2 id=\"what-is-next-on-the-local-calendar\">What is next on the local calendar</h2>\n<p>Looking ahead from May 2026:</p>\n<ul>\n<li><strong>Denver Startup Week.</strong> Typically September. AI track expanding year over year.</li>\n<li><strong>CU Boulder New Venture Showcase.</strong> Annual investor showcase, typically March. The pipeline of CU-spun-out AI companies is the leading indicator.</li>\n<li><strong>The Builders' Room</strong> at boulder.codes. continues year-round for the engineers who do not need pitch decks to find each other.</li>\n<li><strong>BSW 2027.</strong> Early May 2027. The agentic track will likely double.</li>\n</ul>\n<p>If you are an agentic AI builder considering a move from SF, NYC, or Seattle, Boulder is genuinely worth a visit during BSW. The cost of living is lower, the talent density is higher per square foot than the headline numbers imply, and the community gives back at a rate that defies the size of the scene.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>Boulder is shipping. Not at SF volume. At Boulder velocity, which is its own thing. Boulder Startup Week 2026 was the strongest agentic lineup the event has had. The AI Tinkerers meetup is where the engineers actually working on this stuff show up. And the Give First culture is the unglamorous reason new builders here are productive faster than the city's size would predict.</p>\n<p>This was the May 2026 dispatch. Next month: what shipped, who hired, and the new patterns surfacing out of the meetups.</p>",
+    "toc": [
+      {
+        "id": "the-number-that-explains-why-this-matters",
+        "text": "The number that explains why this matters"
+      },
+      {
+        "id": "boulder-startup-week-2026",
+        "text": "Boulder Startup Week 2026"
+      },
+      {
+        "id": "what-is-shipping-out-of-the-local-scene",
+        "text": "What is shipping out of the local scene"
+      },
+      {
+        "id": "where-to-actually-meet-people",
+        "text": "Where to actually meet people"
+      },
+      {
+        "id": "why-the-give-first-culture-matters-for-builders",
+        "text": "Why the Give First culture matters for builders"
+      },
+      {
+        "id": "what-i-am-working-on-out-of-boulder",
+        "text": "What I am working on out of Boulder"
+      },
+      {
+        "id": "what-is-next-on-the-local-calendar",
+        "text": "What is next on the local calendar"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
     "slug": "death-of-the-junior-dev",
     "frontmatter": {
       "title": "The Death of the Junior Dev",
@@ -301,6 +352,113 @@ export const blogPosts: Array<{
       {
         "id": "failure-modes-that-ship",
         "text": "Failure modes that ship"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "framework-for-builders",
+    "frontmatter": {
+      "title": "Framework for Builders",
+      "slug": "framework-for-builders",
+      "publishedDate": "2026-05-25",
+      "description": "The Framework 16 plus Strix Point is the 2026 gold standard for engineers who run their own AI infrastructure. Here is why, plus what Strix Halo changes.",
+      "tags": [
+        "hardware",
+        "framework",
+        "amd",
+        "strix-point",
+        "strix-halo"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> The Framework 16 with the Ryzen AI 9 HX 370 (Strix Point) and 96GB DDR5 is the most defensible laptop choice for engineers running local AI in 2026. Repairable, upgradeable, <a href=\"/blog/96gb-ram-thesis\">first-class ROCm 7.3 support</a>, and unified memory bandwidth that comes within striking distance of an M3 Ultra. The newer Framework Desktop with Strix Halo (Ryzen AI Max+ 395) takes the same playbook to 128GB. This post is the case for both, the tradeoffs they each carry, and what to actually buy in May 2026.</p>\n<h2 id=\"why-this-hardware\">Why this hardware</h2>\n<p>Three things matter for a 2026 builder laptop. Most reviews evaluate one or two and miss the third.</p>\n<p><strong>Unified memory at scale.</strong> Discrete GPU VRAM stops being the constraint when the iGPU can address system RAM directly. The Strix Point platform on Framework 16 supports 96GB DDR5-5600. The Strix Halo platform on the <a href=\"https://frame.work/desktop\">Framework Desktop</a> supports up to 128GB LPDDR5X. Either configuration runs models that simply do not fit on consumer NVIDIA cards.</p>\n<p><strong>Software support that is no longer a science project.</strong> ROCm 7.3 (April 2026) is the first release where Strix Point + RDNA 3.5 is properly supported. Earlier releases crashed on <code>gfx1150</code> under load. <a href=\"https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake\">Phoronix tested the Strix Halo path against Intel Core Ultra 9 285K on Linux</a> and the results are competitive. AMD on Linux for AI is real now.</p>\n<p><strong>Repair and ownership.</strong> The Framework 16 is the only mainstream laptop in 2026 where you can swap the GPU module, replace the keyboard, upgrade memory, and read your own service manual. That matters more in 2026 than it did in 2018 because the hardware you buy is going to be running AI workloads for five years and sustained inference is hard on components.</p>\n<p>The combination is the load-bearing argument. Other laptops have one or two. Framework has all three.</p>\n<h2 id=\"the-strix-point-spec-may-2026\">The Strix Point spec, May 2026</h2>\n<p>What I run, with the rationale:</p>\n<table>\n<thead>\n<tr>\n<th>Component</th>\n<th>Choice</th>\n<th>Why</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>SoC</td>\n<td>Ryzen AI 9 HX 370</td>\n<td>RDNA 3.5 iGPU, XDNA 2 NPU, 12C/24T</td>\n</tr>\n<tr>\n<td>dGPU</td>\n<td>Radeon RX 7700S (8GB)</td>\n<td>Module for bursty image / video</td>\n</tr>\n<tr>\n<td>RAM</td>\n<td>2 × 48GB DDR5-5600</td>\n<td>96GB total, supported by ROCm 7.3</td>\n</tr>\n<tr>\n<td>Storage</td>\n<td>4TB Gen 4 + 2TB Gen 4</td>\n<td>Models, datasets, vector indexes</td>\n</tr>\n<tr>\n<td>Display</td>\n<td>16\" 165Hz 2560×1600</td>\n<td>Default</td>\n</tr>\n<tr>\n<td>OS</td>\n<td>Ubuntu 26.04 LTS</td>\n<td>AMDGPU support in GA tree</td>\n</tr>\n</tbody>\n</table>\n<p>The spec produces 28.4 t/s sustained on GLM-4 9B Q8_0 with 90GB GART carved out for the iGPU. Full benchmark and config in <a href=\"/blog/96gb-ram-thesis\">The 96GB RAM Thesis</a>.</p>\n<p>The dGPU module is optional. The iGPU handles sustained inference. The dGPU handles bursty workloads and the rare image-generation task. Buy it if you do video work; skip it if you do not.</p>\n<h2 id=\"the-strix-halo-upgrade-path\">The Strix Halo upgrade path</h2>\n<p><a href=\"https://www.servethehome.com/framework-desktop-review-a-solid-amd-strix-halo/\">Strix Halo</a> is the bigger sibling. Same RDNA 3.5 architecture, but dramatically more memory bandwidth and capacity:</p>\n<table>\n<thead>\n<tr>\n<th>Spec</th>\n<th>Strix Point (laptop)</th>\n<th>Strix Halo (desktop)</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>iGPU compute units</td>\n<td>16</td>\n<td>32 (Radeon 8060S)</td>\n</tr>\n<tr>\n<td>Max memory</td>\n<td>96GB DDR5</td>\n<td>128GB LPDDR5X (96GB to GPU)</td>\n</tr>\n<tr>\n<td>Memory bandwidth</td>\n<td>~89 GB/s</td>\n<td>~256 GB/s</td>\n</tr>\n<tr>\n<td>TDP</td>\n<td>~55W (laptop)</td>\n<td>~120W (desktop)</td>\n</tr>\n<tr>\n<td>Form factor</td>\n<td>Framework 16</td>\n<td>Framework Desktop, mini-PCs</td>\n</tr>\n</tbody>\n</table>\n<p>The bandwidth jump is the headline. Strix Halo runs 70B-class models at usable speed because it can move tokens fast enough. Strix Point cannot. <a href=\"https://forum.level1techs.com/t/strix-halo-ryzen-ai-max-395-llm-benchmark-results/233796\">Community LLM benchmarks on Level1Techs</a> and <a href=\"https://community.frame.work/t/amd-strix-halo-ryzen-ai-max-395-gpu-llm-performance-tests/72521\">the Framework Community thread</a> confirm the practical numbers.</p>\n<h2 id=\"which-to-buy-in-may-2026\">Which to buy in May 2026</h2>\n<p>Honest decision tree.</p>\n<p><strong>Framework 16 with Strix Point</strong> if:</p>\n<ul>\n<li>You need a laptop (travel, conferences, working from cafes).</li>\n<li>Your model ceiling is 27B Dense at Q4-Q5 (Qwen 3.6, Gemma 4).</li>\n<li>You want the cheapest path into the 96GB unified-memory regime.</li>\n<li>Repair-and-upgrade matters to you. The Framework 16 is the only laptop you can fully service yourself.</li>\n</ul>\n<p><strong>Framework Desktop with Strix Halo</strong> if:</p>\n<ul>\n<li>You can run a desktop. Most of your actual work happens at one location.</li>\n<li>You want headroom for 70B+ models, including DeepSeek V4 Flash at heavier quantization.</li>\n<li>You will eventually want multi-machine local inference (fan out across two boxes).</li>\n<li>Pricing: $1,999 base for 128GB, which is striking once you compare against <a href=\"https://www.apple.com/shop/buy-mac/mac-studio\">Mac Studio M3 Ultra at $4,800 for the same memory</a>.</li>\n</ul>\n<p><strong>Both, eventually.</strong> The pattern most engineers I know are converging on: laptop for travel and meetings, desktop for sustained workloads at home. Same OS, same models, same dotfiles. The local-first stack scales horizontally.</p>\n<h2 id=\"what-other-laptops-cannot-do\">What other laptops cannot do</h2>\n<p>Worth being specific about why this is a Framework recommendation, not a generic \"buy AMD\" recommendation.</p>\n<p><strong>Apple Silicon (M3/M4 Ultra).</strong> Mac Studio is the closest analog: unified memory, strong inference, well-supported in MLX and llama.cpp. Two real disadvantages. Pricing is roughly 2.4× Framework Desktop for the same memory. And Apple's developer-tooling story (sandboxing, kernel extensions, low-level GPU access) is more constrained for the long-tail use cases.</p>\n<p><strong>NVIDIA discrete (RTX 5090, etc).</strong> Faster per-token than any AMD setup. But VRAM ceilings (32GB on a 5090) cap your model size in a way unified memory does not. You also pay top dollar for the card and run hot under sustained AI load.</p>\n<p><strong>Intel Core Ultra (Lunar Lake, Arrow Lake).</strong> Phoronix's testing of <a href=\"https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake\">Arrow Lake against Strix Halo on Linux</a> shows AMD ahead on the AI workloads that matter. Intel's Arc graphics drivers are still catching up on Linux.</p>\n<p><strong>Generic Windows laptops.</strong> Repairability and Linux support are both worse than Framework. The sustainable-engineering argument loses its anchor.</p>\n<h2 id=\"software-setup-notes\">Software setup notes</h2>\n<p>A few things worth documenting once and forgetting about. Full installation lives in <a href=\"/blog/96gb-ram-thesis\">The 96GB RAM Thesis</a>, but the highlights:</p>\n<ul>\n<li><strong>Ubuntu 26.04 LTS, not 24.04.</strong> AMDGPU support for Strix Point ships in the GA tree on 26.04. Skip the HWE stack juggling.</li>\n<li><strong>GART config.</strong> <code>amdgpu.gttsize=92160</code> in the kernel command line. Gives the iGPU 90GB to address.</li>\n<li><strong>ROCm 7.3, not 7.2.</strong> Earlier releases crashed on <code>gfx1150</code> under load.</li>\n<li><strong>llama.cpp built from source.</strong> Prebuilt binaries miss the <code>gfx1150</code> target. Build with <code>-DAMDGPU_TARGETS=\"gfx1150;gfx1102\"</code> so the same binary handles both GPUs.</li>\n<li><strong>Vulkan as fallback.</strong> The cross-platform GPU runtime is now competitive on AMD. When ROCm misbehaves on a particular model or quant, switch backends.</li>\n</ul>\n<h2 id=\"what-is-coming-next\">What is coming next</h2>\n<p>Two threads worth tracking:</p>\n<ul>\n<li><strong>ROCm 8.0</strong> is rumored Q3 2026 with first-class XDNA 2 NPU offload for the matmul-heavy parts of attention. If it ships on time, the iGPU stops being the bottleneck on long-context turns.</li>\n<li><strong>Strix Halo successor (Gorgon Halo).</strong> <a href=\"https://www.ultrabookreview.com/70442-amd-strix-halo-laptops/\">UltrabookReview's roundup</a> tracks the pipeline. Higher core counts, more cache, same unified-memory pattern. Late 2026 is the likely window.</li>\n</ul>\n<p>For now, what is shipping in May 2026 is enough. Framework 16 with Strix Point handles the 90% of agentic-dev workloads I run daily. Strix Halo desktops handle the 10% that need heavier models.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>Buy the Framework 16 with Strix Point if you want one machine that travels and runs serious local AI. Buy the Framework Desktop with Strix Halo if you want a home base that can run 70B-class models at usable speed. Buy both if you can. The hardware is no longer the bottleneck. The bottleneck is the <a href=\"/blog/swarm-vs-monolith\">agentic loop design</a> running on top of it.</p>\n<p>For the full software setup, the <a href=\"/blog/96gb-ram-thesis\">GART tuning, ROCm install, and llama.cpp HIP build</a> live in a separate post. For the day-to-day <a href=\"/blog/personal-ai-agents-on-amd\">personal agent build</a> on this hardware, see the OpenClaw + MCP bridge writeup.</p>",
+    "toc": [
+      {
+        "id": "why-this-hardware",
+        "text": "Why this hardware"
+      },
+      {
+        "id": "the-strix-point-spec-may-2026",
+        "text": "The Strix Point spec, May 2026"
+      },
+      {
+        "id": "the-strix-halo-upgrade-path",
+        "text": "The Strix Halo upgrade path"
+      },
+      {
+        "id": "which-to-buy-in-may-2026",
+        "text": "Which to buy in May 2026"
+      },
+      {
+        "id": "what-other-laptops-cannot-do",
+        "text": "What other laptops cannot do"
+      },
+      {
+        "id": "software-setup-notes",
+        "text": "Software setup notes"
+      },
+      {
+        "id": "what-is-coming-next",
+        "text": "What is coming next"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "local-vs-cloud-inference",
+    "frontmatter": {
+      "title": "Local vs Cloud Inference: The 2026 Cost-Benefit",
+      "slug": "local-vs-cloud-inference",
+      "publishedDate": "2026-05-26",
+      "description": "Real numbers, real workloads, real break-even points. When local is the obvious answer, when cloud is, and the hybrid that wins for most teams.",
+      "tags": [
+        "economics",
+        "local-inference",
+        "cloud",
+        "cost-benefit"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> Local inference is no longer a hobbyist pursuit and cloud inference is no longer the default answer. The 2026 break-even math depends on workload shape, not philosophy. This post is the actual numbers per workload type, the four scenarios where local wins decisively, the three where cloud still earns its keep, and how to know which side of the line you sit on.</p>\n<h2 id=\"the-pricing-reality-may-2026\">The pricing reality, May 2026</h2>\n<p>Cloud inference per million tokens (input/output):</p>\n<table>\n<thead>\n<tr>\n<th>Provider</th>\n<th>Input $/M</th>\n<th>Output $/M</th>\n<th>Notes</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Claude Sonnet 4.5</td>\n<td>$3.00</td>\n<td>$15.00</td>\n<td>Agentic-coding default</td>\n</tr>\n<tr>\n<td>Claude Haiku 4.5</td>\n<td>$1.00</td>\n<td>$5.00</td>\n<td>Router / classifier tier</td>\n</tr>\n<tr>\n<td>Claude Opus 4.x</td>\n<td>$15.00</td>\n<td>$75.00</td>\n<td>Recent 67% cut on 4.5</td>\n</tr>\n<tr>\n<td>GPT-5</td>\n<td>$2.50</td>\n<td>$10.00</td>\n<td>Reasoning premium varies</td>\n</tr>\n<tr>\n<td>GPT-5 mini</td>\n<td>$0.25</td>\n<td>$1.00</td>\n<td>High fan-out workhorse</td>\n</tr>\n<tr>\n<td>Gemini 2.5 Flash</td>\n<td>$0.30</td>\n<td>$2.50</td>\n<td>Long-context champion</td>\n</tr>\n<tr>\n<td><strong>DeepSeek V4 Flash</strong></td>\n<td><strong>$0.14</strong></td>\n<td><strong>$0.28</strong></td>\n<td>The disruptor, MIT-licensed</td>\n</tr>\n<tr>\n<td>DeepSeek V4 Pro</td>\n<td>$1.74</td>\n<td>$3.48</td>\n<td>1.6T MoE, 1M context</td>\n</tr>\n</tbody>\n</table>\n<p>DeepSeek V4 Flash at $0.14 per million reset the market. <a href=\"https://simonwillison.net/2026/Apr/24/deepseek-v4/\">Simon Willison's coverage</a> is the cleanest reference for the launch.</p>\n<p>Local inference per active hour on a Framework 16 with <a href=\"/blog/framework-for-builders\">Strix Point and 96GB unified memory</a>:</p>\n<ul>\n<li>Power: ~65W under sustained load</li>\n<li>At $0.13/kWh: <strong>$0.0085 per hour, or ~$0.034 per 4-hour session</strong></li>\n<li>Hardware cost: ~$3,200, amortized across 5 years = $0.07/hour additional</li>\n<li>Total: <strong>~$0.10 per active hour, all-in</strong></li>\n</ul>\n<p>The crossover math is the rest of the post.</p>\n<h2 id=\"four-workloads-where-local-wins\">Four workloads where local wins</h2>\n<p><strong>1. High-volume routing and classification.</strong> A router agent that processes 5,000 inbound requests per day at 2K tokens each on Sonnet 4.5 burns $300/month. The same workload on a local Gemma 4 E4B is electricity. Quality on a four-class problem is essentially identical. <a href=\"/blog/the-zero-inbox-agent\">This is why most production triage systems run local</a>.</p>\n<p><strong>2. Long-running unattended loops.</strong> A research agent that wakes every 15 minutes for 24 hours generates ~96 sessions per day. At cloud rates this is a real subscription. Locally it costs nothing to leave running. <a href=\"/blog/token-budgeting-for-startups\">Token Budgeting</a> breaks down the per-loop math.</p>\n<p><strong>3. Privacy-sensitive workloads.</strong> Inbox triage, customer-data processing, contract review, internal Slack analysis. Anything where the data should not leave the machine. The cloud option is not \"more expensive,\" it is \"compliance-disqualified.\" HIPAA, GDPR, SOC 2 Type II all get easier when nothing leaves your network.</p>\n<p><strong>4. Heavy fan-out architectures.</strong> <a href=\"/blog/swarm-vs-monolith\">Swarm patterns</a> where one task decomposes into 5-10 specialist sub-agents working in parallel. At cloud rates the fan-out fee is real. Locally the cost is bounded by hardware capacity, not per-token billing.</p>\n<h2 id=\"three-workloads-where-cloud-still-wins\">Three workloads where cloud still wins</h2>\n<p><strong>1. Frontier-reasoning turns.</strong> The hardest 5% of agentic turns: novel debugging, complex code generation across unfamiliar systems, cross-domain synthesis. Claude Opus 4.x and GPT-5 still beat anything that fits on a laptop on these tasks. A well-designed loop calls the frontier ~once per session, by name.</p>\n<p><strong>2. One-off bursty workloads.</strong> A team that runs an agentic task twice a month does not justify the hardware investment. The amortization breaks. Cloud at metered rates wins for sporadic use.</p>\n<p><strong>3. Multimodal at scale.</strong> Vision, audio, video. Local options exist (DeepSeek V4 Lite, Gemma 4 multimodal, Kimi K2.6 with MoonViT) but the frontier multimodal models still have a quality lead, especially on long video context. If your workload is heavily visual, the math shifts.</p>\n<h2 id=\"the-break-even-calculator\">The break-even calculator</h2>\n<p>Three numbers determine which side of the line you sit on.</p>\n<pre><code>monthly_cloud_spend = \n  (input_tokens_per_month × $/M_input) + \n  (output_tokens_per_month × $/M_output)\n\nmonthly_local_cost = \n  (hardware_cost / 60_months) +     # 5-year amortization\n  (kWh_per_month × electricity_rate)\n\nlocal_wins_after_months =\n  hardware_cost / (monthly_cloud_spend - monthly_local_kWh_cost)\n</code></pre>\n<p>A few worked examples:</p>\n<table>\n<thead>\n<tr>\n<th>Profile</th>\n<th>Monthly cloud</th>\n<th>Local payback</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Solo founder, light</td>\n<td>$50</td>\n<td>65 months. Stay cloud.</td>\n</tr>\n<tr>\n<td>Solo founder, agentic</td>\n<td>$200</td>\n<td>16 months. Borderline.</td>\n</tr>\n<tr>\n<td>Two-person AI-native</td>\n<td>$500</td>\n<td>6 months. Buy now.</td>\n</tr>\n<tr>\n<td>Small team, heavy use</td>\n<td>$2,000</td>\n<td>1.5 months. Buy yesterday.</td>\n</tr>\n</tbody>\n</table>\n<p>The crossover is around <strong>$200/month of cloud spend</strong>. Below that, the cloud convenience tax is worth it. Above that, the laptop is paying itself back inside a year.</p>\n<h2 id=\"what-changed-in-2026\">What changed in 2026</h2>\n<p>Two things shifted the math noticeably in the last six months.</p>\n<p><strong>Open-weight models caught up.</strong> Qwen 3.6 27B Dense <a href=\"https://qwen.ai/blog?id=qwen3.6-27b\">hits 77.2% on SWE-bench Verified</a>, within 4 points of Claude Opus. Gemma 4 31B Dense is #3 on the open Arena leaderboard. The local quality bar is now within striking distance of the cloud quality bar for most tasks.</p>\n<p><strong>Hardware got radically cheaper for the workload.</strong> <a href=\"https://frame.work/desktop\">Strix Halo at $1,999 base for 128GB unified memory</a> is half the price of a Mac Studio with the same RAM. The hardware-cost denominator in the break-even formula collapsed.</p>\n<p>These two changes together moved the local-first crossover by roughly 2× year over year. Workloads that did not justify a laptop in 2024 do justify one in 2026.</p>\n<h2 id=\"the-hybrid-that-ships\">The hybrid that ships</h2>\n<p>Most production teams in 2026 do not pick. They run hybrid:</p>\n<ul>\n<li>80-95% of agentic turns on local (routing, classification, drafting, summarization, tool calling, critique)</li>\n<li>5-20% on cloud frontier APIs (genuinely hard reasoning, multimodal frontier, long-context synthesis)</li>\n<li>0% on cloud for privacy-sensitive workloads (regulated data stays on-machine)</li>\n</ul>\n<p>The split varies by team. A heavy frontend product might be 70/30. A research agent processing only public data might be 95/5. A regulated healthcare workflow might be 100/0.</p>\n<p>The pattern that does not work: 100% cloud OR 100% local as a religious commitment. Both are wrong. The right answer is per-task routing.</p>\n<h2 id=\"a-note-on-the-emotional-cost-of-metered-apis\">A note on the emotional cost of metered APIs</h2>\n<p>This is the part the cost spreadsheets miss. When every retry costs money, you start <a href=\"/blog/token-budgeting-for-startups\">trimming retries</a>. You let the agent settle for \"good enough\" instead of letting the critic argue with the executor for three more turns. You stop running parallel fan-out because the bill scales linearly. Quality drops in ways the spreadsheet does not capture.</p>\n<p>On hardware you own, the marginal cost of trying again is zero. The behavioral consequence is real: you experiment more, retry more, fan out more, leave loops running through the night. The output gets better in ways that compound.</p>\n<p>This is the hidden value local-first delivers and the reason the simple cost model under-states the upside.</p>\n<h2 id=\"what-i-would-do-at-each-scale\">What I would do at each scale</h2>\n<p>Direct recommendations:</p>\n<ul>\n<li><strong>Solo founder, just starting</strong>. Stay cloud. Use Claude Code or Cursor with a Sonnet 4.5 plan. Revisit when monthly bill crosses $200.</li>\n<li><strong>Solo founder, shipping daily</strong>. Buy a <a href=\"/blog/framework-for-builders\">Framework 16 with Strix Point</a>. 16-month payback, plus the experiment-velocity dividend.</li>\n<li><strong>Two-person AI-native team</strong>. Buy two Framework 16s plus a Framework Desktop with Strix Halo as the home base. Hybrid setup. ~$10K total. Pays back in a quarter.</li>\n<li><strong>Small team scaling</strong>. Move 80% of inference local. Standardize on Qwen 3.6 / Gemma 4. Reserve Claude / GPT-5 for the genuinely hard turns. Track the savings as a P&#x26;L line item.</li>\n<li><strong>Regulated industry</strong>. 100% local from day one. The compliance argument writes itself.</li>\n</ul>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>Local versus cloud is not a religious question. It is a workload-shape question with a clear formula. Below $200/month of cloud spend, stay cloud. Above $500/month, buy the laptop yesterday. In between, the answer depends on whether you value experiment velocity (buy local) or operational simplicity (stay cloud).</p>\n<p>The teams that win in 2026 are running <a href=\"/blog/swarm-vs-monolith\">hybrid stacks</a> with deliberate per-task routing. The teams losing are running 100% one or the other for ideological reasons.</p>",
+    "toc": [
+      {
+        "id": "the-pricing-reality-may-2026",
+        "text": "The pricing reality, May 2026"
+      },
+      {
+        "id": "four-workloads-where-local-wins",
+        "text": "Four workloads where local wins"
+      },
+      {
+        "id": "three-workloads-where-cloud-still-wins",
+        "text": "Three workloads where cloud still wins"
+      },
+      {
+        "id": "the-break-even-calculator",
+        "text": "The break-even calculator"
+      },
+      {
+        "id": "what-changed-in-2026",
+        "text": "What changed in 2026"
+      },
+      {
+        "id": "the-hybrid-that-ships",
+        "text": "The hybrid that ships"
+      },
+      {
+        "id": "a-note-on-the-emotional-cost-of-metered-apis",
+        "text": "A note on the emotional cost of metered APIs"
+      },
+      {
+        "id": "what-i-would-do-at-each-scale",
+        "text": "What I would do at each scale"
       },
       {
         "id": "the-takeaway",
@@ -1089,6 +1247,58 @@ export const blogPosts: Array<{
       {
         "id": "the-honest-tradeoff",
         "text": "The honest tradeoff"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "why-every-agent-needs-a-simulation-sandbox",
+    "frontmatter": {
+      "title": "Why Every Agent Needs a Simulation Sandbox",
+      "slug": "why-every-agent-needs-a-simulation-sandbox",
+      "publishedDate": "2026-05-27",
+      "description": "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one.",
+      "tags": [
+        "agents",
+        "testing",
+        "simulation",
+        "evals",
+        "production"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> Agents that take real-world action (move money, send emails, edit databases) cannot be tested with golden datasets. They need simulation environments that look like production but are not real, where the agent makes mistakes safely and the team learns from them. Andi Partovi from Veris AI made the case at AI Dev SF on April 28: every AI agent needs a simulation sandbox. The teams that have built one are shipping autonomous agents into regulated enterprises. The teams that have not are explaining to their customers why their bot invented a usage policy.</p>\n<h2 id=\"the-incidents-that-should-have-been-caught-in-simulation\">The incidents that should have been caught in simulation</h2>\n<p>Three real failures from the last 18 months. All preventable. All public.</p>\n<p><strong>Cursor's support bot, April 2025.</strong> <a href=\"https://www.theregister.com/2025/04/18/cursor_ai_support_bot_lies/\">The bot hallucinated a fake login policy</a> and told customers their accounts were locked. The \"Sam\" name on the email was AI-generated. Customers cancelled subscriptions. The <a href=\"https://news.ycombinator.com/item?id=43683012\">Hacker News thread</a> hit the front page. Cursor's co-founder apologized publicly and now labels AI responses. The pattern would have been caught by red-team simulation: feed adversarial customer questions to the bot in a sandbox, watch it invent answers it should not invent.</p>\n<p><strong>McDonald's AI drive-thru, 2024.</strong> Order mishaps led to the trial being shut down. A simulation environment with realistic noisy audio, mumbled orders, and abrupt context switches would have surfaced the failure modes before any customer was charged for 240 chicken nuggets.</p>\n<p><strong>The NYC chatbot, 2024.</strong> The official New York City small-business chatbot told operators to break the law (allowed cash-only when illegal, told landlords they could discriminate). <a href=\"https://themarkup.org/news/2024/03/29/nyc-ai-chatbot-tells-businesses-to-break-the-law\">Markup investigation</a> caught it. Same root cause: untested edge cases met live distribution.</p>\n<p>The pattern across all three: the agents passed their internal tests, then met the real world and broke. Internal tests were not the right shape of test.</p>\n<h2 id=\"why-golden-datasets-do-not-work-for-agents\">Why golden datasets do not work for agents</h2>\n<p>Three reasons golden datasets over-predict on agent quality.</p>\n<p><strong>Agents are non-deterministic.</strong> Same input, different output across runs. Any single-run accuracy measurement is noise. You need scale, repeats, and statistical confidence.</p>\n<p><strong>Tests must be interactive.</strong> A traditional unit test has a fixed input and a fixed expected output. An agent loop has an <em>environment</em> the agent acts on, which changes mid-run. The agent's third action depends on the result of the second action. Static input/output pairs cannot capture this.</p>\n<p><strong>Labels are dynamic.</strong> You often do not know the correct answer beforehand. If an agent is asked to \"find the cheapest flight,\" the right answer depends on what is available right now. The validator has to be a function of the world state, not a fixed string.</p>\n<p><strong>Real users are unpredictable.</strong> They argue. They change their mind mid-conversation. They try to convince the agent to do things it should not. They paste in adversarial prompts. Static test sets do not capture this distribution.</p>\n<p>The cure is <strong>simulation</strong>: a high-fidelity replica of the environment the agent will encounter in production, where adversarial inputs, edge cases, and realistic actor behavior can all be generated at scale.</p>\n<h2 id=\"what-a-simulation-environment-actually-contains\">What a simulation environment actually contains</h2>\n<p>Five components. Each one a real engineering investment.</p>\n<p><strong>1. The agent under test.</strong> Wired to call simulated services instead of real ones. Same code path; different downstream connections.</p>\n<p><strong>2. Synthetic users.</strong> Not nice, polite, foundation-model-default users. <em>Frustrated</em> users. <em>Confused</em> users. Users who argue. Users who try to manipulate. Users who paste in prompt injections. Generating realistic adversarial actors is a real ML problem.</p>\n<p><strong>3. Simulated tools and services.</strong> The CRM the agent updates. The email system it sends through. The database it queries. All replicas, with realistic data shapes, latency, and failure modes (including network errors, partial responses, throttling).</p>\n<p><strong>4. Test scenario generation.</strong> Combinations of starting state plus user behavior plus tool failures. Not handwritten tests. Generated cases that mix and match failure modes. The space of possible scenarios is large; you generate thousands and rank by coverage.</p>\n<p><strong>5. The grader.</strong> After the run completes, a separate process evaluates whether the agent did the right thing. Often LLM-judged for nuanced criteria. Always programmatic for verifiable criteria (the right number transferred between accounts, the right field updated in the right row).</p>\n<p>The best framing of this comes from <a href=\"https://veris.ai/blog/building-an-agent-you-need-an-environment\">Veris AI's blog</a>: <em>agents are defined within their environments, not independently</em>. You cannot test an agent in isolation. You can only test an agent-plus-environment pair.</p>\n<h2 id=\"the-markov-decision-frame\">The Markov decision frame</h2>\n<p>Worth knowing the formal language. An agent in production lives in a <strong>POMDP</strong>: Partially Observable Markov Decision Process. The agent sees part of the world state, takes an action, the state changes, the agent gets a reward (or doesn't), repeat.</p>\n<pre><code>   ┌─────────────────────┐\n   │    Environment      │\n   │  (partially seen)   │\n   └─────┬───────────────┘\n         │ observation       \n         ↓                   \n   ┌──────────────┐  action  \n   │    Agent     │ ──────▶  \n   └──────────────┘          \n         ↑                   \n         │ reward            \n         │                   \n   ┌─────┴───────────────┐\n   │  Reward function    │\n   │  (often hidden)     │\n   └─────────────────────┘\n</code></pre>\n<p>The classical solved-environment example is chess: fully observable. The interesting agentic case is everything but chess: partial observation, hidden state, dynamic adversaries.</p>\n<p>A simulation environment lets the team probe the POMDP at scale: vary the hidden state, vary the adversaries, vary the reward signal, watch how the agent behaves across all of them.</p>\n<h2 id=\"what-to-build-first\">What to build first</h2>\n<p>You do not need Veris AI's full platform on day one. Three pieces are the minimum viable simulation:</p>\n<p><strong>1. A staging copy of every external system.</strong> Not pointing at production. A separate database, a separate email queue, a separate billing sandbox. Stripe ships <a href=\"https://docs.stripe.com/test-mode\">a test mode</a> for exactly this. Most SaaS APIs offer sandbox keys. Use them.</p>\n<p><strong>2. Synthetic-user-as-a-service.</strong> A second agent whose job is to play the customer. Give it personas (calm, frustrated, manipulative). Have it generate test conversations. Score the production agent on how well it handled each.</p>\n<p><strong>3. A grader.</strong> Often a third agent. Sometimes a Python script. Always programmatic where possible (the field has a specific value, the math adds up). LLM-judged where necessary (the tone is appropriate, the response is not condescending).</p>\n<p>These three pieces, glued together, give you a sandbox you can iterate against. Veris AI's commercial platform adds polish and scale. The OSS-and-glue version gets you 70% of the value.</p>\n<h2 id=\"open-source-tooling\">Open-source tooling</h2>\n<p>Pieces of the simulation stack you can use in 2026:</p>\n<ul>\n<li><strong><a href=\"https://pypi.org/project/veris-cli/\">Veris CLI</a>.</strong> The command-line side of Veris AI's platform. Free for small-scale use, paid for enterprise volume. SOC 2 Type II for regulated data.</li>\n<li><strong><a href=\"https://smith.langchain.com\">LangChain Smith</a>.</strong> Eval and tracing platform with synthetic user generation in the newer SDK versions.</li>\n<li><strong><a href=\"https://inspect.ai-safety-institute.org.uk/\">Inspect AI</a></strong>. UK AI Safety Institute's open-source eval framework. Originally built for safety testing, now used widely for agentic evals.</li>\n<li><strong><a href=\"https://github.com/openai/evals\">OpenAI Evals</a>.</strong> Older but battle-tested. Good baseline for static evals; pair with synthetic-user generation for agentic shape.</li>\n<li><strong><a href=\"https://pydantic.ai\">Pydantic AI</a>.</strong> Schema-driven agent framework. Pairs naturally with simulation because every agent action is structurally validated.</li>\n</ul>\n<h2 id=\"what-this-connects-to\">What this connects to</h2>\n<p>The simulation pattern is the natural complement to two other practices on this site.</p>\n<p><a href=\"/blog/shadow-testing\">Shadow testing</a> is what comes after simulation: once the agent passes simulation at high fidelity, run it in shadow mode against real production traffic with no customer exposure. The Bain HR Services payroll agent went simulation → offline historical → shadow → ramped production over six months. The simulation phase caught the failure modes before any real customer was exposed.</p>\n<p><a href=\"/blog/the-hitl-standard\">The HITL standard</a> is about who approves what during graduated rollouts. Simulation is what makes the graduation criteria meaningful. Without simulation, you are graduating the agent based on hope. With simulation, you are graduating it based on coverage of failure modes.</p>\n<p><a href=\"/blog/below-the-waterline\">Below the waterline</a> is about the infrastructure that decides whether agents make it to production at all. The simulation harness is one of the three foundations (alongside identity and token-factory economics).</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>The 2026 teams shipping autonomous agents into production are running them through thousands of simulated scenarios first. The teams writing news headlines about hallucinated policies and wrong drive-thru orders are testing with golden datasets and crossing their fingers. The infrastructure investment for a real simulation environment is real, and it is the difference between agents that ship at 65% and agents that ship at 95%.</p>",
+    "toc": [
+      {
+        "id": "the-incidents-that-should-have-been-caught-in-simulation",
+        "text": "The incidents that should have been caught in simulation"
+      },
+      {
+        "id": "why-golden-datasets-do-not-work-for-agents",
+        "text": "Why golden datasets do not work for agents"
+      },
+      {
+        "id": "what-a-simulation-environment-actually-contains",
+        "text": "What a simulation environment actually contains"
+      },
+      {
+        "id": "the-markov-decision-frame",
+        "text": "The Markov decision frame"
+      },
+      {
+        "id": "what-to-build-first",
+        "text": "What to build first"
+      },
+      {
+        "id": "open-source-tooling",
+        "text": "Open-source tooling"
+      },
+      {
+        "id": "what-this-connects-to",
+        "text": "What this connects to"
       },
       {
         "id": "the-takeaway",
