@@ -119,6 +119,142 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "ai-agent-conf-nyc-takeaways",
+    "frontmatter": {
+      "title": "AI Agent Conference NYC: 10 Takeaways",
+      "slug": "ai-agent-conf-nyc-takeaways",
+      "publishedDate": "2026-05-05",
+      "description": "The 10 things from AI Agent Conference NYC on May 4 that are actually load-bearing if you ship agents in 2026. Bain's 98% payroll system, the review bottleneck, HITL as product, and what the panels did not say out loud.",
+      "tags": [
+        "agents",
+        "production",
+        "conferences",
+        "hitl",
+        "evals"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> AI Agent Conference NYC ran on May 4. The room was production agent teams, not researchers. Below are the 10 takeaways I would tell a CTO who could not attend, ranked by how much they will change what you build next quarter. Every item links the deeper post on this site.</p>\n<h2 id=\"1-the-agent-is-not-the-bottleneck-review-is\">1. The agent is not the bottleneck. Review is.</h2>\n<p>Codex, Linear, and Graphite (now Cursor) split the same panel and converged on the same number: the limiting reagent on coding-agent throughput is not generation, it is human review. Generation got 10x faster. Review got 1x faster. The cost-effective harness is the one that reduces review cost per accepted diff, not the one that produces the most diffs. <a href=\"/blog/coding-agent-infrastructure\">Coding agent infrastructure in production</a> is the long version.</p>\n<h2 id=\"2-bains-8-subgraph-langgraph-payroll-system-hit-98-accuracy-on-3k-live-emails-per-day\">2. Bain's 8-subgraph LangGraph payroll system hit 98% accuracy on 3K live emails per day.</h2>\n<p>The single most useful production reference in the room. Bain &#x26; Company decomposed an HR-services payroll workflow (1-in-10 private US payrolls) into eight LangGraph subgraphs, each with its own scoped tools and its own eval harness. 98% accuracy at 3,000 inbound emails per day. The lesson is not LangGraph. The lesson is decomposition + scoped evals. <a href=\"/blog/swarm-vs-monolith\">Swarm vs monolith</a> walks the architecture.</p>\n<h2 id=\"3-hitl-is-not-the-fallback-it-is-the-product\">3. HITL is not the fallback. It is the product.</h2>\n<p>Raghu Malpani from UiPath and Tim Sanders from G2 framed it cleanly: every team that treats human-in-the-loop as the failure case ships an agent that gets ripped out by the down-line manager. Every team that treats HITL as the product ships an agent that grows. The data they showed was the contradiction: customers want autonomy, employees want oversight, both are rational. The product is the loop, not the model. <a href=\"/blog/the-hitl-standard\">Notes on human-in-the-loop</a>.</p>\n<h2 id=\"4-do-not-sell-agents-on-cost-savings-sell-on-capacity\">4. Do not sell agents on cost savings. Sell on capacity.</h2>\n<p>Tim Sanders' framing was the most-quoted line of the day. The down-line manager has every incentive to find a hallucination and use it to kill the project if the pitch was \"this replaces you.\" The same manager has every incentive to make the agent succeed if the pitch was \"this multiplies you.\" Same agent, same model, opposite outcomes. Repositioning is free. <a href=\"/blog/the-hitl-standard\">More on the framing</a>.</p>\n<h2 id=\"5-crewai-shipped-42-ai-authored-code-last-week\">5. CrewAI shipped 42% AI-authored code last week.</h2>\n<p>Joe Moura disclosed the number. Not aspirational. Last week. The founder of one of the major multi-agent frameworks runs a team where almost half the code is written by agents and reviewed by humans. The Google number for the same period is 75% (Paige Bailey, AI Dev SF, the week before). The death-of-the-junior-dev panic is misplaced. The shift is to senior engineers spending the day reading diffs. <a href=\"/blog/death-of-the-junior-dev\">Junior dev death is overstated</a>.</p>\n<h2 id=\"6-the-eval-problem-is-the-trillion-dollar-problem\">6. The eval problem is the trillion-dollar problem.</h2>\n<p>Multiple sessions hit this. Nobody has good evals. Most teams ship without a harness and find out from customers. The ones that have evals built them by hand and treat them as the source of truth. The vendors selling eval-as-a-service have not closed the gap because the hardest evals are domain-specific. Build your own, in your repo, run on every model swap. The Bain system has eight subgraphs and eight separate eval suites for a reason.</p>\n<h2 id=\"7-graph-beats-swarm-for-production\">7. Graph beats swarm for production.</h2>\n<p>CrewAI, LangGraph, and the Bain reference all landed in the same place: explicit graphs of specialist agents outperform free-roaming swarms when you need predictability. Swarms are great for research and for one-shot tasks. Production wants the graph. The sub-agents are typed, the edges are typed, the failure modes are reproducible. <a href=\"/blog/swarm-vs-monolith\">Long version</a>.</p>\n<h2 id=\"8-agentic-memory-is-the-next-architectural-fork\">8. Agentic memory is the next architectural fork.</h2>\n<p>Three sessions on memory, three different opinions, one shared observation: stuffing long context windows is not memory, it is amnesia with extra latency. The teams that have shipped memory built it as a separate system (vector + graph + structured facts) the agent queries, not a transcript the agent re-reads. <a href=\"/blog/long-term-memory-for-agents\">Long-term memory for agents</a> walks the patterns.</p>\n<h2 id=\"9-coding-agent-harnesses-are-converging-on-the-same-shape\">9. Coding agent harnesses are converging on the same shape.</h2>\n<p>Claude Code, Cursor, Codex, and OpenClaw all showed substantially the same surface: file-aware editing, persistent project memory, hooks, skills, MCP. The differentiation is now in the wrappers (review pipelines, sandbox, IDE integration) not in the harness. Pick on workflow fit, not raw capability. <a href=\"/blog/coding-agent-infrastructure\">Coding agent infrastructure</a>.</p>\n<h2 id=\"10-the-pm-engineer-ratio-collapses-to-11-in-agent-native-teams\">10. The PM-engineer ratio collapses to 1:1 in agent-native teams.</h2>\n<p>Andrew Ng made this point at AI Dev SF the week before. Multiple NYC panels confirmed it from the field. When the SWE feedback loop speeds up 10x, every other function becomes the bottleneck. The fastest teams collapse PM and engineer into the same person. The slowest teams add PM headcount to \"manage\" the agent. The slowest teams are wrong.</p>\n<h2 id=\"what-was-not-said\">What was not said</h2>\n<p>Two things missing from every panel: (a) honest dollar amounts on token spend at production scale, and (b) what happens when the model provider has an outage during a critical agent loop. Both are the questions you should be answering internally, because nobody on the stage answered them publicly. <a href=\"/blog/token-budgeting-for-startups\">Cost discipline</a> and <a href=\"/blog/local-vs-cloud-inference\">the hybrid local-cloud failover pattern</a> are the two posts I would read on each.</p>\n<h2 id=\"the-one-thing-to-take-to-the-team\">The one thing to take to the team</h2>\n<p>Build the eval harness this quarter. Not the orchestrator, not the agent, not the prompt library. The harness. Every other architectural decision compounds on top of measurement, and the teams that have measurement are visibly pulling ahead.</p>",
+    "toc": [
+      {
+        "id": "1-the-agent-is-not-the-bottleneck-review-is",
+        "text": "1. The agent is not the bottleneck. Review is."
+      },
+      {
+        "id": "2-bains-8-subgraph-langgraph-payroll-system-hit-98-accuracy-on-3k-live-emails-per-day",
+        "text": "2. Bain's 8-subgraph LangGraph payroll system hit 98% accuracy on 3K live emails per day."
+      },
+      {
+        "id": "3-hitl-is-not-the-fallback-it-is-the-product",
+        "text": "3. HITL is not the fallback. It is the product."
+      },
+      {
+        "id": "4-do-not-sell-agents-on-cost-savings-sell-on-capacity",
+        "text": "4. Do not sell agents on cost savings. Sell on capacity."
+      },
+      {
+        "id": "5-crewai-shipped-42-ai-authored-code-last-week",
+        "text": "5. CrewAI shipped 42% AI-authored code last week."
+      },
+      {
+        "id": "6-the-eval-problem-is-the-trillion-dollar-problem",
+        "text": "6. The eval problem is the trillion-dollar problem."
+      },
+      {
+        "id": "7-graph-beats-swarm-for-production",
+        "text": "7. Graph beats swarm for production."
+      },
+      {
+        "id": "8-agentic-memory-is-the-next-architectural-fork",
+        "text": "8. Agentic memory is the next architectural fork."
+      },
+      {
+        "id": "9-coding-agent-harnesses-are-converging-on-the-same-shape",
+        "text": "9. Coding agent harnesses are converging on the same shape."
+      },
+      {
+        "id": "10-the-pm-engineer-ratio-collapses-to-11-in-agent-native-teams",
+        "text": "10. The PM-engineer ratio collapses to 1:1 in agent-native teams."
+      },
+      {
+        "id": "what-was-not-said",
+        "text": "What was not said"
+      },
+      {
+        "id": "the-one-thing-to-take-to-the-team",
+        "text": "The one thing to take to the team"
+      }
+    ]
+  },
+  {
+    "slug": "ai-dev-sf-takeaways",
+    "frontmatter": {
+      "title": "AI Dev SF: 10 Takeaways",
+      "slug": "ai-dev-sf-takeaways",
+      "publishedDate": "2026-04-30",
+      "description": "The 10 things from AI Dev SF on April 28-29 that are actually load-bearing if you build agentic systems in 2026. Andrew Ng on bottlenecks, AX as the new UX, simulation sandboxes, and the iceberg under every agent project.",
+      "tags": [
+        "agents",
+        "production",
+        "conferences",
+        "evals",
+        "security"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> AI Dev SF ran April 28-29. Hundreds of practitioners, dozens of vendors, two days of substance. Below are the 10 takeaways I would brief a lead engineer on, ranked by impact on what you build next quarter. Every item links the deeper post on this site.</p>\n<h2 id=\"1-andrew-ng-pm-is-the-new-bottleneck\">1. Andrew Ng: PM is the new bottleneck.</h2>\n<p>When the SWE feedback loop speeds up 10x, every adjacent function becomes the limiting reagent. Product management, design, legal, marketing. The PM-engineer ratio is trending toward 1:1 in fast teams, and the fastest teams collapse the two roles into the same person. The slowest teams hire more PMs to \"manage\" the agent. They will lose. <a href=\"/blog/death-of-the-junior-dev\">The death of the junior dev is overstated</a> covers the data.</p>\n<h2 id=\"2-marc-brooker-aws-agentic-ai-is-gated-by-defects-not-capability\">2. Marc Brooker (AWS): agentic AI is gated by defects, not capability.</h2>\n<p>The clearest framing of the day. Capability is no longer the wall. Defect rate is. Every team in the room hit the same wall: review throughput, not generation throughput. The implication is operational, not modeling. The teams that ship are the ones that drove down per-diff defect cost, not the ones that picked the smartest model. <a href=\"/blog/death-of-the-junior-dev\">Long version</a>.</p>\n<h2 id=\"3-paige-bailey-google-75-of-code-at-google-is-ai-authored\">3. Paige Bailey (Google): 75% of code at Google is AI-authored.</h2>\n<p>Last week, not aspirational. The number means very little out of context. The context is that human reviewers still gate every line. Generation went from \"research demo\" to \"ambient infrastructure\" in 18 months. The discipline did not. Reviewing the diff is now the senior engineer's actual job.</p>\n<h2 id=\"4-sean-roberts-netlify-ax-is-the-new-ux\">4. Sean Roberts (Netlify): AX is the new UX.</h2>\n<p>A meaningful share of traffic to your product is not human. Coding agents read your docs, browser agents fill your forms, research agents scrape your pricing page. Agent Experience (AX) is becoming as load-bearing as UX, and it is the new relevance signal for AI search and discovery. The old SEO playbook does not work. <a href=\"/blog/agent-experience\">Agent Experience: the four-step audit</a>.</p>\n<h2 id=\"5-datadog-the-bezos-api-mandate-for-agents\">5. Datadog: the Bezos API mandate, for agents.</h2>\n<p>The internal Datadog rule: every team must complete its work through agent-friendly interfaces. No human-only GUI manipulation, no direct database reads, no back-doors. The teams that adopt this internally become AX-good externally as a side effect. The discipline is identical to the original Bezos memo, just applied to a new client. <a href=\"/blog/agent-experience\">Same article</a> covers the playbook.</p>\n<h2 id=\"6-andi-partovi-veris-ai-every-agent-that-takes-real-world-action-needs-a-simulation-sandbox\">6. Andi Partovi (Veris AI): every agent that takes real-world action needs a simulation sandbox.</h2>\n<p>Agents that move money, send emails, edit databases cannot be tested with golden datasets. They need simulation environments that look like production but are not real, where the agent makes mistakes safely and the team learns from them. The teams that have built one are shipping autonomous agents into regulated enterprises. The teams that have not are explaining to customers why their bot invented a usage policy. <a href=\"/blog/why-every-agent-needs-a-simulation-sandbox\">Why every agent needs a simulation sandbox</a>.</p>\n<h2 id=\"7-tushar-jain-docker-per-agent-microvms-as-the-security-baseline\">7. Tushar Jain (Docker): per-agent MicroVMs as the security baseline.</h2>\n<p>Docker showed <code>docker/cagent</code> as the OSS reference: hard security boundary per agent, FS and network control, scoped credentials. The blast radius of a compromised agent is the sandbox, not the host. Skipping this is not \"moving fast.\" It is shipping agents with a privileged API key and hoping. <a href=\"/blog/ethical-autonomy\">Ethical autonomy</a> covers the patterns.</p>\n<h2 id=\"8-matthew-xu-agentic-fabriq-oauth-was-built-for-three-actors-agents-are-the-fourth\">8. Matthew Xu (Agentic Fabriq): OAuth was built for three actors. Agents are the fourth.</h2>\n<p>The four-legged identity problem. Resource server, client, user, and now agent. None of the existing protocols cleanly model an agent acting on behalf of a user with scoped, auditable, revocable credentials. The teams that ship agentic systems into regulated environments are inventing this layer themselves. The standards body has not caught up. <a href=\"/blog/the-4-legged-identity\">The 4-legged identity</a>.</p>\n<h2 id=\"9-erik-thorelli-coderabbit-every-model-swap-is-a-hypothesis-test-it\">9. Erik Thorelli (CodeRabbit): every model swap is a hypothesis. Test it.</h2>\n<p>The CodeRabbit shadow-testing discipline. Every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline first, then shadow against production traffic, then ramp. The teams that swap models on vibes ship regressions. The teams that shadow-test ship safely. <a href=\"/blog/shadow-testing\">Shadow testing for agentic systems</a> walks the harness.</p>\n<h2 id=\"10-adit-abraham-reducto--jerry-liu-llamaindex-doc-ocr-is-hybrid-in-2026\">10. Adit Abraham (Reducto) + Jerry Liu (LlamaIndex): doc OCR is hybrid in 2026.</h2>\n<p>Roughly 90% of enterprise data lives in PDFs, scans, screenshots. The 2026 pipeline that gets it out reliably is hybrid: deterministic computer vision for layout and tables, vision-language models for the long tail (handwriting, charts, weird scans), agentic verification between every step. Pure-VLM pipelines hallucinate. Pure-CV pipelines miss the long tail. <a href=\"/blog/document-ocr-for-agents\">Document OCR for agentic workflows</a>.</p>\n<h2 id=\"the-iceberg-under-all-of-it\">The iceberg under all of it</h2>\n<p>Venky Veeraraghavan from DataRobot framed the day with the iceberg metaphor: the agent is the visible 10%. The 90% under the waterline is data quality, evals, identity, sandboxing, observability, governance. Most agentic projects fail because the team built the visible 10% and ignored the 90%. The teams that ship built the iceberg first. <a href=\"/blog/below-the-waterline\">Below the waterline</a>.</p>\n<h2 id=\"the-one-thing-to-take-to-the-team\">The one thing to take to the team</h2>\n<p>Pick the one item from the list above that maps to your team's current weakest link. Not the most exciting one. The weakest one. Then close that gap before the next sprint plans a new agent feature. The conference circuit is full of people building visible features on top of invisible weaknesses, and they will be the ones rewriting next year.</p>",
+    "toc": [
+      {
+        "id": "1-andrew-ng-pm-is-the-new-bottleneck",
+        "text": "1. Andrew Ng: PM is the new bottleneck."
+      },
+      {
+        "id": "2-marc-brooker-aws-agentic-ai-is-gated-by-defects-not-capability",
+        "text": "2. Marc Brooker (AWS): agentic AI is gated by defects, not capability."
+      },
+      {
+        "id": "3-paige-bailey-google-75-of-code-at-google-is-ai-authored",
+        "text": "3. Paige Bailey (Google): 75% of code at Google is AI-authored."
+      },
+      {
+        "id": "4-sean-roberts-netlify-ax-is-the-new-ux",
+        "text": "4. Sean Roberts (Netlify): AX is the new UX."
+      },
+      {
+        "id": "5-datadog-the-bezos-api-mandate-for-agents",
+        "text": "5. Datadog: the Bezos API mandate, for agents."
+      },
+      {
+        "id": "6-andi-partovi-veris-ai-every-agent-that-takes-real-world-action-needs-a-simulation-sandbox",
+        "text": "6. Andi Partovi (Veris AI): every agent that takes real-world action needs a simulation sandbox."
+      },
+      {
+        "id": "7-tushar-jain-docker-per-agent-microvms-as-the-security-baseline",
+        "text": "7. Tushar Jain (Docker): per-agent MicroVMs as the security baseline."
+      },
+      {
+        "id": "8-matthew-xu-agentic-fabriq-oauth-was-built-for-three-actors-agents-are-the-fourth",
+        "text": "8. Matthew Xu (Agentic Fabriq): OAuth was built for three actors. Agents are the fourth."
+      },
+      {
+        "id": "9-erik-thorelli-coderabbit-every-model-swap-is-a-hypothesis-test-it",
+        "text": "9. Erik Thorelli (CodeRabbit): every model swap is a hypothesis. Test it."
+      },
+      {
+        "id": "10-adit-abraham-reducto--jerry-liu-llamaindex-doc-ocr-is-hybrid-in-2026",
+        "text": "10. Adit Abraham (Reducto) + Jerry Liu (LlamaIndex): doc OCR is hybrid in 2026."
+      },
+      {
+        "id": "the-iceberg-under-all-of-it",
+        "text": "The iceberg under all of it"
+      },
+      {
+        "id": "the-one-thing-to-take-to-the-team",
+        "text": "The one thing to take to the team"
+      }
+    ]
+  },
+  {
     "slug": "automated-competitive-intelligence",
     "frontmatter": {
       "title": "An Agent for Competitive Intelligence",

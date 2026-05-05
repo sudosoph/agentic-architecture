@@ -87,8 +87,7 @@ export function NewsletterSignup({
       )}
       <p className="font-mono text-xs text-muted leading-relaxed mb-4">
         n8n templates, cost teardowns, and what is actually working in 2026.
-        No drip sequences, no upsells. Reply to opt out.{' '}
-        <span className="text-accent">Free for Boulder Startup Week attendees.</span>
+        No drip sequences, no upsells. Reply to opt out.
       </p>
       {status === 'success' ? (
         <p className="font-mono text-sm text-online">

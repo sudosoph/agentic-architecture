@@ -113,7 +113,8 @@ const WEB_STACK = [
 ]
 
 const COMMS = [
-  { name: 'Stalwart Mail (self-hosted)', note: 'Open-source mail server. The Fastmail / Google Workspace alternative when you want to own the inbox the agent reads.', href: 'https://stalw.art' },
+  { name: 'Cloudflare Email Routing', note: 'Today\'s forwarder. sophia@agenticarchitecture.ai routes through Cloudflare, lands in Gmail, sends as the custom domain. Free, zero infra. Migration target is Stalwart on Hetzner once the agent loop needs an inbox it can write to as well as read.', href: 'https://developers.cloudflare.com/email-routing' },
+  { name: 'Stalwart Mail (self-hosted, Q3 2026)', note: 'Open-source mail server. The Fastmail / Google Workspace replacement when you want to own the inbox the agent reads. Migration begins after BSW.', href: 'https://stalw.art' },
   { name: 'Plunk (self-hosted)', note: 'Open-source transactional email, MIT-licensed. The Resend alternative when you want to own deliverability. Resend is the managed fallback.', href: 'https://www.useplunk.com' },
   { name: 'Listmonk (self-hosted)', note: 'Newsletter platform. Sends The Architect\'s Notebook. Replaces Buttondown / Substack at near-zero marginal cost.', href: 'https://listmonk.app' },
   { name: 'Chatwoot (self-hosted)', note: 'Customer service plus live chat widget. Inbound conversations route through the triage agent before reaching me.', href: 'https://www.chatwoot.com' },

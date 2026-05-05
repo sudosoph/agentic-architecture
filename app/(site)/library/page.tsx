@@ -25,14 +25,14 @@ type Book = {
 // engine.
 const BOOKS: Book[] = [
   {
-    title: 'The Local AI Stack',
-    subtitle: 'Building production agentic infrastructure on hardware you own',
-    audience: 'Engineers, technical founders',
-    format: 'PDF + EPUB · ~180 pages · Fall 2026',
+    title: 'The Sovereign Stack',
+    subtitle: 'Production agents on hardware you own. Cost teardowns, eval harnesses, and the architecture that ships.',
+    audience: 'Engineers, technical founders, anyone tired of the OpenAI bill',
+    format: 'PDF + EPUB · ~220 pages · Fall 2026',
     status: 'pre-order',
     outcome:
-      'The complete book. Hardware selection, ROCm setup, model picks across Qwen / Gemma / Kimi / DeepSeek, agent harness design, n8n + MCP orchestration, and the engineering patterns that actually ship in 2026. Pre-order pricing locks in early-bird access and the full source repo.',
-    intent: 'Pre-order%20The%20Local%20AI%20Stack',
+      'The book the audience asked for. Real dollar amounts on every page. Hardware selection across Framework, Mac Studio, and dual-GPU servers. ROCm and Metal setup that does not waste a weekend. Model picks across Qwen, Gemma, Kimi, DeepSeek with the benchmark numbers I actually ran. Agent harness design with eval harnesses you can paste. n8n and MCP orchestration patterns from production systems. The cost discipline that decides whether you ship in fall or burn through the runway. Pre-order locks in early-bird pricing and the full source repo.',
+    intent: 'Pre-order%20The%20Sovereign%20Stack',
   },
   {
     title: 'Cut Your AI Bill to Zero',
@@ -204,7 +204,7 @@ export default function LibraryPage() {
 
       <NewsletterSignup
         source="library"
-        sub="One email when each guide drops, and when The Local AI Stack ships in fall 2026."
+        sub="One email when each guide drops, and when The Sovereign Stack ships in fall 2026."
       />
     </div>
   )

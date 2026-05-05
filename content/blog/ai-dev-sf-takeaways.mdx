@@ -1,0 +1,58 @@
+---
+title: "AI Dev SF: 10 Takeaways"
+slug: ai-dev-sf-takeaways
+publishedDate: "2026-04-30"
+description: "The 10 things from AI Dev SF on April 28-29 that are actually load-bearing if you build agentic systems in 2026. Andrew Ng on bottlenecks, AX as the new UX, simulation sandboxes, and the iceberg under every agent project."
+tags: ["agents", "production", "conferences", "evals", "security"]
+draft: false
+---
+
+**TL;DR.** AI Dev SF ran April 28-29. Hundreds of practitioners, dozens of vendors, two days of substance. Below are the 10 takeaways I would brief a lead engineer on, ranked by impact on what you build next quarter. Every item links the deeper post on this site.
+
+## 1. Andrew Ng: PM is the new bottleneck.
+
+When the SWE feedback loop speeds up 10x, every adjacent function becomes the limiting reagent. Product management, design, legal, marketing. The PM-engineer ratio is trending toward 1:1 in fast teams, and the fastest teams collapse the two roles into the same person. The slowest teams hire more PMs to "manage" the agent. They will lose. [The death of the junior dev is overstated](/blog/death-of-the-junior-dev) covers the data.
+
+## 2. Marc Brooker (AWS): agentic AI is gated by defects, not capability.
+
+The clearest framing of the day. Capability is no longer the wall. Defect rate is. Every team in the room hit the same wall: review throughput, not generation throughput. The implication is operational, not modeling. The teams that ship are the ones that drove down per-diff defect cost, not the ones that picked the smartest model. [Long version](/blog/death-of-the-junior-dev).
+
+## 3. Paige Bailey (Google): 75% of code at Google is AI-authored.
+
+Last week, not aspirational. The number means very little out of context. The context is that human reviewers still gate every line. Generation went from "research demo" to "ambient infrastructure" in 18 months. The discipline did not. Reviewing the diff is now the senior engineer's actual job.
+
+## 4. Sean Roberts (Netlify): AX is the new UX.
+
+A meaningful share of traffic to your product is not human. Coding agents read your docs, browser agents fill your forms, research agents scrape your pricing page. Agent Experience (AX) is becoming as load-bearing as UX, and it is the new relevance signal for AI search and discovery. The old SEO playbook does not work. [Agent Experience: the four-step audit](/blog/agent-experience).
+
+## 5. Datadog: the Bezos API mandate, for agents.
+
+The internal Datadog rule: every team must complete its work through agent-friendly interfaces. No human-only GUI manipulation, no direct database reads, no back-doors. The teams that adopt this internally become AX-good externally as a side effect. The discipline is identical to the original Bezos memo, just applied to a new client. [Same article](/blog/agent-experience) covers the playbook.
+
+## 6. Andi Partovi (Veris AI): every agent that takes real-world action needs a simulation sandbox.
+
+Agents that move money, send emails, edit databases cannot be tested with golden datasets. They need simulation environments that look like production but are not real, where the agent makes mistakes safely and the team learns from them. The teams that have built one are shipping autonomous agents into regulated enterprises. The teams that have not are explaining to customers why their bot invented a usage policy. [Why every agent needs a simulation sandbox](/blog/why-every-agent-needs-a-simulation-sandbox).
+
+## 7. Tushar Jain (Docker): per-agent MicroVMs as the security baseline.
+
+Docker showed `docker/cagent` as the OSS reference: hard security boundary per agent, FS and network control, scoped credentials. The blast radius of a compromised agent is the sandbox, not the host. Skipping this is not "moving fast." It is shipping agents with a privileged API key and hoping. [Ethical autonomy](/blog/ethical-autonomy) covers the patterns.
+
+## 8. Matthew Xu (Agentic Fabriq): OAuth was built for three actors. Agents are the fourth.
+
+The four-legged identity problem. Resource server, client, user, and now agent. None of the existing protocols cleanly model an agent acting on behalf of a user with scoped, auditable, revocable credentials. The teams that ship agentic systems into regulated environments are inventing this layer themselves. The standards body has not caught up. [The 4-legged identity](/blog/the-4-legged-identity).
+
+## 9. Erik Thorelli (CodeRabbit): every model swap is a hypothesis. Test it.
+
+The CodeRabbit shadow-testing discipline. Every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline first, then shadow against production traffic, then ramp. The teams that swap models on vibes ship regressions. The teams that shadow-test ship safely. [Shadow testing for agentic systems](/blog/shadow-testing) walks the harness.
+
+## 10. Adit Abraham (Reducto) + Jerry Liu (LlamaIndex): doc OCR is hybrid in 2026.
+
+Roughly 90% of enterprise data lives in PDFs, scans, screenshots. The 2026 pipeline that gets it out reliably is hybrid: deterministic computer vision for layout and tables, vision-language models for the long tail (handwriting, charts, weird scans), agentic verification between every step. Pure-VLM pipelines hallucinate. Pure-CV pipelines miss the long tail. [Document OCR for agentic workflows](/blog/document-ocr-for-agents).
+
+## The iceberg under all of it
+
+Venky Veeraraghavan from DataRobot framed the day with the iceberg metaphor: the agent is the visible 10%. The 90% under the waterline is data quality, evals, identity, sandboxing, observability, governance. Most agentic projects fail because the team built the visible 10% and ignored the 90%. The teams that ship built the iceberg first. [Below the waterline](/blog/below-the-waterline).
+
+## The one thing to take to the team
+
+Pick the one item from the list above that maps to your team's current weakest link. Not the most exciting one. The weakest one. Then close that gap before the next sprint plans a new agent feature. The conference circuit is full of people building visible features on top of invisible weaknesses, and they will be the ones rewriting next year.

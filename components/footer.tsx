@@ -9,8 +9,9 @@ const CONTENT_LINKS = [
 
 const WORK_LINKS = [
   { href: '/work-with-me', label: 'work with me' },
+  { href: '/library', label: 'library' },
   { href: '/courses', label: 'courses' },
-  { href: '/speaking', label: 'speaking' },
+  { href: '/sponsor', label: 'sponsor' },
 ]
 
 const CONNECT_LINKS = [

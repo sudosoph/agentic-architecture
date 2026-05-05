@@ -1,0 +1,58 @@
+---
+title: "AI Agent Conference NYC: 10 Takeaways"
+slug: ai-agent-conf-nyc-takeaways
+publishedDate: "2026-05-05"
+description: "The 10 things from AI Agent Conference NYC on May 4 that are actually load-bearing if you ship agents in 2026. Bain's 98% payroll system, the review bottleneck, HITL as product, and what the panels did not say out loud."
+tags: ["agents", "production", "conferences", "hitl", "evals"]
+draft: false
+---
+
+**TL;DR.** AI Agent Conference NYC ran on May 4. The room was production agent teams, not researchers. Below are the 10 takeaways I would tell a CTO who could not attend, ranked by how much they will change what you build next quarter. Every item links the deeper post on this site.
+
+## 1. The agent is not the bottleneck. Review is.
+
+Codex, Linear, and Graphite (now Cursor) split the same panel and converged on the same number: the limiting reagent on coding-agent throughput is not generation, it is human review. Generation got 10x faster. Review got 1x faster. The cost-effective harness is the one that reduces review cost per accepted diff, not the one that produces the most diffs. [Coding agent infrastructure in production](/blog/coding-agent-infrastructure) is the long version.
+
+## 2. Bain's 8-subgraph LangGraph payroll system hit 98% accuracy on 3K live emails per day.
+
+The single most useful production reference in the room. Bain & Company decomposed an HR-services payroll workflow (1-in-10 private US payrolls) into eight LangGraph subgraphs, each with its own scoped tools and its own eval harness. 98% accuracy at 3,000 inbound emails per day. The lesson is not LangGraph. The lesson is decomposition + scoped evals. [Swarm vs monolith](/blog/swarm-vs-monolith) walks the architecture.
+
+## 3. HITL is not the fallback. It is the product.
+
+Raghu Malpani from UiPath and Tim Sanders from G2 framed it cleanly: every team that treats human-in-the-loop as the failure case ships an agent that gets ripped out by the down-line manager. Every team that treats HITL as the product ships an agent that grows. The data they showed was the contradiction: customers want autonomy, employees want oversight, both are rational. The product is the loop, not the model. [Notes on human-in-the-loop](/blog/the-hitl-standard).
+
+## 4. Do not sell agents on cost savings. Sell on capacity.
+
+Tim Sanders' framing was the most-quoted line of the day. The down-line manager has every incentive to find a hallucination and use it to kill the project if the pitch was "this replaces you." The same manager has every incentive to make the agent succeed if the pitch was "this multiplies you." Same agent, same model, opposite outcomes. Repositioning is free. [More on the framing](/blog/the-hitl-standard).
+
+## 5. CrewAI shipped 42% AI-authored code last week.
+
+Joe Moura disclosed the number. Not aspirational. Last week. The founder of one of the major multi-agent frameworks runs a team where almost half the code is written by agents and reviewed by humans. The Google number for the same period is 75% (Paige Bailey, AI Dev SF, the week before). The death-of-the-junior-dev panic is misplaced. The shift is to senior engineers spending the day reading diffs. [Junior dev death is overstated](/blog/death-of-the-junior-dev).
+
+## 6. The eval problem is the trillion-dollar problem.
+
+Multiple sessions hit this. Nobody has good evals. Most teams ship without a harness and find out from customers. The ones that have evals built them by hand and treat them as the source of truth. The vendors selling eval-as-a-service have not closed the gap because the hardest evals are domain-specific. Build your own, in your repo, run on every model swap. The Bain system has eight subgraphs and eight separate eval suites for a reason.
+
+## 7. Graph beats swarm for production.
+
+CrewAI, LangGraph, and the Bain reference all landed in the same place: explicit graphs of specialist agents outperform free-roaming swarms when you need predictability. Swarms are great for research and for one-shot tasks. Production wants the graph. The sub-agents are typed, the edges are typed, the failure modes are reproducible. [Long version](/blog/swarm-vs-monolith).
+
+## 8. Agentic memory is the next architectural fork.
+
+Three sessions on memory, three different opinions, one shared observation: stuffing long context windows is not memory, it is amnesia with extra latency. The teams that have shipped memory built it as a separate system (vector + graph + structured facts) the agent queries, not a transcript the agent re-reads. [Long-term memory for agents](/blog/long-term-memory-for-agents) walks the patterns.
+
+## 9. Coding agent harnesses are converging on the same shape.
+
+Claude Code, Cursor, Codex, and OpenClaw all showed substantially the same surface: file-aware editing, persistent project memory, hooks, skills, MCP. The differentiation is now in the wrappers (review pipelines, sandbox, IDE integration) not in the harness. Pick on workflow fit, not raw capability. [Coding agent infrastructure](/blog/coding-agent-infrastructure).
+
+## 10. The PM-engineer ratio collapses to 1:1 in agent-native teams.
+
+Andrew Ng made this point at AI Dev SF the week before. Multiple NYC panels confirmed it from the field. When the SWE feedback loop speeds up 10x, every other function becomes the bottleneck. The fastest teams collapse PM and engineer into the same person. The slowest teams add PM headcount to "manage" the agent. The slowest teams are wrong.
+
+## What was not said
+
+Two things missing from every panel: (a) honest dollar amounts on token spend at production scale, and (b) what happens when the model provider has an outage during a critical agent loop. Both are the questions you should be answering internally, because nobody on the stage answered them publicly. [Cost discipline](/blog/token-budgeting-for-startups) and [the hybrid local-cloud failover pattern](/blog/local-vs-cloud-inference) are the two posts I would read on each.
+
+## The one thing to take to the team
+
+Build the eval harness this quarter. Not the orchestrator, not the agent, not the prompt library. The harness. Every other architectural decision compounds on top of measurement, and the teams that have measurement are visibly pulling ahead.

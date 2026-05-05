@@ -109,10 +109,27 @@ export default function BswPage() {
         </div>
       </section>
 
+      {/* Workshop attendee offer */}
+      <section className="border border-accent/40 bg-surface p-5">
+        <p className="font-mono text-xs text-accent uppercase tracking-widest mb-2">
+          Workshop attendees · 5 seats
+        </p>
+        <p className="font-mono text-sm text-fg leading-relaxed mb-3">
+          The first five workshop attendees to book a scoping call get it free.
+          A real working session on your agentic workflow, not a sales pitch.
+        </p>
+        <p className="font-mono text-xs text-muted leading-relaxed mb-3">
+          Use code <span className="text-bench">BSW26</span> when you book. First-come, first-served.
+        </p>
+        <Button variant="primary" size="md" href={`${CAL_URL}?coupon=BSW26`}>
+          claim a free seat ›
+        </Button>
+      </section>
+
       {/* Quick CTAs */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <Button variant="primary" size="md" href={CAL_URL}>
-          book a 30-min call ›
+        <Button variant="outline" size="md" href={CAL_URL}>
+          book a regular 30-min call →
         </Button>
         <Button variant="outline" size="md" href={REPO_URL}>
           github repo →
