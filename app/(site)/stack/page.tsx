@@ -169,7 +169,7 @@ const BIZOPS = [
   { name: 'Chatwoot (self-hosted)', note: 'Customer service plus live chat widget. Inbound conversations route through the triage agent before reaching me.' },
   { name: 'EspoCRM (self-hosted)', note: 'Open-source CRM. The HubSpot alternative when you want the agent to read and write customer state without sending everything to a vendor.' },
   { name: 'Plane (self-hosted)', note: 'Open-source issue tracking. The Linear alternative when you want the polish without the per-seat tax. AGPL-licensed.' },
-  { name: 'Stripe + Lago', note: 'Stripe for the payment processor (no real OSS alternative for moving money — banking is regulated). Lago for the billing infrastructure on top: usage metering, invoicing, plan management, MIT-licensed and self-hostable.' },
+  { name: 'Stripe + Lago', note: 'Stripe for the payment processor (no real OSS alternative for moving money, banking is regulated). Lago for the billing infrastructure on top: usage metering, invoicing, plan management, MIT-licensed and self-hostable.' },
   { name: 'Mercury · Relay · Bunq', note: 'Founder-friendly business banking. Mercury and Relay (US) for free no-fee operating accounts. Bunq Business (EU) for all-in-one. Wise Business for multi-currency. None are OSS but these are the choices that do not nickel-and-dime.' },
   { name: 'PostHog (self-hosted)', note: 'Product analytics, session replay, feature flags, surveys. Replaces ~$300/month of SaaS at zero marginal cost.' },
   { name: 'Umami (self-hosted)', note: 'Privacy-friendly web analytics for the public site. Lighter touch than PostHog where session replay is overkill.' },
@@ -308,7 +308,7 @@ export default function StackPage() {
       <Section
         id="l3"
         label="L3"
-        title="Data — ingest, validate, store, retrieve"
+        title="Data, ingest, validate, store, retrieve"
         desc="The full data path: get it in (Apify), parse documents (LlamaIndex), shape and validate (Pydantic), store it where it belongs (Chroma for vectors, Neo4j for graph, Postgres for everything else)."
         items={DATA_LAYER}
         cols={2}

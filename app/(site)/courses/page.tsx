@@ -116,7 +116,7 @@ export default function CoursesPage() {
           <div>
             <p className="font-mono text-sm text-fg">First cohort opens this summer.</p>
             <p className="font-mono text-xs text-muted mt-1">
-              Get notified when enrollment goes live — no spam, no upsells, just one email when each course opens.
+              Get notified when enrollment goes live, no spam, no upsells, just one email when each course opens.
             </p>
           </div>
           <Button
@@ -157,7 +157,7 @@ export default function CoursesPage() {
         </h2>
         <p className="text-sm text-muted leading-relaxed mb-6">
           If you need 50 engineers ramped on agentic tooling without sending them to a generic bootcamp, the
-          right product is custom course creation — built around your stack, your codebase, and your workflows.
+          right product is custom course creation, built around your stack, your codebase, and your workflows.
         </p>
         <Link href="/work-with-me" className="font-mono text-sm text-accent hover:underline">
           see corporate training and custom course creation →

@@ -5,7 +5,7 @@ import { ContactForm } from '@/components/site/contact-form'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with Sophia Stein — engagement inquiries, collaboration, or general questions.',
+  description: 'Get in touch with Sophia Stein, engagement inquiries, collaboration, or general questions.',
 }
 
 export default function ContactPage() {

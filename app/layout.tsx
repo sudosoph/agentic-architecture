@@ -11,7 +11,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Agentic Architecture — Sophia Stein',
+    default: 'Agentic Architecture, Sophia Stein',
     template: '%s | Agentic Architecture',
   },
   description:

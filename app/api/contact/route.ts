@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
   const subjectLine = typeof subject === 'string' && subject.trim()
     ? subject.trim()
-    : `Contact form — ${name.trim()}`
+    : `Contact form, ${name.trim()}`
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

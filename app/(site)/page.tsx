@@ -51,9 +51,9 @@ export default function HomePage() {
             <span className="text-accent">Local-first by design.</span>
           </h1>
           <p className="text-muted text-sm leading-relaxed max-w-xl mb-6">
-            I design and ship agentic systems that run on the hardware you already own.
-            Lower cost, lower latency, lower blast radius — and weight class for weight class,
-            faster than the cloud version of the same workflow.
+            I design and ship agentic systems that run on hardware you own. Local
+            inference, smaller models, deliberate architecture. The benchmarks
+            below are real.
           </p>
 
           {/* Benchmark callout */}
@@ -93,7 +93,7 @@ export default function HomePage() {
               },
               {
                 label: 'Field Notes',
-                body: 'Benchmarks, deep dives, and what is actually working in 2026 — written from the engagements, not the marketing decks.',
+                body: 'Benchmarks, deep dives, and what is actually working in 2026. Written from the engagements, not the marketing decks.',
                 href: '/blog',
               },
             ].map(({ label, body, href }) => (

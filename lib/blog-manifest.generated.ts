@@ -121,7 +121,7 @@ export const blogPosts: Array<{
   {
     "slug": "automated-competitive-intelligence",
     "frontmatter": {
-      "title": "Replacing Your Competitive-Intel PM With an Agent",
+      "title": "An Agent for Competitive Intelligence",
       "slug": "automated-competitive-intelligence",
       "publishedDate": "2026-04-21",
       "description": "Using Apify, Firecrawl, and a local model to monitor every move your competitors make in real time. With the architecture and the weekly digest format that actually gets read.",
@@ -263,7 +263,7 @@ export const blogPosts: Array<{
   {
     "slug": "coding-agent-infrastructure",
     "frontmatter": {
-      "title": "What Happens After Coding Agents Get Good",
+      "title": "Coding Agent Infrastructure in Production",
       "slug": "coding-agent-infrastructure",
       "publishedDate": "2026-05-05",
       "description": "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work.",
@@ -358,7 +358,7 @@ export const blogPosts: Array<{
   {
     "slug": "document-ocr-for-agents",
     "frontmatter": {
-      "title": "PDF Hell, Solved (For Agents)",
+      "title": "Document OCR for Agentic Workflows",
       "slug": "document-ocr-for-agents",
       "publishedDate": "2026-05-03",
       "description": "90% of enterprise data is locked in PDFs. The 2026 pipeline that gets it out is not RAG, not vision-only, and not the OCR you remember from 2018.",
@@ -410,7 +410,7 @@ export const blogPosts: Array<{
   {
     "slug": "ethical-autonomy",
     "frontmatter": {
-      "title": "The August 2026 Deadline Most AI Teams Are Sleeping On",
+      "title": "Notes on the EU AI Act Deadline for Agentic Systems",
       "slug": "ethical-autonomy",
       "publishedDate": "2026-05-05",
       "description": "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on.",
@@ -843,7 +843,7 @@ export const blogPosts: Array<{
   {
     "slug": "self-healing-cicd",
     "frontmatter": {
-      "title": "The CI Agent That Wakes Up Before You Do",
+      "title": "Self-Healing CI/CD Patterns",
       "slug": "self-healing-cicd",
       "publishedDate": "2026-04-23",
       "description": "Agentic loops that detect, diagnose, and fix deployment errors before you see the notification. With the workflow that actually works in 2026.",
@@ -1200,7 +1200,7 @@ export const blogPosts: Array<{
   {
     "slug": "the-hitl-standard",
     "frontmatter": {
-      "title": "Why Human-in-the-Loop Won 2026",
+      "title": "Notes on Human-in-the-Loop",
       "slug": "the-hitl-standard",
       "publishedDate": "2026-05-05",
       "description": "Why human-in-the-loop is the only ethical and profitable way to scale agentic AI in a world of bot fatigue.",
@@ -1521,7 +1521,7 @@ export const blogPosts: Array<{
   {
     "slug": "why-every-agent-needs-a-simulation-sandbox",
     "frontmatter": {
-      "title": "Agents Fail in Public. Build the Sandbox First.",
+      "title": "Simulation Sandboxes for Agents",
       "slug": "why-every-agent-needs-a-simulation-sandbox",
       "publishedDate": "2026-05-05",
       "description": "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one.",

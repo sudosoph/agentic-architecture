@@ -15,7 +15,7 @@ type Service = {
   duration?: string
 }
 
-// Builders first — that is most of the inbound and the highest-converting tier.
+// Builders first, that is most of the inbound and the highest-converting tier.
 const BUILDER_SERVICES: Service[] = [
   {
     name: 'Agentic Workflow Audit',
