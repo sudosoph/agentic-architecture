@@ -1,0 +1,165 @@
+---
+title: "The 24/7 SDR"
+slug: the-24-7-sdr
+publishedDate: "2026-05-17"
+description: "A research-first outbound agent that scrapes news, LinkedIn, and financials before drafting an email. With the architecture, the prompts, and the guardrails."
+tags: ["sales", "agents", "n8n", "outbound", "automation"]
+draft: false
+---
+
+**TL;DR.** The cold email industry is collapsing under bot fatigue. Generic outbound has reply rates under 0.5% in 2026. The version that still works is research-first and human-on-send: an agent that pulls six months of news, recent funding, current job postings, and tech-stack signals on a target before drafting one personalized opener. Volume drops 80%. Reply rate climbs to 8-12%. Revenue per outbound touch goes up 4-6x. Here is the architecture and the parts that actually matter.
+
+## What broke
+
+Outbound automation in 2024-2025 was a volume game. Tools like Apollo, Outreach, and Lemlist let one SDR send a thousand emails a day with light personalization (first name, company, one variable). That motion stopped working in 2026 for three reasons.
+
+**Bot fatigue.** Recipients now expect every cold email to be partially or fully AI-generated. Generic personalization signals as a bot. Low effort signals lazy.
+
+**Spam-filter sophistication.** Microsoft and Google upgraded their inbound filtering with their own LLMs. Templates that worked for years suddenly land in promotions or spam. The deliverability floor moved.
+
+**Saturation.** Every category has 50 vendors. Every prospect gets 80 cold emails a week. The inbox-attention math no longer favors more sends.
+
+The version that still gets reply rates above 5% is research-first. Less volume. More work per touch. Higher conversion. Different unit economics.
+
+## What "research-first" actually means
+
+Before any draft is written, an agent assembles a dossier on the target person and target company. The dossier has four sections, each with five to ten data points, each grounded in a citable source.
+
+| Section          | Sources                                        |
+|------------------|------------------------------------------------|
+| Company news     | Press releases, news sites, recent blog posts  |
+| Funding & growth | Crunchbase, PitchBook (if API), filings        |
+| Hiring signals   | LinkedIn job posts, careers page, headcount    |
+| Tech stack       | BuiltWith, StackShare, GitHub orgs, public job descriptions |
+
+The dossier is the input to the drafter. The drafter does not write a generic opener with the prospect's name. It writes one paragraph that *demonstrates the agent has done the homework*, anchored to one specific signal from the dossier.
+
+The output is not "Hi {name}, saw {company} is doing interesting things in {industry}." It is "Hi Sara, saw Northwind raised the $14M Series A last month and pushed the careers page from 12 to 31 open roles, mostly senior backend. The hiring spike is the moment teams discover their outbound infra cannot keep up. Two questions if you have a minute."
+
+The first version is auto-generated and ignored. The second one earns a reply.
+
+## The architecture
+
+Three stages, each running locally on the Framework 16 unless explicitly noted.
+
+```
+[Stage 1] Target list
+   - Apollo / Salesnav export → CSV
+   - Filtered to ICP
+   - Manual review by human (10 min per 100 prospects)
+
+[Stage 2] Research agent
+   - Apify MCP server: scrapes news, LinkedIn, careers page
+   - Firecrawl MCP server: deep crawl of company site
+   - Local model: Qwen 3.6 27B (research and structuring)
+   - Output: dossier per prospect (markdown, ~1KB each)
+
+[Stage 3] Drafter
+   - Local model: Qwen 3.6 27B (with voice rules)
+   - Inputs: dossier + voice.md + ICP-specific opener templates
+   - Output: drafted opener + 2 follow-ups, queued for human review
+```
+
+The human-on-send loop is the part the cold email industry is now missing. Every sent email passes through one approval. Volume is capped at what one human can review (50-100 a day). The constraint forces the agent to write *good* drafts, not many drafts.
+
+## The research prompt
+
+The research agent is given a target and a structured output spec. It does not free-form. The prompt:
+
+```
+Target: { name, title, company, linkedin_url }
+
+Produce a dossier in this exact shape:
+
+# {company} dossier
+
+## Company news (last 6 months)
+- {date}: {one-line summary} [source url]
+(5-10 items)
+
+## Funding & growth
+- {fact} [source url]
+(5 items)
+
+## Hiring signals
+- {fact} [source url]
+(5 items)
+
+## Tech stack signals
+- {fact} [source url]
+(5 items)
+
+## One-line read on this company
+{one-paragraph synthesis of where they are right now}
+
+Constraints:
+- Every fact has a source URL.
+- Skip facts you cannot find a source for.
+- If a section has fewer than 3 items, mark it [low signal].
+- Maximum dossier length: 1500 words.
+```
+
+The structured output is non-negotiable. Free-form research dossiers turn into prose mush. Structured dossiers force the agent to surface facts, not narrate.
+
+## The drafter prompt
+
+Different model, different prompt. The drafter does not see the open web. It sees only the dossier, the voice rules, and the offer.
+
+```
+You are drafting a cold outreach email for Sophia Stein.
+
+Constraints:
+- Maximum length: 90 words.
+- First line opens with one specific signal from the dossier.
+- Second sentence connects that signal to a problem her offer addresses.
+- Third sentence asks one question that would be interesting to answer.
+- No "I hope this finds you well." No "I came across your profile."
+- Sign off "Sophia," not "Best,".
+
+Dossier:
+{paste dossier here}
+
+Offer:
+Sophia helps growth-stage companies set up local-first AI infrastructure
+that cuts cloud-API spend by 70-90% without losing capability. Recent
+work: 28.4 t/s sustained on a Framework 16, ~$3 a day for what was a
+$3,000/mo OpenAI bill.
+
+Draft three variants. The human will pick one or none.
+```
+
+The "draft three variants" is the nudge that produces interesting drafts. A single-shot draft tends toward the median. Three drafts include one that is a little too direct, one that is a little too cute, and usually one that lands.
+
+## The follow-ups
+
+The opener gets one reply or no reply. The follow-ups (drafted in advance, sent only on no-reply, queued at appropriate intervals) are where most of the conversion comes from.
+
+A two-touch sequence that works:
+
+- **Day 1**: research-anchored opener (the version above).
+- **Day 5**: a single useful artifact related to the dossier. Not a "just bumping this up" email. An actual link, a one-paragraph teardown of something they just shipped, or a relevant case study.
+- **Day 14**: a hard close. "If now is not the right time, would it make sense to reconnect in Q3? If not, I will stop bothering you."
+
+Three touches, all anchored to the same dossier, each adding value the previous did not. Conversion rates I have seen on this sequence: 8-12% reply rate, 3-5% meeting-booked rate, 1-2% close rate at the bottom of the funnel. Numbers vary by ICP and offer.
+
+## The guardrails
+
+Two rules I learned the painful way.
+
+**Never auto-send. Ever.** The temptation to scale the agent past human review is real. Resist. The moment you auto-send is the moment one bad draft burns a relationship you could not have predicted. The 50-100/day human-approval cap is not a bottleneck. It is the only thing keeping the agent from generating reputational damage faster than you can audit.
+
+**Cap research depth.** Apify and Firecrawl will let you scrape a company until the agent has 500KB of context per target. Past about 1500 words of dossier, the drafter starts hallucinating connections that do not exist. Cap the dossier hard. Quality of facts beats quantity.
+
+## Local-first matters here for two reasons
+
+This agent reads competitor databases, scrapes LinkedIn, pulls funding data, and stores prospect information. None of that should leave the machine. Two specific risks:
+
+**Privacy law.** GDPR, CCPA, and several state laws limit what you can store about prospects without explicit consent. Cloud-only setups send everything to a third-party AI provider, which materially increases compliance surface area. Local processing keeps the data inside your jurisdiction.
+
+**Competitive intelligence leakage.** If you are researching competitors, sending those queries to a cloud LLM creates training-data exposure (depending on the provider's policy). On a local model, the queries never leave the machine.
+
+The cost angle is also real but secondary. A 50-prospect dossier run on Sonnet costs $5-10. The same run locally is electricity. The compounding effect over a year is meaningful. The privacy effect is what actually matters.
+
+## The takeaway
+
+The cold email industry is not dead. The volume version of cold email is dead. The replacement is a small number of well-researched, well-drafted, human-approved emails per day, supported by an agent that does the eight hours of research a real SDR used to spend their morning on. The economics work. The reputation cost is lower. The deliverability is better. The skill that matters is writing the voice rules and reviewing the drafts. Both are jobs the founder is already qualified to do.

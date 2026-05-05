@@ -58,7 +58,11 @@ const INFERENCE = [
 const DATA_LAYER = [
   {
     name: 'Apify',
-    note: 'Web scraping and data acquisition. Marketplace of 25K+ tools agents can call without rolling your own scrapers. The way data gets into the agentic loop.',
+    note: 'Web scraping and data acquisition. Marketplace of 25K+ tools agents can call without rolling your own scrapers. The way external data gets into the loop.',
+  },
+  {
+    name: 'LlamaIndex',
+    note: 'Document parsing and ingest. PDFs, scans, tables, charts in. Structured agent-ready output out. The OCR plus reasoning pipeline most agentic doc workloads need.',
   },
   {
     name: 'Pydantic',
@@ -155,11 +159,21 @@ const WEB_STACK = [
   { name: 'Tailwind CSS', note: 'Utility-first CSS that LLMs were trained on so heavily it almost generates itself. Pairs with Gemma 4 / Kimi for instant UI.' },
   { name: 'Cloudflare Workers', note: 'The site you are reading runs on a single Worker via @opennextjs/cloudflare. Free tier handles real traffic.' },
   { name: 'Keystatic', note: 'Git-backed CMS. Content lives in MDX in the repo, not in someone else\'s database.' },
-  { name: 'Resend', note: 'Transactional email. Direct API, edge-friendly, no SDK needed.' },
-  { name: 'PostHog (self-hosted)', note: 'Product analytics, session replay, feature flags, error tracking, surveys. Replaces ~$300/month of SaaS at zero marginal cost.' },
-  { name: 'GlitchTip (self-hosted)', note: 'Sentry-compatible error tracking. ~5–6× cheaper than Sentry at scale, MIT-licensed.' },
+]
+
+const BIZOPS = [
+  { name: 'Stalwart Mail (self-hosted)', note: 'Open-source mail server. The Fastmail / Google Workspace alternative when you want to own the inbox the agent reads.' },
+  { name: 'Resend', note: 'Transactional email API. Edge-friendly, no SDK needed, the only piece I do not self-host because deliverability is a full-time job.' },
   { name: 'Listmonk (self-hosted)', note: 'Newsletter platform. Sends The Architect\'s Notebook. Replaces Buttondown / Substack at near-zero marginal cost.' },
+  { name: 'Cal.com (self-hosted)', note: 'Open-source booking. Calendly replacement. Routes inbound calls through n8n with agent-prepared context before the meeting.' },
+  { name: 'Chatwoot (self-hosted)', note: 'Customer service plus live chat widget. Inbound conversations route through the triage agent before reaching me.' },
+  { name: 'EspoCRM (self-hosted)', note: 'Open-source CRM. The HubSpot alternative when you want the agent to read and write customer state without sending everything to a vendor.' },
+  { name: 'Stripe', note: 'Billing. Engagements, courses, and products invoice through here. The one piece of the stack where the cost of self-hosting exceeds the cost of paying.' },
+  { name: 'Linear', note: 'Issue tracking. Their MCP server lets the planner agent read tickets directly and turn them into agent-runnable specs.' },
+  { name: 'PostHog (self-hosted)', note: 'Product analytics, session replay, feature flags, surveys. Replaces ~$300/month of SaaS at zero marginal cost.' },
   { name: 'Umami (self-hosted)', note: 'Privacy-friendly web analytics for the public site. Lighter touch than PostHog where session replay is overkill.' },
+  { name: 'GlitchTip (self-hosted)', note: 'Sentry-compatible error tracking. ~5–6× cheaper than Sentry at scale, MIT-licensed.' },
+  { name: 'Outline (self-hosted)', note: 'Team knowledge base. Notion alternative. Stores skills, runbooks, and the docs the coding agents read alongside the codebase.' },
 ]
 
 function Section({
@@ -327,9 +341,17 @@ export default function StackPage() {
 
       <Section
         label="L8"
-        title="Web & dev stack"
-        desc="The toolkit I build sites and businesses on. Picked for two reasons: every coding agent has read enough of these to be useful in them, and the self-hosted ones replace ~$700/year of SaaS at near-zero marginal cost."
+        title="Web stack"
+        desc="The framework, deployment, and CMS the site runs on. Picked because every coding agent has read enough of these to be genuinely useful in them."
         items={WEB_STACK}
+        cols={2}
+      />
+
+      <Section
+        label="L9"
+        title="Bizops & comms"
+        desc="The SaaS replacements that run the business. Mostly self-hosted, mostly open-source. Replaces ~$1,800/month of managed alternatives at the cost of a $5/month VPS."
+        items={BIZOPS}
         cols={2}
       />
 

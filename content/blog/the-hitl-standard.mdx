@@ -1,0 +1,101 @@
+---
+title: "The HITL Standard"
+slug: the-hitl-standard
+publishedDate: "2026-05-19"
+description: "Why human-in-the-loop is the only ethical and profitable way to scale agentic AI in a world of bot fatigue."
+tags: ["hitl", "agents", "ethics", "production"]
+draft: false
+---
+
+**TL;DR.** The companies that tried to take humans out of the loop in 2024-2025 are spending 2026 putting them back in. G2's latest report shows that the majority of buyers needed *more* human oversight than vendors promised. The same buyers said they would aggressively expand autonomy if they could. Both are right. The shape that works is human-in-the-loop with a deliberate autonomy ladder. Here is what each rung looks like, when to climb, and where the ceiling actually sits.
+
+## The trust paradox
+
+Raghu Malpani from UiPath and Tim Sanders from G2 framed the data at AI Agent Conference NYC on May 4. The two findings that contradict each other:
+
+- Most enterprises that deployed agentic systems in 2025 needed *more* human oversight than the vendors promised.
+- Nine out of ten of those same enterprises said they would *radically* expand autonomy in the next year for the business results.
+
+The naive read is "people are confused." The right read is that both findings come from the same root cause. Buyers are not getting the autonomy they were sold *and* they are willing to tolerate the friction because they are seeing real productivity gains from the parts that work. The shape that ships in 2026 is not "fully autonomous" or "fully supervised." It is a graduated ladder where each rung has clear criteria and clear owners.
+
+## The five rungs
+
+Every agent task sits on one of five rungs. The ladder goes from full human-in-the-loop to full autonomy. The rung is determined by *consequence*, not by capability. A perfectly capable agent on a high-consequence task still belongs on a low rung.
+
+| Rung | Pattern                            | Example                              |
+|------|------------------------------------|--------------------------------------|
+| 1    | Agent suggests, human does         | Coding assistant inside the IDE      |
+| 2    | Agent drafts, human approves       | Email draft, calendar invite, PR     |
+| 3    | Agent acts, human can intervene    | Long-running research, monitoring    |
+| 4    | Agent acts, human reviews after    | Inbox auto-action, doc updates       |
+| 5    | Full autonomy, audit only          | Backend triage, internal classification|
+
+The graduation criteria between rungs:
+
+- **Rung 1 → 2**: drafts are accurate enough that the human approves >70% without edits.
+- **Rung 2 → 3**: the agent has shipped at >95% accuracy in shadow mode for at least 4 weeks.
+- **Rung 3 → 4**: intervention rate drops below 5% and consequences of intervention failures are recoverable.
+- **Rung 4 → 5**: the audit log shows zero customer-facing failures over a meaningful period (months, not weeks) and the consequence of any single failure is bounded.
+
+Most production tasks should stop at rung 3. Rung 4 is for tasks where the cost of human review per item exceeds the cost of an occasional silent failure. Rung 5 is rare and dangerous; only the highest-volume, lowest-consequence tasks belong there.
+
+## Where the rungs are right now
+
+A snapshot of where common agentic tasks actually sit in May 2026, based on real engagements:
+
+| Task                              | Rung | Notes                                         |
+|-----------------------------------|------|-----------------------------------------------|
+| Code review (AI-flagged issues)   | 1    | Agent suggests, human writes the comment.     |
+| Pull request drafting             | 2    | Agent drafts, human reviews and merges.       |
+| Customer support reply drafting   | 2    | Drafted-for-approval is the working pattern.  |
+| Inbound email triage              | 4    | After 4 weeks of shadow + 3 weeks of HITL.    |
+| Outbound sales email              | 2    | Never auto-send. Reputation is irrecoverable. |
+| Document parsing and extraction   | 4    | Acceptable error rate ~2% for many use cases. |
+| Vendor follow-up                  | 3    | Long-running, low-consequence intervention.   |
+| Calendar acceptance (recurring)   | 5    | Pattern-matched, low-consequence.             |
+| Payroll entry (Bain case study)   | 4    | After 6 months of shadow proving 98%+         |
+| Code merge                        | 1    | Coding agents do not merge in any team I trust|
+
+The pattern: high-volume, low-consequence, structured-input tasks climb the ladder. Low-volume, high-consequence, unstructured tasks stay near the bottom.
+
+## Why HITL is not slow
+
+The pushback I hear most: "human-in-the-loop is slow." This is wrong, and the misconception is worth dismantling because it drives bad decisions.
+
+HITL is slow when the agent makes the human do *all* the work, then asks for approval at the end. That is not HITL. That is a checkbox.
+
+HITL is fast when the agent does the 80% of the work that does not require judgment, then asks for the 20% that does. The human spends ten seconds approving each item instead of ten minutes generating it. Throughput goes up, not down.
+
+The Bain payroll agent processed 3,000 emails per day in shadow mode. The human approval loop scaled to that volume because each approval was 5-10 seconds. That is 250-500 minutes of approval time for a task that previously took specialists 8 hours per day to do *and* generate. The agent did the generation. The human did the judgment. Throughput multiplied.
+
+## Why HITL is the ethical floor
+
+The ethical case for HITL is not abstract. It is the answer to a specific question: who is accountable when the agent gets it wrong?
+
+A fully autonomous agent that sends a wrong email, makes a wrong payment, or accepts the wrong meeting has nobody to ask. The vendor blames the user. The user blames the agent. The agent does not exist as a legal entity. Accountability collapses.
+
+A human-in-the-loop agent has a clear answer: the human approved the wrong thing, and the human is responsible. The agent's contribution is to make the right thing easier to approve and the wrong thing harder to miss. The system improves over time because the approver learns from their own approvals.
+
+This is not a moral abstraction. It is the structural reason regulated industries (healthcare, finance, legal, defense) require HITL by policy. The ones that try to shortcut HITL with claims of "the AI is supervised by other AI" are building toward a regulatory cliff that has not arrived yet but will.
+
+## The economic case for HITL
+
+Three rules I have watched hold across engagements.
+
+**1. Don't sell on cost savings.** Tim Sanders at AI Agent Conference framed this perfectly: every down-line manager will blame AI hallucinations to save their job if you frame the agent as a replacement. Sell on increasing capacity and agency. The agent does not eliminate the role. It multiplies the productivity of the people in the role.
+
+**2. Enter where the pain is high.** Customer service is the textbook example. People will tolerate AI mistakes because the alternative (long hold times, repeat questions, slow resolution) is also painful. Enter where the existing pain absorbs the new pain of AI imperfection.
+
+**3. Variable pricing matches variable value.** SaaS-style flat licenses do not work for agentic AI because the variable cost (inference) is not zero. The teams shipping in 2026 charge for outcomes (per-task, per-resolved-ticket, per-completed-job), not seats. The HITL pattern fits this model: the human is the gate that defines the outcome.
+
+## The local-first connection
+
+A meaningful percentage of HITL friction is review latency. The human is approving 80 items in a sitting and the queue is bottlenecked on context.
+
+When the agent runs locally, the artifacts the human needs to approve are pre-fetched, structured, and presented in a tight review interface (a Slack DM, a tiny web app, an inbox plugin). When the agent runs cloud-only with metered API calls, every review item is also a token bill, which means teams ration the context they pre-fetch, which means the human spends more time looking up artifacts manually.
+
+The local-first stack makes the HITL experience materially faster because nothing is rate-limited. The agent can pre-compute as much context per review item as the human will ever need, and the marginal cost is electricity.
+
+## The takeaway
+
+The autonomy ladder has five rungs. Most production tasks belong on rung 2 or 3. Climb deliberately, with explicit graduation criteria. Sell on capacity, not replacement. Enter where the existing pain is high enough to absorb the new pain of AI imperfection. The teams shipping in 2026 are the ones who realized HITL is the standard, not the failure mode. The teams trying to take humans out of the loop entirely are about to learn that the regulatory environment is going to put them back in anyway.

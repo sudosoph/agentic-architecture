@@ -1,0 +1,110 @@
+---
+title: "Below the Waterline"
+slug: below-the-waterline
+publishedDate: "2026-05-18"
+description: "The hidden engineering that decides whether your agent makes it to production. The 65/95 gap and the three foundations underneath it."
+tags: ["agents", "production", "infrastructure", "evals"]
+draft: false
+---
+
+**TL;DR.** Demo day is 65% complete. Production demands 95%. Every team that ships agentic AI in 2026 has the same realization: the agent (model + framework + prompt) is the visible 20% of the work. The other 80% is the infrastructure beneath it, where everyone competes and almost no one wins on ROI. Three foundations decide whether the next 30% gets crossed: developer experience, agent identity, and token-factory economics. This post is the case for each.
+
+## What "below the waterline" means
+
+The Iceberg metaphor for agentic AI was framed by Venky Veeraraghavan from DataRobot at AI Dev SF on April 28. It is the cleanest way to describe what is wrong with most agentic projects.
+
+Above the surface (the visible part):
+- Model picks
+- Framework choices
+- Prompt engineering
+
+This is the 20% that gets demoed, gets investor-deck slides, gets HN posts. It is also where everyone competes and no one wins. The model providers commodify each other. The frameworks converge. The prompts get easier to write every month. There is no durable advantage above the surface.
+
+Below the surface (where the work actually is):
+- Developer experience for enterprise hooks
+- Agent identity and auth
+- Token-factory economics
+
+Three things that take a quarter to build, never get marketed, and are the difference between "the demo worked" and "the system is processing 100K production transactions a day."
+
+## Foundation 1: developer experience
+
+The work nobody puts on a slide. Auth standardization, logging consistency, error patterns, CI/CD for agent deployment, observability that tells you why something broke (not just that it did).
+
+The right framing is *augment, don't rewrite*. A team that shipped a working agent in three weeks should not throw it away to bolt on enterprise readiness. The platform layer adds trace analysis, A/B testing for prompt variations, observability hooks, governance interceptors, and security policies *around* the existing agent code. The agent itself does not change.
+
+What this looks like in practice:
+
+```
+[Agent code, untouched]
+   ↓
+[Platform middleware] ← this is what you actually build
+   - OAuth + scoped credentials
+   - Standardized logging (one schema across every agent)
+   - Error boundaries with retry classification
+   - Trace correlation IDs
+   - Per-tool latency and cost tracking
+   - Drift detection (output distribution vs baseline)
+   ↓
+[Underlying model API or local inference]
+```
+
+One pattern, every agent. Auth, logging, error handling, CI/CD configured once and reused. The "time to enterprise-ready" metric goes from quarters to days because the non-functional work stops being a gating step on every release.
+
+The teams that skip this build a great agent and a 20-person internal-tools team. The teams that get it right build the platform once and ship five agents on top.
+
+## Foundation 2: agent identity
+
+Static API keys are not an identity model. The IAM stack was designed for users and services. Agents are neither. Most teams shipping in 2026 are running on shared credentials with no auditable chain of custody. This is going to break under regulatory scrutiny in 2026-2027 and it should.
+
+The actual problems with the default:
+
+**God-mode keys.** Every agent gets a broadly-scoped, long-lived credential. One credential owned by one agent, but the credential can do anything the agent's role can do. When the credential leaks (it always leaks eventually), the blast radius is the entire scope.
+
+**No subject vs actor distinction.** The agent acts on a user's behalf, but the API only sees the agent's credential. There is no record at the API of which user triggered which action. This breaks audit. It breaks attribution. It breaks the moment a regulator or customer asks "who did this."
+
+**Binary authorization.** Permissions are "yes" or "no." There is no concept of "yes for this user, no for that user, conditional on what the agent is doing right now."
+
+The fix is treating agents as first-class identities. OAuth for every agent. Token exchange (RFC 8693) at every hop so downstream APIs see the user identity, not just the agent's credential. Dual IdP integration so agent-level permissions and user-level permissions are computed as an intersection. Immutable audit lineage that records who triggered what, executed by which agent, against which downstream system, in what order.
+
+This is a quarter of work. It is also the difference between an agent that can ship to a regulated customer and one that cannot.
+
+## Foundation 3: token factory economics
+
+The third foundation is the hardest to internalize because it requires unlearning a SaaS pattern.
+
+In SaaS, you sold a license. Variable cost was near zero. Margin was 80-90%. Pricing was per-seat and stable.
+
+In agentic AI, every dollar you charge has a variable cost (the inference cost) tied to it. Margins compress to 40-50%. ARPA changes day to day based on usage. CFOs have a hard time talking about ARR because the unit economics are no longer predictable.
+
+The teams that thrive in this regime treat inference capacity, not GPUs, as the resource being allocated. The pattern is a *token factory*: a routing layer that decouples user contracts from backend execution.
+
+Concretely:
+
+| Component                           | Purpose                                         |
+|-------------------------------------|-------------------------------------------------|
+| Token pools per customer/tier       | Capacity granted or rejected before traffic flows |
+| Premium and spot tiers              | SLA-bound vs low-priority routes                |
+| Multi-provider routing              | Anthropic, OpenAI, DeepSeek, local inference    |
+| Per-task model selection            | Cheapest model that meets the quality bar       |
+| Capacity admission control          | No throttling surprises mid-request             |
+
+The user sees a stable contract: their tier, their guaranteed capacity, their predictable bill. Underneath, the platform routes calls to the cheapest model that meets the quality bar for the specific task. GPU failures, partial scaling, autoscaling metrics all stay invisible to the user. The contract holds. The unit economics work because the platform is not paying premium API prices for low-priority work.
+
+This pattern is the reason DeepSeek V4 Flash at $0.14/$0.28 per million tokens is reshaping the industry. A token factory that can route 60% of its volume to DeepSeek and 35% to local inference and 5% to frontier APIs has fundamentally different economics than a competitor stuck on a single provider.
+
+## Why local-first sits underneath all three
+
+The three foundations are not optional. They are also significantly easier to build when meaningful inference is local.
+
+**Developer experience is easier locally.** Logging, tracing, debugging are all simpler when the model runs on the same machine as the platform middleware. Cloud-only setups multiply network hops, multiply failure modes, and force you to reproduce production conditions in a sandbox before debugging.
+
+**Agent identity is simpler locally.** The 4-legged identity problem (user, agent, MCP, API) becomes the 1-legged identity problem (just file permissions and env vars) when everything runs on a single machine. The MCP spec itself acknowledges this: stdio transport explicitly opts out of OAuth.
+
+**Token-factory economics is built on local inference.** The token factory that can route 35% of traffic to local hardware has a structural margin advantage over competitors who cannot. The capital expense is a one-time hardware cost. The variable cost is electricity.
+
+A team that ignores local-first builds the same three foundations as a team that embraces it. The local-first team builds them once, runs them at lower marginal cost, and serves regulated customers cloud-only competitors cannot reach.
+
+## The takeaway
+
+The thing that goes on the slide is the agent. The thing that decides whether the agent makes it to production is the developer experience, the identity model, and the token-factory economics underneath it. None of those three has marketing appeal. All three are quarter-long projects. The teams that make it across the 65/95 gap in 2026 are the ones that started those quarter-long projects last year. The teams that did not are about to learn that demo day was the easy part.
