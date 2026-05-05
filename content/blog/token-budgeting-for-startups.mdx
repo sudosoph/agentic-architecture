@@ -7,117 +7,108 @@ tags: ["agents", "economics", "local-inference", "ops"]
 draft: false
 ---
 
-**TL;DR.** A modern agentic loop — planner, three parallel research agents, critic, executor, verifier — consumes 4–8 million input tokens and 250–500 thousand output tokens per active hour of dev work. At Claude Sonnet 4.5 list rates ($3 / $15 per million), that's ~$15–$25 per developer per hour, or $120–$200 per active eight-hour day. Multiply by your team. Multiply by the experiments your team didn't run because they flinched at the projected bill. **The bottleneck on agentic AI is not capability. It is the willingness to let the loop retry.** This post is the engineering math behind the budget — current 2026 prices, where the cost actually accumulates, the controls that work, and why the local-first answer is the only one that scales without flinching.
+**TL;DR.** A modern agentic loop (planner, three parallel research agents, critic, executor, verifier) consumes 4 to 8 million input tokens and 250 to 500 thousand output tokens per active hour of dev work. At Sonnet 4.5 list rates, that is roughly $15 to $25 per developer per hour, or $120 to $200 per active eight-hour day. Multiply by your team. The bottleneck on agentic AI is not capability. It is the willingness to let the loop retry.
 
-## The 3 a.m. story
+## The 3am story
 
-The horror story is not apocryphal. I have heard a version of it from every founder I have worked with this year. It always goes like this:
+Every founder I have worked with this year has a version of it. The numbers vary, the story does not:
 
-> "I left the agent running overnight on a refactor. By morning it had retried itself 220 times on the same failing test, accumulating 14M output tokens before its budget cap kicked in. The bill was eight hundred dollars. The bug is still there."
+> I left the agent running overnight on a refactor. By morning it had retried itself 220 times on the same failing test, accumulating 14M output tokens before its budget cap kicked in. The bill was eight hundred dollars. The bug is still there.
 
-The numbers vary. The story does not. The behavioral failure mode is the same in every telling: the *agent loop did not know how to stop*, and the cost compounded silently while the human slept.
+The behavioral failure mode is the same: the agent did not know how to stop, and the cost compounded silently while the human slept. The most-published advice on this is wrong. You cannot solve it with a bigger context window or a smarter model. You solve it with hard caps, prompt caching, fan-out budgets, and (if you are honest about the math) moving a meaningful percentage of your inference to hardware you own.
 
-This post is about the engineering that prevents that night. It is also about why the most-published advice on this topic is wrong — *you cannot solve this with a bigger context window or a smarter model*. You solve it with hard caps, prompt caching, fan-out budgets, and (if you are honest about the math) a meaningful percentage of your inference moved to hardware you own.
+## Current pricing snapshot
 
-## What current loops actually cost
+May 2026 list rates:
 
-This is grounded in real production runs from May 2026, not synthetic. Pricing snapshot:
+| Model                  | Input  $/M | Output $/M |
+|------------------------|------------|------------|
+| Claude Sonnet 4.5      | $3.00      | $15.00     |
+| Claude Haiku 4.5       | $1.00      | $5.00      |
+| Claude Opus 4.x        | $15.00     | $75.00     |
+| GPT-5                  | $2.50      | $10.00     |
+| GPT-5 mini             | $0.25      | $1.00      |
+| Gemini 2.5 Flash       | $0.30      | $2.50      |
+| **DeepSeek V4 Flash**  | **$0.14**  | **$0.28**  |
+| DeepSeek V4 Pro        | $1.74      | $3.48      |
 
-| Model                       | Input  $/M | Output $/M | Notes                            |
-|----------------------------|------------|------------|----------------------------------|
-| Claude Sonnet 4.5          | $3.00      | $15.00     | The agentic-coding default       |
-| Claude Haiku 4.5           | $1.00      | $5.00      | Fast, cheap, the router pick     |
-| Claude Opus 4.x            | $15.00     | $75.00     | Recent 67% price cut on Opus 4.5 |
-| GPT-5                      | $2.50      | $10.00     | Reasoning premium varies         |
-| GPT-5 mini                 | $0.25      | $1.00      | Workhorse for high-fan-out       |
-| Gemini 2.5 Flash           | $0.30      | $2.50      | Long-context champion            |
-| **DeepSeek V4 Flash**      | **$0.14**  | **$0.28**  | The disruptor; MIT-licensed      |
-| **DeepSeek V4 Pro**        | $1.74      | $3.48      | 1.6T MoE, 1M context             |
+DeepSeek V4 Flash at $0.14/$0.28 resets the spreadsheet. Fan-out architectures that were a budget meeting on Sonnet are now the cost of a coffee. Public weights, MIT license, shipped April 24.
 
-DeepSeek V4 Flash is the line that resets the spreadsheet. At $0.14/$0.28 per million, you can run a fan-out architecture that would have been a budget meeting on Sonnet for the cost of a coffee. This is not a hypothetical — it shipped April 24 with public weights and an MIT license.
+## The loop math
 
-Now the loop math. A "research-heavy" agentic dev session I ran last week:
+A research-heavy agentic dev session from last week:
 
-- **Loop shape:** planner → 3 parallel research agents → critic → executor → verifier
-- **Avg tokens per full loop:** 180,000 input / 12,000 output
-- **Loops per hour during active dev:** 8–12
-- **Sustained session:** 4 hours
+- Loop: planner, 3 parallel research agents, critic, executor, verifier
+- Tokens per loop: 180,000 input, 12,000 output
+- Loops per hour during active dev: 8 to 12
+- Sustained session: 4 hours
 
-That is **~6.5M input + 432K output per session**. Costs out as:
+Total: 6.5M input plus 432K output per session.
 
-| Model                   | Per session |
-|-------------------------|-------------|
-| Sonnet 4.5              | **$26.00**  |
-| GPT-5                   | $20.65      |
-| Gemini 2.5 Flash        | $3.04       |
-| DeepSeek V4 Flash       | $1.03       |
-| Local (~65W × 4hr)      | **$0.034**  |
+| Model                | Per session |
+|----------------------|-------------|
+| Sonnet 4.5           | **$26.00**  |
+| GPT-5                | $20.65      |
+| Gemini 2.5 Flash     | $3.04       |
+| DeepSeek V4 Flash    | $1.03       |
+| Local (~65W × 4hr)   | **$0.034**  |
 
-The behavioral consequence is what I keep coming back to: at $26 per developer per session you start *behaving differently*. You trim retries. You shorten the critic's argument with the executor. You stop running parallel agents because the fan-out fee is real. **The cost is the budget meeting you are having with yourself in the moment**, and the budget meeting is what kills the loop's quality.
+At $26 per developer per session you behave differently. You trim retries. You shorten the critic's argument with the executor. You stop running parallel agents because the fan-out fee is real. The cost is the budget meeting you are having with yourself in the moment, and the budget meeting kills the loop's quality.
 
-At three cents, you do none of those things. You let the agent retry. You let the critic argue four times. You leave loops running through the night because there is no reason not to. That is not a small difference. That is a different practice of engineering.
+At three cents you do none of those things. You let the agent retry. You let the critic argue four times. You leave loops running through the night.
 
-## Where the money actually accumulates
+## Where the money accumulates
 
-If you are paying API rates, four cost vectors compound, ranked by how often they kill budgets:
+Four cost vectors compound, ranked by how often they kill budgets:
 
-**1. Prompt re-emission.** Every turn of the loop, the entire context — system prompt + tool catalog + history + retrieved docs — gets re-billed as input. A 50-tool MCP catalog is roughly 50K tokens of *context overhead per turn*. At 80 turns in a long session, that's 4M tokens of *just tool descriptions*, billed every time. This is the cost vector that sneaks up on people. Pruning the tool catalog to what the current task actually needs is the single highest-leverage cost cut available.
+**1. Prompt re-emission.** Every turn re-bills the entire context: system prompt, tool catalog, history, retrieved docs. A 50-tool MCP catalog is roughly 50K tokens of context overhead per turn. At 80 turns, that is 4M tokens of just tool descriptions. Pruning the tool catalog to what the current task needs is the single highest-leverage cut available.
 
-**2. Retry storms.** A failing assertion in the executor sends the loop back to the planner. If the planner does not converge fast, you retry. Each retry burns the full prompt again. Set a hard maximum-iteration count. For most tasks 5 iterations is generous; 10 is the ceiling. Past that, escalate to a human. CrewAI exposes `max_iter`; LangGraph has interrupt primitives. Use them.
+**2. Retry storms.** A failing assertion sends the loop back to the planner. Each retry burns the full prompt again. Set `max_iter` to 5. Hard ceiling 10. Past that, escalate to a human.
 
-**3. Long-context drift.** Jeff Huber from Chroma published research and said it again at AI Dev SF: language models are not invariant to their context windows. Past about 40K tokens in production-tuned evals, even frontier models start to drift. Builders in the field do not trust past 40K. **The bigger context window is not a budget solution; it is a quality liability.** Compact aggressively, summarize history, evict.
+**3. Long-context drift.** Production-tuned evals show that even frontier models drift past about 40K tokens (Jeff Huber, Chroma). The bigger context window is not a budget solution. It is a quality liability. Compact aggressively, summarize history, evict.
 
-**4. Untyped tool output.** If a tool returns 50KB of JSON and the model only needs three fields, you just paid for 50KB of input on the next turn. Postprocess tool output in deterministic code before it hits the model. This pattern saves more than prompt caching does, and nobody talks about it.
+**4. Untyped tool output.** A tool returns 50KB of JSON. The model needs three fields. You just paid for 50KB of input on the next turn. Postprocess tool output in deterministic code before it hits the model. This pattern saves more than prompt caching and nobody talks about it.
 
-## Engineering controls that work
+## Controls that work
 
 In rough order of leverage:
 
-**Prompt caching.** Anthropic's prompt caching (5-minute and 1-hour TTLs) gives 90% cost reduction on cached prefixes. The architecture trick is to keep *system prompt + tool catalog + static instructions* at the front of the message so they hit the cache. Vary the dynamic content at the end. Cached input on Sonnet is $0.30/M instead of $3/M — a 10× cut. Anthropic, OpenAI, and Google all support this; the discount factor varies but the architecture is identical.
+**Prompt caching.** Anthropic's prompt caching (5-min and 1-hour TTLs) gives 90% cost reduction on cached prefixes. Cached input on Sonnet is $0.30/M instead of $3/M. Architecture trick: keep system prompt + tool catalog + static instructions at the front. Vary dynamic content at the end.
 
-**Tiered models.** Route by complexity. A planner running on Sonnet 4.5 is fine; the three parallel researchers can almost always run on Haiku 4.5 or DeepSeek V4 Flash. Save the expensive model for the turn where intelligence actually matters. UiPath's Raghu Malpani called this exact pattern "process orchestration over agent swarming" at AI Agent Conference NYC last week — agents play a *role* in the workflow, alongside cheaper deterministic systems. Same principle, applied to dollars.
+**Tiered models.** Route by complexity. Planner runs on Sonnet 4.5. The three parallel researchers run on Haiku 4.5 or DeepSeek V4 Flash. Save the expensive model for the turn where intelligence actually matters.
 
-**Per-loop budget caps.** Set a max-token-spend per session, not just per call. CrewAI exposes `max_total_tokens`; if you are rolling your own, wrap the API call and abort when the running total crosses the cap. Pair with a Slack/Discord alert: humans get notified before money gets spent, not after.
+**Per-loop budget caps.** Set max-token-spend per session, not per call. Wrap the API call. Abort when running total crosses the cap. Pair with a Slack alert.
 
-**Iteration counts.** Default `max_iter` to 5, hard ceiling 10. If the loop has not converged by then, the wrong thing is being retried. Hand off to a human and log it.
+**Iteration counts.** Default 5. Hard ceiling 10. Hand off to a human and log it.
 
-**Tool catalog scoping.** GitHub's MCP server has 80+ tools. Most loops need 5. Use the `--toolsets` flag (or your client's equivalent) to load *only* the tools the current task needs. This is the single change that has saved me the most money in production.
+**Tool catalog scoping.** GitHub's MCP exposes 80+ tools. Most loops need 5. Use `--toolsets` (or your client's equivalent). Single change that has saved me the most money in production.
 
-**Sleep on it.** Long-running agentic tasks should run during off-peak hours where the provider has spot-capacity tiers, or use the Batch API ($1.50/$7.50 vs $3/$15 on Anthropic — a 50% cut) for anything that does not need to finish in real time. Most "real time" tasks do not actually need real time; they need *eventual consistency*. The deadline you put on the agent is usually self-imposed.
+**Batch API.** Anthropic charges $1.50/$7.50 instead of $3/$15 for non-real-time work, a 50% discount. Most "real time" tasks do not actually need real time. They need eventual consistency. The deadline is usually self-imposed.
 
 ## The local-first move
 
-This is the answer the cloud-first writers do not want to give you. **Most of the agentic loop does not need a frontier model.** It needs a tool-calling model, a router, a critic, a summarizer, a structured-output extractor. All of those are jobs that fit comfortably on a local Qwen 3.6 27B or a Gemma 4 26B MoE running on hardware you can buy for the cost of two months of Sonnet bills.
+Most of the agentic loop does not need a frontier model. It needs a tool-calling model, a router, a critic, a summarizer, a structured-output extractor. All of those fit on a local Qwen 3.6 27B or Gemma 4 26B MoE.
 
-The economics, again from my own daily setup:
+Economics from my own setup:
+- **Hardware:** Framework 16, 96GB unified memory, RX 7700S, Strix Point. ~$3,200 once.
+- **Power:** ~65W under sustained load. $0.034 per active hour.
+- **Local mix:** Qwen 3.6 27B (default agent), Gemma 4 26B MoE (parallel fan-out), Gemma 4 E4B (router/classifier).
+- **API mix:** Claude and GPT-5 only, reserved for the ~5% of turns that genuinely need frontier reasoning.
 
-- **Hardware:** Framework 16 with 96GB unified memory + RX 7700S + Strix Point. ~$3,200 once.
-- **Power:** ~65W under sustained load. At $0.13/kWh, that's $0.034 per active hour.
-- **Local model mix:** Qwen 3.6 27B (default agent), Gemma 4 26B MoE (parallel fan-out), Gemma 4 E4B (router/classifier).
-- **API mix (kept on payroll):** DeepSeek V4 for multimodal/spatial tasks, Kimi K2.6 for UI generation, Claude/GPT-5 for the ~5% of turns that genuinely need frontier reasoning.
+If you spend $200/month on agentic API calls, the laptop pays back in 16 months. At $500/month, 6 months. At $3,000/month, you should have bought one for every developer last quarter.
 
-The crossover math is straightforward. If you are spending $200/month on agentic API calls today, the laptop pays itself back in 16 months. If you are spending $500/month, it pays back in 6 months. If you are running a team and the bill is $3,000/month, you should have bought one for every developer last quarter.
-
-But the cost recovery is not the interesting part. **The interesting part is the regime change in how you design loops when fan-out is free.** Five $0.01 cloud agents and one $0.50 monolith are roughly the same. Five local agents and one local monolith are also the same — except the local fan-out finishes in parallel and the cloud one finishes when the rate limiter says so. Joe Moura from CrewAI showed this at AI Agent Conference NYC: their internal Iris agent is *now executing more than a billion crew runs per quarter*. That kind of execution density is impossible at API rates. It is normal at electricity rates.
+The interesting part is not cost recovery. It is the regime change in how you design loops when fan-out is free. Five $0.01 cloud agents and one $0.50 monolith are roughly the same. Five local agents and one local monolith are also the same, except the local fan-out finishes in parallel and the cloud one finishes when the rate limiter says so.
 
 ## The honest tradeoff
 
-I am not going to argue that local replaces frontier. The 5% of turns that need frontier reasoning will keep needing it. The architecture that wins is hybrid: 95% local for the routing, classifying, drafting, summarizing, tool-calling, and critiquing turns; 5% frontier API for the genuinely hard problems. A well-designed loop calls the frontier *once per session, by name*, when the question is hard enough to earn the bill.
+Local does not replace frontier. The 5% of turns that need frontier reasoning will keep needing it. The architecture that wins is hybrid: 95% local for routing, classifying, drafting, summarizing, tool-calling, critiquing. 5% frontier API for the genuinely hard turns. A well-designed loop calls the frontier once per session, by name, when the question earns the bill.
 
-The hybrid pattern has a real engineering tax. You need to maintain two stacks. You need to handle the "is this turn important enough" routing decision (the answer is usually a small classifier model that itself runs locally). You need to monitor both for drift. None of that is free.
+The hybrid pattern has a real engineering tax. Two stacks to maintain. A routing decision (usually a small classifier model, also local). Drift to monitor on both sides.
 
-What you get for the tax is the freedom to design loops without flinching. That is the moat. The teams that ship this in 2026 are the teams who can run an experiment without scheduling a budget meeting first.
-
-## What I am watching
-
-Three threads on the radar:
-
-- **The DeepSeek V4 Flash floor.** $0.14/$0.28 per million is below where most teams' break-even-vs-self-host lines used to sit. Either Anthropic and OpenAI cut prices materially in 2026 to defend, or the high-volume agentic workloads migrate to DeepSeek and to local. I am watching pricing pages on every model provider monthly. Bet on the price cuts.
-- **Open-weight inference at home matching API quality.** Qwen 3.6 27B Dense matches Claude 4.5 Opus on Terminal-Bench 2.0 and lands within 4 points of Opus 4.6 on SWE-bench Verified. The gap between "what runs on your laptop" and "what runs in Anthropic's cluster" is closing fast on the *agentic-coding* axis specifically. Routing sophistication is the most underbought skill in agentic engineering for the next twelve months.
-- **Spot-priced inference tiers.** DataRobot's Venky Veeraraghavan made the argument at AI Dev SF: providers will eventually expose premium and spot tiers, where SLA-bound traffic pays full freight and low-priority work runs on spare capacity at heavy discounts. Anthropic's Batch API is the leading edge of this; expect it to spread.
+What you get for the tax is the freedom to design loops without flinching. The teams that ship in 2026 are the teams who can run an experiment without scheduling a budget meeting first.
 
 ## The takeaway
 
-Token budgeting is engineering, not penny-pinching. A well-architected loop fits inside a *known* per-session budget. A poorly architected loop is a runway-burning bot waiting for the wrong night. The four moves that matter — prompt caching, tiered models, hard iteration caps, scoped tool catalogs — pay for themselves on the first session that would have spiraled. The fifth move, moving the routing-and-tool-calling 80% to local hardware, is what separates the teams that flinch from the teams that ship.
+Token budgeting is engineering, not penny-pinching. A well-architected loop fits inside a known per-session budget. A poorly architected loop is a runway-burning bot waiting for the wrong night.
 
-The full configuration — wrapper code for budget caps, the tiered-routing classifier, the n8n templates for shadow-cost monitoring — will land in [`apu-config`](https://github.com/sudosoph) and on the newsletter shortly. If you want a heads-up when it drops, [subscribe](/contact?subject=Newsletter%20signup&message=Add%20me%20to%20The%20Architect%27s%20Notebook). If you want it set up against your own loop next week, [that is what an engagement looks like](/work-with-me).
+Six moves pay for themselves on the first session that would have spiraled: prompt caching, tiered models, hard iteration caps, scoped tool catalogs, batch API for non-realtime, and moving the routing-and-tool-calling 80% to local hardware. The teams that flinch and the teams that ship differ by exactly that decision.
