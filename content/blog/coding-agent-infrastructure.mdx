@@ -1,0 +1,104 @@
+---
+title: "The Hidden Infrastructure for AI Coding Agents"
+slug: coding-agent-infrastructure
+publishedDate: "2026-05-05"
+description: "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work."
+tags: ["coding-agents", "infrastructure", "codex", "linear", "graphite"]
+draft: false
+---
+
+**TL;DR.** OpenAI Codex, Linear, and Graphite (acquired by Cursor) shared a panel at AI Agent Conference NYC on May 4. The shared takeaway: shipping coding agents at scale is not about the agent. It is about the infrastructure that makes the agent's output reviewable, mergeable, and trustworthy. This post is the practitioner-level guide to that infrastructure: ten skills for new-hire onboarding, code review as the new bottleneck, automation cadence, and the cost-effective harness pattern that decides which teams ship.
+
+## What changed
+
+Two years ago, a coding agent that produced a working diff for a small task was a research demo. In May 2026, every major coding harness (Claude Code, Cursor, Codex, OpenClaw) ships agents that handle real refactors, real bug fixes, and real feature implementations. The agent itself is no longer the bottleneck.
+
+The bottleneck moved. Three places it landed:
+
+**Code review.** A human reviewing 30 agent-generated PRs a day is a worse job than a human writing 30 PRs a day. Throughput matters more than ever. CodeRabbit's [growth in 2026](https://www.coderabbit.ai/) is the leading indicator.
+
+**Onboarding.** Engineers joining a team need to ramp faster than they did in 2024 because the existing team is shipping faster. OpenAI's internal pattern: ten skills new hires must master in week one.
+
+**Automation cadence.** The interesting agent work is the recurring background task, not the one-off interactive session. Teams that built daily-running improvement agents are pulling away from teams that only use agents reactively.
+
+## The ten skills pattern
+
+OpenAI's panelist (Derrick Choi from Codex) described their internal onboarding: ten specific skills that every new engineer learns. Each skill is a markdown file plus a script the agent executes. Examples:
+
+- `/release` (bump version, regenerate changelog, tag commit)
+- `/triage` (scan Linear for unassigned issues, classify, propose owner)
+- `/review` (run linter, type checker, custom rules; format output for humans)
+- `/migrate` (apply schema migration, validate, rollback on failure)
+- `/spike` (create a throwaway branch, scaffolds the experiment template)
+
+The pattern: a skill encodes a specific workflow that the team does often enough to need to reproduce. New hires learn the skills, not the underlying tools. The agent runs them.
+
+This is the [authoring constraints](/blog/vibe-coding-for-founders) pattern at organizational scale. The skills are the durable artifact. The agent is interchangeable.
+
+## Code review as the new bottleneck
+
+Tom Moor (Linear) made the case at the panel: when generation is cheap, review is the constraint. The teams shipping fastest are the ones who treat review infrastructure as first-class engineering work.
+
+Concretely, what matters:
+
+**Filter ruthlessly before the human looks.** [CodeRabbit's pipeline](https://www.coderabbit.ai/blog/the-state-of-ai-code-review) runs context enrichment, primary review agent, then up to 10 verification agents that filter comments based on config and codebase. Only meaningful comments reach the PR. Without filtering, the human is reading 50 LLM-generated comments per PR. With filtering, it is 3-5.
+
+**Per-file review takes a back seat to per-system review.** The agent already understands single-file changes. The review work that adds value is the cross-file impact: what tests should now exist, what callers might break, what API contract is now violated.
+
+**Test the review pipeline like product code.** Erik Thorelli from CodeRabbit at AI Dev SF: every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline, then shadow, then online. Same [shadow testing](/blog/shadow-testing) discipline.
+
+The teams that got this right ship a 5-minute median PR-to-review-complete time. The teams that did not are at 4 hours and growing.
+
+## Automation cadence
+
+Tomas Reimers from Graphite framed this at the panel: most teams use coding agents reactively, when a human asks for something. The teams pulling ahead use them on a daily cron.
+
+Real patterns from production:
+
+**Daily improvement automation.** Once a day, the agent finds one thing to improve in the codebase, makes the change, opens the PR, and merges it if CI passes. After a quarter, the codebase has 90 small improvements that no one had to ask for.
+
+**Continuous test maintenance.** Tests that pass but should not (because the underlying behavior changed) are a class of bug humans never have time to chase. An agent running nightly catches these and proposes updates.
+
+**Documentation regeneration.** When code ships, the agent updates the relevant docs, runs the link checker, regenerates examples. Docs stop being permanently behind.
+
+**Dependency updates.** Renovate or Dependabot handle the proposing. An agent handles the *evaluating* (what changed, is it safe, run the tests) and merges if the criteria are met.
+
+These are all Ring 2 of the [self-healing CI/CD pattern](/blog/self-healing-cicd): agent does the work, human reviews and merges. Bounded, cheap, compounding.
+
+## The harness pattern that decides which teams ship
+
+Tom Moor (Linear) and Derrick Choi (OpenAI) both made the same point: the harness around the model matters more than the model. Three principles.
+
+**1. Cost-effective by design.** "Make the harness cost-effective for everyone rather than the model expensive for some." A team where every engineer is on the $200/month Cursor tier is paying $200K/year for 80 engineers. The teams shipping fastest [route work tier-aware](/blog/token-budgeting-for-startups): cheap models for routing, mid-tier for coding, frontier for the rare hard turn.
+
+**2. Virtuous cycles in tooling.** Each new piece of harness automation becomes the input to the next one. The release skill calls the review skill calls the deploy skill. Composability is the multiplier.
+
+**3. Token efficiency.** OpenAI's GPT-5.5 release prioritized token efficiency over raw capability. Same intelligence per turn, fewer thinking tokens, faster latency. The harness wins that comes from [scoping context aggressively](/blog/the-40k-token-wall) compounds.
+
+## Open-source pieces and platforms
+
+What the panel mentioned, with annotations.
+
+**Symphony** : the open-source Linear running with Codex internally. Shows the pattern of issue tracker plus coding agent at deep integration.
+
+**[Vercel](https://vercel.com)** : rendering environment for agentic code. Useful as a sandbox for "did this PR break the preview?" automation.
+
+**[CodeRabbit](https://www.coderabbit.ai/)** : paid review platform but the leader on the actual review-pipeline pattern. Worth studying even if you do not pay for it.
+
+**[PR-Agent](https://github.com/Codium-ai/pr-agent)** : open-source PR review agent.
+
+**[Linear MCP server](https://linear.app/changelog)** : first-party. The right way to give a coding agent ticket context.
+
+## Where local-first matters here
+
+The coding agent that runs locally is fundamentally different from the one that runs cloud-only. Two specifics.
+
+**Source code does not leave the machine.** Most cloud coding harnesses send your codebase to the model provider. For regulated industries, internal tools, and any project where the code itself is sensitive, this is a non-starter. Local Qwen 3.6 27B running on a [Framework 16](/blog/framework-for-builders) handles 95% of coding-agent workloads without anything leaving the laptop.
+
+**The cost curve is different.** A team running 5 engineers at heavy daily Sonnet 4.5 usage is paying $50-100/day in API costs. The same team on a hybrid local-first setup uses local for the routing and tool-calling 80% of work and Sonnet for the hard 20%. Cost drops by 60-70% with the same shipping velocity.
+
+The hybrid stack is the actual production answer. Pure-cloud is a tax. Pure-local misses the 5% where frontier models still earn the bill.
+
+## The takeaway
+
+The coding agent is solved. The infrastructure around the coding agent is what decides which teams ship. Skills as the durable onboarding artifact. Review pipelines that filter before the human looks. Daily automation that compounds. Cost-effective harness that routes per-task. None of this is research. All of it is shipping in 2026 production teams. The teams investing in the harness are pulling ahead. The teams thinking the model is the work are about to find out otherwise.

@@ -71,7 +71,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "AX: When Your Users Are Agents",
       "slug": "agent-experience",
-      "publishedDate": "2026-05-22",
+      "publishedDate": "2026-05-03",
       "description": "Agent Experience is the new SEO. Here is what it means, what changes, and the four-step audit to figure out how your product looks to the agents already using it.",
       "tags": [
         "ax",
@@ -123,7 +123,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Automated Competitive Intelligence",
       "slug": "automated-competitive-intelligence",
-      "publishedDate": "2026-05-20",
+      "publishedDate": "2026-04-21",
       "description": "Using Apify, Firecrawl, and a local model to monitor every move your competitors make in real time. With the architecture and the weekly digest format that actually gets read.",
       "tags": [
         "competitive-intel",
@@ -175,7 +175,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Below the Waterline",
       "slug": "below-the-waterline",
-      "publishedDate": "2026-05-18",
+      "publishedDate": "2026-05-03",
       "description": "The hidden engineering that decides whether your agent makes it to production. The 65/95 gap and the three foundations underneath it.",
       "tags": [
         "agents",
@@ -214,7 +214,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Boulder's AI Frontier",
       "slug": "boulders-ai-frontier",
-      "publishedDate": "2026-05-28",
+      "publishedDate": "2026-05-05",
       "description": "What is actually shipping out of the Boulder AI scene in May 2026, what is on the schedule for Boulder Startup Week, and why the Give First culture matters for agentic builders.",
       "tags": [
         "boulder",
@@ -261,11 +261,63 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "coding-agent-infrastructure",
+    "frontmatter": {
+      "title": "The Hidden Infrastructure for AI Coding Agents",
+      "slug": "coding-agent-infrastructure",
+      "publishedDate": "2026-05-05",
+      "description": "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work.",
+      "tags": [
+        "coding-agents",
+        "infrastructure",
+        "codex",
+        "linear",
+        "graphite"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> OpenAI Codex, Linear, and Graphite (acquired by Cursor) shared a panel at AI Agent Conference NYC on May 4. The shared takeaway: shipping coding agents at scale is not about the agent. It is about the infrastructure that makes the agent's output reviewable, mergeable, and trustworthy. This post is the practitioner-level guide to that infrastructure: ten skills for new-hire onboarding, code review as the new bottleneck, automation cadence, and the cost-effective harness pattern that decides which teams ship.</p>\n<h2 id=\"what-changed\">What changed</h2>\n<p>Two years ago, a coding agent that produced a working diff for a small task was a research demo. In May 2026, every major coding harness (Claude Code, Cursor, Codex, OpenClaw) ships agents that handle real refactors, real bug fixes, and real feature implementations. The agent itself is no longer the bottleneck.</p>\n<p>The bottleneck moved. Three places it landed:</p>\n<p><strong>Code review.</strong> A human reviewing 30 agent-generated PRs a day is a worse job than a human writing 30 PRs a day. Throughput matters more than ever. CodeRabbit's <a href=\"https://www.coderabbit.ai/\">growth in 2026</a> is the leading indicator.</p>\n<p><strong>Onboarding.</strong> Engineers joining a team need to ramp faster than they did in 2024 because the existing team is shipping faster. OpenAI's internal pattern: ten skills new hires must master in week one.</p>\n<p><strong>Automation cadence.</strong> The interesting agent work is the recurring background task, not the one-off interactive session. Teams that built daily-running improvement agents are pulling away from teams that only use agents reactively.</p>\n<h2 id=\"the-ten-skills-pattern\">The ten skills pattern</h2>\n<p>OpenAI's panelist (Derrick Choi from Codex) described their internal onboarding: ten specific skills that every new engineer learns. Each skill is a markdown file plus a script the agent executes. Examples:</p>\n<ul>\n<li><code>/release</code> (bump version, regenerate changelog, tag commit)</li>\n<li><code>/triage</code> (scan Linear for unassigned issues, classify, propose owner)</li>\n<li><code>/review</code> (run linter, type checker, custom rules; format output for humans)</li>\n<li><code>/migrate</code> (apply schema migration, validate, rollback on failure)</li>\n<li><code>/spike</code> (create a throwaway branch, scaffolds the experiment template)</li>\n</ul>\n<p>The pattern: a skill encodes a specific workflow that the team does often enough to need to reproduce. New hires learn the skills, not the underlying tools. The agent runs them.</p>\n<p>This is the <a href=\"/blog/vibe-coding-for-founders\">authoring constraints</a> pattern at organizational scale. The skills are the durable artifact. The agent is interchangeable.</p>\n<h2 id=\"code-review-as-the-new-bottleneck\">Code review as the new bottleneck</h2>\n<p>Tom Moor (Linear) made the case at the panel: when generation is cheap, review is the constraint. The teams shipping fastest are the ones who treat review infrastructure as first-class engineering work.</p>\n<p>Concretely, what matters:</p>\n<p><strong>Filter ruthlessly before the human looks.</strong> <a href=\"https://www.coderabbit.ai/blog/the-state-of-ai-code-review\">CodeRabbit's pipeline</a> runs context enrichment, primary review agent, then up to 10 verification agents that filter comments based on config and codebase. Only meaningful comments reach the PR. Without filtering, the human is reading 50 LLM-generated comments per PR. With filtering, it is 3-5.</p>\n<p><strong>Per-file review takes a back seat to per-system review.</strong> The agent already understands single-file changes. The review work that adds value is the cross-file impact: what tests should now exist, what callers might break, what API contract is now violated.</p>\n<p><strong>Test the review pipeline like product code.</strong> Erik Thorelli from CodeRabbit at AI Dev SF: every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline, then shadow, then online. Same <a href=\"/blog/shadow-testing\">shadow testing</a> discipline.</p>\n<p>The teams that got this right ship a 5-minute median PR-to-review-complete time. The teams that did not are at 4 hours and growing.</p>\n<h2 id=\"automation-cadence\">Automation cadence</h2>\n<p>Tomas Reimers from Graphite framed this at the panel: most teams use coding agents reactively, when a human asks for something. The teams pulling ahead use them on a daily cron.</p>\n<p>Real patterns from production:</p>\n<p><strong>Daily improvement automation.</strong> Once a day, the agent finds one thing to improve in the codebase, makes the change, opens the PR, and merges it if CI passes. After a quarter, the codebase has 90 small improvements that no one had to ask for.</p>\n<p><strong>Continuous test maintenance.</strong> Tests that pass but should not (because the underlying behavior changed) are a class of bug humans never have time to chase. An agent running nightly catches these and proposes updates.</p>\n<p><strong>Documentation regeneration.</strong> When code ships, the agent updates the relevant docs, runs the link checker, regenerates examples. Docs stop being permanently behind.</p>\n<p><strong>Dependency updates.</strong> Renovate or Dependabot handle the proposing. An agent handles the <em>evaluating</em> (what changed, is it safe, run the tests) and merges if the criteria are met.</p>\n<p>These are all Ring 2 of the <a href=\"/blog/self-healing-cicd\">self-healing CI/CD pattern</a>: agent does the work, human reviews and merges. Bounded, cheap, compounding.</p>\n<h2 id=\"the-harness-pattern-that-decides-which-teams-ship\">The harness pattern that decides which teams ship</h2>\n<p>Tom Moor (Linear) and Derrick Choi (OpenAI) both made the same point: the harness around the model matters more than the model. Three principles.</p>\n<p><strong>1. Cost-effective by design.</strong> \"Make the harness cost-effective for everyone rather than the model expensive for some.\" A team where every engineer is on the $200/month Cursor tier is paying $200K/year for 80 engineers. The teams shipping fastest <a href=\"/blog/token-budgeting-for-startups\">route work tier-aware</a>: cheap models for routing, mid-tier for coding, frontier for the rare hard turn.</p>\n<p><strong>2. Virtuous cycles in tooling.</strong> Each new piece of harness automation becomes the input to the next one. The release skill calls the review skill calls the deploy skill. Composability is the multiplier.</p>\n<p><strong>3. Token efficiency.</strong> OpenAI's GPT-5.5 release prioritized token efficiency over raw capability. Same intelligence per turn, fewer thinking tokens, faster latency. The harness wins that comes from <a href=\"/blog/the-40k-token-wall\">scoping context aggressively</a> compounds.</p>\n<h2 id=\"open-source-pieces-and-platforms\">Open-source pieces and platforms</h2>\n<p>What the panel mentioned, with annotations.</p>\n<p><strong>Symphony</strong> : the open-source Linear running with Codex internally. Shows the pattern of issue tracker plus coding agent at deep integration.</p>\n<p><strong><a href=\"https://vercel.com\">Vercel</a></strong> : rendering environment for agentic code. Useful as a sandbox for \"did this PR break the preview?\" automation.</p>\n<p><strong><a href=\"https://www.coderabbit.ai/\">CodeRabbit</a></strong> : paid review platform but the leader on the actual review-pipeline pattern. Worth studying even if you do not pay for it.</p>\n<p><strong><a href=\"https://github.com/Codium-ai/pr-agent\">PR-Agent</a></strong> : open-source PR review agent.</p>\n<p><strong><a href=\"https://linear.app/changelog\">Linear MCP server</a></strong> : first-party. The right way to give a coding agent ticket context.</p>\n<h2 id=\"where-local-first-matters-here\">Where local-first matters here</h2>\n<p>The coding agent that runs locally is fundamentally different from the one that runs cloud-only. Two specifics.</p>\n<p><strong>Source code does not leave the machine.</strong> Most cloud coding harnesses send your codebase to the model provider. For regulated industries, internal tools, and any project where the code itself is sensitive, this is a non-starter. Local Qwen 3.6 27B running on a <a href=\"/blog/framework-for-builders\">Framework 16</a> handles 95% of coding-agent workloads without anything leaving the laptop.</p>\n<p><strong>The cost curve is different.</strong> A team running 5 engineers at heavy daily Sonnet 4.5 usage is paying $50-100/day in API costs. The same team on a hybrid local-first setup uses local for the routing and tool-calling 80% of work and Sonnet for the hard 20%. Cost drops by 60-70% with the same shipping velocity.</p>\n<p>The hybrid stack is the actual production answer. Pure-cloud is a tax. Pure-local misses the 5% where frontier models still earn the bill.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>The coding agent is solved. The infrastructure around the coding agent is what decides which teams ship. Skills as the durable onboarding artifact. Review pipelines that filter before the human looks. Daily automation that compounds. Cost-effective harness that routes per-task. None of this is research. All of it is shipping in 2026 production teams. The teams investing in the harness are pulling ahead. The teams thinking the model is the work are about to find out otherwise.</p>",
+    "toc": [
+      {
+        "id": "what-changed",
+        "text": "What changed"
+      },
+      {
+        "id": "the-ten-skills-pattern",
+        "text": "The ten skills pattern"
+      },
+      {
+        "id": "code-review-as-the-new-bottleneck",
+        "text": "Code review as the new bottleneck"
+      },
+      {
+        "id": "automation-cadence",
+        "text": "Automation cadence"
+      },
+      {
+        "id": "the-harness-pattern-that-decides-which-teams-ship",
+        "text": "The harness pattern that decides which teams ship"
+      },
+      {
+        "id": "open-source-pieces-and-platforms",
+        "text": "Open-source pieces and platforms"
+      },
+      {
+        "id": "where-local-first-matters-here",
+        "text": "Where local-first matters here"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
     "slug": "death-of-the-junior-dev",
     "frontmatter": {
       "title": "The Death of the Junior Dev",
       "slug": "death-of-the-junior-dev",
-      "publishedDate": "2026-05-12",
+      "publishedDate": "2026-05-04",
       "description": "What agentic workflows are actually doing to entry-level engineering, and what to do about it.",
       "tags": [
         "careers",
@@ -312,7 +364,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Document OCR for Agents",
       "slug": "document-ocr-for-agents",
-      "publishedDate": "2026-05-23",
+      "publishedDate": "2026-05-03",
       "description": "90% of enterprise data is locked in PDFs. The 2026 pipeline that gets it out is not RAG, not vision-only, and not the OCR you remember from 2018.",
       "tags": [
         "ocr",
@@ -360,11 +412,63 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "ethical-autonomy",
+    "frontmatter": {
+      "title": "Ethical Autonomy",
+      "slug": "ethical-autonomy",
+      "publishedDate": "2026-05-05",
+      "description": "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on.",
+      "tags": [
+        "ethics",
+        "agents",
+        "security",
+        "privacy",
+        "ai-act"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> The August 2 2026 EU AI Act deadline for high-risk agentic systems is real and the <a href=\"https://www.kennedyslaw.com/en/thought-leadership/article/2026/the-eu-ai-act-implementation-timeline-understanding-the-next-deadline-for-compliance/\">Digital Omnibus trilogue failed to delay it on April 28</a>. Most teams have not internalized what compliance actually requires. This post is a working framework for ethical autonomy in 2026: the four privacy questions to ask before any agent gets a credential, the security layers that should be table stakes, and what the EU AI Act actually requires you to ship.</p>\n<h2 id=\"the-deadline\">The deadline</h2>\n<p><a href=\"https://www.hklaw.com/en/insights/publications/2026/04/us-companies-face-eu-ai-acts-possible-august-2026-compliance-deadline\">The 2 August 2026 deadline</a> applies to any AI system classified as high-risk that operates in the EU or serves EU nationals. Agents that move money, access health data, make hiring decisions, or run critical infrastructure are all in scope.</p>\n<p>The <a href=\"https://www.modulos.ai/blog/is-the-eu-ai-act-delayed/\">Digital Omnibus trilogue on 28 April 2026 failed</a> to push the deadline back. A delay is still possible but no longer the default. Plan for the August date.</p>\n<p>What compliance actually requires for autonomous agents:</p>\n<ul>\n<li>Technical documentation covering decision logic</li>\n<li>Open-loop architecture preventing isolated operation</li>\n<li>Structured human oversight with clear intervention points</li>\n<li>Control mechanisms that allow the system to be stopped or corrected</li>\n<li>Safeguards against prohibited practices (manipulation, exploitation of vulnerabilities)</li>\n</ul>\n<p>US teams shipping to EU customers are subject to the same rules. Geographic location of the team does not exempt the product.</p>\n<h2 id=\"the-four-privacy-questions\">The four privacy questions</h2>\n<p>Before any agent gets a credential to a system, four questions. If the answer to any is \"we have not thought about it,\" the agent does not get the credential.</p>\n<p><strong>1. What data does the agent see, and where does it go?</strong> A coding agent on a metered API sends every line of your code to the API provider. Their data-retention policy is your data-retention policy. Most teams do not know what their vendor's policy is. Read it.</p>\n<p><strong>2. What can the agent do with what it sees?</strong> Read-only and read-write are different threat models. Default to read-only. Promote to write only after the agent has been validated against the specific write actions in <a href=\"/blog/shadow-testing\">shadow mode</a>.</p>\n<p><strong>3. Who can the agent contact externally?</strong> A network-restricted agent can write all the code it wants and exfiltrate exactly nothing. The <a href=\"https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/\">lethal trifecta attack</a> (private data, untrusted content, exfiltration capability) only works if all three legs exist. Cut the network leg by default.</p>\n<p><strong>4. Who is accountable when the agent gets it wrong?</strong> A fully autonomous agent has no one. A <a href=\"/blog/the-hitl-standard\">human-in-the-loop agent</a> has a clear answer: the human approved the wrong thing, the human is responsible. Accountability collapse is the structural reason regulated industries require HITL.</p>\n<h2 id=\"the-security-layers-that-should-be-table-stakes\">The security layers that should be table stakes</h2>\n<p>Five things that should be in every production agentic system in 2026. Most are not.</p>\n<p><strong>Sandboxing by default.</strong> Tushar Jain from Docker showed at AI Dev SF the per-agent MicroVM pattern: hard security boundary, FS and network control, scoped credentials. <code>docker/cagent</code> is the OSS baseline. The blast radius of a compromised agent is the sandbox, not the host.</p>\n<p><strong>Scoped credentials, not god-mode keys.</strong> Static API keys that grant the agent everything its role can do are the default and the wrong default. Issue narrow-scope tokens per task. Rotate on every session. Treat credentials like nuclear material.</p>\n<p><strong>Token exchange for downstream calls.</strong> Anything that calls APIs on a user's behalf needs <a href=\"/blog/the-4-legged-identity\">RFC 8693 token exchange</a> so the API sees the user identity, not the agent's credential. This is the core of the 4-legged identity problem.</p>\n<p><strong>Immutable audit lineage.</strong> Every agent action, who triggered it, what credentials were used, what downstream system was touched, what the agent's reasoning was. Without this, the agent is unauditable and unauthorisable for regulated use.</p>\n<p><strong>Eviction by policy.</strong> Agents should not retain context indefinitely. Memory has a lifecycle. The <a href=\"/blog/long-term-memory-for-agents\">four-type memory model</a> includes eviction as a first-class concern, not an afterthought.</p>\n<h2 id=\"what-the-eu-ai-act-adds-on-top\">What the EU AI Act adds on top</h2>\n<p>For high-risk systems, the AI Act layers additional requirements that most US teams are not designing for:</p>\n<p><strong>Technical documentation.</strong> A complete description of the agent's capabilities, limitations, training data sources, and decision logic. Auditors get a copy. It has to be accurate. \"We use a frontier model\" is not a description.</p>\n<p><strong>Open-loop architecture.</strong> The agent cannot run as a closed loop. There must be intervention points where a human can stop, redirect, or correct it. This is the <a href=\"/blog/the-hitl-standard\">HITL standard</a> made into law.</p>\n<p><strong>Conformity assessment.</strong> Some high-risk systems require third-party conformity assessment before going to market. Plan for the audit cycle.</p>\n<p><strong>Post-market monitoring.</strong> Once deployed, the agent's behavior in production has to be continuously monitored for drift. You need to be able to demonstrate ongoing compliance, not just initial certification.</p>\n<p><strong>Logging.</strong> Every interaction has to be logged in a way that allows reconstruction of what happened and why. Retention periods are specified by use case.</p>\n<h2 id=\"the-compliance-gap\">The compliance gap</h2>\n<p>Be specific about where most teams are unready.</p>\n<p><strong>Vendor data policies.</strong> Most teams have not read their AI provider's data retention and training policies. Some providers train on your queries by default. Some retain for 30 days, some for years. Know what you signed up for. Anthropic's, OpenAI's, and Google's policies are all public.</p>\n<p><strong>Sub-processor disclosure.</strong> GDPR already requires this; the AI Act extends it. If your agent uses an LLM, the LLM provider is a sub-processor. They have to be disclosed in your privacy policy and in your DPA with EU customers.</p>\n<p><strong>Cross-border data transfers.</strong> EU customer data sent to a US-based LLM API is a Schrems-relevant transfer. Standard Contractual Clauses are required. Some providers offer EU-hosted endpoints that simplify this.</p>\n<p><strong>Right to explanation.</strong> EU customers can demand to know why an automated system made a decision affecting them. \"The model decided\" is not an answer. Logging the reasoning trace is a soft prerequisite.</p>\n<h2 id=\"a-concrete-path-to-compliance\">A concrete path to compliance</h2>\n<p>Three actions that move the needle in May-July 2026, before the August deadline.</p>\n<p><strong>1. Document the data flow.</strong> Diagram every system the agent touches, every API it calls, every credential it holds. If you cannot draw it, you cannot defend it.</p>\n<p><strong>2. Identify your high-risk systems.</strong> Not every agent is high-risk. The Act has specific categories. Know which of yours qualify.</p>\n<p><strong>3. Implement HITL on every high-risk path.</strong> If the answer is \"the agent runs autonomously and we have logs,\" that is not enough. The Act requires intervention points by design, not after-the-fact monitoring.</p>\n<h2 id=\"what-this-connects-to\">What this connects to</h2>\n<p>Ethical autonomy is the layer above the technical patterns this site already covers. <a href=\"/blog/shadow-testing\">Shadow testing</a> is what you do before you ship. <a href=\"/blog/the-hitl-standard\">HITL</a> is the production discipline. <a href=\"/blog/below-the-waterline\">Below the waterline</a> is the engineering substrate. This post is the regulatory and ethical envelope all of those operate inside.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>The August 2026 deadline is real, the requirements are specific, and most US-headquartered teams shipping to EU customers are not ready. The good news is that the practices required for compliance are also the practices that produce reliable agents: HITL, shadow testing, scoped credentials, immutable audit, intervention points. The compliance investment doubles as engineering quality. The teams that have already built these patterns are months ahead. The teams that have not are about to spend the summer catching up.</p>",
+    "toc": [
+      {
+        "id": "the-deadline",
+        "text": "The deadline"
+      },
+      {
+        "id": "the-four-privacy-questions",
+        "text": "The four privacy questions"
+      },
+      {
+        "id": "the-security-layers-that-should-be-table-stakes",
+        "text": "The security layers that should be table stakes"
+      },
+      {
+        "id": "what-the-eu-ai-act-adds-on-top",
+        "text": "What the EU AI Act adds on top"
+      },
+      {
+        "id": "the-compliance-gap",
+        "text": "The compliance gap"
+      },
+      {
+        "id": "a-concrete-path-to-compliance",
+        "text": "A concrete path to compliance"
+      },
+      {
+        "id": "what-this-connects-to",
+        "text": "What this connects to"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
     "slug": "framework-for-builders",
     "frontmatter": {
       "title": "Framework for Builders",
       "slug": "framework-for-builders",
-      "publishedDate": "2026-05-25",
+      "publishedDate": "2026-04-17",
       "description": "The Framework 16 plus Strix Point is the 2026 gold standard for engineers who run their own AI infrastructure. Here is why, plus what Strix Halo changes.",
       "tags": [
         "hardware",
@@ -416,7 +520,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Local vs Cloud Inference: The 2026 Cost-Benefit",
       "slug": "local-vs-cloud-inference",
-      "publishedDate": "2026-05-26",
+      "publishedDate": "2026-04-18",
       "description": "Real numbers, real workloads, real break-even points. When local is the obvious answer, when cloud is, and the hybrid that wins for most teams.",
       "tags": [
         "economics",
@@ -471,7 +575,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Long-Term Memory for Agents",
       "slug": "long-term-memory-for-agents",
-      "publishedDate": "2026-05-14",
+      "publishedDate": "2026-05-01",
       "description": "Why agents forget by default, what the four types of memory actually are, and how to build a system that compounds across sessions.",
       "tags": [
         "memory",
@@ -526,7 +630,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "MCP 101: From Function Call to Driver Layer",
       "slug": "mcp-101",
-      "publishedDate": "2026-05-06",
+      "publishedDate": "2026-05-02",
       "description": "What the Model Context Protocol actually is, what it gets right, where it leaks, and why the local-first version is the cleaner story.",
       "tags": [
         "mcp",
@@ -582,7 +686,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Personal AI Agents on AMD",
       "slug": "personal-ai-agents-on-amd",
-      "publishedDate": "2026-05-13",
+      "publishedDate": "2026-04-24",
       "description": "The build, the OpenClaw config, and the first agent worth running. End to end on a Framework 16 with 96GB unified memory.",
       "tags": [
         "amd",
@@ -646,7 +750,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Reasoning Loops: Plan-and-Execute vs ReAct",
       "slug": "reasoning-loops",
-      "publishedDate": "2026-05-21",
+      "publishedDate": "2026-04-26",
       "description": "The two dominant agent reasoning patterns in 2026, what they get right, where each one fails, and how to know which to pick.",
       "tags": [
         "agents",
@@ -702,7 +806,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Scaling to $1M ARR With Two People",
       "slug": "scaling-to-1m-arr-with-2-people",
-      "publishedDate": "2026-05-16",
+      "publishedDate": "2026-04-25",
       "description": "Three real teams, real numbers, and the agentic operations stack that lets a duo run what used to need fifteen.",
       "tags": [
         "startups",
@@ -745,7 +849,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Self-Healing CI/CD",
       "slug": "self-healing-cicd",
-      "publishedDate": "2026-05-24",
+      "publishedDate": "2026-04-23",
       "description": "Agentic loops that detect, diagnose, and fix deployment errors before you see the notification. With the workflow that actually works in 2026.",
       "tags": [
         "devops",
@@ -801,7 +905,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Shadow Testing",
       "slug": "shadow-testing",
-      "publishedDate": "2026-05-09",
+      "publishedDate": "2026-05-04",
       "description": "The single highest-leverage decision when shipping mission-critical autonomous agents. Production is the only truth.",
       "tags": [
         "agents",
@@ -848,7 +952,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Swarm vs Monolith",
       "slug": "swarm-vs-monolith",
-      "publishedDate": "2026-05-08",
+      "publishedDate": "2026-05-04",
       "description": "Why five specialized $0.01 agents beat one $0.50 god model, and what the multi-agent crowd gets wrong about it.",
       "tags": [
         "agents",
@@ -895,7 +999,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "The 24/7 SDR",
       "slug": "the-24-7-sdr",
-      "publishedDate": "2026-05-17",
+      "publishedDate": "2026-04-20",
       "description": "A research-first outbound agent that scrapes news, LinkedIn, and financials before drafting an email. With the architecture, the prompts, and the guardrails.",
       "tags": [
         "sales",
@@ -943,11 +1047,71 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "the-4-legged-identity",
+    "frontmatter": {
+      "title": "The 4-Legged Identity Problem",
+      "slug": "the-4-legged-identity",
+      "publishedDate": "2026-05-05",
+      "description": "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway.",
+      "tags": [
+        "identity",
+        "oauth",
+        "agents",
+        "mcp",
+        "security"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> OAuth's three-legged flow (user, app, identity provider) was correct for a decade. Agentic systems break it because they introduce a fourth actor: the agent acting on the user's behalf. The downstream API sees the agent's credential, not the user's identity. <a href=\"https://datatracker.ietf.org/doc/html/rfc8693\">RFC 8693 (OAuth 2.0 Token Exchange)</a> is the standard fix. Most production agentic deployments in 2026 are not implementing it. This post is what breaks, what the right answer looks like, and why the OSS ecosystem is finally catching up.</p>\n<h2 id=\"the-triangle-that-worked\">The triangle that worked</h2>\n<p>Classical OAuth, the version that has shipped for ten years:</p>\n<pre><code>   ┌──────┐         ┌─────┐         ┌─────┐\n   │ User │ ─auth─→ │ App │ ─call─→ │ API │\n   └──────┘         └─────┘         └─────┘\n                       │\n                       ↓\n                   ┌──────┐\n                   │ IdP  │\n                   └──────┘\n</code></pre>\n<p>The user authorizes the app. The IdP issues a token representing the user. The app calls the API with that token. The API sees who is acting (the user) and what app is acting on their behalf. Audit trails are clean. Authorization is straightforward.</p>\n<p>Three actors. Three legs. Solved problem.</p>\n<h2 id=\"the-square-that-breaks-it\">The square that breaks it</h2>\n<p>Add an agent and an MCP server to the triangle and you get a square:</p>\n<pre><code>   ┌──────┐    ┌───────┐    ┌─────┐    ┌─────┐\n   │ User │ → │ Agent │ → │ MCP │ → │ API │\n   └──────┘    └───────┘    └─────┘    └─────┘\n</code></pre>\n<p>Suddenly the API has no idea who triggered the request. The MCP server is calling on behalf of an agent calling on behalf of a user. The auth header at the API only sees the MCP server's credentials. <strong>Identity is lost mid-chain.</strong></p>\n<p>Matthew Xu from Agentic Fabriq presented this exact framing at AI Dev SF on April 29. The problems multiply:</p>\n<ul>\n<li><strong>Over-permissioning.</strong> The MCP server has to hold credentials broad enough for any agent's user. So everyone's permissions effectively become the union of everyone's permissions.</li>\n<li><strong>Data leakage.</strong> A bug in one user's session can leak data because the credential is shared.</li>\n<li><strong>No audit trail.</strong> \"Who did this?\" has no answer at the API. The MCP did. Acting on behalf of an agent. Acting on behalf of a user. Three layers removed.</li>\n<li><strong>Federation explosion.</strong> Multiple IdPs, agent-to-agent calls, multiple MCP servers. The chain becomes a graph.</li>\n</ul>\n<h2 id=\"patterns-that-are-shipping-and-most-are-bad\">Patterns that are shipping (and most are bad)</h2>\n<p>Four patterns in production. Three are compromises. One is correct.</p>\n<p><strong>1. Non-delegating client credentials.</strong> App scraps user intent, MCP uses its own credentials. Works. User identity hidden from downstream APIs. Most common pattern in 2026 production. Wrong.</p>\n<p><strong>2. Pre-injected tokens.</strong> Agent fetches every downstream token upfront. Requires knowing all downstream APIs in advance. Impossible for agents that decide tools at runtime. Used when the target IdP does not support token exchange.</p>\n<p><strong>3. Out-of-band login.</strong> User authorizes every tool at every step. Extra browser tabs, session coordination, UX disaster. Used in some interactive flows. Not scalable.</p>\n<p><strong>4. Token exchange (RFC 8693).</strong> The conceptually correct answer. Exchange the user's inbound token for an upstream-scoped token at every hop. Downstream API sees user identity preserved across the chain.</p>\n<p>The right answer is universally understood. The implementation gap is what is keeping most teams on pattern 1.</p>\n<h2 id=\"how-rfc-8693-actually-works\">How RFC 8693 actually works</h2>\n<p><a href=\"https://datatracker.ietf.org/doc/html/rfc8693\">RFC 8693</a> defines token exchange. Two key claims:</p>\n<p><strong>Subject token.</strong> The mandatory input token representing the identity of the party on whose behalf the request is being made. The user's token, in the agentic case.</p>\n<p><strong>Actor token.</strong> An optional input token representing the identity of the acting party. The agent's token, or the MCP server's token. Used to embed the \"who is doing this\" alongside the \"for whom.\"</p>\n<p>The exchange flow:</p>\n<pre><code>Inbound request:\n  {user_token: &#x3C;bearer>, request: &#x3C;action>}\n       ↓\nToken exchange call to IdP:\n  POST /token\n  grant_type=urn:ietf:params:oauth:grant-type:token-exchange\n  subject_token=&#x3C;user_token>          ← who this is for\n  actor_token=&#x3C;mcp_credential>        ← who is acting\n  audience=&#x3C;downstream_api>           ← scope to this API\n       ↓\nResponse:\n  Audience-scoped token preserving user identity + actor \"act\" claim\n       ↓\nDownstream call to API:\n  Authorization: Bearer &#x3C;new_token>\n  → API sees: user X, acting via MCP Y\n</code></pre>\n<p>The downstream API now has the full picture. Audit logs are correct. Authorization decisions can be conditional on both user and acting agent.</p>\n<h2 id=\"idp-support-may-2026\">IdP support, May 2026</h2>\n<p>The painful part. Token exchange is a 2020 RFC and adoption is uneven.</p>\n<table>\n<thead>\n<tr>\n<th>IdP</th>\n<th>RFC 8693 support</th>\n<th>Notes</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Keycloak</td>\n<td>First-class</td>\n<td>Documented, supported, works.</td>\n</tr>\n<tr>\n<td>Authentik</td>\n<td>Yes</td>\n<td>Supported in 2026.x releases.</td>\n</tr>\n<tr>\n<td>ZITADEL</td>\n<td>First-class</td>\n<td><a href=\"https://zitadel.com/docs/guides/integrate/token-exchange\">Documented at zitadel.com</a>.</td>\n</tr>\n<tr>\n<td>IdentityServer</td>\n<td>Via TokenExchange package</td>\n<td><a href=\"https://github.com/RockSolidKnowledge/TokenExchange\">Open-source plugin</a>.</td>\n</tr>\n<tr>\n<td>Okta</td>\n<td>Via custom claims</td>\n<td>Workaround, not native.</td>\n</tr>\n<tr>\n<td>Microsoft Entra</td>\n<td>Limited / proprietary</td>\n<td>On-Behalf-Of flow exists; token exchange does not.</td>\n</tr>\n<tr>\n<td>Auth0</td>\n<td>Custom rules required</td>\n<td>Possible, not native.</td>\n</tr>\n<tr>\n<td>AWS Cognito</td>\n<td>No</td>\n<td>Not supported.</td>\n</tr>\n</tbody>\n</table>\n<p>The OSS IdPs lead. The big-vendor IdPs lag. If you are starting fresh in 2026 and care about agentic identity, Keycloak or ZITADEL is the right call.</p>\n<h2 id=\"the-mcp-angle\">The MCP angle</h2>\n<p>The MCP spec authors are aware of this problem. <a href=\"https://github.com/modelcontextprotocol/modelcontextprotocol/issues/214\">GitHub issue 214</a> tracks on-behalf-of token exchange for agent-to-agent communication. <a href=\"https://github.com/IBM/mcp-context-forge/issues/3385\">IBM's MCP Context Forge</a> is shipping the user-delegation pattern using RFC 8693. <a href=\"https://github.com/PrefectHQ/fastmcp/issues/1985\">PrefectHQ's FastMCP</a> is being asked to add native support.</p>\n<p>The pattern that is converging:</p>\n<ul>\n<li>MCP host issues user-scoped tokens to the MCP client</li>\n<li>MCP server receives and exchanges them for downstream-scoped tokens</li>\n<li>Each downstream API call carries the chain</li>\n<li>A broker layer handles the exchange, caches tokens, integrates with secrets management</li>\n</ul>\n<p>This is what shipping looks like in production. It is a quarter of work. It is also the difference between an agent that can ship to a regulated customer and one that cannot.</p>\n<h2 id=\"when-the-simple-version-is-ok\">When the simple version is OK</h2>\n<p>Honest list of when not to bother.</p>\n<p><strong>stdio-only local agents.</strong> The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a <a href=\"/blog/personal-ai-agents-on-amd\">single-machine local setup</a>.</p>\n<p><strong>Single-user dev tools.</strong> A coding agent that only ever runs as you, on your machine, against your own GitHub PAT, does not need token exchange. Your token is fine.</p>\n<p><strong>Internal-only tooling.</strong> A team-scoped agent that only operates inside your org with internal-IdP-issued tokens may not need the full exchange flow if your IdP can issue narrowly-scoped tokens directly.</p>\n<p><strong>Greenfield prototypes.</strong> Get the agent working first. Wire up identity correctly when you start handling real user data.</p>\n<h2 id=\"when-you-have-to-ship-the-real-thing\">When you have to ship the real thing</h2>\n<p>The categories that force RFC 8693 implementation:</p>\n<ul>\n<li><strong>Multi-tenant SaaS where customers' agents call each other's data.</strong> No way to do this with shared credentials.</li>\n<li><strong>Regulated industries (healthcare, finance, legal).</strong> Audit requirements force per-user identity preservation.</li>\n<li><strong>Cross-organization agentic workflows.</strong> When agent A from company X calls agent B from company Y, federation is required.</li>\n<li><strong>EU AI Act compliance.</strong> <a href=\"/blog/ethical-autonomy\">The August 2 2026 deadline</a> requires immutable audit lineage. Shared credentials cannot produce that.</li>\n</ul>\n<p>If any of these describe your product, plan for token exchange. Pick an IdP that supports it natively. Budget the engineering time.</p>\n<h2 id=\"what-this-connects-to\">What this connects to</h2>\n<p>This post is the deep version of the <a href=\"/blog/mcp-101\">4-legged identity section in MCP 101</a>. It pairs with <a href=\"/blog/below-the-waterline\">Below the Waterline</a>, where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in <a href=\"/blog/ethical-autonomy\">Ethical Autonomy</a> and the shadow-testing pattern in <a href=\"/blog/shadow-testing\">Shadow Testing</a>.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>OAuth was designed for three actors. Agentic systems have four. RFC 8693 token exchange is the right answer. Most teams are still on shared credentials because the OSS IdP support gap was real until recently. It is closing. If you are designing identity for an agentic system in 2026 and you skip the exchange pattern, you are designing a system that cannot ship to regulated customers and cannot pass an EU audit. Do it once correctly. Reuse it everywhere.</p>",
+    "toc": [
+      {
+        "id": "the-triangle-that-worked",
+        "text": "The triangle that worked"
+      },
+      {
+        "id": "the-square-that-breaks-it",
+        "text": "The square that breaks it"
+      },
+      {
+        "id": "patterns-that-are-shipping-and-most-are-bad",
+        "text": "Patterns that are shipping (and most are bad)"
+      },
+      {
+        "id": "how-rfc-8693-actually-works",
+        "text": "How RFC 8693 actually works"
+      },
+      {
+        "id": "idp-support-may-2026",
+        "text": "IdP support, May 2026"
+      },
+      {
+        "id": "the-mcp-angle",
+        "text": "The MCP angle"
+      },
+      {
+        "id": "when-the-simple-version-is-ok",
+        "text": "When the simple version is OK"
+      },
+      {
+        "id": "when-you-have-to-ship-the-real-thing",
+        "text": "When you have to ship the real thing"
+      },
+      {
+        "id": "what-this-connects-to",
+        "text": "What this connects to"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
     "slug": "the-40k-token-wall",
     "frontmatter": {
       "title": "The 40K Token Wall",
       "slug": "the-40k-token-wall",
-      "publishedDate": "2026-05-10",
+      "publishedDate": "2026-04-30",
       "description": "Why bigger context windows are not the answer, and what production-tuned engineers actually trust in 2026.",
       "tags": [
         "context-engineering",
@@ -990,7 +1154,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "The Agentic Audit",
       "slug": "the-agentic-audit",
-      "publishedDate": "2026-05-11",
+      "publishedDate": "2026-04-22",
       "description": "A framework for finding which 20% of your tasks are agent-ready before you write a line of code.",
       "tags": [
         "smb",
@@ -1046,7 +1210,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "The HITL Standard",
       "slug": "the-hitl-standard",
-      "publishedDate": "2026-05-19",
+      "publishedDate": "2026-05-05",
       "description": "Why human-in-the-loop is the only ethical and profitable way to scale agentic AI in a world of bot fatigue.",
       "tags": [
         "hitl",
@@ -1089,11 +1253,67 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "the-monorepo-advantage",
+    "frontmatter": {
+      "title": "The Monorepo Advantage",
+      "slug": "the-monorepo-advantage",
+      "publishedDate": "2026-04-27",
+      "description": "Why AI-native teams are deploying micro-SaaS apps from a single codebase, and how to architect a SaaS factory that compounds.",
+      "tags": [
+        "monorepo",
+        "saas",
+        "ai-native",
+        "architecture",
+        "turborepo"
+      ],
+      "draft": false
+    },
+    "html": "<p><strong>TL;DR.</strong> AI-native teams in 2026 are shipping multiple micro-SaaS products from a single monorepo because shared agents, shared infrastructure, and shared evals compound across products in a way that polyrepo architectures can not match. Nx now ships a <a href=\"https://nx.dev/\"><code>nx configure-ai-agents</code></a> command that installs CLAUDE.md, AGENTS.md, and an MCP server in one shot. Turborepo's content-aware caching means agent-driven changes ship in seconds. This post is the case for the SaaS-factory monorepo, when Turborepo wins, when Nx wins, and the failure modes I have hit running this pattern.</p>\n<h2 id=\"what-changed-in-2026\">What changed in 2026</h2>\n<p>The traditional argument against monorepos was cognitive load: large codebases overwhelm individual engineers who only need a small piece. That argument was strong when humans were doing the navigation. Coding agents do not have that constraint. Claude Code, Cursor, and Codex traverse a monorepo with the same fluency they traverse a small project. The cognitive-load argument inverted.</p>\n<p>What stayed true: shared infrastructure compounds. One auth layer. One billing module. One observability stack. One agent harness. When you ship the second product, you do not rebuild any of these. By the fifth product, the marginal cost of launching is hours, not weeks.</p>\n<p><a href=\"https://twitter.com/levelsio\">Pieter Levels</a> has been demonstrating this pattern for a decade. Five micro-SaaS apps, one PHP codebase, seven-figure compounding revenue. The 2026 version is the same pattern with TypeScript, Next.js, and AI agents.</p>\n<h2 id=\"the-case-for-the-saas-factory\">The case for the SaaS factory</h2>\n<p>Three structural advantages that compound for AI-native teams.</p>\n<p><strong>1. Agents need to read the whole graph.</strong> A coding agent fixing a bug in product A often needs context from shared module B. In a polyrepo, this requires switching repos, re-loading context, fighting with tool boundaries. In a monorepo, it is one navigation. <a href=\"https://nx.dev/\">Nx's Polygraph feature</a> creates a unified dependency graph so AI agents can coordinate changes across repos. The monorepo skips the problem entirely.</p>\n<p><strong>2. Shared evals and observability.</strong> The agent harness running product A's customer-support flow can share the eval suite with product B's. Same prompts, same traces, same regressions surfaced once. This is the <a href=\"/blog/below-the-waterline\">per-component eval pattern</a> at codebase scale.</p>\n<p><strong>3. One deploy pipeline.</strong> The CI/CD that ships product A also ships product B. The <a href=\"/blog/self-healing-cicd\">self-healing patterns</a> apply across all products. The infrastructure investment amortizes faster.</p>\n<p>The combination produces the SaaS-factory pattern: one codebase, shared infrastructure, multiple products. The marginal cost of product N is dramatically lower than product 1.</p>\n<h2 id=\"turborepo-vs-nx-in-2026\">Turborepo vs Nx in 2026</h2>\n<p>The two dominant tools have diverged. Pick based on team shape.</p>\n<p><strong>Turborepo</strong> wins when:</p>\n<ul>\n<li>Team is 1 to 10 engineers</li>\n<li>Stack is JavaScript / TypeScript first</li>\n<li>Priority is fast cached builds with minimal config</li>\n<li>Vercel deployment is the target</li>\n</ul>\n<p><a href=\"https://turbo.build/repo/docs\">Turborepo's content-aware hashing</a> re-runs only what changed and reuses cached outputs across machines. For a small AI-native team, the configuration-to-value ratio is excellent.</p>\n<p><strong>Nx</strong> wins when:</p>\n<ul>\n<li>Team is 30+ engineers, or planning to be</li>\n<li>Stack is multi-language (TypeScript + Python + Go)</li>\n<li>AI-agent integration is a first-class need</li>\n<li>Cross-repo coordination matters</li>\n</ul>\n<p>The 2026 differentiator is Nx's AI integration. <a href=\"https://nx.dev/docs/guides/adopting-nx/nx-vs-turborepo\">Nx Cloud's Polygraph</a> creates a synthetic monorepo across separate repos so AI agents see the unified graph without code movement. <code>nx configure-ai-agents</code> installs the MCP server, agent skills, and project memory files in one command.</p>\n<p>For a small AI-native team starting fresh, Turborepo is the right call. For a team scaling past 30 engineers or coordinating across multiple repos, Nx earns its complexity.</p>\n<h2 id=\"architecting-a-saas-factory\">Architecting a SaaS factory</h2>\n<p>A working monorepo I have shipped against, Turborepo-style:</p>\n<pre><code>apps/\n  product-a/        # Customer-facing SaaS A\n  product-b/        # Customer-facing SaaS B\n  product-c/        # Internal admin\n  marketing-site/   # Public marketing\npackages/\n  ui/               # Shared design system\n  auth/             # Shared auth (better-auth or similar)\n  billing/          # Shared Stripe + Lago\n  agents/           # Shared agent harness\n  evals/            # Shared eval suite\n  db/               # Shared Postgres + pgvector\n  ai/               # Shared model gateway\ninfra/\n  cloudflare/       # Worker bindings\n  hetzner/          # Self-hosted services\ndocs/\n  AGENTS.md         # Top-level agent rules\n</code></pre>\n<p>The pattern: anything reusable lives in <code>packages/</code>. Anything customer-facing lives in <code>apps/</code>. The agent harness, the eval suite, and the model gateway are all shared. Each product imports what it needs.</p>\n<p>A new product launch: clone the smallest existing product, change the brand and the routes, wire up the product-specific schema. Shared everything else. First deploy in hours, not weeks.</p>\n<h2 id=\"what-goes-wrong\">What goes wrong</h2>\n<p>Three failure modes I have hit. Pre-empt them.</p>\n<p><strong>Shared package thrashing.</strong> A change to <code>packages/ui</code> rebuilds every app that imports it. If three apps depend on UI and you make 10 UI changes a day, you have 30 rebuilds. Fix: aggressive caching (Turborepo or Nx remote cache) plus careful versioning of shared packages. Treat them like internal libraries, not free-for-all.</p>\n<p><strong>Hidden coupling.</strong> Shared modules drift toward special-casing. Product A needs a tweak in <code>auth</code>, gets it via a flag. Product B needs a different tweak, gets a different flag. Three flags later the auth module is unmaintainable. Fix: a hard rule that shared packages do not contain product-specific branches. If a feature is per-product, it lives in the product's own code.</p>\n<p><strong>Build-time blow-up.</strong> A naive monorepo builds everything on every commit. CI takes 20 minutes. Engineers stop running the full build. Fix: incremental builds (Turborepo handles this natively, Nx with task pipeline configured). Only build what changed.</p>\n<h2 id=\"the-agent-angle\">The agent angle</h2>\n<p>The pattern that compounds in 2026 specifically:</p>\n<ul>\n<li><strong>One AGENTS.md at the root.</strong> Universal rules. Architecture invariants. Taste rules.</li>\n<li><strong>Per-app AGENTS.md.</strong> Product-specific overrides. Stack quirks. Domain context.</li>\n<li><strong>Per-package SKILL.md.</strong> Reusable skills for shared modules (release process, schema migrations, eval runs).</li>\n</ul>\n<p>The agent reading the monorepo navigates this hierarchy the same way a senior engineer would. The constraints compose. The result: an agent that ships consistent code across products without re-explaining the rules each session.</p>\n<p>This pattern is what <a href=\"/blog/vibe-coding-for-founders\">authoring constraints</a> looks like at SaaS-factory scale. The senior engineer's job is the architecture documents. The agent's job is the implementation.</p>\n<h2 id=\"when-the-monorepo-is-wrong\">When the monorepo is wrong</h2>\n<p>Honest list.</p>\n<ul>\n<li><strong>Different runtime profiles.</strong> A real-time game server and a billing dashboard do not belong in the same monorepo. Different deploy targets, different latency profiles, different runtime stacks.</li>\n<li><strong>Genuinely separate teams with separate businesses.</strong> If product A and product B are run by different orgs that should not see each other's code, they are different repos. The monorepo argument is for shared teams, not just shared codebases.</li>\n<li><strong>Compliance boundaries.</strong> A SOC 2 boundary, a HIPAA boundary, or an FDA boundary often forces repo separation for audit. Worth checking before you commit to one repo.</li>\n</ul>\n<h2 id=\"where-this-connects\">Where this connects</h2>\n<p>A SaaS factory works because the <a href=\"/blog/personal-ai-agents-on-amd\">agent harness</a> reads across products. The <a href=\"/blog/shadow-testing\">shared eval suite</a> catches regressions before they ship. The <a href=\"/blog/self-healing-cicd\">self-healing CI/CD</a> applies the same recovery patterns across the whole graph. The <a href=\"/stack\">stack</a> is shared infrastructure (Postgres + pgvector, n8n, PostHog) running once and serving every product.</p>\n<p>The pattern is what enables <a href=\"/blog/scaling-to-1m-arr-with-2-people\">two-person teams to ship the work of fifteen</a>.</p>\n<h2 id=\"the-takeaway\">The takeaway</h2>\n<p>The monorepo argument flipped in 2026 because the cognitive-load critique only applied to humans navigating code. Agents do not have that limitation. The structural advantages (shared agents, shared evals, shared infrastructure, one deploy pipeline) compound for AI-native teams. Turborepo for fast builds at small scale. Nx for unified-graph AI integration at larger scale. Either choice is materially better than five separate repos for a team that is shipping multiple AI-driven products.</p>",
+    "toc": [
+      {
+        "id": "what-changed-in-2026",
+        "text": "What changed in 2026"
+      },
+      {
+        "id": "the-case-for-the-saas-factory",
+        "text": "The case for the SaaS factory"
+      },
+      {
+        "id": "turborepo-vs-nx-in-2026",
+        "text": "Turborepo vs Nx in 2026"
+      },
+      {
+        "id": "architecting-a-saas-factory",
+        "text": "Architecting a SaaS factory"
+      },
+      {
+        "id": "what-goes-wrong",
+        "text": "What goes wrong"
+      },
+      {
+        "id": "the-agent-angle",
+        "text": "The agent angle"
+      },
+      {
+        "id": "when-the-monorepo-is-wrong",
+        "text": "When the monorepo is wrong"
+      },
+      {
+        "id": "where-this-connects",
+        "text": "Where this connects"
+      },
+      {
+        "id": "the-takeaway",
+        "text": "The takeaway"
+      }
+    ]
+  },
+  {
     "slug": "the-zero-inbox-agent",
     "frontmatter": {
       "title": "The Zero-Inbox Agent",
       "slug": "the-zero-inbox-agent",
-      "publishedDate": "2026-05-15",
+      "publishedDate": "2026-04-19",
       "description": "Triage that does not just summarize. It prepares the drafts and fetches the data, and you approve. The 60-line config that actually works.",
       "tags": [
         "agents",
@@ -1157,7 +1377,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Token Budgeting for Startups",
       "slug": "token-budgeting-for-startups",
-      "publishedDate": "2026-05-07",
+      "publishedDate": "2026-05-02",
       "description": "The engineering math behind preventing an agentic loop from burning through your monthly runway in one night.",
       "tags": [
         "agents",
@@ -1208,7 +1428,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Vibe Coding for Founders",
       "slug": "vibe-coding-for-founders",
-      "publishedDate": "2026-05-05",
+      "publishedDate": "2026-04-29",
       "description": "How to lead a codebase by stating intent instead of writing syntax, and the discipline that keeps it from falling apart.",
       "tags": [
         "agents",
@@ -1259,7 +1479,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "Why Every Agent Needs a Simulation Sandbox",
       "slug": "why-every-agent-needs-a-simulation-sandbox",
-      "publishedDate": "2026-05-27",
+      "publishedDate": "2026-05-05",
       "description": "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one.",
       "tags": [
         "agents",

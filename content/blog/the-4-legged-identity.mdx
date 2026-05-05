@@ -1,0 +1,153 @@
+---
+title: "The 4-Legged Identity Problem"
+slug: the-4-legged-identity
+publishedDate: "2026-05-05"
+description: "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway."
+tags: ["identity", "oauth", "agents", "mcp", "security"]
+draft: false
+---
+
+**TL;DR.** OAuth's three-legged flow (user, app, identity provider) was correct for a decade. Agentic systems break it because they introduce a fourth actor: the agent acting on the user's behalf. The downstream API sees the agent's credential, not the user's identity. [RFC 8693 (OAuth 2.0 Token Exchange)](https://datatracker.ietf.org/doc/html/rfc8693) is the standard fix. Most production agentic deployments in 2026 are not implementing it. This post is what breaks, what the right answer looks like, and why the OSS ecosystem is finally catching up.
+
+## The triangle that worked
+
+Classical OAuth, the version that has shipped for ten years:
+
+```
+   ┌──────┐         ┌─────┐         ┌─────┐
+   │ User │ ─auth─→ │ App │ ─call─→ │ API │
+   └──────┘         └─────┘         └─────┘
+                       │
+                       ↓
+                   ┌──────┐
+                   │ IdP  │
+                   └──────┘
+```
+
+The user authorizes the app. The IdP issues a token representing the user. The app calls the API with that token. The API sees who is acting (the user) and what app is acting on their behalf. Audit trails are clean. Authorization is straightforward.
+
+Three actors. Three legs. Solved problem.
+
+## The square that breaks it
+
+Add an agent and an MCP server to the triangle and you get a square:
+
+```
+   ┌──────┐    ┌───────┐    ┌─────┐    ┌─────┐
+   │ User │ → │ Agent │ → │ MCP │ → │ API │
+   └──────┘    └───────┘    └─────┘    └─────┘
+```
+
+Suddenly the API has no idea who triggered the request. The MCP server is calling on behalf of an agent calling on behalf of a user. The auth header at the API only sees the MCP server's credentials. **Identity is lost mid-chain.**
+
+Matthew Xu from Agentic Fabriq presented this exact framing at AI Dev SF on April 29. The problems multiply:
+
+- **Over-permissioning.** The MCP server has to hold credentials broad enough for any agent's user. So everyone's permissions effectively become the union of everyone's permissions.
+- **Data leakage.** A bug in one user's session can leak data because the credential is shared.
+- **No audit trail.** "Who did this?" has no answer at the API. The MCP did. Acting on behalf of an agent. Acting on behalf of a user. Three layers removed.
+- **Federation explosion.** Multiple IdPs, agent-to-agent calls, multiple MCP servers. The chain becomes a graph.
+
+## Patterns that are shipping (and most are bad)
+
+Four patterns in production. Three are compromises. One is correct.
+
+**1. Non-delegating client credentials.** App scraps user intent, MCP uses its own credentials. Works. User identity hidden from downstream APIs. Most common pattern in 2026 production. Wrong.
+
+**2. Pre-injected tokens.** Agent fetches every downstream token upfront. Requires knowing all downstream APIs in advance. Impossible for agents that decide tools at runtime. Used when the target IdP does not support token exchange.
+
+**3. Out-of-band login.** User authorizes every tool at every step. Extra browser tabs, session coordination, UX disaster. Used in some interactive flows. Not scalable.
+
+**4. Token exchange (RFC 8693).** The conceptually correct answer. Exchange the user's inbound token for an upstream-scoped token at every hop. Downstream API sees user identity preserved across the chain.
+
+The right answer is universally understood. The implementation gap is what is keeping most teams on pattern 1.
+
+## How RFC 8693 actually works
+
+[RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) defines token exchange. Two key claims:
+
+**Subject token.** The mandatory input token representing the identity of the party on whose behalf the request is being made. The user's token, in the agentic case.
+
+**Actor token.** An optional input token representing the identity of the acting party. The agent's token, or the MCP server's token. Used to embed the "who is doing this" alongside the "for whom."
+
+The exchange flow:
+
+```
+Inbound request:
+  {user_token: <bearer>, request: <action>}
+       ↓
+Token exchange call to IdP:
+  POST /token
+  grant_type=urn:ietf:params:oauth:grant-type:token-exchange
+  subject_token=<user_token>          ← who this is for
+  actor_token=<mcp_credential>        ← who is acting
+  audience=<downstream_api>           ← scope to this API
+       ↓
+Response:
+  Audience-scoped token preserving user identity + actor "act" claim
+       ↓
+Downstream call to API:
+  Authorization: Bearer <new_token>
+  → API sees: user X, acting via MCP Y
+```
+
+The downstream API now has the full picture. Audit logs are correct. Authorization decisions can be conditional on both user and acting agent.
+
+## IdP support, May 2026
+
+The painful part. Token exchange is a 2020 RFC and adoption is uneven.
+
+| IdP                  | RFC 8693 support       | Notes                                  |
+|----------------------|------------------------|----------------------------------------|
+| Keycloak             | First-class            | Documented, supported, works.          |
+| Authentik            | Yes                    | Supported in 2026.x releases.          |
+| ZITADEL              | First-class            | [Documented at zitadel.com](https://zitadel.com/docs/guides/integrate/token-exchange). |
+| IdentityServer       | Via TokenExchange package | [Open-source plugin](https://github.com/RockSolidKnowledge/TokenExchange). |
+| Okta                 | Via custom claims      | Workaround, not native.                |
+| Microsoft Entra      | Limited / proprietary  | On-Behalf-Of flow exists; token exchange does not.|
+| Auth0                | Custom rules required  | Possible, not native.                  |
+| AWS Cognito          | No                     | Not supported.                         |
+
+The OSS IdPs lead. The big-vendor IdPs lag. If you are starting fresh in 2026 and care about agentic identity, Keycloak or ZITADEL is the right call.
+
+## The MCP angle
+
+The MCP spec authors are aware of this problem. [GitHub issue 214](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/214) tracks on-behalf-of token exchange for agent-to-agent communication. [IBM's MCP Context Forge](https://github.com/IBM/mcp-context-forge/issues/3385) is shipping the user-delegation pattern using RFC 8693. [PrefectHQ's FastMCP](https://github.com/PrefectHQ/fastmcp/issues/1985) is being asked to add native support.
+
+The pattern that is converging:
+- MCP host issues user-scoped tokens to the MCP client
+- MCP server receives and exchanges them for downstream-scoped tokens
+- Each downstream API call carries the chain
+- A broker layer handles the exchange, caches tokens, integrates with secrets management
+
+This is what shipping looks like in production. It is a quarter of work. It is also the difference between an agent that can ship to a regulated customer and one that cannot.
+
+## When the simple version is OK
+
+Honest list of when not to bother.
+
+**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/personal-ai-agents-on-amd).
+
+**Single-user dev tools.** A coding agent that only ever runs as you, on your machine, against your own GitHub PAT, does not need token exchange. Your token is fine.
+
+**Internal-only tooling.** A team-scoped agent that only operates inside your org with internal-IdP-issued tokens may not need the full exchange flow if your IdP can issue narrowly-scoped tokens directly.
+
+**Greenfield prototypes.** Get the agent working first. Wire up identity correctly when you start handling real user data.
+
+## When you have to ship the real thing
+
+The categories that force RFC 8693 implementation:
+
+- **Multi-tenant SaaS where customers' agents call each other's data.** No way to do this with shared credentials.
+- **Regulated industries (healthcare, finance, legal).** Audit requirements force per-user identity preservation.
+- **Cross-organization agentic workflows.** When agent A from company X calls agent B from company Y, federation is required.
+- **EU AI Act compliance.** [The August 2 2026 deadline](/blog/ethical-autonomy) requires immutable audit lineage. Shared credentials cannot produce that.
+
+If any of these describe your product, plan for token exchange. Pick an IdP that supports it natively. Budget the engineering time.
+
+## What this connects to
+
+This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/below-the-waterline), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/ethical-autonomy) and the shadow-testing pattern in [Shadow Testing](/blog/shadow-testing).
+
+## The takeaway
+
+OAuth was designed for three actors. Agentic systems have four. RFC 8693 token exchange is the right answer. Most teams are still on shared credentials because the OSS IdP support gap was real until recently. It is closing. If you are designing identity for an agentic system in 2026 and you skip the exchange pattern, you are designing a system that cannot ship to regulated customers and cannot pass an EU audit. Do it once correctly. Reuse it everywhere.

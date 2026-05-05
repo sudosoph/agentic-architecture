@@ -1,0 +1,95 @@
+---
+title: "Ethical Autonomy"
+slug: ethical-autonomy
+publishedDate: "2026-05-05"
+description: "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on."
+tags: ["ethics", "agents", "security", "privacy", "ai-act"]
+draft: false
+---
+
+**TL;DR.** The August 2 2026 EU AI Act deadline for high-risk agentic systems is real and the [Digital Omnibus trilogue failed to delay it on April 28](https://www.kennedyslaw.com/en/thought-leadership/article/2026/the-eu-ai-act-implementation-timeline-understanding-the-next-deadline-for-compliance/). Most teams have not internalized what compliance actually requires. This post is a working framework for ethical autonomy in 2026: the four privacy questions to ask before any agent gets a credential, the security layers that should be table stakes, and what the EU AI Act actually requires you to ship.
+
+## The deadline
+
+[The 2 August 2026 deadline](https://www.hklaw.com/en/insights/publications/2026/04/us-companies-face-eu-ai-acts-possible-august-2026-compliance-deadline) applies to any AI system classified as high-risk that operates in the EU or serves EU nationals. Agents that move money, access health data, make hiring decisions, or run critical infrastructure are all in scope.
+
+The [Digital Omnibus trilogue on 28 April 2026 failed](https://www.modulos.ai/blog/is-the-eu-ai-act-delayed/) to push the deadline back. A delay is still possible but no longer the default. Plan for the August date.
+
+What compliance actually requires for autonomous agents:
+- Technical documentation covering decision logic
+- Open-loop architecture preventing isolated operation
+- Structured human oversight with clear intervention points
+- Control mechanisms that allow the system to be stopped or corrected
+- Safeguards against prohibited practices (manipulation, exploitation of vulnerabilities)
+
+US teams shipping to EU customers are subject to the same rules. Geographic location of the team does not exempt the product.
+
+## The four privacy questions
+
+Before any agent gets a credential to a system, four questions. If the answer to any is "we have not thought about it," the agent does not get the credential.
+
+**1. What data does the agent see, and where does it go?** A coding agent on a metered API sends every line of your code to the API provider. Their data-retention policy is your data-retention policy. Most teams do not know what their vendor's policy is. Read it.
+
+**2. What can the agent do with what it sees?** Read-only and read-write are different threat models. Default to read-only. Promote to write only after the agent has been validated against the specific write actions in [shadow mode](/blog/shadow-testing).
+
+**3. Who can the agent contact externally?** A network-restricted agent can write all the code it wants and exfiltrate exactly nothing. The [lethal trifecta attack](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) (private data, untrusted content, exfiltration capability) only works if all three legs exist. Cut the network leg by default.
+
+**4. Who is accountable when the agent gets it wrong?** A fully autonomous agent has no one. A [human-in-the-loop agent](/blog/the-hitl-standard) has a clear answer: the human approved the wrong thing, the human is responsible. Accountability collapse is the structural reason regulated industries require HITL.
+
+## The security layers that should be table stakes
+
+Five things that should be in every production agentic system in 2026. Most are not.
+
+**Sandboxing by default.** Tushar Jain from Docker showed at AI Dev SF the per-agent MicroVM pattern: hard security boundary, FS and network control, scoped credentials. `docker/cagent` is the OSS baseline. The blast radius of a compromised agent is the sandbox, not the host.
+
+**Scoped credentials, not god-mode keys.** Static API keys that grant the agent everything its role can do are the default and the wrong default. Issue narrow-scope tokens per task. Rotate on every session. Treat credentials like nuclear material.
+
+**Token exchange for downstream calls.** Anything that calls APIs on a user's behalf needs [RFC 8693 token exchange](/blog/the-4-legged-identity) so the API sees the user identity, not the agent's credential. This is the core of the 4-legged identity problem.
+
+**Immutable audit lineage.** Every agent action, who triggered it, what credentials were used, what downstream system was touched, what the agent's reasoning was. Without this, the agent is unauditable and unauthorisable for regulated use.
+
+**Eviction by policy.** Agents should not retain context indefinitely. Memory has a lifecycle. The [four-type memory model](/blog/long-term-memory-for-agents) includes eviction as a first-class concern, not an afterthought.
+
+## What the EU AI Act adds on top
+
+For high-risk systems, the AI Act layers additional requirements that most US teams are not designing for:
+
+**Technical documentation.** A complete description of the agent's capabilities, limitations, training data sources, and decision logic. Auditors get a copy. It has to be accurate. "We use a frontier model" is not a description.
+
+**Open-loop architecture.** The agent cannot run as a closed loop. There must be intervention points where a human can stop, redirect, or correct it. This is the [HITL standard](/blog/the-hitl-standard) made into law.
+
+**Conformity assessment.** Some high-risk systems require third-party conformity assessment before going to market. Plan for the audit cycle.
+
+**Post-market monitoring.** Once deployed, the agent's behavior in production has to be continuously monitored for drift. You need to be able to demonstrate ongoing compliance, not just initial certification.
+
+**Logging.** Every interaction has to be logged in a way that allows reconstruction of what happened and why. Retention periods are specified by use case.
+
+## The compliance gap
+
+Be specific about where most teams are unready.
+
+**Vendor data policies.** Most teams have not read their AI provider's data retention and training policies. Some providers train on your queries by default. Some retain for 30 days, some for years. Know what you signed up for. Anthropic's, OpenAI's, and Google's policies are all public.
+
+**Sub-processor disclosure.** GDPR already requires this; the AI Act extends it. If your agent uses an LLM, the LLM provider is a sub-processor. They have to be disclosed in your privacy policy and in your DPA with EU customers.
+
+**Cross-border data transfers.** EU customer data sent to a US-based LLM API is a Schrems-relevant transfer. Standard Contractual Clauses are required. Some providers offer EU-hosted endpoints that simplify this.
+
+**Right to explanation.** EU customers can demand to know why an automated system made a decision affecting them. "The model decided" is not an answer. Logging the reasoning trace is a soft prerequisite.
+
+## A concrete path to compliance
+
+Three actions that move the needle in May-July 2026, before the August deadline.
+
+**1. Document the data flow.** Diagram every system the agent touches, every API it calls, every credential it holds. If you cannot draw it, you cannot defend it.
+
+**2. Identify your high-risk systems.** Not every agent is high-risk. The Act has specific categories. Know which of yours qualify.
+
+**3. Implement HITL on every high-risk path.** If the answer is "the agent runs autonomously and we have logs," that is not enough. The Act requires intervention points by design, not after-the-fact monitoring.
+
+## What this connects to
+
+Ethical autonomy is the layer above the technical patterns this site already covers. [Shadow testing](/blog/shadow-testing) is what you do before you ship. [HITL](/blog/the-hitl-standard) is the production discipline. [Below the waterline](/blog/below-the-waterline) is the engineering substrate. This post is the regulatory and ethical envelope all of those operate inside.
+
+## The takeaway
+
+The August 2026 deadline is real, the requirements are specific, and most US-headquartered teams shipping to EU customers are not ready. The good news is that the practices required for compliance are also the practices that produce reliable agents: HITL, shadow testing, scoped credentials, immutable audit, intervention points. The compliance investment doubles as engineering quality. The teams that have already built these patterns are months ahead. The teams that have not are about to spend the summer catching up.
