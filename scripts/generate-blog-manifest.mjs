@@ -10,6 +10,7 @@ import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkMdx from 'remark-mdx'
 import remarkRehype from 'remark-rehype'
+import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -45,12 +46,21 @@ const processor = unified()
   .use(remarkGfm)
   .use(remarkMdx)
   .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeSlug)
   .use(rehypeStringify, { allowDangerousHtml: true })
 
 async function mdxToHtml(content) {
   const stripped = content.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
   const file = await processor.process(stripped)
   return String(file)
+}
+
+function extractToc(html) {
+  const matches = [...html.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)]
+  return matches.map(([, id, inner]) => ({
+    id,
+    text: inner.replace(/<[^>]+>/g, '').trim(),
+  }))
 }
 
 const files = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.mdx'))
@@ -60,7 +70,8 @@ const posts = await Promise.all(
     const raw = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf-8')
     const { data, content } = parseFrontmatter(raw)
     const html = await mdxToHtml(content)
-    return { slug, frontmatter: data, html }
+    const toc = extractToc(html)
+    return { slug, frontmatter: data, html, toc }
   })
 )
 
@@ -68,7 +79,12 @@ const json = JSON.stringify(posts, null, 2)
 const code = `// AUTO-GENERATED — do not edit manually; regenerated on every build via scripts/generate-blog-manifest.mjs
 import type { PostFrontmatter } from './mdx'
 
-export const blogPosts: Array<{ slug: string; frontmatter: PostFrontmatter; html: string }> = ${json}
+export const blogPosts: Array<{
+  slug: string
+  frontmatter: PostFrontmatter
+  html: string
+  toc: { id: string; text: string }[]
+}> = ${json}
 `
 
 fs.writeFileSync(OUT_FILE, code)

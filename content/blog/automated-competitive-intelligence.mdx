@@ -1,0 +1,150 @@
+---
+title: "Automated Competitive Intelligence"
+slug: automated-competitive-intelligence
+publishedDate: "2026-05-20"
+description: "Using Apify, Firecrawl, and a local model to monitor every move your competitors make in real time. With the architecture and the weekly digest format that actually gets read."
+tags: ["competitive-intel", "agents", "apify", "firecrawl", "monitoring"]
+draft: false
+---
+
+**TL;DR.** The competitive intelligence playbook of 2024 was a junior PM with a Google Alerts inbox. The 2026 version is a small agent that pulls competitor changelogs, pricing pages, social posts, hiring activity, and product releases on a daily schedule, deduplicates the signal, and delivers a single weekly digest worth opening. It costs electricity to run, surfaces the things that actually matter, and the founders who built it during 2025 are running rings around the ones still on Google Alerts. Here is the architecture.
+
+## What the old version got wrong
+
+Google Alerts and its descendants (Mention, Brand24, Awario) sent volume. A startup tracking five competitors got 50-200 notifications a day. Most were noise: blog posts that mentioned the company in passing, recycled press releases, social posts about unrelated namespaces. The real signal (a pricing change, a stack rewrite, a key hire, a product launch) drowned in the noise.
+
+The fix is not better filters. The fix is having the agent *read each thing* and decide whether it matters. LLMs in 2026 do this reliably enough on a four-class problem that the old volume-driven pattern is obsolete.
+
+## What actually matters
+
+Five categories of competitor activity worth tracking. Everything else is noise.
+
+| Category              | What you watch                              | Frequency to check |
+|-----------------------|---------------------------------------------|-------------------|
+| Pricing changes       | Pricing page diffs                          | Daily             |
+| Product launches      | Changelog, release notes, blog posts        | Daily             |
+| Hiring signals        | Careers page, LinkedIn job posts            | Weekly            |
+| Funding events        | Press releases, Crunchbase, filings         | Weekly            |
+| Strategic positioning | Homepage messaging, dev docs, demo content  | Monthly           |
+
+The frequencies match the rate of actual change. Pricing pages are the highest-leverage category because they update frequently and tell you the most about positioning. Strategic-positioning changes are the lowest-leverage signal day-to-day but the highest-leverage signal in retrospect (a competitor pivoting their homepage messaging is leading the pivot).
+
+## The architecture
+
+Three stages, all running locally on a Framework 16 plus a small Hetzner box for the cron jobs.
+
+```
+[Stage 1] Schedulers (n8n cron flows)
+   - Daily: pricing pages, changelogs, blog feeds
+   - Weekly: careers pages, LinkedIn job listings, funding databases
+   - Monthly: homepage / docs / positioning content
+
+[Stage 2] Crawl + diff
+   - Apify MCP server: structured scraping
+   - Firecrawl: deep crawls of multi-page resources
+   - Stored as dated snapshots in Postgres
+   - Diff computed against last snapshot
+
+[Stage 3] Classifier + summarizer (local model: Qwen 3.6 27B)
+   - Classifies each diff into one of five categories
+   - Summarizes the diff in one sentence
+   - Scores it for signal strength (0-3)
+   - Stores in the weekly digest queue
+
+[Stage 4] Weekly digest generator
+   - Runs Sunday evening
+   - Filters to signal score >= 2
+   - Produces a single markdown email
+   - Sent via Listmonk to a private list (just me, mostly)
+```
+
+Four stages, two human-readable outputs (the daily Slack alerts for high-signal events, the weekly digest), one digest worth opening.
+
+## The classifier prompt
+
+The classifier prompt is the load-bearing piece. It decides what to surface and what to ignore.
+
+```
+You are a competitive intelligence classifier.
+
+Given a diff between two snapshots of a competitor's website, output:
+{
+  "category": one of [pricing, product_launch, hiring, funding, positioning, noise],
+  "summary": one-sentence neutral description of what changed,
+  "signal_strength": 0 (noise), 1 (worth knowing), 2 (worth a digest entry), 3 (worth a Slack alert)
+}
+
+Decision rules:
+- "noise" includes: typo fixes, image swaps, logo changes, navigation reordering, copy polishing
+- "noise" gets signal_strength 0
+- Pricing changes are at minimum signal_strength 2
+- Product launches with named new features are signal_strength 3
+- Hiring signals are signal_strength 1 unless 5+ senior roles posted in one week (then 2)
+- Anything ambiguous: prefer the lower score
+```
+
+The signal-strength scale is non-negotiable. Without it the agent will surface everything it sees and you are back to Google Alerts. The hard cutoff at signal_strength >= 2 for the digest is what makes the digest readable.
+
+## The diff approach
+
+Stage 2 is where most teams over-engineer. The simple version that works: store the entire HTML of the page in Postgres on every crawl, with a timestamp. Diff against the previous snapshot using HTML-aware diff (`htmldiff` or similar). Pass the diff to the classifier with the URL, the previous snapshot timestamp, and the current snapshot timestamp.
+
+Two refinements worth adding:
+
+**Selector-scoped diffs.** A pricing page has a `.pricing-table` selector. Scope the diff to that selector instead of the whole page. Filters out cookie banners, A/B test variations, and other non-meaningful changes.
+
+**Visual diff for design-heavy changes.** When messaging changes shape (homepage hero, new section blocks, brand refresh), text diffs miss it. A monthly screenshot diff with a vision model (DeepSeek V4 Lite handles this well) catches what the text diff drops.
+
+Neither refinement is required to start. The basic HTML diff plus the classifier handles 80% of the value. Add complexity only when you hit specific gaps.
+
+## What the weekly digest looks like
+
+The format that actually gets read, after iterating on it for two months:
+
+```
+# Competitive digest, week of May 13, 2026
+
+## Pricing (2)
+- **Vendor A** dropped enterprise tier from $999/mo to $749/mo on May 10.
+  Removed the seat-based add-on. [snapshot diff]
+- **Vendor B** added a new $19/mo solo tier on May 12, distinct from the
+  existing $49 starter. [snapshot diff]
+
+## Product launches (1)
+- **Vendor C** shipped a new "AI agents" feature on May 11. Demo video
+  shows tool calling and a marketplace. Direct overlap with our roadmap.
+  [release notes]
+
+## Hiring (1)
+- **Vendor A** posted 7 backend engineering roles in the last 7 days,
+  4 of them senior. Either ramping for a launch or replacing a team.
+  [careers page diff]
+
+## Other items in the noise floor: 47
+
+[link to full noise log]
+```
+
+Five real signal items. One link to the noise log if curious. Read time: under five minutes. The previous (manual) version of this took a junior PM 6-8 hours per week and missed half of what mattered.
+
+## What goes wrong
+
+Three failure modes.
+
+**Cookie banners and CSP popups.** Half of all crawled pages now have AI-generated cookie banners that change wording every week. Filter these aggressively in stage 2 before the diff hits the classifier. Otherwise the classifier wastes tokens explaining that "the cookie banner now says 'OK' instead of 'Accept'."
+
+**Bot detection.** Apify and Firecrawl handle most of this, but some competitors detect aggressive crawling and start serving you dummy pages. If your daily diff is suspiciously empty, hand-check from a different IP. The fix is rotating proxies (Apify supports this) or backing off to weekly cadence on the affected target.
+
+**Classifier drift.** After three months, the classifier starts marking things as noise that should be signal because the same edit pattern repeats. Re-baseline the prompt quarterly. Add new examples of edge cases that snuck through.
+
+## Why local-first matters here
+
+This agent reads competitor data, stores their pricing history, and tracks their hiring patterns. None of that is illegal but all of it is sensitive. Cloud-only setups send every classification call to a third-party LLM. If the third-party LLM is run by a company that is also run by an investor in your competitor, you have a problem. (This is not hypothetical. The investor concentration in AI is real.)
+
+Running classification locally on Qwen 3.6 27B means the queries never leave your machine. Your competitor-tracking strategy is your competitor-tracking strategy, not a feature in some LLM provider's product roadmap.
+
+The cost angle is real but secondary. A daily classification run on Sonnet costs $5-10. Weekly across five competitors is $50-100/month. On hardware you own, the same volume is electricity. The privacy angle is what actually decides this.
+
+## The takeaway
+
+Competitive intelligence in 2026 is a small agent reading the web on a schedule, classifying what matters, and delivering a digest worth opening. Build it once. Maintain the prompt quarterly. Read the digest on Sunday evening. The competitors who are still on Google Alerts are sending email volume. The competitors who built this two quarters ago are taking their lunch.

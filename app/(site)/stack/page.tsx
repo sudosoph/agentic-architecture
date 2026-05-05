@@ -176,7 +176,21 @@ const BIZOPS = [
   { name: 'Outline (self-hosted)', note: 'Team knowledge base. Notion alternative. Stores skills, runbooks, and the docs the coding agents read alongside the codebase.' },
 ]
 
+const LAYER_NAV = [
+  { id: 'l0', label: 'L0', title: 'Hardware' },
+  { id: 'l1', label: 'L1', title: 'OS' },
+  { id: 'l2', label: 'L2', title: 'Inference' },
+  { id: 'l3', label: 'L3', title: 'Data' },
+  { id: 'l4', label: 'L4', title: 'Orchestration' },
+  { id: 'l5', label: 'L5', title: 'Coding agents' },
+  { id: 'l6', label: 'L6', title: 'Models (local)' },
+  { id: 'l7', label: 'L7', title: 'Frontier APIs' },
+  { id: 'l8', label: 'L8', title: 'Web stack' },
+  { id: 'l9', label: 'L9', title: 'Bizops & comms' },
+]
+
 function Section({
+  id,
   label,
   title,
   desc,
@@ -184,6 +198,7 @@ function Section({
   badge,
   cols = 2,
 }: {
+  id?: string
   label?: string
   title: string
   desc?: string
@@ -193,7 +208,7 @@ function Section({
 }) {
   const gridCols = cols === 1 ? 'grid-cols-1' : cols === 2 ? 'md:grid-cols-2' : cols === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'
   return (
-    <section className="border-t border-border pt-10">
+    <section id={id} className="border-t border-border pt-10 scroll-mt-20">
       <div className="flex items-center justify-between mb-2">
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
           {label && <span className="text-bench mr-2">{label}</span>}
@@ -217,15 +232,33 @@ function Section({
 
 export default function StackPage() {
   return (
-    <div className="space-y-2">
+    <div className="lg:grid lg:grid-cols-[1fr_180px] lg:gap-12">
+      <div className="min-w-0 space-y-2">
       <PageHeader
         title="stack"
         meta="May 2026 · subject to drift"
         description="The exact hardware, AI tooling, open-weight models, and web stack I run. Reproducible, auditable, local-first wherever local-first works."
       />
 
+      {/* Mobile jump nav */}
+      <details className="lg:hidden mt-6 border border-border bg-surface p-4">
+        <summary className="font-mono text-xs text-muted uppercase tracking-widest cursor-pointer">
+          Jump to layer
+        </summary>
+        <ul className="mt-3 grid grid-cols-2 gap-1.5">
+          {LAYER_NAV.map(({ id, label, title }) => (
+            <li key={id}>
+              <a href={`#${id}`} className="font-mono text-xs text-muted hover:text-accent">
+                <span className="text-bench mr-1">{label}</span>
+                {title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+
       {/* Hardware */}
-      <section className="pt-6">
+      <section id="l0" className="pt-6 scroll-mt-20">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
             <span className="text-bench mr-2">L0</span>
@@ -247,7 +280,7 @@ export default function StackPage() {
       </section>
 
       {/* OS */}
-      <section className="border-t border-border pt-10">
+      <section id="l1" className="border-t border-border pt-10 scroll-mt-20">
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
           <span className="text-bench mr-2">L1</span>
           OS
@@ -263,6 +296,7 @@ export default function StackPage() {
       </section>
 
       <Section
+        id="l2"
         label="L2"
         title="Inference (GPU + model serving)"
         items={INFERENCE}
@@ -270,14 +304,16 @@ export default function StackPage() {
       />
 
       <Section
+        id="l3"
         label="L3"
         title="Data — ingest, validate, store, retrieve"
-        desc="The full data path: get it in (Apify), shape it (Pydantic), store it where it belongs (vector, graph, relational)."
+        desc="The full data path: get it in (Apify), parse documents (LlamaIndex), shape and validate (Pydantic), store it where it belongs (Chroma for vectors, Neo4j for graph, Postgres for everything else)."
         items={DATA_LAYER}
         cols={2}
       />
 
       <Section
+        id="l4"
         label="L4"
         title="Orchestration"
         desc="Workflow runtimes that turn a one-off prompt into a recurring, governed, durable system."
@@ -286,6 +322,7 @@ export default function StackPage() {
       />
 
       <Section
+        id="l5"
         label="L5"
         title="Coding agents"
         desc="The daily harnesses I rotate through. Different strengths, same project memory file."
@@ -294,7 +331,7 @@ export default function StackPage() {
       />
 
       {/* Models I run locally */}
-      <section className="border-t border-border pt-10">
+      <section id="l6" className="border-t border-border pt-10 scroll-mt-20">
         <div className="flex items-center justify-between mb-2">
           <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
             <span className="text-bench mr-2">L6</span>
@@ -317,7 +354,7 @@ export default function StackPage() {
       </section>
 
       {/* Frontier APIs */}
-      <section className="border-t border-border pt-10">
+      <section id="l7" className="border-t border-border pt-10 scroll-mt-20">
         <div className="flex items-center justify-between mb-2">
           <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
             <span className="text-bench mr-2">L7</span>
@@ -340,6 +377,7 @@ export default function StackPage() {
       </section>
 
       <Section
+        id="l8"
         label="L8"
         title="Web stack"
         desc="The framework, deployment, and CMS the site runs on. Picked because every coding agent has read enough of these to be genuinely useful in them."
@@ -348,6 +386,7 @@ export default function StackPage() {
       />
 
       <Section
+        id="l9"
         label="L9"
         title="Bizops & comms"
         desc="The SaaS replacements that run the business. Mostly self-hosted, mostly open-source. Replaces ~$1,800/month of managed alternatives at the cost of a $5/month VPS."
@@ -375,6 +414,29 @@ export default function StackPage() {
           <span className="font-mono text-fg">solo-stack</span>.
         </p>
       </section>
+      </div>
+
+      {/* Desktop sticky layer nav */}
+      <aside className="hidden lg:block">
+        <div className="sticky top-24">
+          <p className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
+            Layers
+          </p>
+          <ul className="space-y-2 border-l border-border">
+            {LAYER_NAV.map(({ id, label, title }) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  className="block pl-4 -ml-px border-l border-transparent hover:border-accent font-mono text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
+                >
+                  <span className="text-bench mr-2">{label}</span>
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
     </div>
   )
 }

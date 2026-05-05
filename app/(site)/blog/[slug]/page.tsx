@@ -49,6 +49,8 @@ export default async function BlogPostPage({ params }: Props) {
     },
   }
 
+  const showToc = post.toc.length >= 3
+
   return (
     <>
       <script
@@ -57,22 +59,72 @@ export default async function BlogPostPage({ params }: Props) {
           __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
         }}
       />
-      <article>
-        <PageHeader
-          title={post.frontmatter.title}
-          meta={dateFormatted}
-          description={post.frontmatter.description}
-        />
-        {post.frontmatter.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-4">
-            {post.frontmatter.tags.map(tag => (
-              <Badge key={tag} variant="tag">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+      <article className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
+        <div className="min-w-0">
+          <PageHeader
+            title={post.frontmatter.title}
+            meta={dateFormatted}
+            description={post.frontmatter.description}
+          />
+          {post.frontmatter.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-4">
+              {post.frontmatter.tags.map(tag => (
+                <Badge key={tag} variant="tag">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          {/* Mobile TOC */}
+          {showToc && (
+            <details className="lg:hidden mt-8 border border-border bg-surface p-4">
+              <summary className="font-mono text-xs text-muted uppercase tracking-widest cursor-pointer">
+                Contents ({post.toc.length})
+              </summary>
+              <ul className="mt-3 space-y-1.5">
+                {post.toc.map(item => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className="font-mono text-xs text-muted hover:text-accent leading-snug"
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+
+          <div
+            className="prose mt-10"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+        </div>
+
+        {/* Desktop sticky TOC */}
+        {showToc && (
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <p className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
+                Contents
+              </p>
+              <ul className="space-y-2 border-l border-border">
+                {post.toc.map(item => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className="block pl-4 -ml-px border-l border-transparent hover:border-accent font-mono text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         )}
-        <div className="prose mt-10" dangerouslySetInnerHTML={{ __html: post.html }} />
       </article>
     </>
   )
