@@ -191,7 +191,7 @@ export const blogPosts: Array<{
     "frontmatter": {
       "title": "AI Dev SF: 10 Takeaways",
       "slug": "ai-dev-sf-takeaways",
-      "publishedDate": "2026-04-30",
+      "publishedDate": "2026-05-05",
       "description": "The 10 things from AI Dev 26 SF (April 28-29, Pier 48) that are actually load-bearing if you build agentic systems in 2026. Marc Brooker on defects, Andrew Ng on PM bottlenecks, Bain's 8-subgraph payroll system, the 4-legged identity, hybrid doc OCR, and the simulation sandbox every action-taking agent needs.",
       "tags": [
         "agents",
