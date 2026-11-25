@@ -42,6 +42,15 @@ describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', (
     expect(post!.html).toContain('= 19')
   })
 
+  it('keeps agent-ready-tasks consequence scale additive and aligned with starter-kit', () => {
+    const post = getPost('agent-ready-tasks')
+    expect(post).not.toBeNull()
+    expect(post!.html).not.toContain('6 − consequence')
+    expect(post!.html).not.toContain('6 - consequence')
+    expect(post!.html).not.toContain('consequence 1 (internal brief only')
+    expect(post!.html).toContain('consequence 5')
+  })
+
   it('returns null for nonexistent post slug', () => {
     expect(getPost('does-not-exist-anywhere')).toBeNull()
   })

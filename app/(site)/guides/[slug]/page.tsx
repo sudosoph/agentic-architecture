@@ -37,6 +37,7 @@ export default async function GuidePage({ params }: Props) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   })
 
   const jsonLd = {

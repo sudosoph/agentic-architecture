@@ -80,12 +80,12 @@ export function RoiCalculator() {
           <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border">
             <div>
               <p className="text-xs text-muted">Monthly capacity value</p>
-              <p className="text-lg font-bold text-fg">${monthlyValueSaved.toLocaleString()}</p>
+              <p className="text-lg font-bold text-fg">${monthlyValueSaved.toLocaleString('en-US')}</p>
             </div>
             <div>
               <p className="text-xs text-muted">Annualized impact</p>
               <p className="text-lg font-bold text-emerald-700">
-                ${annualValueSaved.toLocaleString()}/yr
+                ${annualValueSaved.toLocaleString('en-US')}/yr
               </p>
             </div>
           </div>

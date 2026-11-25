@@ -132,10 +132,19 @@ function applyPostSpecificFixes(slug, body) {
   let out = body
 
   if (slug === 'agent-ready-tasks') {
-    out = out.replace(
-      /Total: `\(4 × 2\) \+ 2 \+ \(6 [−-] 3\) \+ 2 = 15`\. Borderline\.[\s\S]*?Keep the human on send\./,
-      'Total: `(4 × 2) + 2 + (6 - 3) + 2 = 15`. Borderline as a single end-to-end agent.\n\nNow decompose that workflow into two separate steps: **Prospect Research Dossier** and **Outbound Send**. Scored on its own, the **Prospect Research Dossier** step has volume 4, bounded variability 4 (repeatable five-field company snapshot), consequence 1 (internal brief only, zero external relationship risk, so `6 - 1 = 5`), and structured signal 2: `(4 × 2) + 4 + 5 + 2 = 19`. Decomposing moves the research step cleanly from `15` (Borderline) to `19` (**Ship with HITL**). Automate the research dossier today, and keep a human click on the send.',
-    )
+    out = out
+      .replace(
+        'agent_readiness = (volume × 2) + variability + (6 − consequence) + structured_signal',
+        'agent_readiness = (volume × 2) + variability + consequence + structured_signal',
+      )
+      .replace(
+        '- Consequence is *inverted* (`6 − consequence`). Lower consequence is better for early agents.',
+        '- Consequence is scored for safety (`1` = catastrophic if wrong, `5` = internal draft / nobody notices), so lower-risk tasks earn higher readiness points directly.',
+      )
+      .replace(
+        /Total: `\(4 × 2\) \+ (?:2 \+ \(6 [−-] 3\)|2 \+ 3) \+ 2 = 15`\.[\s\S]*?keep a human click on the send\.|Total: `\(4 × 2\) \+ 2 \+ \(6 [−-] 3\) \+ 2 = 15`\. Borderline\.[\s\S]*?Keep the human on send\./,
+        'Total: `(4 × 2) + 2 + 3 + 2 = 15`. Borderline as a single end-to-end agent.\n\nNow decompose that workflow into two separate steps: **Prospect Research Dossier** and **Outbound Send**. Scored on its own, the **Prospect Research Dossier** step has volume 4, bounded variability 4 (repeatable five-field company snapshot), consequence 5 (internal brief only, zero external relationship risk), and structured signal 2: `(4 × 2) + 4 + 5 + 2 = 19`. Decomposing moves the research step cleanly from `15` (Borderline) to `19` (**Ship with HITL**). Automate the research dossier today, and keep a human click on the send.',
+      )
   }
 
   if (slug === 'mcp-server-audit-2026') {

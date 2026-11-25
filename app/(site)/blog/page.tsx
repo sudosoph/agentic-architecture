@@ -169,12 +169,23 @@ function postMatchesTheme(postTags: string[], theme: Theme): boolean {
   return postTags.some(t => themeSet.has(t))
 }
 
+function firstParam(val?: string | string[]): string | undefined {
+  return Array.isArray(val) ? val[0] : val
+}
+
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: Promise<{ track?: string; theme?: string; tag?: string }>
+  searchParams: Promise<{
+    track?: string | string[]
+    theme?: string | string[]
+    tag?: string | string[]
+  }>
 }) {
-  const { track: trackParam, theme: themeSlug, tag } = await searchParams
+  const rawParams = await searchParams
+  const trackParam = firstParam(rawParams.track)
+  const themeSlug = firstParam(rawParams.theme)
+  const tag = firstParam(rawParams.tag)
   const allPosts = getAllPosts()
 
   const activeTrack = TRACK_TABS.find(t => t.slug === trackParam) ?? null
@@ -271,6 +282,7 @@ export default async function BlogPage({
               year: 'numeric',
               month: 'short',
               day: 'numeric',
+              timeZone: 'UTC',
             })
             const trackKey: BlogTrack = post.track ?? 'engineering'
             return (

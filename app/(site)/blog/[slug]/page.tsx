@@ -46,6 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   })
 
   const trackKey: BlogTrack = post.frontmatter.track ?? 'engineering'

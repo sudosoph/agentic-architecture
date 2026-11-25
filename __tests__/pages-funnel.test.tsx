@@ -23,6 +23,7 @@ import BswPage from '@/app/(site)/bsw/page'
 import GuidesPage from '@/app/(site)/guides/page'
 import NowPage from '@/app/(site)/now/page'
 import SponsorPage from '@/app/(site)/sponsor/page'
+import { sanitizeBswMarkdown } from '../scripts/sync-bsw.mjs'
 
 describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
   it('renders all 11 funnel & legacy pages free of stale placeholders, broken slugs, and em-dashes', () => {
@@ -139,5 +140,15 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     )
     expect(tutorialMd).not.toContain('architect-audit-bsw')
     expect(tutorialMd).not.toContain('\u2014')
+  })
+
+  it('sanitizes BSW markdown on sync so newer upstream files never reintroduce broken audit links or em-dashes', () => {
+    const sample =
+      '**Office Hours · 5 free 30-min audits for BSW attendees:** [cal.com/sophia-stein/architect-audit-bsw](https://cal.com/sophia-stein/architect-audit-bsw) (capped at 5 bookings)\n**Newsletter:** [agenticarchitect.ai/blog](https://agenticarchitect.ai/blog) — weekly deep-dives'
+    const cleaned = sanitizeBswMarkdown(sample)
+    expect(cleaned).not.toContain('architect-audit-bsw')
+    expect(cleaned).not.toContain('\u2014')
+    expect(cleaned).toContain('agenticarchitect.ai/work-with-me')
+    expect(cleaned).toContain('agenticarchitectai.substack.com')
   })
 })

@@ -228,6 +228,7 @@ export default function HomePage() {
                   year: 'numeric',
                   month: 'short',
                   day: 'numeric',
+                  timeZone: 'UTC',
                 })
                 return (
                   <Link

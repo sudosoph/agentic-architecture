@@ -94,12 +94,12 @@ Structured input is the cheapest agent to build. Unstructured input is where the
 The formula is weighted to match what actually predicts success in production:
 
 ```
-agent_readiness = (volume × 2) + variability + (6 − consequence) + structured_signal
+agent_readiness = (volume × 2) + variability + consequence + structured_signal
 ```
 
 A few notes:
 - Volume counts double. ROI is dominated by frequency.
-- Consequence is *inverted* (`6 − consequence`). Lower consequence is better for early agents.
+- Consequence is scored for safety (`1` = catastrophic if wrong, `5` = internal draft / nobody notices), so lower-risk tasks earn higher readiness points directly.
 - Variability and structured signal contribute equally.
 
 Maximum score: 25. Minimum: 5.
@@ -135,10 +135,10 @@ You leave the audit with a ranked list of 3 to 5 workflows that should ship firs
 |-------------------|-------|---------------------------------------------|
 | Volume            | 5     | Hundreds per day                           |
 | Variability       | 3     | Predictable categories, edge cases exist   |
-| Consequence       | 4     | Wrong route is recoverable, customer noticed |
+| Consequence       | 2     | Wrong route is visible to customer, recoverable |
 | Structured signal | 4     | Subject line + body + customer ID         |
 
-Total: `(5 × 2) + 3 + (6 − 4) + 4 = 19`. Ship with HITL. The agent classifies; the human approves the route on borderline cases until the model has been calibrated against the historical distribution.
+Total: `(5 × 2) + 3 + 2 + 4 = 19`. Ship with HITL. The agent classifies; the human approves the route on borderline cases until the model has been calibrated against the historical distribution.
 
 **Outbound sales sequencing.**
 
@@ -149,9 +149,9 @@ Total: `(5 × 2) + 3 + (6 − 4) + 4 = 19`. Ship with HITL. The agent classifies
 | Consequence       | 3     | Wrong send damages a relationship          |
 | Structured signal | 2     | Free-text bio + scattered intent signals  |
 
-Total: `(4 × 2) + 2 + (6 - 3) + 2 = 15`. Borderline as a single end-to-end agent.
+Total: `(4 × 2) + 2 + 3 + 2 = 15`. Borderline as a single end-to-end agent.
 
-Now decompose that workflow into two separate steps: **Prospect Research Dossier** and **Outbound Send**. Scored on its own, the **Prospect Research Dossier** step has volume 4, bounded variability 4 (repeatable five-field company snapshot), consequence 1 (internal brief only, zero external relationship risk, so `6 - 1 = 5`), and structured signal 2: `(4 × 2) + 4 + 5 + 2 = 19`. Decomposing moves the research step cleanly from `15` (Borderline) to `19` (**Ship with HITL**). Automate the research dossier today, and keep a human click on the send.
+Now decompose that workflow into two separate steps: **Prospect Research Dossier** and **Outbound Send**. Scored on its own, the **Prospect Research Dossier** step has volume 4, bounded variability 4 (repeatable five-field company snapshot), consequence 5 (internal brief only, zero external relationship risk), and structured signal 2: `(4 × 2) + 4 + 5 + 2 = 19`. Decomposing moves the research step cleanly from `15` (Borderline) to `19` (**Ship with HITL**). Automate the research dossier today, and keep a human click on the send.
 
 The lesson: high-consequence tasks often hide low-consequence research and analysis subtasks that are absolutely agent-ready. Pull them out and ship them separately.
 

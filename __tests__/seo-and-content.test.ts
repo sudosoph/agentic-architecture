@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { describe, it, expect } from 'vitest'
 import { getAllPosts, getPost } from '@/lib/mdx'
+import { getGuide } from '@/lib/guides'
 import sitemap from '@/app/sitemap'
 import { GET as getRss } from '@/app/rss.xml/route'
 
@@ -124,5 +125,12 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     expect(xml).not.toContain('Local-First AI')
     expect(xml).not.toContain('\u2014')
     expect((xml.match(/<entry>/g) ?? []).length).toBe(41)
+  })
+
+  it('keeps all guides free of retired localfirstai Substack branding', () => {
+    const guide = getGuide('booking-agent')
+    expect(guide).not.toBeNull()
+    expect(guide!.html).toContain('agenticarchitectai.substack.com')
+    expect(guide!.html).not.toContain('localfirstai')
   })
 })
