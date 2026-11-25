@@ -46,7 +46,7 @@ const CALLAN_BUYER_FUNNEL_PACKS = [
     url: 'https://agenticarchitect.ai/blog/ai-org-chart',
     hookTitle: 'Subject: Guest idea: Building an AI Org Chart before your next $65K hire',
     copyBody:
-      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on keeping operations lean. Most AI guests either stay at surface-level ChatGPT tips or drown founders in developer jargon.\n\nMy background bridges both: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners love a 35-minute tactical walkthrough on "Humans on the Front End, AI on the Back End: The 6-Role AI Org Chart That Saves a $65K Hire"? Happy to give your audience our unlocked Brand Brain (voice.md) workbook free at agenticarchitect.ai/masterclass.\n\nWarmly,\nSophia Stein',
+      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on keeping operations lean. Most AI guests either stay at surface-level ChatGPT tips or drown founders in developer jargon.\n\nMy background bridges both: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners love a 35-minute tactical walkthrough on "Humans on the Front End, AI on the Back End: The 6-Role AI Org Chart That Saves a $65K Hire"? Happy to give your audience our unlocked Company Context Vault (voice.md) workbook free at agenticarchitect.ai/masterclass.\n\nWarmly,\nSophia Stein',
   },
   {
     id: 'callan-corporate-coo',
@@ -119,6 +119,8 @@ export function StudioInbox({
   const [publishing, setPublishing] = useState(false)
   const [publishResult, setPublishResult] = useState<string | null>(null)
   const [dispatchStatus, setDispatchStatus] = useState<string | null>(null)
+  const [crosspostSlug, setCrosspostSlug] = useState('ai-org-chart')
+  const [crosspostLive, setCrosspostLive] = useState(false)
 
   function buildAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' }
@@ -244,6 +246,32 @@ export function StudioInbox({
     }
   }
 
+  async function handleTriggerCrosspost() {
+    setDispatchStatus(`Dispatching zero-ban official cross-post for "${crosspostSlug}"...`)
+    try {
+      const res = await fetch('/api/studio', {
+        method: 'POST',
+        headers: buildAuthHeaders(),
+        body: JSON.stringify({
+          action: 'trigger-crosspost-workflow',
+          slug: crosspostSlug,
+          platforms: 'all',
+          dryRun: !crosspostLive,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setDispatchStatus(data.error || 'Open GitHub Actions to run Official Cross-Post.')
+        return
+      }
+      setDispatchStatus(
+        `Dispatched ${crosspostLive ? 'LIVE official API syndication' : 'dry-run pack build'}! View run at ${data.actionsUrl}`,
+      )
+    } catch {
+      setDispatchStatus('Could not reach GitHub API.')
+    }
+  }
+
   function prefillComposerFromRadar(item: RadarItem) {
     setPostTitle(item.seoBlogTitle)
     setPostDesc(item.geoCitationAngle)
@@ -363,14 +391,47 @@ export function StudioInbox({
           >
             Substack Queue ↗
           </a>
+          <a
+            href="https://medium.com/p/import"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Medium Canonical Import ↗
+          </a>
         </div>
-        <button
-          type="button"
-          onClick={() => handleTriggerCloudRadar()}
-          className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-fg hover:border-accent cursor-pointer"
-        >
-          Run Cloud Weekly Radar PR Now ↻
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="text"
+            value={crosspostSlug}
+            onChange={e => setCrosspostSlug(e.target.value)}
+            aria-label="Post slug for official API cross-post"
+            placeholder="ai-org-chart"
+            className="w-36 rounded-lg border border-border bg-white px-2.5 py-1.5 font-mono text-xs text-fg"
+          />
+          <label className="inline-flex items-center gap-1 text-[11px] font-mono text-muted cursor-pointer">
+            <input
+              type="checkbox"
+              checked={crosspostLive}
+              onChange={e => setCrosspostLive(e.target.checked)}
+            />
+            <span>Live API</span>
+          </label>
+          <button
+            type="button"
+            onClick={handleTriggerCrosspost}
+            className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+          >
+            Official Cross-Post →
+          </button>
+          <button
+            type="button"
+            onClick={() => handleTriggerCloudRadar()}
+            className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-fg hover:border-accent cursor-pointer"
+          >
+            Run Cloud Weekly Radar PR ↻
+          </button>
+        </div>
       </Card>
 
       {dispatchStatus && (
@@ -424,7 +485,7 @@ export function StudioInbox({
                 >
                   <option value="engineering">Engineering Deep Dives</option>
                   <option value="models-rigs">Models, Tailscale &amp; Rigs</option>
-                  <option value="small-business">Small Business &amp; Workflows</option>
+                  <option value="small-business">Owner Playbooks &amp; Workflows</option>
                 </select>
               </div>
             </div>

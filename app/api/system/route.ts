@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server'
+import { getWorkerEnv } from '@/lib/cloudflare-env'
 
-export const runtime = 'edge'
-
-// Stub, returns 501 until Plan C wires the telemetry bridge
 export function GET() {
   return NextResponse.json(
-    { error: 'telemetry not configured' },
-    { status: 501 }
+    {
+      ok: true,
+      service: 'agentic-architect',
+      status: 'healthy',
+      resendConfigured: Boolean(getWorkerEnv('RESEND_API_KEY')),
+    },
+    {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    },
   )
 }

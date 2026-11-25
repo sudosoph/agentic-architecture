@@ -2,6 +2,7 @@ import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { NextResponse } from 'next/server'
+import { getWorkerEnv } from '@/lib/cloudflare-env'
 import { fetchLiveRadarItems } from '@/scripts/brand-radar.mjs'
 import { loadReplyQueue, updateReplyStatus } from '@/scripts/comment-copilot.mjs'
 import pendingRepliesData from '@/content/queue/pending-replies.json'
@@ -60,8 +61,8 @@ async function resolveAuth(request: Request): Promise<{
 }> {
   const headerPat = request.headers.get('x-github-pat')?.trim() || ''
   const headerStudio = request.headers.get('x-studio-token')?.trim() || ''
-  const envStudio = process.env.STUDIO_ACCESS_TOKEN?.trim() || ''
-  const envPat = process.env.GITHUB_PAT?.trim() || ''
+  const envStudio = getWorkerEnv('STUDIO_ACCESS_TOKEN') || ''
+  const envPat = getWorkerEnv('GITHUB_PAT') || ''
 
   if (process.env.NODE_ENV !== 'production') {
     return {
@@ -403,6 +404,45 @@ type ReplyQueueItem = {
     return NextResponse.json({
       ok: true,
       actionsUrl: `https://github.com/${GITHUB_REPO}/actions/workflows/weekly-radar.yml`,
+    })
+  }
+
+  if (body.action === 'trigger-crosspost-workflow') {
+    if (!auth.githubPat) {
+      return NextResponse.json(
+        { error: 'Connect a GitHub PAT with Actions write permission to dispatch cross-posting.' },
+        { status: 400 },
+      )
+    }
+    const cleanSlug = slugify(String(body.slug || ''))
+    if (!cleanSlug) {
+      return NextResponse.json({ error: 'Provide a published post slug to syndicate.' }, { status: 400 })
+    }
+    const dispatch = await fetch(
+      `${GITHUB_API}/actions/workflows/crosspost-on-publish.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: ghHeaders(auth.githubPat),
+        body: JSON.stringify({
+          ref: 'main',
+          inputs: {
+            slug: cleanSlug,
+            platforms: String(body.platforms || 'all'),
+            dry_run: body.dryRun === false ? 'false' : 'true',
+          },
+        }),
+      },
+    )
+    if (!dispatch.ok) {
+      const errText = await dispatch.text()
+      return NextResponse.json(
+        { error: `Cross-post workflow dispatch returned ${dispatch.status}: ${errText.slice(0, 160)}` },
+        { status: 502 },
+      )
+    }
+    return NextResponse.json({
+      ok: true,
+      actionsUrl: `https://github.com/${GITHUB_REPO}/actions/workflows/crosspost-on-publish.yml`,
     })
   }
 

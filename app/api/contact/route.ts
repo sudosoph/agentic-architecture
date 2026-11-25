@@ -1,14 +1,12 @@
-import { getCloudflareContext } from '@opennextjs/cloudflare'
+import { getWorkerEnv } from '@/lib/cloudflare-env'
 
-const TO = 'sophia@agenticarchitect.ai'
-const FROM = 'hello@agenticarchitect.ai'
+// Deliver to both Sophia's custom-domain inbox (forwarded via Cloudflare Email Routing)
+// and her Antigravity-monitored workspace inbox so Weekday Engagement Radar picks up leads.
+const TO = ['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com']
+const FROM = 'Agentic Architect <hello@agenticarchitect.ai>'
 
 export async function POST(request: Request) {
-  // Cloudflare secrets are exposed via getCloudflareContext().env, not
-  // process.env. Falls back to process.env for local dev where the secret
-  // is set in .env.local.
-  const env = getCloudflareContext().env as { RESEND_API_KEY?: string } | undefined
-  const key = env?.RESEND_API_KEY ?? process.env.RESEND_API_KEY
+  const key = getWorkerEnv('RESEND_API_KEY')
   if (!key) {
     return Response.json(
       {
@@ -27,19 +25,31 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { name, email, subject, message } = body as Record<string, unknown>
+  const { name, email, subject, message, website } = body as Record<string, unknown>
+
+  // Honeypot trap: silently accept bot submissions without burning email quota.
+  if (typeof website === 'string' && website.trim()) {
+    return Response.json({ ok: true })
+  }
 
   if (
-    typeof name !== 'string' || !name.trim() ||
-    typeof email !== 'string' || !email.includes('@') ||
-    typeof message !== 'string' || !message.trim()
+    typeof name !== 'string' ||
+    !name.trim() ||
+    typeof email !== 'string' ||
+    !email.includes('@') ||
+    typeof message !== 'string' ||
+    !message.trim()
   ) {
     return Response.json({ error: 'Missing required fields' }, { status: 422 })
   }
 
-  const subjectLine = typeof subject === 'string' && subject.trim()
-    ? subject.trim()
-    : `Contact form, ${name.trim()}`
+  const cleanName = name.trim().slice(0, 120)
+  const cleanEmail = email.trim().slice(0, 160)
+  const cleanMessage = message.trim().slice(0, 8000)
+  const subjectLine =
+    typeof subject === 'string' && subject.trim()
+      ? subject.trim().slice(0, 160)
+      : `Contact form: ${cleanName}`
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -50,9 +60,9 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       from: FROM,
       to: TO,
-      reply_to: email.trim(),
+      reply_to: cleanEmail,
       subject: subjectLine,
-      text: `From: ${name.trim()} <${email.trim()}>\n\n${message.trim()}`,
+      text: `From: ${cleanName} <${cleanEmail}>\n\n${cleanMessage}`,
     }),
   })
 

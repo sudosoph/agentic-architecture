@@ -1,20 +1,25 @@
 import { makeGenericAPIRouteHandler } from '@keystatic/core/api/generic'
 import config from '@/keystatic.config'
+import { getWorkerEnv } from '@/lib/cloudflare-env'
 
 type KeystaticResp = { body: string | Uint8Array | null } & ResponseInit
 
-function hasKeystaticOAuthEnv() {
-  return Boolean(
-    process.env.KEYSTATIC_GITHUB_CLIENT_ID &&
-      process.env.KEYSTATIC_GITHUB_CLIENT_SECRET &&
-      process.env.KEYSTATIC_SECRET,
-  )
+function readKeystaticOAuthConfig() {
+  const clientId = getWorkerEnv('KEYSTATIC_GITHUB_CLIENT_ID')
+  const clientSecret = getWorkerEnv('KEYSTATIC_GITHUB_CLIENT_SECRET')
+  const secret = getWorkerEnv('KEYSTATIC_SECRET')
+  return {
+    clientId,
+    clientSecret,
+    secret,
+    configured: Boolean(clientId && clientSecret && secret),
+  }
 }
 
 function renderLockedCmsNotice() {
   const isProd = process.env.NODE_ENV === 'production'
   const details = isProd
-    ? '<p style="font-size:14px;color:#475569;">Keystatic GitHub OAuth is currently disabled on this edge worker. Authenticate as the repository owner via <a href="/studio">/studio</a>.</p>'
+    ? '<p style="font-size:14px;color:#475569;">Keystatic GitHub OAuth (`KEYSTATIC_GITHUB_CLIENT_ID`) is currently disabled on this edge worker. Authenticate as the repository owner via <a href="/studio">/studio</a>.</p>'
     : '<p style="font-size:14px;">Local setup note: configure <code>KEYSTATIC_GITHUB_CLIENT_ID</code>, <code>KEYSTATIC_GITHUB_CLIENT_SECRET</code>, and <code>KEYSTATIC_SECRET</code> to test GitHub OAuth, or use <a href="/studio">/studio</a>.</p>'
 
   const html = `<!doctype html>
@@ -48,12 +53,12 @@ function renderLockedCmsNotice() {
   })
 }
 
-function getHandler() {
+function getHandler(oauth: ReturnType<typeof readKeystaticOAuthConfig>) {
   return makeGenericAPIRouteHandler({
     config,
-    clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-    clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-    secret: process.env.KEYSTATIC_SECRET,
+    clientId: oauth.clientId,
+    clientSecret: oauth.clientSecret,
+    secret: oauth.secret,
   })
 }
 
@@ -62,15 +67,17 @@ function toResponse({ body, ...init }: KeystaticResp) {
 }
 
 export async function GET(req: Request) {
-  if (!hasKeystaticOAuthEnv()) {
+  const oauth = readKeystaticOAuthConfig()
+  if (!oauth.configured) {
     return renderLockedCmsNotice()
   }
-  return toResponse(await getHandler()(req as Parameters<ReturnType<typeof getHandler>>[0]))
+  return toResponse(await getHandler(oauth)(req as Parameters<ReturnType<typeof getHandler>>[0]))
 }
 
 export async function POST(req: Request) {
-  if (!hasKeystaticOAuthEnv()) {
+  const oauth = readKeystaticOAuthConfig()
+  if (!oauth.configured) {
     return renderLockedCmsNotice()
   }
-  return toResponse(await getHandler()(req as Parameters<ReturnType<typeof getHandler>>[0]))
+  return toResponse(await getHandler(oauth)(req as Parameters<ReturnType<typeof getHandler>>[0]))
 }

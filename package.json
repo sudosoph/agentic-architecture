@@ -8,6 +8,7 @@
     "build:next": "node scripts/sync-bsw.mjs && node scripts/generate-blog-manifest.mjs && node scripts/generate-bsw-manifest.mjs && node scripts/generate-guides-manifest.mjs && next build",
     "sync-bsw": "node scripts/sync-bsw.mjs",
     "new:pack": "node scripts/new-content-pack.mjs",
+    "crosspost": "node scripts/crosspost-official.mjs",
     "substack:prep": "node scripts/mdx-to-substack.mjs",
     "outreach:pack": "node scripts/outreach-engine.mjs",
     "seo:ping": "node scripts/ping-search-engines.mjs",
