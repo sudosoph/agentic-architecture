@@ -3,11 +3,12 @@ title: "Plan-and-Execute vs ReAct: Picking Your Agent's Brain"
 slug: reasoning-loops
 publishedDate: "2026-04-26"
 description: "The two dominant agent reasoning patterns in 2026, what they get right, where each one fails, and how to know which to pick."
+track: "engineering"
 tags: ["agents", "patterns", "react", "plan-and-execute", "design"]
 draft: false
 ---
 
-**TL;DR.** Two agent reasoning patterns dominate production systems in 2026. **ReAct** (Reason + Act) is the OG: think one step, act one step, observe, repeat. **Plan-and-Execute** flips it: plan all the steps up front, execute the plan, replan only on failure. The frameworks treat them as interchangeable. They are not. This post is the case for picking the right pattern for your task, the case for the hybrid that actually wins in production, and the failure modes each one hides.
+Two agent reasoning patterns dominate production systems in 2026. **ReAct** (Reason + Act) is the OG: think one step, act one step, observe, repeat. **Plan-and-Execute** flips it: plan all the steps up front, execute the plan, replan only on failure. The frameworks treat them as interchangeable. They are not. This post is the case for picking the right pattern for your task, the case for the hybrid that actually wins in production, and the failure modes each one hides.
 
 ## The two patterns, side by side
 

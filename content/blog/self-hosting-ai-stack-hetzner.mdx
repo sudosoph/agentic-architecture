@@ -1,14 +1,17 @@
 ---
-title: "Self-Hosting the Full AI Stack on $5/mo Hetzner"
+title: "How to Replace $150/mo of Creator & Ops SaaS on a $5 Server (Reference Blueprint)"
 slug: self-hosting-ai-stack-hetzner
 publishedDate: "2026-05-07"
 description: "$9/mo of Hetzner replaces $80 to $150/mo of SaaS. Listmonk, Cal.com, Umami, and Uptime Kuma on a single CX22, with the deliverability playbook nobody writes down."
+track: "models-rigs"
 tags: ["self-hosting", "hetzner", "listmonk", "newsletter", "sovereign-compute", "infrastructure"]
 kind: deep-dive
 draft: false
 ---
 
-**TL;DR.** A single Hetzner CX22 in Ashburn ([€3.79/mo, roughly $4.59 USD](https://www.hetzner.com/pressroom/new-cx-plans/)), plus a [BX11 Storage Box at $4.51/mo](https://docs.hetzner.com/storage/storage-box/access/access-ssh-rsync-borg/), plus Resend's free tier for SMTP, runs the entire creator/consultant SaaS stack. [Listmonk](https://github.com/knadh/listmonk) replaces Substack and Buttondown. [Cal.com self-hosted](https://cal.com/docs/self-hosting/docker) replaces Cal.com Teams. [Umami v2](https://github.com/umami-software/umami) replaces Plausible and PostHog Cloud. [Uptime Kuma](https://github.com/louislam/uptime-kuma) replaces UptimeRobot. Total infrastructure: about $9/mo.
+*Reference architecture note: On Agentic Architect today, I keep my newsletter on Substack and bookings on Cal.com + Stripe so 100% of my week goes to teaching and client systems. Below is the exact Docker Compose reference blueprint for technical operators who want to self-host the entire creator and ops stack on a single €3.79/mo Hetzner VPS.*
+
+A single Hetzner CX22 in Ashburn ([€3.79/mo, roughly $4.59 USD](https://www.hetzner.com/pressroom/new-cx-plans/)), plus a [BX11 Storage Box at $4.51/mo](https://docs.hetzner.com/storage/storage-box/access/access-ssh-rsync-borg/), plus Resend's free tier for SMTP, runs the entire creator/consultant SaaS stack. [Listmonk](https://github.com/knadh/listmonk) replaces Substack and Buttondown. [Cal.com self-hosted](https://cal.com/docs/self-hosting/docker) replaces Cal.com Teams. [Umami v2](https://github.com/umami-software/umami) replaces Plausible and PostHog Cloud. [Uptime Kuma](https://github.com/louislam/uptime-kuma) replaces UptimeRobot. Total infrastructure: about $9/mo.
 
 The retail SaaS bill that stack replaces, at typical creator/consultant volume (5,000 newsletter subs, 50,000 monthly analytics events, one Cal.com seat, one uptime monitor), runs $80 to $150/mo. Substack alone takes 10% of paid revenue plus a 0.7% billing fee plus the Stripe cut, which is effectively $20 to $80/mo at modest list size. Buttondown at 1,000+ subs with paid subscriptions, RSS-to-email, and analytics add-ons sits around $36/mo. Cal.com Teams is $15/seat/mo. UptimeRobot Solo is $9/mo. PostHog Cloud is free up to 1M events and then climbs to $450/mo at 50M, which is exactly why this stack ships Umami instead.
 
@@ -208,7 +211,7 @@ This is where most "I'll just self-host my newsletter" stories die. Listmonk is 
 - **[Resend](https://resend.com/pricing).** Free tier: 3,000 emails/mo, capped at 100/day. Pro: $20/mo for 50,000 emails, no daily cap. Built by ex-Vercel folks; the dashboard is excellent and the React Email integration is best-in-class.
 - **[AWS SES](https://aws.amazon.com/ses/pricing/).** $0.10 per 1,000 emails. Roughly 9× cheaper than Resend at scale. You handle bounce and complaint webhooks yourself, which is a real engineering tax until you've done it once.
 
-For under 50,000 emails/month, use Resend Pro. Above that, the math tips toward SES, but the operational complexity tips back toward Resend. I run Resend.
+For under 50,000 emails/month, use Resend Pro. Above that, the math tips toward SES, but the operational complexity tips back toward Resend. Resend is the cleanest default at this scale.
 
 **Do not try to send SMTP directly from the Hetzner box.** Hetzner [blocks outbound port 25 by default](https://docs.hetzner.com/cloud/servers/faq/#why-can-i-not-send-any-mails-from-my-server) on new accounts, which is the right call because cloud-VPS IP space has terrible reputation in the spam-filter universe. Even if you got the block lifted, you'd spend weeks negotiating with [Spamhaus](https://www.spamhaus.org/) to delist your IP. Relay through Resend or SES on port 587 or 465. The deliverability problem is not "can I send packets"; it is "do receivers trust me."
 
@@ -292,7 +295,7 @@ The pattern is consistent: self-host anything where the failure mode is "I'm dow
 
 ## The maintenance reality
 
-Honest numbers from running this stack across a few client deployments and my own.
+Honest numbers from deploying and maintaining this reference architecture in production environments.
 
 **Initial setup.** 5 to 10 hours if you've worked with Docker Compose before. 15 to 20 hours if it's your first compose stack. The Caddy and DNS pieces are the fastest. The Cal.com env-var matrix and the deliverability warm-up are where the time goes.
 

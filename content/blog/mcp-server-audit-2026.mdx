@@ -3,12 +3,13 @@ title: "MCP Server Audit: Which Ones Actually Work in 2026"
 slug: mcp-server-audit-2026
 publishedDate: "2026-05-07"
 description: "Of the ~14,000 MCP servers in PulseMCP's hand-curated index, fewer than 30 are demonstrably production-ready. Here is the list, the criteria, and the failure modes."
+track: "engineering"
 tags: ["mcp", "agents", "security", "production", "oauth", "review"]
 kind: deep-dive
 draft: false
 ---
 
-**TL;DR.** PulseMCP hand-curates ~14,000 Model Context Protocol servers. Glama indexes 21,586. The [official registry](https://registry.modelcontextprotocol.io/) crossed 9,400 in mid-April. Of all of them, fewer than thirty pass a real production bar: company-backed, OAuth 2.1 with the discovery-trifecta RFCs, 2026 release cadence, published security disclosure path, license that survives an enterprise procurement review. The rest is vapor wrapped around a JSON-RPC handshake. This post is the audit, the failure modes, and the short list.
+PulseMCP hand-curates ~14,000 Model Context Protocol servers. Glama indexes 21,586. The [official registry](https://registry.modelcontextprotocol.io/) crossed 9,400 in mid-April. Of all of them, fewer than thirty pass a real production bar: company-backed, OAuth 2.1 with the discovery-trifecta RFCs, 2026 release cadence, published security disclosure path, license that survives an enterprise procurement review. The rest is vapor wrapped around a JSON-RPC handshake. This post is the audit, the failure modes, and the short list.
 
 ## The numbers
 
@@ -75,7 +76,7 @@ The criteria, again, before the table: company-backed or unambiguously community
 
 A few notes on what is conspicuously missing. There is no general-purpose web-scraping server here that I trust. Most of the ones with traction are exec-injection time bombs. There is no email or calendar server I would wire into a production agent without a full audit; the Gmail and Outlook servers in the wild range from "fine" to "exfiltrates contacts on tool list." There is no PDF or document-ingestion server I have verified to my standard, though [`mcp-omnisearch`](https://github.com/spences10/mcp-omnisearch) plus a Firecrawl key gets you most of the way.
 
-## Top 5 picks for HN-flavored devs
+## Top 5 picks for production teams
 
 In the order I actually reach for them:
 
@@ -85,7 +86,7 @@ In the order I actually reach for them:
 
 **3. `crystaldba/postgres-mcp` (Postgres MCP Pro).** Index tuning, EXPLAIN-plan analysis, query rewriting hints. 2,000+ stars. The cadence is slowing (last commit January 2026, 25 open issues from April 2025) which is why I am noting it in the top five with a caveat: pin a version, run against a read replica, do not point it at production credentials. When it works, it does what it says. If a successor emerges with active maintenance, it dethrones this one immediately.
 
-**4. `cloudflare/mcp` "Code Mode."** This is the HN-bait pick and it deserves the paragraph. Cloudflare's API surface is roughly 2,500 endpoints. The naive way to expose that as MCP is to register 2,500 tools, which costs 244k tokens of context just to declare the tool list. Cloudflare's [Code Mode](https://blog.cloudflare.com/code-mode-mcp/) registers two tools, `search` and `execute`, and lets the model navigate the OpenAPI spec at runtime. Same coverage. Roughly 1k tokens of context. A 244-to-1 reduction. Read the source. The pattern generalizes: any API with a structured spec can be exposed this way, and most of the maximalist tool catalogs in the registry should be rewritten in this shape. The [Cloudflare Agents authorization docs](https://developers.cloudflare.com/agents/model-context-protocol/authorization/) carry their OAuth Provider Library, which is a separate gift to the ecosystem.
+**4. `cloudflare/mcp` "Code Mode."** This is the standout architecture pick in the catalog. Cloudflare's API surface is roughly 2,500 endpoints. The naive way to expose that as MCP is to register 2,500 tools, which costs 244k tokens of context just to declare the tool list. Cloudflare's [Code Mode](https://blog.cloudflare.com/code-mode-mcp/) registers two tools, `search` and `execute`, and lets the model navigate the OpenAPI spec at runtime. Same coverage. Roughly 1k tokens of context. A 244-to-1 reduction. Read the source. The pattern generalizes: any API with a structured spec can be exposed this way, and most of the maximalist tool catalogs in the registry should be rewritten in this shape. The [Cloudflare Agents authorization docs](https://developers.cloudflare.com/agents/model-context-protocol/authorization/) carry their OAuth Provider Library, which is a separate gift to the ecosystem.
 
 **5. `exa-labs/exa-mcp-server`.** 4.4k stars, MIT, hosted at `mcp.exa.ai/mcp`. Semantic search with structured deep-research output (Exa Deep was revamped March 2026). Pair with Brave Search MCP for keyword fallback. This is the search stack I run in [my own agent loop](/stack); skip Tavily and Perplexity unless you specifically need their synthesis modes, because their token costs are higher and the underlying signal is similar.
 

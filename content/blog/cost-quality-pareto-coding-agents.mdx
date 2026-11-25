@@ -3,12 +3,13 @@ title: "Cost-Quality Pareto for Coding Agents (May 2026)"
 slug: cost-quality-pareto-coding-agents
 publishedDate: "2026-05-07"
 description: "Paying $5 per task no longer gets you the frontier. Qwen3.6-27B running locally hits 77.2% SWE-bench Verified at ~$0.04/task, within 10pp of Opus 4.7 for ~130x less money."
+track: "models-rigs"
 tags: ["coding-agents", "benchmarks", "cost", "swe-bench", "claude-code", "qwen", "deepseek"]
 kind: deep-dive
 draft: false
 ---
 
-**TL;DR.** Paying $5 per task no longer gets you the frontier. Paying nothing comes within 11 points of the leader. The cost-quality landscape for coding agents in May 2026 has bifurcated into a five-step Pareto frontier with a dead middle. Qwen3.6-27B Dense runs locally on a Framework laptop and hits 77.2% on [SWE-bench Verified](https://www.swebench.com/) at roughly $0.04 per task, electricity included. Anthropic's Mythos Preview hits 93.9% at $8.50 per task. Almost everything in the gap between those two endpoints is dominated by a cheaper option at the same quality, or a smarter option at a similar price. If you're not running on Opus 4.7, Mythos, GPT-5.5 via Codex, Kimi K2.6, DeepSeek V4-Pro, or local Qwen3.6-27B, you are paying for someone else's brand.
+Paying $5 per task no longer gets you the frontier. Paying nothing comes within 11 points of the leader. The cost-quality landscape for coding agents in May 2026 has bifurcated into a five-step Pareto frontier with a dead middle. Qwen3.6-27B Dense runs locally on a Framework laptop and hits 77.2% on [SWE-bench Verified](https://www.swebench.com/) at roughly $0.04 per task, electricity included. Anthropic's Mythos Preview hits 93.9% at $8.50 per task. Almost everything in the gap between those two endpoints is dominated by a cheaper option at the same quality, or a smarter option at a similar price. If you're not running on Opus 4.7, Mythos, GPT-5.5 via Codex, Kimi K2.6, DeepSeek V4-Pro, or local Qwen3.6-27B, you are paying for someone else's brand.
 
 Three things broke at once to produce this chart. Anthropic shipped [Mythos Preview](https://platform.claude.com/docs/en/about-claude/pricing) at 93.9% Verified but kept Opus 4.7 the practical ceiling at 87.6%. DeepSeek V4-Pro and Kimi K2.6 hit roughly 80% Verified at 7 to 15x lower API cost than Anthropic's flagship. And Qwen3.6-27B Dense made 77.2% Verified runnable on a laptop with 18GB of VRAM, [Apache 2.0 licensed](https://www.aimadetools.com/blog/qwen-3-6-27b-complete-guide/), with no API key in the loop. Each of those three would be the story of the month on its own. They all landed inside six weeks. The middle of the chart, where proprietary models priced like frontier-tier scored Sonnet-tier, evaporated.
 

@@ -3,11 +3,12 @@ title: "MCP, Honestly: What It Is and What It Is Not"
 slug: mcp-101
 publishedDate: "2026-05-02"
 description: "What the Model Context Protocol actually is, what it gets right, where it leaks, and why the local-first version is the cleaner story."
+track: "models-rigs"
 tags: ["mcp", "agents", "protocols", "local-first", "ollama"]
 draft: false
 ---
 
-**TL;DR.** MCP is JSON-RPC 2.0 over stdio or streamable HTTP, with a handshake that negotiates capabilities and a *sampling* primitive that lets a server call back into the host's model. That last detail is what makes it more than function calling. It is the protocol that lets tools and models be coroutines, which is the actual operating-system abstraction underneath.
+MCP is JSON-RPC 2.0 over stdio or streamable HTTP, with a handshake that negotiates capabilities and a *sampling* primitive that lets a server call back into the host's model. That last detail is what makes it more than function calling. It is the protocol that lets tools and models be coroutines, which is the actual operating-system abstraction underneath.
 
 ## What it is, in 60 seconds
 

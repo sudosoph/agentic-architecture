@@ -1,12 +1,27 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { getAllPosts, getPost } from '@/lib/mdx'
+import { getAllPosts, getPost, type BlogTrack } from '@/lib/mdx'
 import { PageHeader } from '@/components/ui/page-header'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 type Props = { params: Promise<{ slug: string }> }
+
+const TRACK_LABELS: Record<BlogTrack, string> = {
+  'small-business': 'Small Business & Workflows',
+  'models-rigs': 'Models, Tailscale & Rigs',
+  engineering: 'Engineering Deep Dive',
+}
+
+const TRACK_BADGE_VARIANT: Record<BlogTrack, 'online' | 'rig' | 'tag'> = {
+  'small-business': 'online',
+  'models-rigs': 'rig',
+  engineering: 'tag',
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
@@ -33,6 +48,13 @@ export default async function BlogPostPage({ params }: Props) {
     day: 'numeric',
   })
 
+  const trackKey: BlogTrack = post.frontmatter.track ?? 'engineering'
+  const readingMinutes = post.frontmatter.readingMinutes ?? 5
+
+  const relatedPosts = getAllPosts()
+    .filter(p => p.slug !== slug && p.track === trackKey)
+    .slice(0, 3)
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
@@ -41,13 +63,13 @@ export default async function BlogPostPage({ params }: Props) {
     datePublished: post.frontmatter.publishedDate,
     author: {
       '@type': 'Person',
-      name: 'Sophia Stein',
-      url: 'https://agenticarchitect.ai/about',
+      name: SITE_CONFIG.authorName,
+      url: `${SITE_CONFIG.siteUrl}/about`,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Agentic Architecture',
-      url: 'https://agenticarchitect.ai',
+      name: SITE_CONFIG.siteName,
+      url: SITE_CONFIG.siteUrl,
     },
   }
 
@@ -61,38 +83,38 @@ export default async function BlogPostPage({ params }: Props) {
           __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
         }}
       />
-      <article className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
+      <article className="lg:grid lg:grid-cols-[1fr_230px] lg:gap-12">
         <div className="min-w-0">
           <PageHeader
             title={post.frontmatter.title}
-            meta={dateFormatted}
+            meta={`${dateFormatted} · ${readingMinutes} min read`}
             description={post.frontmatter.description}
           />
-          {(post.frontmatter.kind === 'deep-dive' || post.frontmatter.tags.length > 0) && (
-            <div className="flex flex-wrap gap-1.5 mt-4">
-              {post.frontmatter.kind === 'deep-dive' && (
-                <Badge variant="tag">Deep dive</Badge>
-              )}
-              {post.frontmatter.tags.map(tag => (
-                <Badge key={tag} variant="tag">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )}
+
+          <div className="flex flex-wrap items-center gap-2 mt-4">
+            <Link href={`/blog?track=${trackKey}`}>
+              <Badge variant={TRACK_BADGE_VARIANT[trackKey]}>{TRACK_LABELS[trackKey]}</Badge>
+            </Link>
+            {post.frontmatter.kind === 'deep-dive' && <Badge variant="tag">Deep Dive</Badge>}
+            {post.frontmatter.tags.map(tag => (
+              <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                <Badge variant="tag">{tag}</Badge>
+              </Link>
+            ))}
+          </div>
 
           {/* Mobile TOC */}
           {showToc && (
-            <details className="lg:hidden mt-8 border border-border bg-surface p-4">
-              <summary className="font-mono text-xs text-muted uppercase tracking-widest cursor-pointer">
-                Contents ({post.toc.length})
+            <details className="lg:hidden mt-8 rounded-xl border border-border bg-surface p-4">
+              <summary className="font-mono text-xs font-semibold text-fg uppercase tracking-wider cursor-pointer">
+                On this page ({post.toc.length})
               </summary>
-              <ul className="mt-3 space-y-1.5">
+              <ul className="mt-3 space-y-2">
                 {post.toc.map(item => (
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="font-mono text-xs text-muted hover:text-accent leading-snug"
+                      className="text-xs text-muted hover:text-accent leading-snug"
                     >
                       {item.text}
                     </a>
@@ -102,23 +124,73 @@ export default async function BlogPostPage({ params }: Props) {
             </details>
           )}
 
-          <div
-            className="prose mt-10"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
+          <div className="prose mt-10" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-          {/* Newsletter signup at the bottom of every post · primary list-capture for syndicated traffic */}
-          <div className="mt-16 pt-8 border-t border-border">
-            <NewsletterSignup
-              source={`post:${slug}`}
-              sub="If this was useful, the weekly notes go deeper. No drip sequences, no upsells."
-            />
+          {/* Dual Starter Kit & Work-With-Me Action Card */}
+          <Card className="mt-14 p-6 md:p-8 bg-surface space-y-4">
+            <div className="space-y-1.5">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                Put This Playbook to Work
+              </p>
+              <h2 className="text-xl font-bold text-fg">
+                Grab the Free Brand Brain Kit or Build Live With Sophia
+              </h2>
+              <p className="text-sm text-muted leading-relaxed">
+                Copy the unlocked <code className="font-mono text-fg">voice.md</code> template and
+                20/80 Task Scorecard in 20 minutes, join the next free 60-minute live masterclass,
+                or book a 1:1 workflow and cost audit.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="primary" size="md" href="/starter-kit">
+                Open Free Starter Kit →
+              </Button>
+              <Button variant="outline" size="md" href="/masterclass">
+                Free 60-Min Live Masterclass
+              </Button>
+              <Button variant="ghost" size="md" href="/work-with-me">
+                Work With Sophia →
+              </Button>
+            </div>
+          </Card>
+
+          {/* Related Playbooks */}
+          {relatedPosts.length > 0 && (
+            <section className="mt-12 space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-fg">More in {TRACK_LABELS[trackKey]}</h2>
+                <Link
+                  href={`/blog?track=${trackKey}`}
+                  className="text-xs font-semibold text-accent hover:underline"
+                >
+                  See all →
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {relatedPosts.map(rel => (
+                  <Link key={rel.slug} href={`/blog/${rel.slug}`} className="block group">
+                    <Card className="p-4 h-full flex flex-col justify-between space-y-2 hover:border-accent transition-colors">
+                      <h3 className="text-sm font-bold text-fg group-hover:text-accent transition-colors leading-snug">
+                        {rel.title}
+                      </h3>
+                      <span className="font-mono text-xs text-muted">
+                        {rel.readingMinutes ?? 5} min read →
+                      </span>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Newsletter Signup */}
+          <div className="mt-12 pt-8 border-t border-border">
+            <NewsletterSignup source={`post:${slug}`} />
           </div>
 
-          {/* Back to blog · simple nav out of the post */}
           <div className="mt-8 flex items-center justify-between font-mono text-xs">
             <Link href="/blog" className="text-accent hover:underline">
-              ← all posts
+              ← All playbooks
             </Link>
             <Link href="/rss.xml" className="text-muted hover:text-accent">
               RSS ↗
@@ -130,15 +202,15 @@ export default async function BlogPostPage({ params }: Props) {
         {showToc && (
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <p className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-                Contents
+              <p className="font-mono text-xs font-semibold text-fg uppercase tracking-wider mb-4">
+                On this page
               </p>
               <ul className="space-y-2 border-l border-border">
                 {post.toc.map(item => (
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="block pl-4 -ml-px border-l border-transparent hover:border-accent font-mono text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
+                      className="block pl-4 -ml-px border-l border-transparent hover:border-accent text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
                     >
                       {item.text}
                     </a>

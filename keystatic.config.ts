@@ -6,7 +6,7 @@ export default config({
     repo: 'sudosoph/agentic-architecture',
   },
   ui: {
-    brand: { name: 'Agentic Architecture' },
+    brand: { name: 'Agentic Architect' },
   },
   collections: {
     blog: collection({
@@ -25,10 +25,19 @@ export default config({
           label: 'Description',
           multiline: true,
         }),
-        tags: fields.array(
-          fields.text({ label: 'Tag' }),
-          { label: 'Tags', itemLabel: props => props.value }
-        ),
+        track: fields.select({
+          label: 'Reader Track',
+          options: [
+            { label: 'Small Business & Workflows', value: 'small-business' },
+            { label: 'Models, Tailscale & Rigs', value: 'models-rigs' },
+            { label: 'Engineering Deep Dives', value: 'engineering' },
+          ],
+          defaultValue: 'small-business',
+        }),
+        tags: fields.array(fields.text({ label: 'Tag' }), {
+          label: 'Tags',
+          itemLabel: props => props.value,
+        }),
         draft: fields.checkbox({
           label: 'Draft',
           defaultValue: false,

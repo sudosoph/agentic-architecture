@@ -1,102 +1,64 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getAllPosts, getPost } from '@/lib/mdx'
+import { describe, it, expect } from 'vitest'
+import { getAllPosts, getPost, getPostsByTrack } from '@/lib/mdx'
 
-vi.mock('fs')
-import fs from 'fs'
-const mockFs = vi.mocked(fs)
+const VALID_TRACKS = new Set(['small-business', 'models-rigs', 'engineering'])
 
-const POST_A = `---
-title: Post A
-slug: post-a
-publishedDate: 2026-03-01
-description: Earlier post
-tags: [test]
-draft: false
----
-
-Content A.
-`
-
-const POST_B = `---
-title: Post B
-slug: post-b
-publishedDate: 2026-04-28
-description: Later post
-tags: [test, demo]
-draft: false
----
-
-Content B.
-`
-
-const DRAFT_POST = `---
-title: Draft
-slug: draft
-publishedDate: 2026-04-29
-description: Not published
-tags: [draft]
-draft: true
----
-
-Draft content.
-`
-
-describe('getAllPosts', () => {
-  beforeEach(() => { vi.clearAllMocks() })
-
-  it('returns posts sorted by publishedDate descending', () => {
-    mockFs.readdirSync.mockReturnValue(['post-a.mdx', 'post-b.mdx'] as any)
-    mockFs.readFileSync.mockImplementation((p: any) =>
-      p.toString().includes('post-a') ? POST_A : POST_B
-    )
+describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', () => {
+  it('returns sorted non-draft posts with readingMinutes >= 1 and valid 3-track assignment', () => {
     const posts = getAllPosts()
-    expect(posts[0].slug).toBe('post-b')
-    expect(posts[1].slug).toBe('post-a')
+    expect(posts.length).toBeGreaterThanOrEqual(38)
+
+    for (let i = 0; i < posts.length; i++) {
+      const p = posts[i]
+      expect(p.readingMinutes, `${p.slug} readingMinutes`).toBeTypeOf('number')
+      expect(p.readingMinutes ?? 0).toBeGreaterThanOrEqual(1)
+      expect(VALID_TRACKS.has(p.track ?? ''), `${p.slug} track=${p.track}`).toBe(true)
+
+      if (i > 0) {
+        const prev = new Date(posts[i - 1].publishedDate).getTime()
+        const curr = new Date(p.publishedDate).getTime()
+        expect(prev).toBeGreaterThanOrEqual(curr)
+      }
+    }
   })
 
-  it('excludes draft posts', () => {
-    mockFs.readdirSync.mockReturnValue(['draft.mdx'] as any)
-    mockFs.readFileSync.mockReturnValue(DRAFT_POST)
-    expect(getAllPosts()).toHaveLength(0)
+  it('filters posts cleanly via getPostsByTrack', () => {
+    const all = getAllPosts()
+    const sb = getPostsByTrack('small-business')
+    const mr = getPostsByTrack('models-rigs')
+    const eng = getPostsByTrack('engineering')
+
+    expect(sb.length).toBeGreaterThanOrEqual(13)
+    expect(mr.length).toBeGreaterThanOrEqual(10)
+    expect(eng.length).toBeGreaterThanOrEqual(15)
+    expect(sb.length + mr.length + eng.length).toBe(all.length)
+    expect(getPostsByTrack()).toHaveLength(all.length)
   })
 
-  it('returns only .mdx files', () => {
-    mockFs.readdirSync.mockReturnValue(['post-b.mdx', 'readme.txt'] as any)
-    mockFs.readFileSync.mockReturnValue(POST_B)
-    expect(getAllPosts()).toHaveLength(1)
+  it('fixes agent-ready-tasks decomposition math and removes self-correction prose', () => {
+    const post = getPost('agent-ready-tasks')
+    expect(post).not.toBeNull()
+    expect(post!.html).not.toContain("Wait, that's the same")
+    expect(post!.html).toContain('= 19')
   })
 
-  it('returns frontmatter fields without content', () => {
-    mockFs.readdirSync.mockReturnValue(['post-b.mdx'] as any)
-    mockFs.readFileSync.mockReturnValue(POST_B)
+  it('returns null for nonexistent post slug', () => {
+    expect(getPost('does-not-exist-anywhere')).toBeNull()
+  })
+
+  it('enforces zero em-dashes, zero TL;DR openers, and updated H2s across every post', () => {
     const posts = getAllPosts()
-    expect(posts[0].title).toBe('Post B')
-    expect(posts[0].tags).toEqual(['test', 'demo'])
-    expect((posts[0] as any).content).toBeUndefined()
-  })
-})
+    for (const meta of posts) {
+      expect(meta.title, `${meta.slug} title em-dash`).not.toContain('\u2014')
+      expect(meta.description, `${meta.slug} description em-dash`).not.toContain('\u2014')
 
-describe('getPost', () => {
-  beforeEach(() => { vi.clearAllMocks() })
-
-  it('returns frontmatter and content for valid slug', () => {
-    mockFs.existsSync.mockReturnValue(true)
-    mockFs.readFileSync.mockReturnValue(POST_B)
-    const result = getPost('post-b')
-    expect(result).not.toBeNull()
-    expect(result!.frontmatter.title).toBe('Post B')
-    expect(result!.content).toContain('Content B.')
-  })
-
-  it('returns null for missing file', () => {
-    mockFs.existsSync.mockReturnValue(false)
-    expect(getPost('does-not-exist')).toBeNull()
-  })
-
-  it('content does not include frontmatter', () => {
-    mockFs.existsSync.mockReturnValue(true)
-    mockFs.readFileSync.mockReturnValue(POST_B)
-    const result = getPost('post-b')
-    expect(result!.content).not.toContain('publishedDate')
+      const full = getPost(meta.slug)
+      expect(full, `${meta.slug} full post`).not.toBeNull()
+      expect(full!.html, `${meta.slug} html em-dash`).not.toContain('\u2014')
+      expect(full!.html, `${meta.slug} TL;DR opener`).not.toMatch(/<strong>TL;DR\.?<\/strong>/i)
+      expect(full!.html, `${meta.slug} HN-flavored H2`).not.toContain(
+        'Top 5 picks for HN-flavored devs',
+      )
+    }
   })
 })

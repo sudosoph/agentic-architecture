@@ -3,11 +3,12 @@ title: "How Agents Remember, and How They Forget"
 slug: long-term-memory-for-agents
 publishedDate: "2026-05-01"
 description: "Why agents forget by default, what the four types of memory actually are, and how to build a system that compounds across sessions."
+track: "engineering"
 tags: ["memory", "agents", "context-engineering", "neo4j"]
 draft: false
 ---
 
-**TL;DR.** Most agentic systems start every session as if they have never met you. The fix is not a bigger context window. It is borrowing the four-memory model from neuroscience (procedural, episodic, semantic, contextual) and building a stack where each type is stored in the right place, retrieved by the right query, and evicted when stale. Here is the architecture I run, the mistakes I made first, and the open-source pieces that hold it together.
+Most agentic systems start every session as if they have never met you. The fix is not a bigger context window. It is borrowing the four-memory model from neuroscience (procedural, episodic, semantic, contextual) and building a stack where each type is stored in the right place, retrieved by the right query, and evicted when stale. Here is the architecture I run, the mistakes I made first, and the open-source pieces that hold it together.
 
 ## Why agents forget
 

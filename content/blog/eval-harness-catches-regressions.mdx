@@ -3,12 +3,13 @@ title: "Building an Eval Harness That Catches Regressions"
 slug: eval-harness-catches-regressions
 publishedDate: "2026-05-07"
 description: "Anthropic shipped three concurrent regressions over six weeks and their eval suite caught none of them. Even Anthropic ships blind. Here is the six-layer harness pattern that would have caught it."
+track: "engineering"
 tags: ["evals", "agents", "production", "testing", "anthropic", "shadow-testing"]
 kind: deep-dive
 draft: false
 ---
 
-**TL;DR.** On April 23, Anthropic published a [public postmortem](https://www.anthropic.com/engineering/april-23-postmortem) admitting that Claude Code degraded for roughly six weeks because three independent infrastructure changes shipped between March 4 and April 16, and the standard internal eval suite caught none of them. Only post-incident ablation found a 3% drop on a single eval the regression suite never tested. Three regressions, six weeks of user-visible quality drop, zero pre-merge eval signal. The team that publishes the canonical [*Demystifying Evals for AI Agents*](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) ships blind. If Anthropic ships blind, your eval is almost certainly worse. The fix is not a bigger scoreboard. It is a six-layer harness against a dataset that grows from real failures, where each layer catches what the layer above misses.
+On April 23, Anthropic published a [public postmortem](https://www.anthropic.com/engineering/april-23-postmortem) admitting that Claude Code degraded for roughly six weeks because three independent infrastructure changes shipped between March 4 and April 16, and the standard internal eval suite caught none of them. Only post-incident ablation found a 3% drop on a single eval the regression suite never tested. Three regressions, six weeks of user-visible quality drop, zero pre-merge eval signal. The team that publishes the canonical [*Demystifying Evals for AI Agents*](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) ships blind. If Anthropic ships blind, your eval is almost certainly worse. The fix is not a bigger scoreboard. It is a six-layer harness against a dataset that grows from real failures, where each layer catches what the layer above misses.
 
 ## Even Anthropic ships blind
 

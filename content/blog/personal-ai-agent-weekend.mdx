@@ -3,11 +3,12 @@ title: "Building a Personal AI Agent in a Weekend"
 slug: personal-ai-agent-weekend
 publishedDate: "2026-04-24"
 description: "The build, the OpenClaw config, and the first agent worth running. End to end on a Framework 16 with 96GB unified memory."
+track: "models-rigs"
 tags: ["amd", "rocm", "openclaw", "agents", "local-first"]
 draft: false
 ---
 
-**TL;DR.** A working personal AI agent on AMD hardware in 2026 looks like this: ROCm 7.3 + Vulkan as fallback, Ollama serving Qwen 3.6 27B and Gemma 4 26B MoE, OpenClaw as the persistent terminal harness, an MCP bridge for tool calling, and a six-file project memory the agent reads at every session. This post is the end-to-end build. Every command runs. Every file is the actual contents. The first useful agent boots in under an hour.
+A working personal AI agent on AMD hardware in 2026 looks like this: ROCm 7.3 + Vulkan as fallback, Ollama serving Qwen 3.6 27B and Gemma 4 26B MoE, OpenClaw as the persistent terminal harness, an MCP bridge for tool calling, and a six-file project memory the agent reads at every session. This post is the end-to-end build. Every command runs. Every file is the actual contents. The first useful agent boots in under an hour.
 
 ## What "personal" actually means
 

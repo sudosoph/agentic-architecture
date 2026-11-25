@@ -3,11 +3,12 @@ title: "OAuth Was Built for Three Actors. Agents Are the Fourth."
 slug: the-4-legged-identity
 publishedDate: "2026-05-01"
 description: "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway."
+track: "engineering"
 tags: ["identity", "oauth", "agents", "mcp", "security"]
 draft: false
 ---
 
-**TL;DR.** OAuth's three-legged flow (user, app, identity provider) was correct for a decade. Agentic systems break it because they introduce a fourth actor: the agent acting on the user's behalf. The downstream API sees the agent's credential, not the user's identity. [RFC 8693 (OAuth 2.0 Token Exchange)](https://datatracker.ietf.org/doc/html/rfc8693) is the standard fix. Most production agentic deployments in 2026 are not implementing it. This post is what breaks, what the right answer looks like, and why the OSS ecosystem is finally catching up.
+OAuth's three-legged flow (user, app, identity provider) was correct for a decade. Agentic systems break it because they introduce a fourth actor: the agent acting on the user's behalf. The downstream API sees the agent's credential, not the user's identity. [RFC 8693 (OAuth 2.0 Token Exchange)](https://datatracker.ietf.org/doc/html/rfc8693) is the standard fix. Most production agentic deployments in 2026 are not implementing it. This post is what breaks, what the right answer looks like, and why the OSS ecosystem is finally catching up.
 
 ## The triangle that worked
 

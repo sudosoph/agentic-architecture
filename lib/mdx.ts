@@ -1,13 +1,17 @@
 import { blogPosts } from './blog-manifest.generated'
 
+export type BlogTrack = 'small-business' | 'models-rigs' | 'engineering'
+
 export interface PostFrontmatter {
   title: string
   slug: string
   publishedDate: string
   description: string
   tags: string[]
+  track?: BlogTrack
+  readingMinutes?: number
   /** Format. Defaults to 'post'. Deep dives are 2,500+ word reference articles
-   * with primary research — surfaced separately on the /blog index. */
+   * with primary research. */
   kind?: 'post' | 'deep-dive'
   draft?: boolean
 }
@@ -20,9 +24,15 @@ export function getAllPosts(): PostMeta[] {
     .sort(
       (a, b) =>
         new Date(b.frontmatter.publishedDate).getTime() -
-        new Date(a.frontmatter.publishedDate).getTime()
+        new Date(a.frontmatter.publishedDate).getTime(),
     )
     .map(({ frontmatter: { draft: _draft, ...rest }, slug }) => ({ ...rest, slug }))
+}
+
+export function getPostsByTrack(track?: string): PostMeta[] {
+  const all = getAllPosts()
+  if (!track || track === 'all') return all
+  return all.filter(p => p.track === track)
 }
 
 export function getDeepDives(): PostMeta[] {
@@ -36,7 +46,7 @@ export function getRegularPosts(): PostMeta[] {
 export type TocItem = { id: string; text: string }
 
 export function getPost(
-  slug: string
+  slug: string,
 ): { frontmatter: PostFrontmatter; html: string; toc: TocItem[] } | null {
   const post = blogPosts.find(p => p.slug === slug)
   return post ? { frontmatter: post.frontmatter, html: post.html, toc: post.toc } : null

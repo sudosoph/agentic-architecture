@@ -3,12 +3,13 @@ title: "Mixing and Matching Open-Weight Models: A Recipe Book"
 slug: mixing-and-matching-open-weight-models
 publishedDate: "2026-05-07"
 description: "An 84% cost reduction on a real SaaS workload, a 97% reduction on agentic dev loops, and the three-tier mix that actually ships in May 2026."
+track: "models-rigs"
 tags: ["local-models", "cost", "open-weights", "agents", "qwen", "kimi", "deepseek"]
 kind: deep-dive
 draft: false
 ---
 
-**TL;DR.** In May 2026, [Qwen 3.6-27B Dense](https://huggingface.co/Qwen/Qwen3.6-27B) running on a single consumer GPU at home posts 77.2% on SWE-bench Verified, within 0.4 points of Claude Opus 4.6. Electricity cost: roughly $0.0003 per million input tokens. The frontier API equivalent is $5/$25. That four-orders-of-magnitude gap is the arbitrage. The cheapest production stack in 2026 is not the cheapest model. It is a three-tier mix where a 1-4B classifier routes 80% of traffic to a mid-tier 27-35B open-weight worker, and only the residual 5-15% touches a frontier API. Documented savings on real workloads: 60-84% reduction versus frontier-only, with quality drop typically under two percentage points on SWE-bench and MMLU-Pro. The plumbing that makes this practical (vLLM, SGLang, OpenRouter fallbacks, EAGLE-3 speculative decoding, ROCm 7.2+) all landed in the last twelve months.
+In May 2026, [Qwen 3.6-27B Dense](https://huggingface.co/Qwen/Qwen3.6-27B) running on a single consumer GPU at home posts 77.2% on SWE-bench Verified, within 0.4 points of Claude Opus 4.6. Electricity cost: roughly $0.0003 per million input tokens. The frontier API equivalent is $5/$25. That four-orders-of-magnitude gap is the arbitrage. The cheapest production stack in 2026 is not the cheapest model. It is a three-tier mix where a 1-4B classifier routes 80% of traffic to a mid-tier 27-35B open-weight worker, and only the residual 5-15% touches a frontier API. Documented savings on real workloads: 60-84% reduction versus frontier-only, with quality drop typically under two percentage points on SWE-bench and MMLU-Pro. The plumbing that makes this practical (vLLM, SGLang, OpenRouter fallbacks, EAGLE-3 speculative decoding, ROCm 7.2+) all landed in the last twelve months.
 
 The strongest version of this pattern is an agentic dev loop where a Qwen3-4B router sends "edit" and "explain" turns to a local Qwen 3.6-27B and only flags the rare "novel research" turn for Sonnet. Blended cost per million output tokens: ~$0.40 versus $15 frontier-only. **97% reduction.** The rest of this post is six recipes, the cost teardown for each, the implementation patterns, and the six cases where you should not do this.
 

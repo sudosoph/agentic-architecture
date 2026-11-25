@@ -1,13 +1,14 @@
 ---
-title: "AI Agent Conference NYC: 10 Takeaways"
+title: "10 Lessons for Business & Tech Leaders From AI Agent Conference NYC"
 slug: ai-agent-conf-nyc-takeaways
 publishedDate: "2026-05-05"
 description: "The 10 things from AI Agent Conference 2026 NYC (May 4-5, NY Hilton Midtown) that are actually load-bearing if you ship agents in 2026. The trust paradox, CrewAI's 42% AI-authored code, the iceberg under every project, AX as the new UX, and what the panels from Datadog, LanceDB, Carta, and the Codex/Linear/Graphite room actually said."
+track: "small-business"
 tags: ["agents", "production", "conferences", "hitl", "evals"]
 draft: false
 ---
 
-**TL;DR.** AI Agent Conference NYC ran May 4-5 at the NY Hilton Midtown. The room was production agent teams, CIOs, and the vendors selling them. Below are the 10 takeaways I would tell a CTO who could not attend, ranked by how much they will change what you ship next quarter. Every item links the deeper post on this site.
+AI Agent Conference NYC ran May 4-5 at the NY Hilton Midtown. The room was production agent teams, CIOs, and the vendors selling them. Below are the 10 takeaways I would tell a CTO who could not attend, ranked by how much they will change what you ship next quarter. Every item links the deeper post on this site.
 
 ## 1. Tim Sanders (G2) + Raghu Malpani (UiPath): the trust paradox is the framing that lets you ship.
 
@@ -24,8 +25,8 @@ The founder of one of the major multi-agent frameworks runs a team where almost 
 
 Moura's other framing landed: agentic systems are bifurcating into two shapes that increasingly call each other.
 
-- **Ad-hoc workflows** — disposable, output is what matters. Examples: OpenClaw, Claude Code, Cowork.
-- **Embedded workflows** — recurring, governed, the business runs on them. CrewAI's home turf.
+- **Ad-hoc workflows**, disposable, output is what matters. Examples: OpenClaw, Claude Code, Cowork.
+- **Embedded workflows**, recurring, governed, the business runs on them. CrewAI's home turf.
 
 Reusable building blocks, agent repositories, and skills repositories are the flywheels that compound. CrewAI open-sourced their skills library at `skills.crewai.com`. [Death of the junior dev is overstated](/blog/death-of-the-junior-dev).
 
@@ -68,10 +69,10 @@ Production agents turn retrieval from a single lookup into parallel, multimodal,
 
 LanceDB's storage tiering for the artifact problem, all behind one read API:
 
-- **Inline** (under 64KB) — in the main data file.
-- **Packed** (64KB-4MB) — shared blob sidecar.
-- **Dedicated** (over 4MB) — one blob per asset.
-- **External** (URI/range) — point at existing object storage, no copy.
+- **Inline** (under 64KB), in the main data file.
+- **Packed** (64KB-4MB), shared blob sidecar.
+- **Dedicated** (over 4MB), one blob per asset.
+- **External** (URI/range), point at existing object storage, no copy.
 
 Snapshot isolation and time travel matter for evaluation reproducibility. The only way an eval is meaningful is if you can replay the exact context state used during the run. Versioned context with branch and rollback semantics is now a system requirement, not a research nicety.
 
@@ -108,8 +109,8 @@ The hardest data point of the conference. Average software-shipping throughput r
 
 The bottleneck migrated from code generation to code validation, with a side effect: roles outside engineering (PM, design, communicating product requirements) are now the rate limiter for the same reason Andrew Ng described at SF the week before.
 
-- **Inner loop** (build, debug, push) — dominated by AI-generated code.
-- **Outer loop** (queue, manual review, compliance, security, deploy) — dominated by slow feedback and noisy signals.
+- **Inner loop** (build, debug, push), dominated by AI-generated code.
+- **Outer loop** (queue, manual review, compliance, security, deploy), dominated by slow feedback and noisy signals.
 
 Multi-agent self-review (one agent proposes, four others critique until consensus) buys back confidence at the cost of compute. The panel argued the trade is worth it.
 

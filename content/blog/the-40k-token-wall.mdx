@@ -3,11 +3,12 @@ title: "The 40K Token Wall"
 slug: the-40k-token-wall
 publishedDate: "2026-04-30"
 description: "Why bigger context windows are not the answer, and what production-tuned engineers actually trust in 2026."
+track: "engineering"
 tags: ["context-engineering", "agents", "rag", "evals"]
 draft: false
 ---
 
-**TL;DR.** Language models are not invariant to their context windows. Whether you have 1M, 2M, or 10M tokens of headroom, builders who have actually evaluated production agentic systems do not trust the model past about **40K tokens** before quality starts dropping. This is the opposite of what every model provider's marketing implies. Standard RAG is dead. The replacement is not a longer context window. It is curated context, written and read by sub-agents that know what to fetch and what to evict.
+Language models are not invariant to their context windows. Whether you have 1M, 2M, or 10M tokens of headroom, builders who have actually evaluated production agentic systems do not trust the model past about **40K tokens** before quality starts dropping. This is the opposite of what every model provider's marketing implies. Standard RAG is dead. The replacement is not a longer context window. It is curated context, written and read by sub-agents that know what to fetch and what to evict.
 
 ## The headline number
 

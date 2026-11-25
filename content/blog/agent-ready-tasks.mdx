@@ -1,13 +1,14 @@
 ---
-title: "Find Your Agent-Ready Tasks in 90 Minutes"
+title: "How to Find the 20% of Your Work AI Should Actually Handle (In 90 Minutes)"
 slug: agent-ready-tasks
 publishedDate: "2026-04-22"
 description: "A framework for finding which 20% of your tasks are agent-ready before you write a line of code."
+track: "small-business"
 tags: ["smb", "agents", "audit", "automation", "framework"]
 draft: false
 ---
 
-**TL;DR.** Most companies trying to add agents lose the first six months building agents for tasks that should not have been automated. The fastest 30% of business value in 2026 comes from finding the *right* tasks before writing any code. This post is a four-axis scoring framework, a 90-minute process to run it, and the buckets the scores produce. It is the same framework Anthropic recommends in their "Building Effective Agents" guide, simplified to fit one page and one sitting.
+Most companies trying to add agents lose the first six months building agents for tasks that should not have been automated. The fastest 30% of business value in 2026 comes from finding the *right* tasks before writing any code. This post is a four-axis scoring framework, a 90-minute process to run it, and the buckets the scores produce. It is the same framework Anthropic recommends in their "Building Effective Agents" guide, simplified to fit one page and one sitting.
 
 ## The expensive lesson everyone learns
 
@@ -148,9 +149,9 @@ Total: `(5 × 2) + 3 + (6 − 4) + 4 = 19`. Ship with HITL. The agent classifies
 | Consequence       | 3     | Wrong send damages a relationship          |
 | Structured signal | 2     | Free-text bio + scattered intent signals  |
 
-Total: `(4 × 2) + 2 + (6 − 3) + 2 = 15`. Borderline. Decompose: the *research* sub-step (scrape news plus LinkedIn plus financials before drafting) scores volume-4, variability-3, consequence-5, structured-signal-3 = `(4 × 2) + 3 + (6 − 5) + 3 = 15`. Wait, that's the same.
+Total: `(4 × 2) + 2 + (6 - 3) + 2 = 15`. Borderline as a single end-to-end agent.
 
-Actually look at it differently. Decompose into research and send. The *research* step scores volume-4, variability-3, consequence-5 (no consequence to research, you just generate a dossier), structured-signal-3 = `(4 × 2) + 3 + 1 + 3 = 15`. Higher with consequence factored properly. Ship the research sub-step. Keep the human on send.
+Now decompose that workflow into two separate steps: **Prospect Research Dossier** and **Outbound Send**. Scored on its own, the **Prospect Research Dossier** step has volume 4, bounded variability 4 (repeatable five-field company snapshot), consequence 1 (internal brief only, zero external relationship risk, so `6 - 1 = 5`), and structured signal 2: `(4 × 2) + 4 + 5 + 2 = 19`. Decomposing moves the research step cleanly from `15` (Borderline) to `19` (**Ship with HITL**). Automate the research dossier today, and keep a human click on the send.
 
 The lesson: high-consequence tasks often hide low-consequence research and analysis subtasks that are absolutely agent-ready. Pull them out and ship them separately.
 

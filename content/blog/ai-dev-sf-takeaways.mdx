@@ -1,13 +1,14 @@
 ---
-title: "AI Dev SF: 10 Takeaways"
+title: "What Actually Works in Production AI: 10 Takeaways From AI Dev SF"
 slug: ai-dev-sf-takeaways
 publishedDate: "2026-05-05"
 description: "The 10 things from AI Dev 26 SF (April 28-29, Pier 48) that are actually load-bearing if you build agentic systems in 2026. Marc Brooker on defects, Andrew Ng on PM bottlenecks, Bain's 8-subgraph payroll system, the 4-legged identity, hybrid doc OCR, and the simulation sandbox every action-taking agent needs."
+track: "small-business"
 tags: ["agents", "production", "conferences", "evals", "security"]
 draft: false
 ---
 
-**TL;DR.** AI Dev 26 in SF (Pier 48 Shed B, April 28-29) was production-engineering-heavy and laboratory-light. Below are the 10 takeaways I would brief a lead engineer on, ranked by impact on what you build next quarter. Every item links the deeper post on this site.
+AI Dev 26 in SF (Pier 48 Shed B, April 28-29) was production-engineering-heavy and laboratory-light. Below are the 10 takeaways I would brief a lead engineer on, ranked by impact on what you build next quarter. Every item links the deeper post on this site.
 
 ## 1. Marc Brooker (AWS): the limit on agentic AI is the defect rate, not capability.
 
@@ -15,9 +16,9 @@ The clearest framing of the conference. Capability has exploded over the last 18
 
 What AWS shipped the same week:
 
-- **Trusted Remote Execution** (open-sourced) — auto-formalized policies written in Cedar, executed against agent-built scripts in the cloud.
-- **Cedar** — a policy language with deep roots in automated reasoning.
-- **Bedrock Guardrails** — converts natural-language SOPs into mathematically precise specs (autoformalization).
+- **Trusted Remote Execution** (open-sourced), auto-formalized policies written in Cedar, executed against agent-built scripts in the cloud.
+- **Cedar**, a policy language with deep roots in automated reasoning.
+- **Bedrock Guardrails**, converts natural-language SOPs into mathematically precise specs (autoformalization).
 
 The cultural argument: take the worst days as seriously as the best. [Defects, not capability, is the wall](/blog/death-of-the-junior-dev).
 
@@ -42,9 +43,9 @@ The frontier is shifting from "what can the model do" to "what can the model do 
 
 System thinking, judgment, and stakeholder alignment are rising. Syntax memorization, boilerplate production, and isolated coding speed are falling. AMD's contributions to the upper arm of the K:
 
-- **HotSwap** — intercepts GPU kernel loads and retargets ISA at runtime. A "Rosetta for GPUs" so older hardware runs new kernels at native speed.
-- **Native HIP backend for llama.cpp** — ~100 custom kernels, zero ROCm-library dependencies, no CUDA, no Vulkan.
-- **IREE Tokenizer** — purpose-built for the actual bottleneck in production agentic chat: tokenization throughput.
+- **HotSwap**, intercepts GPU kernel loads and retargets ISA at runtime. A "Rosetta for GPUs" so older hardware runs new kernels at native speed.
+- **Native HIP backend for llama.cpp**, ~100 custom kernels, zero ROCm-library dependencies, no CUDA, no Vulkan.
+- **IREE Tokenizer**, purpose-built for the actual bottleneck in production agentic chat: tokenization throughput.
 
 The agent-as-cron-job era is over. Agents are now contiguous systems that monitor for issues, file PRs, validate tests, and merge with little human review. The pipeline supporting them needs to be just as continuous. [Why I bet on a Framework laptop in 2026](/blog/framework-laptop-thesis) is the consumer-side version of this argument.
 
@@ -78,10 +79,10 @@ The four-legged identity problem (User → Agent → MCP → API) is now the def
 
 The four RFCs that complete the OAuth story for agents:
 
-- **RFC 9728** — resource metadata; tells the agent which auth server to use.
-- **RFC 8414** — auth-server discovery; tells the agent how to interact.
-- **RFC 7591** — dynamic client registration; lets agents register themselves.
-- **RFC 8693** — token exchange; preserves user identity across audience changes downstream.
+- **RFC 9728**, resource metadata; tells the agent which auth server to use.
+- **RFC 8414**, auth-server discovery; tells the agent how to interact.
+- **RFC 7591**, dynamic client registration; lets agents register themselves.
+- **RFC 8693**, token exchange; preserves user identity across audience changes downstream.
 
 Build a broker layer that handles exchange, scope narrowing, and audit. Skipping this ships agents with shared God-mode credentials and no chain of custody. [The 4-legged identity, long version](/blog/the-4-legged-identity).
 
@@ -107,7 +108,7 @@ Roughly 90% of enterprise data lives in PDFs, scans, and screenshots that were n
 - Agent-in-the-loop verification between every pipeline stage.
 - Classification and document splitting *before* parsing, not after.
 
-Liu released **LiteParse** (`run-llama/liteparse`, MIT-licensed, CLI-native) and the team launched **ParseBench** (`parsebench.ai`) — 2K human-verified pages, the new enterprise OCR benchmark for AI agents. [Document OCR for agentic workflows](/blog/document-ocr-for-agents).
+Liu released **LiteParse** (`run-llama/liteparse`, MIT-licensed, CLI-native) and the team launched **ParseBench** (`parsebench.ai`), 2K human-verified pages, the new enterprise OCR benchmark for AI agents. [Document OCR for agentic workflows](/blog/document-ocr-for-agents).
 
 ## 10. Andi Partovi (Veris AI): every action-taking agent lives in a POMDP and needs a simulation sandbox.
 

@@ -3,11 +3,12 @@ title: "One Codebase, Five Products: The Monorepo Pattern"
 slug: the-monorepo-advantage
 publishedDate: "2026-04-27"
 description: "Why AI-native teams are deploying micro-SaaS apps from a single codebase, and how to architect a SaaS factory that compounds."
+track: "engineering"
 tags: ["monorepo", "saas", "ai-native", "architecture", "turborepo"]
 draft: false
 ---
 
-**TL;DR.** AI-native teams in 2026 are shipping multiple micro-SaaS products from a single monorepo because shared agents, shared infrastructure, and shared evals compound across products in a way that polyrepo architectures can not match. Nx now ships a [`nx configure-ai-agents`](https://nx.dev/) command that installs CLAUDE.md, AGENTS.md, and an MCP server in one shot. Turborepo's content-aware caching means agent-driven changes ship in seconds. This post is the case for the SaaS-factory monorepo, when Turborepo wins, when Nx wins, and the failure modes I have hit running this pattern.
+AI-native teams in 2026 are shipping multiple micro-SaaS products from a single monorepo because shared agents, shared infrastructure, and shared evals compound across products in a way that polyrepo architectures can not match. Nx now ships a [`nx configure-ai-agents`](https://nx.dev/) command that installs CLAUDE.md, AGENTS.md, and an MCP server in one shot. Turborepo's content-aware caching means agent-driven changes ship in seconds. This post is the case for the SaaS-factory monorepo, when Turborepo wins, when Nx wins, and the failure modes I have hit running this pattern.
 
 ## What changed in 2026
 
