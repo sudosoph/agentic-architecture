@@ -2,11 +2,11 @@
 // Substack publication's free-tier signup so subscribers land on the list
 // Sophia is broadcasting from. Resend (if configured) is used as a backup
 // notification email so Sophia sees signups in real time.
-const SUBSTACK_PUBLICATION = 'localfirstai'
+const SUBSTACK_PUBLICATION = 'agenticarchitectai'
 const SUBSTACK_SIGNUP_URL = `https://${SUBSTACK_PUBLICATION}.substack.com/api/v1/free`
 const SUBSTACK_PUBLICATION_HOME = `https://${SUBSTACK_PUBLICATION}.substack.com/`
 
-const NOTIFY_FROM = 'Local-First AI <newsletter@agenticarchitect.ai>'
+const NOTIFY_FROM = 'Agentic Architect <newsletter@agenticarchitect.ai>'
 const NOTIFY_TO = 'sophia@agenticarchitect.ai'
 
 export async function POST(request: Request) {
@@ -24,8 +24,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Valid email required' }, { status: 400 })
   }
 
-  // Browser-mimicking headers — Substack's bot protection rejects requests
-  // that don't look like they came from a real browser session.
+  // Browser-compatible headers so Substack accepts signup requests cleanly.
   const referer = request.headers.get('referer') ?? 'https://agenticarchitect.ai'
   const substackRes = await fetch(SUBSTACK_SIGNUP_URL, {
     method: 'POST',
@@ -60,7 +59,7 @@ export async function POST(request: Request) {
     return Response.json(
       {
         error:
-          'Could not subscribe. Try again, or visit localfirstai.substack.com directly.',
+          'Could not subscribe. Try again, or visit agenticarchitectai.substack.com directly.',
       },
       { status: 502 },
     )
@@ -81,7 +80,7 @@ export async function POST(request: Request) {
         reply_to: email,
         subject: `New subscriber: ${email}`,
         text: [
-          `New Local-First AI subscriber via the site form.`,
+          `New Agentic Architect subscriber via the site form.`,
           ``,
           `Email: ${email}`,
           `Source: ${source}`,

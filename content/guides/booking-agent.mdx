@@ -16,13 +16,13 @@ draft: false
 
 **What it costs.** Effectively zero. The Anthropic API charges per use (around $0.005 per drafted reply with Claude Haiku, less than a penny). Cal.com has a free tier. No monthly subscription.
 
-**What it doesn't do (yet).** It doesn't read your inbox automatically — that's the next guide. This first version is a copy-paste tool. We start here on purpose: you stay in control, you see every draft before it goes out, and you build trust in the agent before handing it the keys.
+**What it doesn't do (yet).** It doesn't read your inbox automatically, that's the next guide. This first version is a copy-paste tool. We start here on purpose: you stay in control, you see every draft before it goes out, and you build trust in the agent before handing it the keys.
 
 ## What you'll need
 
-- A computer (Mac, Windows, or Linux — any of them work).
+- A computer (Mac, Windows, or Linux, any of them work).
 - A free [Anthropic account](https://console.anthropic.com) for the API key. New accounts get $5 in free credit, which is enough for ~1,000 drafted replies.
-- A free [Cal.com account](https://cal.com) (or any scheduling link — Calendly works too, just swap the URL).
+- A free [Cal.com account](https://cal.com) (or any scheduling link, Calendly works too, just swap the URL).
 - About 45 minutes. The first 15 are setup, the rest is using it and tweaking the tone.
 
 You do not need to know how to code. You'll copy and paste a few commands. If you've ever opened the Terminal app to run something a guide told you to, you have all the skills required.
@@ -64,7 +64,7 @@ cd booking-agent
 npm install
 ```
 
-The first command downloads the code. The second moves you into the folder. The third installs the libraries the app needs (it'll print a lot of text — that's normal, wait for it to finish).
+The first command downloads the code. The second moves you into the folder. The third installs the libraries the app needs (it'll print a lot of text, that's normal, wait for it to finish).
 
 If you get an error like "command not found: npm", you need to install Node.js first. Go to [nodejs.org](https://nodejs.org), download the LTS version, install it, then run the three commands above again.
 
@@ -93,7 +93,7 @@ You'll see a line that says something like `Local: http://localhost:3000`. Open 
 
 ## Step 6. Use it
 
-Find a scheduling email in your inbox — the kind that says "Hey, free for a quick call next week?" Copy the entire email body (subject + body if you want, but the body is what matters). Paste it into the text box. Click **Draft reply**.
+Find a scheduling email in your inbox, the kind that says "Hey, free for a quick call next week?" Copy the entire email body (subject + body if you want, but the body is what matters). Paste it into the text box. Click **Draft reply**.
 
 In a few seconds, you'll see a draft reply below the form. It will:
 
@@ -132,7 +132,7 @@ When declining:
 Sign off with: "Sophia"
 ```
 
-This is your agent's brand voice. Edit it freely. Run a few drafts and watch the agent adapt — the changes take effect on the next draft, no restart needed.
+This is your agent's brand voice. Edit it freely. Run a few drafts and watch the agent adapt, the changes take effect on the next draft, no restart needed.
 
 The voice file is the most important customization, and the most fun. Add your own tics, your own preferred phrases, the things you say a lot, the things you'd never say. The agent reads this on every request and uses it to shape every reply. This is the same pattern professional writers use to keep AI on-brand at scale.
 
@@ -161,7 +161,7 @@ This guide builds the simplest possible version on purpose. Things it intentiona
 - **Read your Gmail inbox automatically.** You still copy-paste each email. V1 is about you trusting the drafts before automating the read path.
 - **Send replies for you.** Drafts only. You hit send.
 - **Connect to Google Calendar to suggest specific times.** It always offers the Cal.com link instead, because suggesting times that turn out to conflict is the most common failure mode of full-automation booking bots.
-- **Use MCP** (Model Context Protocol) for Google Workspace. MCP is the right pattern for V2 — it lets the agent read Gmail, write drafts to Gmail's drafts folder, and query Calendar — but the setup is significantly more involved than this beginner guide.
+- **Use MCP** (Model Context Protocol) for Google Workspace. MCP is the right pattern for V2, it lets the agent read Gmail, write drafts to Gmail's drafts folder, and query Calendar, but the setup is significantly more involved than this beginner guide.
 
 If you want any of these, that's V2 territory. The next guide in this series adds Gmail-via-MCP automation: agent watches your inbox, classifies scheduling emails, drafts replies, lands them in your Gmail drafts folder for review. Same pattern as this guide (paste-and-trust first, then automate), one layer up.
 
@@ -169,8 +169,8 @@ If you want any of these, that's V2 territory. The next guide in this series add
 
 The natural next step, in three pieces:
 
-1. **MCP server for Gmail** — there's a community-maintained one (`gmail-mcp-server`) that exposes inbox, search, and drafts as tools. The agent gets `read_inbox`, `search_messages`, `create_draft` capabilities.
-2. **MCP server for Calendar** — same pattern. `list_events`, `find_free_slots`. The agent can answer "is Tuesday at 2 actually open?" before suggesting it.
+1. **MCP server for Gmail**, there's a community-maintained one (`gmail-mcp-server`) that exposes inbox, search, and drafts as tools. The agent gets `read_inbox`, `search_messages`, `create_draft` capabilities.
+2. **MCP server for Calendar**, same pattern. `list_events`, `find_free_slots`. The agent can answer "is Tuesday at 2 actually open?" before suggesting it.
 3. **A small loop** that runs every 15 minutes: list new messages → classify scheduling vs other → for scheduling messages, draft reply → save to Gmail drafts. You review and send when you're ready.
 
 V1 (this guide) is the foundation. You learn the prompt-engineering layer and build trust in the drafts. V2 adds the read/write automation on top of the same skill.
@@ -179,7 +179,7 @@ If you want a heads-up when V2 lands, subscribe to Local-First AI at the bottom 
 
 ## When this beginner guide isn't enough
 
-If you're a developer reading this and thinking "I just want the full Gmail integration now" — fair. The Boulder Startup Week 2026 workshop ([/bsw](/bsw)) covers the full agentic pattern (research, draft, HITL, audit) with n8n + Gmail + an MCP-shaped tool layer. The slides, n8n template JSON, and the 17-step tutorial are open at the link above. That's the closest thing to "the full thing" the site has today.
+If you're a developer reading this and thinking "I just want the full Gmail integration now", fair. The Boulder Startup Week 2026 workshop ([/bsw](/bsw)) covers the full agentic pattern (research, draft, HITL, audit) with n8n + Gmail + an MCP-shaped tool layer. The slides, n8n template JSON, and the 17-step tutorial are open at the link above. That's the closest thing to "the full thing" the site has today.
 
 ## Troubleshooting
 
@@ -187,7 +187,7 @@ If you're a developer reading this and thinking "I just want the full Gmail inte
 
 **The browser says "this site can't be reached".** Make sure `npm run dev` is still running in the Terminal. If you closed the Terminal, open it again, `cd booking-agent`, and run `npm run dev` again.
 
-**The draft is in a weird tone or makes things up.** Two fixes: (1) make `voice.md` more specific (add example replies you've sent before — show, don't tell), and (2) try Claude Sonnet instead of Haiku (see "What it costs" above). The smarter model picks up subtle tone shifts faster.
+**The draft is in a weird tone or makes things up.** Two fixes: (1) make `voice.md` more specific (add example replies you've sent before, show, don't tell), and (2) try Claude Sonnet instead of Haiku (see "What it costs" above). The smarter model picks up subtle tone shifts faster.
 
 **It mentioned a meeting time the sender didn't ask for.** Open `src/prompt.ts` and look for the line that says "Do not invent times". Make it more explicit, e.g., "Never propose a specific time. Always offer the Cal.com link instead."
 
@@ -195,4 +195,4 @@ If you're a developer reading this and thinking "I just want the full Gmail inte
 
 ## Where to ask for help
 
-Stuck on a step? [Email me](/contact). Include the step number you're on and what the Terminal said when it broke. I read every message and I'm building this guide series in public — the questions you ask shape the next version.
+Stuck on a step? [Email me](/contact). Include the step number you're on and what the Terminal said when it broke. I read every message and I'm building this guide series in public, the questions you ask shape the next version.

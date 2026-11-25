@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     return Response.json(
       {
         error:
-          'Contact form is being set up. Email Sophia directly at sophia@agenticarchitect.ai — your message is included below for easy copy-paste.',
+          'Contact form is being set up. Email Sophia directly at sophia@agenticarchitect.ai; your message is included below for easy copy-paste.',
         unconfigured: true,
       },
       { status: 503 },

@@ -32,4 +32,15 @@ describe('Badge', () => {
     render(<Badge variant="status" color="red" data-testid="b">down</Badge>)
     expect(screen.getByTestId('b').className).toContain('text-red')
   })
+
+  it('renders online and rig semantic Crisp Operator variants', () => {
+    render(
+      <>
+        <Badge variant="online" data-testid="online">live</Badge>
+        <Badge variant="rig" data-testid="rig">mesh</Badge>
+      </>,
+    )
+    expect(screen.getByTestId('online').className).toContain('text-emerald-700')
+    expect(screen.getByTestId('rig').className).toContain('text-amber-700')
+  })
 })

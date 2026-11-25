@@ -2,7 +2,6 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { describe, it, expect } from 'vitest'
-// @ts-expect-error ESM mjs helper imported directly in Vitest
 import { buildContentPackTemplates } from '../scripts/new-content-pack.mjs'
 
 describe('Omnichannel Content Pack Generator & Brand Engine Plugin', () => {
