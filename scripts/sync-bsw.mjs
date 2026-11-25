@@ -59,7 +59,7 @@ function copyIfChanged(src, dest, label) {
   try {
     const a = fs.statSync(src)
     const b = fs.statSync(dest)
-    if (a.size === b.size && a.mtimeMs <= b.mtimeMs) {
+    if (a.mtimeMs <= b.mtimeMs) {
       return false
     }
   } catch {

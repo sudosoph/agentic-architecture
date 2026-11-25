@@ -5,13 +5,13 @@
 
 **Audience:** Early-stage founders, lean operators, anyone who can configure a Google Sheet.
 **Time:** 20 minutes live demo · 45–60 minutes self-paced if new to n8n.
-**License:** MIT — fork freely, ship yours.
+**License:** MIT: fork freely, ship yours.
 
 **Repo:** [github.com/sudosoph/bsw26-agentic-workflows](https://github.com/sudosoph/bsw26-agentic-workflows)
 **Workshop:** Boulder Startup Week 2026 · Sophia Stein · [agenticarchitect.ai/blog](https://agenticarchitect.ai/blog)
 **Live reference workflow:** https://sophiastein.app.n8n.cloud/workflow/bd3bleAE0dPG4SgN *(replace `sophiastein` with your own n8n Cloud subdomain when you import it; the workflow ID stays the same)*
 
-> ⚠️ **Before you start**, scan [`n8n/README.md`](n8n/README.md) — it captures every platform gotcha we hit while building this live (Reddit blocking n8n Cloud IPs, voice.md DOCX issue, paired-item lookups, 60s code timeout, Gmail "To" field expression mode, etc.). Saves at least an hour of debugging.
+> ⚠️ **Before you start**, scan [`n8n/README.md`](n8n/README.md): it captures every platform gotcha we hit while building this live (Reddit blocking n8n Cloud IPs, voice.md DOCX issue, paired-item lookups, 60s code timeout, Gmail "To" field expression mode, etc.). Saves at least an hour of debugging.
 
 ---
 
@@ -19,7 +19,7 @@
 
 - ✅ A scheduled n8n workflow that wakes up daily at 7 AM
 - ✅ Drafts ~5 personalized customer-discovery emails per run
-- ✅ Drops them in your Gmail Drafts folder (never sends — you send)
+- ✅ Drops them in your Gmail Drafts folder (never sends: you send)
 - ✅ Logs every action to a Google Sheet
 - ✅ Sends you a daily digest email at 7:30 AM
 - ✅ Follows up on no-replies after 5 days
@@ -65,9 +65,9 @@ If you have **Claude for Chrome** (Max/Pro subscribers · [claude.com/chrome](ht
 >
 > *7. When done, give me back: the Anthropic key, the Firecrawl key, the Groq key, the Sheet ID (from the URL), and the voice.md file ID. I'll wire these into n8n manually."*
 
-The agent handles signups + form fills + key copy. **You only intervene at OAuth consent screens and payment forms** — typically 2 minutes of your real time across the whole 10-minute autopilot run.
+The agent handles signups + form fills + key copy. **You only intervene at OAuth consent screens and payment forms**: typically 2 minutes of your real time across the whole 10-minute autopilot run.
 
-**Cannot autopilot via Claude Code CLI / shell-only AI.** Browser interaction needs a browser-controlling agent. If you don't have one, follow the manual steps below — they take ~30 minutes.
+**Cannot autopilot via Claude Code CLI / shell-only AI.** Browser interaction needs a browser-controlling agent. If you don't have one, follow the manual steps below: they take ~30 minutes.
 
 ---
 
@@ -89,21 +89,21 @@ The agent handles signups + form fills + key copy. **You only intervene at OAuth
 
 In Google Sheets, create one spreadsheet called `Discovery Engine` with **three tabs**:
 
-**Tab 1 — `ICP`** (1 row of config)
+**Tab 1: `ICP`** (1 row of config)
 
 | icp_description | signal_keywords |
 |---|---|
 | Early-stage SaaS founders, pre-PMF, technical-leaning, complaining about outbound costs | n8n cost, Lindy credits, hired SDR, founder-led sales, Sonnet 4.6 cost |
 
-**Tab 2 — `Sent`** (just the headers, agent will append rows)
+**Tab 2: `Sent`** (just the headers, agent will append rows)
 
 `date · person · signal_type · source_url · score · draft_subject · status`
 
-**Tab 3 — `Runs`** (just the headers, agent will append rows)
+**Tab 3: `Runs`** (just the headers, agent will append rows)
 
 `date · leads_found · qualified · drafts · errors · notes`
 
-**Save the sheet ID from the URL** — looks like `1AbC...XyZ` between `/d/` and `/edit`.
+**Save the sheet ID from the URL**: looks like `1AbC...XyZ` between `/d/` and `/edit`.
 
 ### 3. Create the Drive folder + voice.md
 
@@ -117,7 +117,7 @@ Right-click `voice.md` → Get link → copy. Save the file ID (between `/d/` an
 
 Two options:
 
-**Option A — fork the repo (fastest)**
+**Option A: fork the repo (fastest)**
 ```bash
 # In your terminal
 gh repo fork sudosoph/bsw26-agentic-workflows --clone
@@ -126,7 +126,7 @@ cd bsw-growth-agent
 
 Then in n8n: **Workflows → Add → Import from File** → upload `n8n/bsw-growth-agent.json`. The full workflow appears with placeholder credentials. You only need to wire the credentials and replace the placeholder IDs (covered below).
 
-**Option B — build from scratch (this tutorial)**
+**Option B: build from scratch (this tutorial)**
 Follow the 17 steps below.
 
 ---
@@ -142,7 +142,7 @@ Time budget per step shown in `[X min]`. Total: 18 minutes building + 2 minutes 
 3. Drag a **Schedule Trigger** node onto canvas
 4. Configure:
    - Trigger Interval: `Custom (Cron)`
-   - Cron Expression: `0 13 * * *` (every day at 7:00 AM Boulder/Denver during MDT — 13:00 UTC). Adjust UTC for your zone: PT=14, ET=11, UK=06, CET=05.
+   - Cron Expression: `0 13 * * *` (every day at 7:00 AM Boulder/Denver during MDT: 13:00 UTC). Adjust UTC for your zone: PT=14, ET=11, UK=06, CET=05.
 
 **Why cron?** Almost every SMB agent starts as a daily scheduled job. You want predictable behavior, not chaos.
 
@@ -164,7 +164,7 @@ For testing and live demos, add a manual trigger as a parallel entry point.
 5. Sheet: `ICP`
 6. Output options: leave defaults
 
-**Test it:** Click "Execute Node" — you should see your `icp_description` and `signal_keywords` come back.
+**Test it:** Click "Execute Node": you should see your `icp_description` and `signal_keywords` come back.
 
 **Pattern:** *Config-as-files.* The agent reads its operating instructions from a Sheet. You can edit the Sheet without touching n8n.
 
@@ -175,7 +175,7 @@ For testing and live demos, add a manual trigger as a parallel entry point.
 3. File: paste your `voice.md` file ID
 4. Binary Property: `voiceMd` (we'll reference this name later)
 
-**Test it:** Click "Execute Node" — you should see the file content as base64. We'll decode it in Step 11.
+**Test it:** Click "Execute Node": you should see the file content as base64. We'll decode it in Step 11.
 
 ### Step 5 · Discovery via Claude Haiku 4.5 + web_search `[3 min]`
 
@@ -252,7 +252,7 @@ return qualified.map(lead => ({ json: lead }));
 3. Same Document ID as before
 4. Sheet: `Sent`
 
-**Why?** We need to know who we've already contacted so we don't double-email anyone. This is **idempotency** — re-run safety.
+**Why?** We need to know who we've already contacted so we don't double-email anyone. This is **idempotency**: re-run safety.
 
 ### Step 8 · Dedup + keep top 5 `[1 min]`
 
@@ -279,7 +279,7 @@ const top5 = fresh.slice(0, 5);
 return top5.map(lead => ({ json: lead }));
 ```
 
-**What this does:** Filters out anyone in the Sent log, sorts by score, keeps top 5. **Progressive enrichment** starts here — we only spend money researching the 5 best candidates.
+**What this does:** Filters out anyone in the Sent log, sorts by score, keeps top 5. **Progressive enrichment** starts here: we only spend money researching the 5 best candidates.
 
 ### Step 9 · Enrich top 5 with Firecrawl `[1 min]`
 
@@ -301,7 +301,7 @@ return top5.map(lead => ({ json: lead }));
 
 6. **Options → Timeout:** `30000` (Firecrawl can take a few seconds)
 
-**Why Firecrawl?** Best signal-to-noise on JavaScript-heavy sites. Apache 2.0 license — self-host on Docker for free, or use Cloud at $83/mo to skip operations.
+**Why Firecrawl?** Best signal-to-noise on JavaScript-heavy sites. Apache 2.0 license: self-host on Docker for free, or use Cloud at $83/mo to skip operations.
 
 ### Step 10 · Summarize the company in 2 sentences `[1 min]`
 
@@ -321,7 +321,7 @@ return top5.map(lead => ({ json: lead }));
 }
 ```
 
-**Pattern:** Cascade again — Haiku for the cheap summary, Sonnet for the next step's drafting.
+**Pattern:** Cascade again: Haiku for the cheap summary, Sonnet for the next step's drafting.
 
 ### Step 11 · Draft the email with Sonnet 4.6 + voice.md `[2 min]`
 
@@ -338,7 +338,7 @@ This is the **only premium-token step** in the workflow. The voice.md file gets 
   "system": [
     {
       "type": "text",
-      "text": "You write customer-discovery emails for a lean startup founder. Goal: an INTERVIEW ASK — not a pitch. Soft CTA. 80–110 words. Follow voice.md exactly."
+      "text": "You write customer-discovery emails for a lean startup founder. Goal: an INTERVIEW ASK: not a pitch. Soft CTA. 80–110 words. Follow voice.md exactly."
     },
     {
       "type": "text",
@@ -348,7 +348,7 @@ This is the **only premium-token step** in the workflow. The voice.md file gets 
   ],
   "messages": [{
     "role": "user",
-    "content": "Draft a customer-discovery email.\n\nPerson: {{ $('Code1').item.json.person }}\nSignal: {{ $('Code1').item.json.signal_type }} — {{ $('Code1').item.json.evidence_quote }}\nSource: {{ $('Code1').item.json.source_url }}\nCompany context: {{ $('HTTP Request2').item.json.content[0].text }}\n\nReturn:\nSUBJECT: [subject]\nBODY:\n[body]"
+    "content": "Draft a customer-discovery email.\n\nPerson: {{ $('Code1').item.json.person }}\nSignal: {{ $('Code1').item.json.signal_type }}: {{ $('Code1').item.json.evidence_quote }}\nSource: {{ $('Code1').item.json.source_url }}\nCompany context: {{ $('HTTP Request2').item.json.content[0].text }}\n\nReturn:\nSUBJECT: [subject]\nBODY:\n[body]"
   }]
 }
 ```
@@ -434,11 +434,11 @@ After all leads have been processed (i.e., all draft emails created), generate o
 4. Subject: parse from the digest response (use a small Code node before, or paste a static one for now)
 5. Message: parse from the digest response
 
-This is the **only place the agent actually sends** — and it's only sending to YOU. Everyone else gets drafts.
+This is the **only place the agent actually sends**: and it's only sending to YOU. Everyone else gets drafts.
 
 ### Step 17 · Append to Runs audit log `[1 min]`
 
-Final step — log this run for trust-building.
+Final step: log this run for trust-building.
 
 1. Drag a **Google Sheets** node
 2. Operation: `Append`
@@ -459,10 +459,10 @@ Final step — log this run for trust-building.
 
 1. Click the **Manual Trigger** node → **Execute Workflow**
 2. Watch the execution flow through all 17 steps
-3. Check Gmail Drafts — you should see ~5 fresh drafts
-4. Check the `Sent` Sheet — 5 new rows
-5. Check the `Runs` Sheet — 1 new row
-6. Check your inbox — 1 digest email
+3. Check Gmail Drafts: you should see ~5 fresh drafts
+4. Check the `Sent` Sheet: 5 new rows
+5. Check the `Runs` Sheet: 1 new row
+6. Check your inbox: 1 digest email
 
 **Total run time:** ~30–60 seconds depending on Firecrawl latency.
 
@@ -480,7 +480,7 @@ Final step — log this run for trust-building.
 | Sheets append fails | OAuth scope missing | Re-auth Sheets credential, ensure write scope enabled |
 | Gmail draft creation fails | OAuth scope `gmail.compose` not granted | Re-auth Gmail with full compose permissions |
 | No drafts appear | Recipient address is placeholder | Drafts are still in Gmail Drafts folder · check there |
-| `parse failed` in Step 6 | Claude returned malformed JSON | Try the workflow again — usually transient |
+| `parse failed` in Step 6 | Claude returned malformed JSON | Try the workflow again: usually transient |
 
 ---
 
@@ -502,7 +502,7 @@ Same architecture, different inputs. Drafts a follow-up if no reply in 5 days.
 
 1. Create a second n8n workflow: `Discovery Engine · Follow-Up`
 2. Schedule Trigger at `0 8 * * *` (8 AM daily)
-3. Gmail node → `Get Many Threads` → filter by label `Sent — Discovery`
+3. Gmail node → `Get Many Threads` → filter by label `Sent - Discovery`
 4. Code node → for each thread, check elapsed days + reply count
 5. If `5+ days AND no reply`: HTTP Request to Sonnet 4.6 with the thread context, ask for a follow-up draft that **references the original thread** (not a copy-paste reminder)
 6. Gmail → `Create Draft` with the follow-up
@@ -570,12 +570,12 @@ Fork the repo, change the trigger, change `icp.md` and `voice.md`, ship. **Same 
 - **Workshop slides:** `slides/index.html`
 - **Speaker script:** `script/speaker-notes.md`
 
-**Office Hours · 5 free 30-min audits for BSW attendees:** [cal.com/sophia-stein/architect-audit-bsw](https://cal.com/sophia-stein/architect-audit-bsw) (capped at 5 bookings)
+**Work With Sophia · Workflow Audits & Live Masterclass:** [agenticarchitect.ai/work-with-me](https://agenticarchitect.ai/work-with-me)
 
-**Newsletter:** [agenticarchitect.ai/blog](https://agenticarchitect.ai/blog) — weekly deep-dives on agentic architecture for lean founders
+**Newsletter:** [agenticarchitectai.substack.com](https://agenticarchitectai.substack.com) · weekly playbooks on AI workflows and private infrastructure
 
 **Email:** sophia@agenticarchitect.ai
 
 ---
 
-*Tutorial v1.0 · MIT licensed · fork freely · ship yours · — Sophia Stein, AI Architect*
+*Tutorial v1.0 · MIT licensed · fork freely · ship yours · Sophia Stein, AI Architect*

@@ -1,216 +1,148 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { PageHeader } from '@/components/ui/page-header'
+import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-
-const CAL_BASE = 'https://cal.com/sophia-stein'
+import { Badge } from '@/components/ui/badge'
+import { RoiCalculator } from '@/components/site/roi-calculator'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Work With Me',
   description:
-    'Agentic-architecture projects for founders, operators, and organizations. Workflow audits, done-for-you builds, corporate AI training, custom course creation, and speaking. All booking on cal.com. Boulder, CO.',
+    'Book a VIP 90-Min AI Workflow Audit, 1:1 Strategy Session, 8-week Agentic Business Accelerator seat, Private Corporate AI Workshop, or Executive Advisory.',
 }
 
-const STEPS = [
-  'Pick the project that fits, or book a free 30-minute scoping call if you are not sure.',
-  'I reply within 1 to 2 business days with a fit assessment.',
-  'If it is a match, we walk through the work together. No sales.',
-  'Proposal, deposit, work starts. Most projects close within a week.',
-]
-
-type Service = {
-  name: string
-  duration: string
-  description: string
-  /** cal.com event slug (cal.com/sophia-stein/<slug>) */
-  calSlug: string
-  /** Optional human label for the booking CTA. */
-  cta?: string
-}
-
-const BUILDER_SERVICES: Service[] = [
+const PRIMARY_OFFERS = [
   {
-    name: 'Agentic Workflow Audit',
-    duration: '90 min · productized',
-    description:
-      'We map your current AI spend, identify the 20% of your tasks that are agent-ready, and you leave with a concrete action plan. The fastest way to find out whether agents can actually save you money.',
-    calSlug: 'audit',
-    cta: 'book the audit',
+    badge: 'Flagship 8-Week Cohort',
+    badgeVariant: 'online' as const,
+    title: 'Agentic Business Accelerator',
+    price: '$5,997 Founding · $8,997 Standard',
+    detail:
+      'Done-With-You implementation installing 6 revenue, content, and operations AI workflows inside your business over 8 weeks. Optional +$1,500 seat for your Ops Lead or EA.',
+    href: '/accelerator',
+    cta: 'Explore the Accelerator →',
   },
   {
-    name: 'Done-for-You Build',
-    duration: 'project · 2–4 weeks',
-    description:
-      'End-to-end agentic workflow implementation. Local-first where it makes sense, n8n + MCP for orchestration, your existing tools wired in. Delivered, documented, and running on your infrastructure. Starts with a free scoping call.',
-    calSlug: 'scoping',
-    cta: 'book a free scoping call',
+    badge: '90-Min Deep Dive · 100% Creditable',
+    badgeVariant: 'rig' as const,
+    title: 'VIP 90-Min AI Workflow & Cost Audit',
+    price: '$1,500 (Paid on Booking via Stripe)',
+    detail:
+      '1:1 executive teardown of your team’s weekly bottlenecks, SaaS spend, and highest-ROI automation opportunities. Includes a written 90-day roadmap and 100% fee credit toward the Accelerator or Corporate Training.',
+    href: SITE_CONFIG.cal.audit,
+    cta: 'Book VIP 90-Min Audit →',
   },
   {
-    name: 'Office Hours · Hourly Consulting',
-    duration: '60 min · hourly',
-    description:
-      'For teams already building. Bring the ROCm error, the eval-harness question, the orchestration design, the cost teardown. We solve the thing in an hour or I tell you what to read and who to call. Available by the hour or on retainer.',
-    calSlug: 'office-hours',
-    cta: 'book office hours',
-  },
-]
-
-const ORG_SERVICES: Service[] = [
-  {
-    name: 'Corporate AI Training',
-    duration: 'half / full day',
-    description:
-      'On-site or remote workshops for engineering and ops teams. Hands-on labs covering local inference, agentic workflow design, MCP, and the cost math behind moving off frontier APIs. Materials and recordings included.',
-    calSlug: 'speaking',
-    cta: 'book a 30-min intake',
+    badge: 'Half-Day or Full-Day Team Lab',
+    badgeVariant: 'tag' as const,
+    title: 'Private Corporate AI Intensive & Enablement',
+    price: '$7,500 to $15,000',
+    detail:
+      'Hands-on on-site or remote training rolling out portable Brand Brains, human-approved operational workflows, and AI governance across 10 to 100+ staff.',
+    href: SITE_CONFIG.cal.speaking,
+    cta: 'Book Corporate Workshop Intake →',
   },
   {
-    name: 'Custom Course Creation',
-    duration: 'project',
-    description:
-      'Built-for-you internal courses for engineering orgs. Curriculum design, recorded modules, hands-on exercises, assessment. Useful when you need to ramp 50+ engineers on agentic tooling without sending them to a generic bootcamp.',
-    calSlug: 'scoping',
-    cta: 'book a free scoping call',
+    badge: 'Monthly Retainer',
+    badgeVariant: 'tag' as const,
+    title: 'Executive AI Advisory / Fractional Architect',
+    price: '$5,000+/mo',
+    detail:
+      'Ongoing architectural guidance, vendor/cost governance, internal curriculum design, and private infrastructure oversight for leadership teams.',
+    href: SITE_CONFIG.cal.scoping,
+    cta: 'Book Advisory Scoping Call →',
   },
-  {
-    name: 'Speaking & Workshops',
-    duration: 'keynote · talk · podcast',
-    description:
-      'Recent topics: how 96GB of RAM changed my mind about local AI, MCP as a driver layer, the $0.01 micro-agent, agentic workflows for lean founders. Boulder Startup Week alum.',
-    calSlug: 'speaking',
-    cta: 'book a 30-min intake',
-  },
-]
-
-function ServiceCard({ name, duration, description, calSlug, cta }: Service) {
-  return (
-    <Link
-      href={`${CAL_BASE}/${calSlug}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block group border border-border bg-surface p-6 hover:border-accent hover:bg-bg transition-colors"
-    >
-      <div className="flex items-start justify-between gap-4 mb-2">
-        <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
-          {name}
-        </h3>
-        <span className="font-mono text-xs text-bench shrink-0">{duration}</span>
-      </div>
-      <p className="text-sm text-muted leading-relaxed mb-4">{description}</p>
-      <p className="font-mono text-xs text-accent group-hover:underline">
-        {cta ?? 'book on cal.com'} →
-      </p>
-    </Link>
-  )
-}
-
-const SECTIONS = [
-  { id: 'what-to-expect', label: 'What to expect' },
-  { id: 'builders', label: 'For founders & builders' },
-  { id: 'organizations', label: 'For orgs & speaking' },
-  { id: 'sponsor', label: 'Sponsor' },
 ]
 
 export default function WorkWithMePage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <PageHeader
-        title="work with me"
-        description="I take a small number of projects at a time. If you are serious about reducing cloud AI costs, building agentic infrastructure that actually works, or rolling out AI to your team — let's talk. Every service below opens cal.com directly when you click it."
+        meta="Boulder, CO & Worldwide · Direct Calendar Booking"
+        title="Work With Sophia"
+        description="Practical AI workflow implementation, executive audits, and live corporate enablement built to return real hours and protect your data."
       />
 
-      {/* Section quick-nav */}
-      <nav className="flex flex-wrap gap-2">
-        {SECTIONS.map(({ id, label }) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className="font-mono text-xs px-3 py-1.5 border border-border text-muted hover:text-fg hover:border-fg transition-colors"
-          >
-            {label} ↓
-          </a>
-        ))}
-      </nav>
-
-      {/* What to expect — primary CTA above the fold */}
-      <section id="what-to-expect" className="border border-border bg-surface p-6 scroll-mt-20">
-        <h2 className="font-mono text-xs text-bench uppercase tracking-widest mb-3">
-          What to expect
-        </h2>
-        <ol className="space-y-2 text-sm text-fg leading-relaxed mb-5">
-          {STEPS.map((step, i) => (
-            <li key={i} className="flex gap-3">
-              <span className="text-muted font-mono shrink-0">{i + 1}.</span>
-              <span>{step}</span>
-            </li>
-          ))}
-        </ol>
-        <div className="flex flex-wrap gap-3">
-          <Button variant="primary" size="md" href={`${CAL_BASE}/scoping`}>
-            book a free 30-min call ›
-          </Button>
-          <Button variant="ghost" size="md" href="/contact">
-            email instead
-          </Button>
+      {/* Interactive ROI Calculator */}
+      <section className="space-y-4">
+        <div>
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            Estimate Your Return First
+          </p>
+          <h2 className="text-2xl font-bold text-fg mt-1">
+            Hiring Headcount vs. Automating Repetitive Workflows
+          </h2>
         </div>
+        <RoiCalculator />
       </section>
 
-      {/* For founders & builders */}
-      <section id="builders" className="scroll-mt-20">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
-          For founders &amp; builders
-        </h2>
-        <p className="font-mono text-xs text-muted mb-6">
-          Productized projects. Click any card to schedule directly.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {BUILDER_SERVICES.map(service => (
-            <ServiceCard key={service.name} {...service} />
+      {/* 2x2 High-Margin Offer Grid */}
+      <section id="offers" className="space-y-5 scroll-mt-20">
+        <div>
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            Core Ways to Work Together
+          </p>
+          <h2 className="text-2xl font-bold text-fg mt-1">
+            Choose the Right Engagement Model
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {PRIMARY_OFFERS.map(offer => (
+            <Card key={offer.title} className="p-6 flex flex-col justify-between space-y-5">
+              <div className="space-y-2.5">
+                <Badge variant={offer.badgeVariant}>{offer.badge}</Badge>
+                <h3 className="text-xl font-bold text-fg">{offer.title}</h3>
+                <p className="font-mono text-sm font-semibold text-accent">{offer.price}</p>
+                <p className="text-sm text-muted leading-relaxed">{offer.detail}</p>
+              </div>
+              <div>
+                <Button variant="primary" size="md" href={offer.href}>
+                  {offer.cta}
+                </Button>
+              </div>
+            </Card>
           ))}
         </div>
       </section>
 
-      {/* For organizations */}
-      <section id="organizations" className="border-t border-border pt-10 scroll-mt-20">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
-          For organizations
-        </h2>
-        <p className="font-mono text-xs text-muted mb-6">
-          Scoped per project. Click any card to start a conversation.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ORG_SERVICES.map(service => (
-            <ServiceCard key={service.name} {...service} />
-          ))}
-        </div>
-      </section>
+      {/* Focused 1:1 Single Session + Contact Fallback */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <Card className="lg:col-span-7 p-6 bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div className="space-y-1">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
+              Single 60-Minute Session · $500
+            </p>
+            <h3 className="text-lg font-bold text-fg">1:1 AI Strategy &amp; Systems Session</h3>
+            <p className="text-sm text-muted leading-relaxed">
+              Have one specific workflow, tool stack decision, or architecture bottleneck? Book a
+              focused 60-minute working session directly on Cal.com with Stripe checkout.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Button variant="outline" size="md" href={SITE_CONFIG.cal.officeHours}>
+              Book 60-Min Session ($500) →
+            </Button>
+          </div>
+        </Card>
 
-      {/* Fallback */}
-      <section className="border-t border-border pt-6 flex flex-wrap items-center gap-3">
-        <Button variant="outline" size="md" href={CAL_BASE}>
-          see all on cal.com →
-        </Button>
-        <Button variant="ghost" size="md" href="/contact">
-          or email instead
-        </Button>
-      </section>
-
-      {/* Sponsor — different motion from consulting, but lives in the same neighborhood */}
-      <section id="sponsor" className="border-t border-border pt-10 scroll-mt-20">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
-          Sponsor the newsletter or a post
-        </h2>
-        <p className="font-mono text-xs text-muted mb-4">
-          Different from consulting — for companies who want exposure to the
-          Local-First AI audience.
-        </p>
-        <p className="text-sm text-muted leading-relaxed mb-4">
-          Single sponsorship slot in a newsletter issue, quarterly recurring,
-          or a sponsored field guide. Pricing and tiers on the sponsor page.
-        </p>
-        <Button variant="outline" size="md" href="/sponsor">
-          see sponsorship tiers →
-        </Button>
+        <Card className="lg:col-span-5 p-6 flex flex-col justify-between space-y-4">
+          <div className="space-y-1">
+            <h3 className="text-base font-bold text-fg">Questions, Custom Scope, or Sponsorships?</h3>
+            <p className="text-sm text-muted leading-relaxed">
+              Send a short note with your team size and goals, or view newsletter sponsorship tiers.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" size="sm" href="/contact">
+              Send a Message
+            </Button>
+            <Button variant="ghost" size="sm" href="/sponsor">
+              Sponsorship Tiers →
+            </Button>
+          </div>
+        </Card>
       </section>
     </div>
   )

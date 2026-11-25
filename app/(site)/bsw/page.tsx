@@ -1,26 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { PageHeader } from '@/components/ui/page-header'
+import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 const REPO_URL = 'https://github.com/sudosoph/bsw26-agentic-workflows'
 const SLIDES_URL = '/slides/bsw26.html'
-const SESSION_URL =
-  'https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4'
-const BSW_AUDIT_URL = 'https://cal.com/sophia-stein/architect-audit-bsw'
 
 export const metadata: Metadata = {
-  title: 'Boulder Startup Week 2026',
+  title: 'Boulder Startup Week 2026 Workshop Archive',
   description:
-    'Architecting Agentic Workflows for the Lean 2026 Startup. A workshop at Boulder Startup Week 2026, May 7 at RegenHub. Slides, n8n templates, and demo repo.',
-}
-
-const SESSION = {
-  title: 'Architecting Agentic Workflows for the Lean 2026 Startup',
-  date: 'Thursday, May 7, 2026',
-  time: '11:00 AM – 12:00 PM',
-  venue: 'RegenHub',
-  tags: ['AI', 'Growth', 'Founder-Specific', 'SaaS'],
+    'Open-source slides, 17-step n8n tutorial, and printable handouts delivered May 7, 2026 to 300+ founders and operators at Boulder Startup Week.',
 }
 
 type Material = {
@@ -31,145 +24,100 @@ type Material = {
   cta: string
 }
 
-// Order is intentional. The deck and the build-along are what most
-// attendees want first. Everything is a native page on this site;
-// the GitHub repo is one click away as the source of truth.
 const MATERIALS: Material[] = [
   {
-    label: 'Slide deck',
-    body: 'The full deck from the workshop. Opens in a new tab. Press F for fullscreen, arrow keys to navigate.',
+    label: 'Workshop Slide Deck (50 Slides)',
+    body: 'Full presentation deck from the RegenHub session. Opens in a new tab; press F for fullscreen and use arrow keys to navigate.',
     href: SLIDES_URL,
     external: true,
-    cta: 'open the deck ↗',
+    cta: 'Open the deck ↗',
   },
   {
-    label: 'Tutorial · build your first agent in 90 minutes',
-    body: 'Step-by-step. Copy-pasteable. The exact build we walk through live, written so you can finish it on your own afterward.',
+    label: '17-Step Tutorial: Build the Discovery Engine',
+    body: 'Copy-paste step-by-step build walkthrough so you can stand up the exact customer-discovery workflow on your own schedule.',
     href: '/bsw/tutorial',
     external: false,
-    cta: 'read the tutorial →',
+    cta: 'Read the tutorial →',
   },
   {
-    label: 'Setup guide · swap any provider',
-    body: 'How to swap providers without rewriting the workflow. Groq, Jina, Ollama, Gemini, OpenRouter. Pick whichever is cheapest or fastest for your case.',
+    label: 'Provider Swap & Setup Guide',
+    body: 'How to swap LLM and scraping providers cleanly without rewriting your workflow logic.',
     href: '/bsw/setup',
     external: false,
-    cta: 'read the setup guide →',
+    cta: 'Read the setup guide →',
   },
   {
-    label: 'n8n workflow templates',
-    body: 'Two ready-to-import workflows: the lite version on free providers, and the full version on Anthropic + Firecrawl. Direct download.',
+    label: 'n8n Workflow JSON Templates',
+    body: 'Ready-to-import workflow JSON files for both free-tier testing and daily production runs.',
     href: '/bsw/templates',
     external: false,
-    cta: 'download the templates →',
+    cta: 'Download templates →',
   },
   {
-    label: 'Handouts · printable references',
-    body: 'Brand voice template, ICP template, agent JSON schemas, the OSS growth playbook (13 case studies), the 20/80 worksheet. All forkable.',
+    label: 'Printable Handouts & voice.md Worksheets',
+    body: 'Brand voice template, ICP template, JSON schemas, and the 20/80 task readiness worksheet.',
     href: '/bsw/handouts',
     external: false,
-    cta: 'open the handouts →',
+    cta: 'Open handouts →',
   },
   {
-    label: 'Source repo',
-    body: 'The whole workshop as code, MIT-licensed. Clone or fork if you want the raw markdown, JSONs, and slide source.',
+    label: 'MIT-Licensed Source Repository',
+    body: 'Clone or fork the complete workshop code, templates, and slide deck on GitHub.',
     href: REPO_URL,
     external: true,
-    cta: 'open the repo on github ↗',
+    cta: 'Open repo on GitHub ↗',
   },
 ]
 
 const TAKEAWAYS = [
   {
-    title: 'Find your agent-ready tasks',
-    body: 'A simple 90-minute exercise to spot the 20% of your manual work that an agent can take over today, and the 80% that should stay with humans.',
+    title: 'Spot your 20% agent-ready tasks',
+    body: 'Use a simple scoring rubric to separate repetitive high-volume chores from the 80% of relationship and judgment work that stays human.',
   },
   {
-    title: 'Build a working agent live',
-    body: 'We build a Growth Agent together using n8n and an LLM of your choice. You leave with the same workflow running on your own machine, ready to adapt.',
+    title: 'Ship a working discovery workflow',
+    body: 'Connect Google Sheets, your portable voice.md file, and n8n to draft personalized outreach into Gmail Drafts automatically.',
   },
   {
-    title: 'Keep the human in the loop',
-    body: 'Practical patterns for keeping brand voice, judgment, and oversight intact while the agent does the repetitive work.',
+    title: 'Keep a strict human-in-the-loop gate',
+    body: 'Drafts wait for your eyes before anything leaves your inbox, keeping brand voice and accuracy intact.',
   },
 ]
 
 export default function BswPage() {
   return (
-    <div className="space-y-10">
-      <section className="pt-2">
-        <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
-          Boulder Startup Week 2026
-        </p>
-        <h1 className="font-mono text-2xl text-fg mb-3">
-          {SESSION.title}
-        </h1>
-        <p className="text-sm text-muted leading-relaxed">
-          A workshop for founders, operators, and small-business owners who
-          want to build AI systems that actually work, not just chat with one.
-          If you came from the QR code at the venue, you are in the right
-          spot. Everything from the workshop is below.
-        </p>
-      </section>
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="online">Delivered May 7, 2026 · 300+ Attendees</Badge>
+          <span className="font-mono text-xs text-muted">Boulder Startup Week · RegenHub</span>
+        </div>
+        <PageHeader
+          title="Architecting Agentic Workflows for the Lean Startup"
+          description="Complete open-source slides, 17-step code-along tutorial, n8n JSON workflows, and handouts from Sophia Stein’s standing-room Boulder Startup Week workshop."
+        />
+      </div>
 
-      {/* Session card */}
-      <section className="border border-border bg-surface p-5 space-y-2">
-        <div className="flex items-baseline gap-3 font-mono text-sm">
-          <span className="text-bench shrink-0">when</span>
-          <span className="text-fg">{SESSION.date} · {SESSION.time}</span>
-        </div>
-        <div className="flex items-baseline gap-3 font-mono text-sm">
-          <span className="text-bench shrink-0">where</span>
-          <span className="text-fg">{SESSION.venue}</span>
-        </div>
-        <div className="flex items-baseline gap-3 font-mono text-sm">
-          <span className="text-bench shrink-0">tags</span>
-          <span className="text-muted">{SESSION.tags.join(' · ')}</span>
-        </div>
-        <div className="pt-3">
-          <Link
-            href={SESSION_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-xs text-accent hover:underline"
-          >
-            rsvp on revel ↗
-          </Link>
-        </div>
-      </section>
-
-      {/* Workshop materials · FIRST so attendees can dive straight in */}
-      <section>
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-          Workshop materials
-        </h2>
-        <div className="divide-y divide-border">
+      {/* Materials Bento */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-fg">Open Workshop Materials</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {MATERIALS.map(({ label, body, href, external, cta }) => {
             const inner = (
-              <>
-                <div className="flex items-baseline justify-between gap-4 mb-1">
-                  <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
-                    {label}
-                  </h3>
+              <Card className="p-6 h-full flex flex-col justify-between space-y-3 hover:border-accent transition-colors">
+                <div className="space-y-1.5">
+                  <h3 className="text-base font-bold text-fg">{label}</h3>
+                  <p className="text-sm text-muted leading-relaxed">{body}</p>
                 </div>
-                <p className="text-sm text-muted leading-relaxed mb-2">{body}</p>
-                <p className="font-mono text-xs text-accent group-hover:underline">{cta}</p>
-              </>
+                <p className="font-mono text-xs font-semibold text-accent">{cta}</p>
+              </Card>
             )
-            // Plain <a> for external destinations and static .html assets
-            // (slide deck) so we bypass Next router prefetch on non-RSC URLs.
             return external ? (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block group py-5 first:pt-0 last:pb-0"
-              >
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="block">
                 {inner}
               </a>
             ) : (
-              <Link key={label} href={href} className="block group py-5 first:pt-0 last:pb-0">
+              <Link key={label} href={href} className="block">
                 {inner}
               </Link>
             )
@@ -177,82 +125,44 @@ export default function BswPage() {
         </div>
       </section>
 
-      {/* What you will leave with */}
-      <section className="border-t border-border pt-8">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-          What you will leave with
-        </h2>
-        <div className="divide-y divide-border">
+      {/* Core Takeaways */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-fg">Three Core Patterns From the Lab</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {TAKEAWAYS.map(({ title, body }) => (
-            <div key={title} className="py-4 first:pt-0 last:pb-0">
-              <h3 className="font-mono text-sm text-fg mb-1">{title}</h3>
+            <Card key={title} className="p-6 space-y-2 bg-surface">
+              <h3 className="text-base font-bold text-fg">{title}</h3>
               <p className="text-sm text-muted leading-relaxed">{body}</p>
-            </div>
+            </Card>
           ))}
         </div>
-        <p className="text-sm text-muted leading-relaxed mt-4">
-          Whether you write code or you have never opened a terminal, you
-          leave with a working agent and a plan for the next one.
-        </p>
       </section>
 
-      {/* Help with your first agent · the offer · value-led */}
-      <section className="border border-accent/40 bg-surface p-5">
-        <h2 className="font-mono text-sm text-fg mb-2">
-          Want help setting up your first agent?
-        </h2>
-        <p className="text-sm text-muted leading-relaxed mb-3">
-          Bring the workflow you want to automate, the part of your week that
-          eats your time. Inbox, reporting, follow-ups, lead research, status
-          updates. We sit down for 30 minutes and sketch the agent that
-          handles it. You leave with a working plan you can hand to whoever
-          builds it for you, or follow yourself.
-        </p>
-        <p className="text-sm text-muted leading-relaxed mb-3">
-          Five free sessions for workshop attendees. No sales.
-        </p>
-        <Button variant="primary" size="md" href={BSW_AUDIT_URL}>
-          book a free session ›
-        </Button>
+      {/* Next Steps CTA */}
+      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="space-y-1.5 max-w-2xl">
+          <h2 className="text-xl font-bold text-fg">
+            Missed the Live Boulder Session or Ready to Go Deeper?
+          </h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Join the next free 60-minute live online masterclass, bring this workshop privately to
+            your company, or book a 1:1 workflow audit with Sophia.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3 shrink-0">
+          <Button variant="primary" size="md" href="/masterclass">
+            Free 60-Min Live Masterclass →
+          </Button>
+          <Button variant="outline" size="md" href="/work-with-me">
+            Work With Sophia
+          </Button>
+          <Button variant="ghost" size="md" href={SITE_CONFIG.cal.speaking}>
+            Book for Your Event
+          </Button>
+        </div>
       </section>
 
-      {/* Newsletter pull · audience building is the main CTA */}
-      <NewsletterSignup
-        source="bsw"
-        sub="Want the writeup of the workshop, plus weekly notes on what is actually working?"
-      />
-
-      {/* Related reading */}
-      <section className="pt-4 border-t border-border">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-          Related on the blog
-        </h2>
-        <ul className="space-y-2 text-sm">
-          <li>
-            <Link href="/blog/agent-ready-tasks" className="text-accent hover:underline">
-              Find Your Agent-Ready Tasks in 90 Minutes
-            </Link>
-            <span className="text-muted">, the framework behind the workshop</span>
-          </li>
-          <li>
-            <Link href="/blog/three-ways-to-run-open-weight-models" className="text-accent hover:underline">
-              Three Ways to Run Open Weights for Pennies
-            </Link>
-            <span className="text-muted">, the cost math for the agents you build</span>
-          </li>
-          <li>
-            <Link href="/blog/the-hitl-standard" className="text-accent hover:underline">
-              Notes on Human-in-the-Loop
-            </Link>
-            <span className="text-muted">, how to keep the human part of the agent</span>
-          </li>
-          <li>
-            <Link href="/blog?theme=local-models" className="text-accent hover:underline">
-              All local-models posts →
-            </Link>
-          </li>
-        </ul>
-      </section>
+      <NewsletterSignup source="bsw" />
     </div>
   )
 }
