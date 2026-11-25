@@ -13,6 +13,7 @@ const PROGRAM_LINKS = [
   { href: '/masterclass', label: 'Free Live 60-Min Masterclass' },
   { href: '/accelerator', label: 'Agentic Business Accelerator' },
   { href: '/teaching', label: 'Speaking, Corporate & University' },
+  { href: '/boulder', label: 'Boulder & Denver Training' },
   { href: '/work-with-me', label: 'Audits & Executive Advisory' },
   { href: '/contact', label: 'Contact' },
 ]

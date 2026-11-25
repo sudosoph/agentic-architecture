@@ -3,8 +3,13 @@ import path from 'path'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { convertMdxToSubstackPayload } from '../scripts/mdx-to-substack.mjs'
+import { buildOutreachCampaignPack } from '../scripts/outreach-engine.mjs'
 import { StarterKitBuilder } from '@/components/site/starter-kit-builder'
+import { LdReimbursementCard } from '@/components/site/ld-reimbursement-card'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import BoulderPage from '@/app/(site)/boulder/page'
+import OpenGraphImage from '@/app/opengraph-image'
+import BlogPostOpenGraphImage from '@/app/(site)/blog/[slug]/opengraph-image'
 
 describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead Tools', () => {
   afterEach(() => {
@@ -31,6 +36,7 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
       'public/downloads/icp-and-offer-positioning.md',
       'public/downloads/20-80-ai-task-audit-scorecard.csv',
       'public/downloads/pre-call-lead-dossier-n8n.json',
+      'public/downloads/corporate-ai-workshop-sheet.md',
     ]
 
     for (const rel of files) {
@@ -86,5 +92,40 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
       '/api/subscribe',
       expect.objectContaining({ method: 'POST' }),
     )
+  })
+
+  it('renders BoulderPage regional corporate training hub and LdReimbursementCard free of em-dashes', () => {
+    const { container: bContainer } = render(<BoulderPage />)
+    expect(bContainer.textContent).toContain('Boulder & Denver Corporate AI Training')
+    expect(bContainer.textContent).toContain('$7,500')
+    expect(bContainer.textContent).toContain('$15,000')
+    expect(bContainer.textContent).not.toContain('\u2014')
+
+    const { container: ldContainer } = render(<LdReimbursementCard />)
+    expect(ldContainer.textContent).toContain('L&D Approval Request')
+    expect(ldContainer.textContent).not.toContain('\u2014')
+  })
+
+  it('generates personalized zero-em-dash outreach sequences across all 4 segments and builds OG ImageResponses', async () => {
+    for (const seg of ['warm-founder', 'corporate-ld', 'podcast-partner', 'university'] as const) {
+      const pack = buildOutreachCampaignPack({
+        segment: seg,
+        prospectName: 'Jordan',
+        company: 'Boulder Labs',
+        signal: 'expanding operations across Colorado',
+      })
+      expect(pack.emailTouch1).toContain('Jordan')
+      expect(pack.emailTouch1).not.toContain('\u2014')
+      expect(pack.linkedinDm).not.toContain('\u2014')
+      expect(pack.followUpDay5).not.toContain('\u2014')
+    }
+
+    const rootOg = OpenGraphImage()
+    expect(rootOg.headers.get('content-type')).toContain('image/png')
+
+    const postOg = await BlogPostOpenGraphImage({
+      params: Promise.resolve({ slug: 'easy-ai-brand-and-workflow-setup' }),
+    })
+    expect(postOg.headers.get('content-type')).toContain('image/png')
   })
 })

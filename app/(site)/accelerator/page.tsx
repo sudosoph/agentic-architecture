@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { LdReimbursementCard } from '@/components/site/ld-reimbursement-card'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
@@ -208,6 +209,8 @@ export default function AcceleratorPage() {
           </Button>
         </Card>
       </section>
+
+      <LdReimbursementCard />
     </div>
   )
 }
