@@ -99,7 +99,7 @@ export default function SovereignStackPage() {
               </h2>
             </div>
             <Link href="/starter-kit" className="text-xs font-semibold text-accent hover:underline">
-              Need the non-technical Brand Brain (voice.md) kit instead? →
+              Need the non-technical Owner Bottleneck &amp; Workflow Kit instead? →
             </Link>
           </div>
 

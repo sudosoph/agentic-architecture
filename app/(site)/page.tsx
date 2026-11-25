@@ -53,10 +53,10 @@ const HOME_ENTITY_GRAPH_LD = {
       },
       priceRange: '$$$',
       serviceType: [
-        'AI Automation Courses for Non-Technical Operators',
-        'Bespoke Business Workflow Automation Sprints',
+        'AI Automation Courses for Non-Technical Business Owners',
+        'Custom Business Workflow Automation Sprints',
+        'Fractional Chief AI Officer & Fractional AI CTO',
         'Corporate AI Enablement Workshops',
-        'Production AI Architecture & CTO Advisory',
       ],
       sameAs: ENTITY_PROFILES,
     },
@@ -96,12 +96,12 @@ const PATH_CARDS = [
     badgeColor: 'amber' as const,
   },
   {
-    eyebrow: '3. Organizations & Technical Authority',
-    title: 'Corporate Training, Book & CTO Advisory',
-    body: 'For teams past the demo and stuck before production: department workshops, 30+ systems benchmarks, our 18-chapter Sovereign Stack book, and CU Boulder syllabi.',
-    cta: 'Visit Research & Teaching',
-    href: '/research',
-    badge: '300+ Trained Live',
+    eyebrow: '3. Mid-Market & Engineering Leaders',
+    title: 'Fractional CAIO / AI CTO & Corporate Labs',
+    body: 'For companies past the demo and stuck before production: part-time Fractional Chief AI Officer or AI CTO leadership, department workshops, and 29 systems benchmarks.',
+    cta: 'Explore Fractional AI Roles',
+    href: '/fractional-ai-cto',
+    badge: 'Columbia CS · Ex-McKinsey',
     badgeColor: 'blue' as const,
   },
 ]
@@ -201,22 +201,22 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 3-Card Bento: Where to Start */}
+        {/* 3-Card Bento: Audience Separation */}
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
             <div>
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Choose Your Path
+                Separated By Audience
               </p>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
-                From Free Live Masterclass to Full Team Implementation
+                Courses &amp; Sprints for Business Owners · Fractional Leadership for Organizations
               </h2>
             </div>
             <Link
               href="/starter-kit"
               className="text-sm font-semibold text-accent hover:underline"
             >
-              Grab the free 20-minute Brand Brain (voice.md) Kit →
+              Run the free 20/80 Bottleneck Readiness Calculator →
             </Link>
           </div>
 
@@ -246,27 +246,27 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Flagship Hormozi Dual Offer Callout */}
+        {/* Executive & Enterprise Fractional Callout */}
         <section className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-2">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Outcome-Guaranteed Implementation for $1M to $50M Owners
+              For $3M to $50M+ Companies, Healthcare Groups &amp; Tech Teams
             </span>
             <h2 className="text-2xl font-bold tracking-tight text-fg">
-              Train Your Operator Free ($5,997 Cohort) or Have Us Build It Custom ($12.5K+)
+              Need a Fractional Chief AI Officer, Fractional AI CTO, or Corporate Workshop?
             </h2>
             <p className="text-sm md:text-base text-muted leading-relaxed">
-              Bring your Executive Assistant, COO, or Ops Manager at $0 extra tuition inside our
-              8-week Cohort (backed by our 14-Day Live-System Guarantee), or book a white-glove
-              30-Day Bespoke AI Automation Build.
+              Skip the $300K+ executive search and slide-only consultants. Get Columbia CS
+              architecture oversight and ex-McKinsey ($70M SaaS OpEx + 250+ clinical leaders)
+              rollout leadership 2 to 4 days a month, starting with a 2-week diagnostic or team lab.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
-            <Button variant="primary" size="md" href="/accelerator">
-              8-Week Cohort + Free EA Seat
+            <Button variant="primary" size="md" href="/fractional-ai-cto">
+              Fractional CAIO &amp; AI CTO
             </Button>
-            <Button variant="outline" size="md" href="/work-with-me">
-              Bespoke Custom Builds
+            <Button variant="outline" size="md" href="/research">
+              Research, Book &amp; Syllabi
             </Button>
           </div>
         </section>

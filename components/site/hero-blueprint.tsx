@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-type BlueprintId = 'brand' | 'ops' | 'private'
+type BlueprintId = 'sales' | 'ops' | 'private'
 
 type Blueprint = {
   id: BlueprintId
@@ -18,30 +18,30 @@ type Blueprint = {
 
 const BLUEPRINTS: Blueprint[] = [
   {
-    id: 'brand',
-    tabLabel: 'Executive Voice',
-    badge: 'Company Context Vault',
+    id: 'sales',
+    tabLabel: 'Sales & Intake',
+    badge: 'Zero Dropped Leads',
     badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-    impact: 'Reclaims ~6 hrs/week',
+    impact: 'Reclaims 6 to 10 hrs/week',
     steps: [
       {
         step: '01',
-        title: '5-Min Voice Memo or Call Notes',
-        detail: 'Capture one deal insight, client answer, or executive update.',
+        title: 'New Inquiry, Form or Call Transcript',
+        detail: 'Captures inbound client inquiries, referral notes, and discovery call transcripts.',
       },
       {
         step: '02',
-        title: 'voice.md + icp.md Context Vault',
-        detail: 'Applies your exact tone, pricing rules, and zero-fluff guardrails.',
+        title: 'Qualification, Scope & Proposal Prep',
+        detail: 'Scores fit, researches the account, and drafts a clean proposal or intake packet.',
       },
       {
         step: '03',
-        title: 'Client Emails, Briefs & Authority Posts',
-        detail: 'Stages ready-to-approve drafts in 10 minutes without generic chatbot prose.',
+        title: 'Day-2 & Day-5 Human-Approved Follow-Up',
+        detail: 'Queues polite follow-ups for 1-click sign-off so warm deals never slip.',
       },
     ],
-    ctaLabel: 'Download the Free Context Vault',
-    ctaHref: '/starter-kit',
+    ctaLabel: 'See Courses & Custom Sprints',
+    ctaHref: '/courses',
   },
   {
     id: 'ops',
@@ -53,59 +53,59 @@ const BLUEPRINTS: Blueprint[] = [
       {
         step: '01',
         title: 'Inbound Lead or Booking Arrives',
-        detail: 'Triggers automatically from Gmail, forms, or calendar bookings.',
+        detail: 'Triggers automatically from Gmail, forms, CRM updates, or calendar bookings.',
       },
       {
         step: '02',
         title: 'AI Chief of Staff + Pre-Call Dossier',
-        detail: 'Researches the company, preps call talking points, and stages a draft reply.',
+        detail: 'Preps executive meeting briefs, extracts commitments, and triages routine email.',
       },
       {
         step: '03',
         title: '10-Second Human Sign-Off',
-        detail: 'Nothing sends externally without you or your EA clicking approve.',
+        detail: 'Nothing sends externally without you or your Ops Lead clicking approve.',
       },
     ],
-    ctaLabel: 'Join the Free 60-Min Live Briefing',
+    ctaLabel: 'Join Free 60-Min Live Build',
     ctaHref: '/masterclass',
   },
   {
     id: 'private',
     tabLabel: 'Private AI',
-    badge: 'Sovereign Infrastructure',
+    badge: 'Enterprise & Fractional Rigor',
     badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
-    impact: '$0/mo per-seat SaaS creep',
+    impact: 'HIPAA / SOC2-Ready Control',
     steps: [
       {
         step: '01',
-        title: 'Laptop or Phone From Anywhere',
-        detail: 'Work from client sites, home, or travel with zero exposed public ports.',
+        title: 'Sensitive Contracts, Clinical or Board Docs',
+        detail: 'Keeps regulated client records and proprietary data off public training pipelines.',
       },
       {
         step: '02',
         title: 'Encrypted Private Mesh Network',
-        detail: 'Routes sensitive contracts, financials, and internal docs privately.',
+        detail: 'Enforces scoped permissions, evaluation checks, and cost ceilings.',
       },
       {
         step: '03',
-        title: 'Always-On Private AI Office Node',
-        detail: 'Runs private automation and document search on hardware you control.',
+        title: 'Governed Production Operations',
+        detail: 'Runs across approved enterprise cloud or private hardware your organization owns.',
       },
     ],
-    ctaLabel: 'Explore the Sovereign Stack',
-    ctaHref: '/stack',
+    ctaLabel: 'Explore Fractional CAIO / AI CTO',
+    ctaHref: '/fractional-ai-cto',
   },
 ]
 
 export function HeroBlueprintSwitcher() {
-  const [activeId, setActiveId] = useState<BlueprintId>('brand')
+  const [activeId, setActiveId] = useState<BlueprintId>('sales')
   const active = BLUEPRINTS.find(b => b.id === activeId) ?? BLUEPRINTS[0]
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-5 md:p-6 shadow-sm">
       <div className="flex items-center justify-between gap-2 mb-4">
         <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
-          Interactive Workflow Blueprints
+          Interactive Business Blueprints
         </span>
         <span
           className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${active.badgeColor}`}

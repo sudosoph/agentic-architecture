@@ -3,7 +3,7 @@ import { SITE_CONFIG } from '@/lib/site-config'
 
 const EXPLORE_LINKS = [
   { href: '/blog', label: 'Owner Playbooks & Reviews' },
-  { href: '/starter-kit', label: 'Free Company Context Kit' },
+  { href: '/starter-kit', label: 'Free Bottleneck Scorecard & Kit' },
   { href: '/research', label: 'Systems Research & Benchmarks' },
   { href: '/sovereign-stack', label: 'The Sovereign Stack (18-Ch. Book)' },
   { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
@@ -12,10 +12,10 @@ const EXPLORE_LINKS = [
 ]
 
 const PROGRAM_LINKS = [
+  { href: '/courses', label: 'Owner Courses & $297 Academy' },
   { href: '/masterclass', label: 'Free 60-Min Live Workflow Build' },
-  { href: '/courses', label: 'Courses & $297 Workflow Academy' },
-  { href: '/accelerator', label: '6-System Back-Office Cohort' },
-  { href: '/work-with-me', label: 'Custom Sprints & Bottleneck Call' },
+  { href: '/work-with-me', label: 'Custom Bottleneck Sprints' },
+  { href: '/fractional-ai-cto', label: 'Fractional CAIO & AI CTO' },
   { href: '/teaching', label: 'Corporate Training & University' },
   { href: '/boulder', label: 'Boulder & Denver Team Workshops' },
   { href: '/contact', label: 'Contact' },

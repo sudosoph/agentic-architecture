@@ -32,12 +32,12 @@ const PILLARS = [
     cta: 'View Syllabi & Speaking →',
   },
   {
-    badge: 'Technical & Board Advisory',
+    badge: 'Fractional Leadership & Architecture',
     badgeVariant: 'tag' as const,
-    title: 'CTO Advisory & AI Architecture Due Diligence',
-    body: 'Custom-scoped technical advisory and architecture reviews for engineering leaders, Seed-to-Series B teams, and investors auditing loop reliability, security boundaries, and inference margins.',
-    href: SITE_CONFIG.cal.scoping,
-    cta: 'Book 20-Min Advisory Scoping Call →',
+    title: 'Fractional Chief AI Officer & Fractional AI CTO',
+    body: 'Part-time executive AI leadership, 2-week architecture diagnostics, evaluation harnesses, and technical due diligence for mid-market companies, healthcare groups, and engineering teams.',
+    href: '/fractional-ai-cto',
+    cta: 'Explore Fractional AI Roles →',
   },
 ]
 

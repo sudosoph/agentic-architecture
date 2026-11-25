@@ -157,7 +157,7 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
       }),
     ).toBeTruthy()
     expect(container.textContent).toContain('4-Layer')
-    expect(container.textContent).toContain('voice.md')
+    expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
     expect(container.textContent).not.toContain('\u2014')
     expect(container.textContent).not.toMatch(/DeepSeek|Gemini/i)
 

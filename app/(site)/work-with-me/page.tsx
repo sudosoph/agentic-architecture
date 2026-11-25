@@ -63,16 +63,18 @@ const PATH_CARDS = [
     cta: 'Book Free 20-Min Bottleneck Call →',
   },
   {
-    badge: 'For Organizations · Past the Demo, Stuck Before Production',
+    badge: 'Executive & Enterprise Track · Mid-Market & Funded Teams',
     badgeVariant: 'tag' as const,
-    title: 'Corporate AI Workshops & CTO Advisory',
-    price: 'Custom-Quoted by Team Size & Scope',
+    title: 'Fractional CAIO, Fractional AI CTO & Corporate Training',
+    price: 'Custom-Scoped Monthly Cadence, 2-Wk Diagnostic, or Team Lab',
     detail:
-      'Hands-on department and leadership enablement workshops (virtual or on-site in Boulder, Denver, and nationwide) plus technical architecture advisory backed by Columbia CS, ex-McKinsey, and CU Boulder teaching experience.',
+      'For organizations past the demo and stuck before production: part-time Fractional Chief AI Officer or Fractional AI CTO leadership (2 to 4 days/mo), plus hands-on department workshops in Boulder, Denver, and nationwide.',
     standard:
-      'Quality Bar: Every workshop is tailored to your security/compliance posture with practical cost and verification guardrails attached.',
-    href: SITE_CONFIG.cal.speaking,
-    cta: 'Book 20-Min Corporate / Advisory Call →',
+      'Quality Bar: Strategy and production architecture in one seat (Columbia CS + ex-McKinsey), tailored to HIPAA, SOC2, and enterprise security rules.',
+    href: '/fractional-ai-cto',
+    cta: 'Explore Fractional CAIO & AI CTO →',
+    secondaryHref: SITE_CONFIG.cal.speaking,
+    secondaryCta: 'Book 20-Min Executive Call',
   },
   {
     badge: 'DIY & Guided Learning · Not Ready for Custom Builds?',
@@ -97,7 +99,7 @@ const WORK_FAQS = [
   },
   {
     q: 'Do I need a developer on payroll to maintain what you build?',
-    a: 'No. We avoid over-engineered autonomous agents when a clean, auditable workflow solves the job reliably at 10x lower cost. Every sprint ships inside your own accounts with plain-English context files (voice.md) and short video SOPs your existing team can edit.',
+    a: 'No. We avoid over-engineered autonomous agents when a clean, auditable workflow solves the job reliably at 10x lower cost. Every sprint ships inside your own accounts with clear SOP documentation and short video walkthroughs your existing team can edit.',
   },
   {
     q: 'Where can our engineering leader or L&D committee inspect your technical depth?',

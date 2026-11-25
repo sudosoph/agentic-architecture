@@ -18,7 +18,7 @@ const COLORADO_PROGRAMS = [
   {
     badge: 'On-Site or Hybrid · Half Day ($7,500)',
     title: 'Leadership & Operations AI Workflow Intensive',
-    body: '3.5-hour hands-on lab for Boulder, Denver, and Front Range teams (10 to 40 staff). Build a shared company Brand & SOP Brain (voice.md), score departmental bottlenecks, and wire human-approved operational workflows.',
+    body: '3.5-hour hands-on lab for Boulder, Denver, and Front Range teams (10 to 40 staff). Standardize departmental SOPs, score operational bottlenecks, and wire human-approved workflows across Sales, Intake, and Operations.',
   },
   {
     badge: 'On-Site · Full Day ($15,000)',

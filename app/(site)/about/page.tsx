@@ -22,10 +22,10 @@ const ICP_LAYERS = [
       'Founders, agencies, clinics, and service firms tired of manual follow-ups or fragile contractor zaps. Start free in our 60-minute live Prompt-to-System build, learn step-by-step in our $297 Academy or guided Cohort, or book a free 20-minute call to scope a custom sprint (from $2,500).',
   },
   {
-    eyebrow: '2. Corporate L&D, COOs & Engineering Leaders',
-    title: 'Workshops & Technical Advisory for Teams Stuck Before Production',
+    eyebrow: '2. Mid-Market Executives, Corporate L&D & CTOs',
+    title: 'Fractional Chief AI Officer, Fractional AI CTO & Team Enablement',
     detail:
-      'Organizations across healthcare, professional services, and technology that are past the ChatGPT demo and need real workflow adoption, McKinsey-grade ROI discipline, and Columbia CS security and verification guardrails.',
+      'Organizations across healthcare, professional services, and technology that are past the ChatGPT demo and need Fractional CAIO / AI CTO leadership, hands-on department workshops, McKinsey-grade ROI discipline, and Columbia CS security guardrails.',
   },
 ]
 
@@ -79,13 +79,15 @@ export default function AboutPage() {
           leaders, and now build applied AI systems in Boulder.
         </p>
         <p>
-          At <strong>Agentic Architect</strong>, we start with your single biggest operational
-          bottleneck rather than a shiny tool list: what should stay 100% human, what belongs to a
-          clean, auditable automation, and how to own your context files (
-          <code className="font-mono text-fg">voice.md</code>,{' '}
-          <code className="font-mono text-fg">icp.md</code>) and data boundaries inside your own
-          accounts. (And if your CTO or engineering team wants our raw hardware and loop-engineering
-          benchmarks, we publish all 18 chapters openly in{' '}
+          At <strong>Agentic Architect</strong>, we separate two distinct tracks cleanly: practical
+          courses and focused workflow sprints for non-technical business owners, and{' '}
+          <Link href="/fractional-ai-cto" className="text-accent font-medium hover:underline">
+            Fractional Chief AI Officer / Fractional AI CTO
+          </Link>{' '}
+          leadership and corporate enablement for organizations moving into production. Every system
+          is built inside your own accounts with clear SOPs and strict data boundaries. (And if your
+          engineering team wants our raw hardware and loop-engineering benchmarks, we publish all 18
+          chapters openly in{' '}
           <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
             The Sovereign Stack
           </Link>{' '}

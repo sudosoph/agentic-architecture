@@ -17,6 +17,7 @@ import CoursesPage from '@/app/(site)/courses/page'
 import StarterKitPage from '@/app/(site)/starter-kit/page'
 import WorkWithMePage from '@/app/(site)/work-with-me/page'
 import TeachingPage from '@/app/(site)/teaching/page'
+import FractionalAiCtoPage from '@/app/(site)/fractional-ai-cto/page'
 import StackPage from '@/app/(site)/stack/page'
 import LibraryPage from '@/app/(site)/library/page'
 import BswPage from '@/app/(site)/bsw/page'
@@ -34,6 +35,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
       { name: 'StarterKitPage', Comp: StarterKitPage },
       { name: 'WorkWithMePage', Comp: WorkWithMePage },
       { name: 'TeachingPage', Comp: TeachingPage },
+      { name: 'FractionalAiCtoPage', Comp: FractionalAiCtoPage },
       { name: 'StackPage', Comp: StackPage },
       { name: 'BswPage', Comp: BswPage },
       { name: 'GuidesPage', Comp: GuidesPage },
@@ -65,6 +67,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
       StarterKitPage,
       WorkWithMePage,
       TeachingPage,
+      FractionalAiCtoPage,
     ]
     for (const Comp of brandPages) {
       const { container, unmount } = render(<Comp />)
@@ -118,6 +121,24 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(text).toMatch(/CU Boulder|University of Colorado/i)
     expect(text).toMatch(/Leeds/i)
     expect(text).toMatch(/ATLAS/i)
+  })
+
+  it('renders FractionalAiCtoPage with Fractional CAIO + Fractional AI CTO roles, Columbia/McKinsey proof, Service + FAQPage JSON-LD, and zero voice.md or sticker walls', () => {
+    const { container } = render(<FractionalAiCtoPage />)
+    const text = container.textContent ?? ''
+    expect(text).toMatch(/Fractional Chief AI Officer/i)
+    expect(text).toMatch(/Fractional AI CTO/i)
+    expect(text).toContain('McKinsey')
+    expect(text).toContain('Columbia')
+    expect(text).toContain('personal capacity')
+    expect(text.toLowerCase()).not.toContain('voice.md')
+    expect(text.toLowerCase()).not.toContain('ai org chart')
+    expect(text).not.toContain('$5,000+/mo')
+    const ld = container.querySelector('script[type="application/ld+json"]')
+    expect(ld).not.toBeNull()
+    const types = JSON.parse(ld!.innerHTML)['@graph'].map((n: { '@type': string }) => n['@type'])
+    expect(types).toContain('Service')
+    expect(types).toContain('FAQPage')
   })
 
   it('redirects /library to /courses', () => {

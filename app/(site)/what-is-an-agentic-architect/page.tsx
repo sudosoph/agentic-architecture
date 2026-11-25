@@ -26,10 +26,10 @@ const COMPARISON_ROWS = [
     agentic: 'Goal-directed workflow combining portable context, scoped tools, and approval gates',
   },
   {
-    dimension: 'Context & Brand Memory',
+    dimension: 'Context & Organizational Memory',
     prompting: 'Re-typed or pasted manually each morning',
     automation: 'Hardcoded string templates inside one SaaS app',
-    agentic: 'Portable files (voice.md, icp.md, SOPs) shared across every workflow and model',
+    agentic: 'Shared SOPs, pricing rules, and compliance guardrails read across every workflow',
   },
   {
     dimension: 'Handling Edge Cases',
@@ -53,15 +53,15 @@ const COMPARISON_ROWS = [
 
 const FOUR_LAYERS = [
   {
-    layer: 'Layer 01 · Portable Context & Brand Brain',
+    layer: 'Layer 01 · Shared SOPs, Business Rules & Context',
     badge: 'Foundation',
     badgeVariant: 'online' as const,
     summary:
-      'Before choosing models or orchestration frameworks, an Agentic Architect codifies organizational context into plain, version-controlled files: voice.md (tone and real examples), icp.md (customer problems, tiers, objections), and structured SOP checklists.',
+      'Before choosing models or orchestration frameworks, an Agentic Architect codifies how the business actually operates: pricing boundaries, client qualification criteria, escalation rules, and department SOP checklists.',
     linkHref: '/starter-kit',
-    linkLabel: 'Download the voice.md & icp.md Starter Kit →',
-    secondaryHref: '/blog/easy-ai-brand-and-workflow-setup',
-    secondaryLabel: 'Read the Afternoon Setup Playbook',
+    linkLabel: 'Open the 20/80 Bottleneck Scorecard & Kit →',
+    secondaryHref: '/blog/ai-back-office',
+    secondaryLabel: 'Read the 6-Workflow Back-Office Guide',
   },
   {
     layer: 'Layer 02 · Scoped Tooling & Capability Boundaries',
@@ -293,33 +293,33 @@ export default function WhatIsAgenticArchitectPage() {
             </h2>
             <p className="text-sm text-muted leading-relaxed">
               You do not need custom microservices to think like an Agentic Architect. Start by
-              writing your 1-page <code className="font-mono text-fg">voice.md</code> Brand Brain,
-              scoring your weekly busywork with the 20/80 Scorecard, and wiring three human-approved
-              workflows across inbox triage, pre-call research dossiers, and omnichannel publishing.
+              scoring your repetitive bottlenecks with the 20/80 Scorecard, then wire human-approved
+              workflows across client intake, pre-call research dossiers, and inbox follow-up.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button variant="primary" size="sm" href="/masterclass">
-                Join Free 60-Min Masterclass
+              <Button variant="primary" size="sm" href="/courses">
+                Courses &amp; Live Build
               </Button>
-              <Button variant="outline" size="sm" href="/accelerator">
-                Explore 8-Week Accelerator
+              <Button variant="outline" size="sm" href="/work-with-me">
+                Custom Bottleneck Sprints
               </Button>
             </div>
           </Card>
 
           <Card className="p-6 md:p-7 space-y-4 bg-surface">
-            <Badge variant="rig">Track 2 · Engineering Leaders, Enterprises &amp; Universities</Badge>
+            <Badge variant="rig">Track 2 · Mid-Market Executives, CTOs &amp; Enterprises</Badge>
             <h2 className="text-xl font-bold text-fg">
-              Production Systems, Governance &amp; Private Infrastructure
+              Fractional CAIO / AI CTO, Governance &amp; Private Infrastructure
             </h2>
             <p className="text-sm text-muted leading-relaxed">
-              For technical and regulated organizations, the priority shifts to evaluation
-              harnesses, context-window economics, scoped tool identity, corporate enablement labs,
-              and encrypted private compute rigs where proprietary data stays inside your network.
+              For mid-market, healthcare, and engineering organizations, the priority shifts to
+              Fractional Chief AI Officer or AI CTO leadership, evaluation harnesses, scoped tool
+              identity, corporate enablement labs, and private compute where sensitive data stays
+              inside your boundary.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button variant="primary" size="sm" href="/work-with-me">
-                Book VIP 90-Min Audit
+              <Button variant="primary" size="sm" href="/fractional-ai-cto">
+                Fractional CAIO &amp; AI CTO
               </Button>
               <Button variant="outline" size="sm" href="/teaching">
                 Corporate Workshops &amp; Syllabi

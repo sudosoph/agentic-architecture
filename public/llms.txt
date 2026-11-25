@@ -7,19 +7,20 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background s
 
 ## Core Focus Areas
 
-1. Non-Technical Business Owners & Operators: Portable Company Context Vaults (`voice.md` + `icp.md`), our free 5-day Prompt-to-System challenge, self-paced AI Workflow Academy ($297), guided 6-System Cohort, and focused custom automation sprints.
-2. Cost Governance & Sovereign AI Infrastructure: Practical model routing, data privacy boundaries, and encrypted private AI setups you own.
-3. Corporate Workshops, Keynotes & CTO Advisory: Hands-on enablement for organizations past the demo and stuck before production, plus CU Boulder course syllabi.
+1. Non-Technical Business Owners & Operators: Practical non-coder courses ($297 AI Workflow Academy), our free 5-day Prompt-to-System challenge, guided 6-System Cohort, and focused custom automation sprints across Sales, Intake, Operations, and AI Chief of Staff loops.
+2. Fractional AI Leadership & Corporate Enablement: Fractional Chief AI Officer (CAIO) and Fractional AI CTO roles, 2-week architecture diagnostics, and hands-on department trainings for mid-market, healthcare, and tech teams.
+3. Sovereign AI Infrastructure & Benchmarks: Vendor-neutral model routing, data privacy boundaries, and encrypted private AI setups.
 
 ## Key Pages
 
-- / : Three-door overview across DIY Courses, Custom Bottleneck Sprints, and Corporate/Technical Authority
+- / : Audience-separated hub across Owner Courses/Sprints and Fractional AI Leadership/Corporate Training
+- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and 2-Week Architecture Diagnostic for mid-market and funded companies
 - /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
 - /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, vendor-neutral 512GB/128GB hardware sizer, and 3 downloadable Markdown field manuals
 - /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
 - /courses : Free 5-day challenge, $297 Self-Paced AI Workflow Academy (+$97/team seat), and guided cohort
 - /accelerator : Guided 6-System Back-Office Implementation Cohort (from $1,497, includes free EA/Ops seat)
-- /starter-kit : Free unlocked 20-Minute Company Context Vault (`voice.md`) & 20/80 Task Readiness Scorecard
+- /starter-kit : Free unlocked 20/80 Bottleneck Readiness Calculator, Lead Dossier workflow, and SOP templates
 - /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 90-Min Workflow Roadmap, Custom Sprints (from $2,500), and Corporate/Advisory Scoping
 - /research : 29 systems & hardware benchmarks, The Sovereign Stack book, CU Boulder syllabi, and CTO advisory
 - /teaching : Keynotes, corporate L&D workshops, and CU Boulder course syllabi

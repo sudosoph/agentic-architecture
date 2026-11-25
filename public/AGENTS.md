@@ -10,7 +10,8 @@ Agentic Architect (https://agenticarchitect.ai) is the publication, education hu
 - /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
 - /courses : Free starter challenge, $297 Self-Paced AI Workflow Academy, and guided cohort
 - /accelerator : 6-System Back-Office Implementation Cohort (includes free operator seat)
-- /starter-kit : Unlocked `voice.md` Company Context Vault and 20/80 Task Scorecard
+- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and enterprise architecture diagnostics
+- /starter-kit : Unlocked 20/80 Task Readiness Calculator and business workflow templates
 - /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 Roadmap, Custom Sprints, and Corporate Scoping
 - /research : Systems benchmarks, 18-chapter Sovereign Stack book, CU Boulder syllabi, and CTO advisory
 - /sovereign-stack : 18-chapter Sovereign Stack book, 512GB/128GB hardware sizer, and 3 free Markdown manuals
