@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 const EXPLORE_LINKS = [
+  { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
   { href: '/blog', label: 'Playbooks & Articles' },
   { href: '/starter-kit', label: 'Free Brand & Workflow Kit' },
   { href: '/stack', label: 'Stack & Rigs' },

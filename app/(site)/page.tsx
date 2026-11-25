@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/mdx'
 import { Button } from '@/components/ui/button'
@@ -7,26 +8,67 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { HeroBlueprintSwitcher } from '@/components/site/hero-blueprint'
 import { SITE_CONFIG } from '@/lib/site-config'
 
-const PROFESSIONAL_SERVICE_LD = {
+export const metadata: Metadata = {
+  alternates: {
+    canonical: SITE_CONFIG.siteUrl,
+  },
+}
+
+const ENTITY_PROFILES = [
+  SITE_CONFIG.substackUrl,
+  SITE_CONFIG.linkedinUrl,
+  SITE_CONFIG.xUrl,
+  SITE_CONFIG.githubUrl,
+  SITE_CONFIG.cal.hub,
+]
+
+const HOME_ENTITY_GRAPH_LD = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: SITE_CONFIG.siteName,
-  description: SITE_CONFIG.tagline,
-  url: SITE_CONFIG.siteUrl,
-  founder: {
-    '@type': 'Person',
-    name: SITE_CONFIG.authorName,
-    jobTitle: 'AI Systems Architect & Educator',
-    url: `${SITE_CONFIG.siteUrl}/about`,
-  },
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Boulder',
-    addressRegion: 'CO',
-    addressCountry: 'US',
-  },
-  priceRange: '$$$',
-  serviceType: 'AI Workflow Enablement, Corporate Training & Advisory',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_CONFIG.siteUrl}/#website`,
+      url: `${SITE_CONFIG.siteUrl}/`,
+      name: SITE_CONFIG.siteName,
+      alternateName: ['agenticarchitect.ai', 'Agentic Architecture', SITE_CONFIG.legalName],
+      description: SITE_CONFIG.tagline,
+      inLanguage: 'en-US',
+      publisher: { '@id': `${SITE_CONFIG.siteUrl}/#organization` },
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${SITE_CONFIG.siteUrl}/#organization`,
+      name: SITE_CONFIG.siteName,
+      legalName: SITE_CONFIG.legalName,
+      description: SITE_CONFIG.tagline,
+      url: SITE_CONFIG.siteUrl,
+      logo: `${SITE_CONFIG.siteUrl}/icon.svg`,
+      image: `${SITE_CONFIG.siteUrl}/opengraph-image`,
+      founder: { '@id': `${SITE_CONFIG.siteUrl}/#person` },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Boulder',
+        addressRegion: 'CO',
+        addressCountry: 'US',
+      },
+      priceRange: '$$$',
+      serviceType: 'AI Workflow Enablement, Corporate Training & Advisory',
+      sameAs: ENTITY_PROFILES,
+    },
+    {
+      '@type': 'Person',
+      '@id': `${SITE_CONFIG.siteUrl}/#person`,
+      name: SITE_CONFIG.authorName,
+      jobTitle: 'Agentic Architect, AI Systems Educator & Advisor',
+      url: `${SITE_CONFIG.siteUrl}/about`,
+      alumniOf: {
+        '@type': 'CollegeOrUniversity',
+        name: 'Columbia University',
+      },
+      worksFor: { '@id': `${SITE_CONFIG.siteUrl}/#organization` },
+      sameAs: ENTITY_PROFILES,
+    },
+  ],
 }
 
 const PATH_CARDS = [
@@ -76,7 +118,7 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(PROFESSIONAL_SERVICE_LD).replace(/</g, '\\u003c'),
+          __html: JSON.stringify(HOME_ENTITY_GRAPH_LD).replace(/</g, '\\u003c'),
         }}
       />
 
@@ -90,7 +132,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
               <span className="inline-block h-2 w-2 rounded-full bg-online" />
               <span className="font-mono text-xs font-medium text-muted">
-                Sophia Stein · Boulder, CO
+                Agentic Architect · Sophia Stein · Boulder, CO
               </span>
             </div>
 
@@ -100,8 +142,9 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
-              Practical AI systems, live workshops, and strategic advisory for business owners,
-              leadership teams, and builders who want measurable ROI instead of hype.
+              Agentic Architect helps business owners, leadership teams, and builders ship
+              practical AI systems, live workshops, and private infrastructure with measurable ROI
+              instead of hype.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -113,7 +156,16 @@ export default function HomePage() {
               </Button>
             </div>
 
-            <div className="pt-2 space-y-2">
+            <div className="pt-1">
+              <Link
+                href="/what-is-an-agentic-architect"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
+              >
+                New to the discipline? Read What Is an Agentic Architect (2026 Role &amp; 4-Layer Stack Guide) →
+              </Link>
+            </div>
+
+            <div className="pt-1 space-y-2">
               <div className="flex flex-wrap gap-2">
                 {CREDENTIAL_CHIPS.map(chip => (
                   <span

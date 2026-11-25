@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Playbooks & Technical Deep Dives',
   description:
     'Practical AI workflow playbooks for small businesses, model & autonomous rig guides, and production agent engineering deep dives by Sophia Stein.',
+  alternates: {
+    canonical: '/blog',
+  },
 }
 
 const TRACK_TABS: Array<{

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Step-by-Step AI Workflow Guides',
   description:
     'Beginner-friendly, copy-paste tutorials for building practical AI workflows and agents. Every live guide ships with templates or a forkable GitHub repo.',
+  alternates: { canonical: '/guides' },
 }
 
 const WORKSHOPS = [

@@ -10,6 +10,7 @@
     "new:pack": "node scripts/new-content-pack.mjs",
     "substack:prep": "node scripts/mdx-to-substack.mjs",
     "outreach:pack": "node scripts/outreach-engine.mjs",
+    "seo:ping": "node scripts/ping-search-engines.mjs",
     "deploy": "opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare preview",
     "start": "next start",

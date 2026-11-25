@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: 'Boulder Startup Week 2026 Workshop Archive',
   description:
     'Open-source slides, 17-step n8n tutorial, and printable handouts delivered May 7, 2026 to 300+ founders and operators at Boulder Startup Week.',
+  alternates: { canonical: '/bsw' },
 }
 
 type Material = {

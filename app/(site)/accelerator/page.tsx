@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'The Agentic Business Accelerator',
   description:
     '8-week Done-With-You implementation cohort installing 6 revenue and operations AI systems inside your business for a fraction of a $65,000/yr hire.',
+  alternates: { canonical: '/accelerator' },
 }
 
 const SIX_SYSTEMS = [

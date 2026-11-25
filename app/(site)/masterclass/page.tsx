@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Free Live 60-Min AI Workflow Masterclass',
   description:
     'How lean businesses hook up a 1-page Brand Brain and 6 time-saving AI workflows without hiring or coding. Free 60-minute live training with Sophia Stein.',
+  alternates: { canonical: '/masterclass' },
 }
 
 const AGENDA = [

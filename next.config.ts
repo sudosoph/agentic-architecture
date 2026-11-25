@@ -22,11 +22,29 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   async redirects() {
-    return RENAMED_SLUGS.map(([from, to]) => ({
-      source: `/blog/${from}`,
-      destination: `/blog/${to}`,
-      permanent: true,
-    }))
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.agenticarchitect.ai',
+          },
+        ],
+        destination: 'https://agenticarchitect.ai/:path*',
+        permanent: true,
+      },
+      {
+        source: '/agentic-architect',
+        destination: '/what-is-an-agentic-architect',
+        permanent: true,
+      },
+      ...RENAMED_SLUGS.map(([from, to]) => ({
+        source: `/blog/${from}`,
+        destination: `/blog/${to}`,
+        permanent: true,
+      })),
+    ]
   },
 }
 

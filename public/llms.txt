@@ -14,6 +14,7 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background s
 ## Key Pages
 
 - / : Overview, interactive workflow blueprints, and featured playbooks
+- /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
 - /masterclass : Free Live 60-Min AI Workflow & Brand Brain Masterclass
 - /accelerator : Flagship 8-week Done-With-You Agentic Business Accelerator ($5,997 Founding / $8,997 Standard)
 - /starter-kit : Free unlocked 20-Minute Brand Brain (`voice.md`) & 20/80 Task Readiness Scorecard

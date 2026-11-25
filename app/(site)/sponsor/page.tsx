@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Sponsor Agentic Architect',
   description:
     'Partner with Agentic Architect across weekly playbooks and the Substack newsletter. Single sponsor per issue, full editorial independence.',
+  alternates: { canonical: '/sponsor' },
 }
 
 const TIERS = [

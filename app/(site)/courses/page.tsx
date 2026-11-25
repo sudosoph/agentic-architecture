@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Kits, Live Masterclass & Accelerator',
   description:
     'Start free with the 20-Minute Brand Brain Starter Kit and Live 60-Min Masterclass, or install 6 business AI systems inside the 8-week Agentic Business Accelerator.',
+  alternates: { canonical: '/courses' },
 }
 
 const LADDER = [

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Now',
   description:
     'What Sophia Stein is building, teaching, and writing right now in Boulder, CO. Updated November 2026.',
+  alternates: { canonical: '/now' },
 }
 
 export default function NowPage() {

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'Speaking, Corporate Workshops & University Teaching',
   description:
     'Keynotes, executive AI workshops, and university courses taught by Sophia Stein. 300+ trained at Boulder Startup Week, Women Who Code speaker, Columbia CS, ex-McKinsey.',
+  alternates: { canonical: '/teaching' },
 }
 
 const KEYNOTES = [

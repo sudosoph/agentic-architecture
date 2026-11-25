@@ -6,6 +6,7 @@ import { ContactForm } from '@/components/site/contact-form'
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Send a note. Resource requests, sponsorship inquiries, workshop follow-ups, or general questions all land in the same inbox.',
+  alternates: { canonical: '/contact' },
 }
 
 export default function ContactPage() {

@@ -9,7 +9,10 @@ import { SITE_CONFIG } from '@/lib/site-config'
 export const metadata: Metadata = {
   title: 'About Sophia Stein',
   description:
-    'AI Systems Architect, Educator & Advisor in Boulder, CO. Columbia CS, ex-McKinsey, AI Systems & Enablement at Google (personal capacity, views my own), and Women Who Code speaker.',
+    'Agentic Architect, AI Systems Educator & Advisor in Boulder, CO. Columbia CS, ex-McKinsey, AI Systems & Enablement at Google (personal capacity, views my own), and Women Who Code speaker.',
+  alternates: {
+    canonical: '/about',
+  },
 }
 
 const CREDENTIAL_CARDS = [

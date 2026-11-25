@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Stack & Autonomous AI Rigs',
   description:
     'Switch between the 15-minute zero-cost Small Business AI Stack and the Private & Sovereign AI Rig running over Tailscale with open-weight models.',
+  alternates: { canonical: '/stack' },
 }
 
 export default function StackPage() {

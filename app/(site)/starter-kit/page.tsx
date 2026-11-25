@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'Free 20-Min AI Brand Voice & Workflow Starter Kit',
   description:
     'Download the portable voice.md Brand Brain, icp.md template, 20/80 Scorecard CSV, and n8n Pre-Call Dossier workflow, plus score your tasks interactively.',
+  alternates: { canonical: '/starter-kit' },
 }
 
 export default function StarterKitPage() {

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Boulder & Denver Corporate AI Training, Workshops & Advisory',
   description:
     'On-site and virtual corporate AI workshops, executive workflow audits, and keynotes in Boulder, Denver, and the Colorado Front Range by Sophia Stein (Columbia CS, ex-McKinsey).',
+  alternates: { canonical: '/boulder' },
 }
 
 const COLORADO_PROGRAMS = [

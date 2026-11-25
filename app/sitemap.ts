@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
+    {
+      url: `${BASE}/what-is-an-agentic-architect`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
     { url: `${BASE}/masterclass`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/accelerator`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/starter-kit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },

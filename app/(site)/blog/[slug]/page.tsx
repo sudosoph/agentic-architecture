@@ -30,6 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.frontmatter.title,
     description: post.frontmatter.description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
   }
 }
 
@@ -56,19 +59,31 @@ export default async function BlogPostPage({ params }: Props) {
     .filter(p => p.slug !== slug && p.track === trackKey)
     .slice(0, 3)
 
+  const canonicalUrl = `${SITE_CONFIG.siteUrl}/blog/${slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
+    '@id': `${canonicalUrl}#article`,
     headline: post.frontmatter.title,
     description: post.frontmatter.description,
+    url: canonicalUrl,
+    mainEntityOfPage: canonicalUrl,
     datePublished: post.frontmatter.publishedDate,
     author: {
       '@type': 'Person',
+      '@id': `${SITE_CONFIG.siteUrl}/#person`,
       name: SITE_CONFIG.authorName,
       url: `${SITE_CONFIG.siteUrl}/about`,
+      sameAs: [
+        SITE_CONFIG.linkedinUrl,
+        SITE_CONFIG.xUrl,
+        SITE_CONFIG.githubUrl,
+        SITE_CONFIG.substackUrl,
+      ],
     },
     publisher: {
       '@type': 'Organization',
+      '@id': `${SITE_CONFIG.siteUrl}/#organization`,
       name: SITE_CONFIG.siteName,
       url: SITE_CONFIG.siteUrl,
     },

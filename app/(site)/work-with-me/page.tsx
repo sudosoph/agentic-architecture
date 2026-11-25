@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'Work With Me',
   description:
     'Book a VIP 90-Min AI Workflow Audit, 1:1 Strategy Session, 8-week Agentic Business Accelerator seat, Private Corporate AI Workshop, or Executive Advisory.',
+  alternates: { canonical: '/work-with-me' },
 }
 
 const PRIMARY_OFFERS = [
