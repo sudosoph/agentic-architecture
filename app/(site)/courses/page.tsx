@@ -138,7 +138,7 @@ export default function CoursesPage() {
           </p>
           <div className="flex flex-wrap gap-3 pt-1">
             <Button variant="primary" size="md" href="/sovereign-stack">
-              Read All 15 Live Chapters &amp; Download 3 OSS Manuals →
+              Read All 18 Live Chapters &amp; Download 3 OSS Manuals →
             </Button>
             <Button
               variant="outline"

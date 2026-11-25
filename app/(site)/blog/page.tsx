@@ -204,10 +204,36 @@ export default async function BlogPage({
   return (
     <div className="space-y-10">
       <PageHeader
-        meta="Playbooks · Model Guides · Systems Research"
-        title="AI Workflow Playbooks & Field Notes"
-        description="Choose your reader track below: plain-English workflows for lean businesses, practical model and private-rig setups, or production engineering deep dives."
+        meta="AI Org Charts · Chief of Staff Setups · Systems Research"
+        title="AI Workflow Playbooks & Buyer Guides"
+        description="Filter by track below: founder & executive AI org chart playbooks, model cost & privacy guides, or deep production engineering benchmarks."
       />
+
+      {/* Callan-Style Buyer Funnel Strip at Top of Blog */}
+      <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            Free Live 60-Min Training · Zero Coding Required
+          </p>
+          <p className="text-sm font-bold text-fg">
+            Want to see a live AI Org Chart &amp; 6 back-end workflows running before you hire?
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2.5 shrink-0">
+          <Link
+            href="/masterclass"
+            className="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
+          >
+            Save Free Masterclass Seat →
+          </Link>
+          <Link
+            href="/accelerator"
+            className="inline-flex items-center rounded-lg border border-border bg-white px-4 py-2 text-xs font-semibold text-fg hover:border-accent transition-colors"
+          >
+            8-Week Accelerator
+          </Link>
+        </div>
+      </div>
 
       {/* Primary 3-Track Tabs */}
       <div className="space-y-3">

@@ -77,39 +77,58 @@ export function buildSeoGeoOpportunity(rawItem) {
 }
 
 export async function fetchLiveRadarItems() {
+  const buyerCoreClusters = [
+    buildSeoGeoOpportunity({
+      id: 'buyer-ai-chief-of-staff-vs-ea',
+      source: 'High-Intent Buyer SEO/GEO ($5,997 Cohort + $1,500 Audit)',
+      title: 'AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown',
+      url: 'https://agenticarchitect.ai/blog/how-to-build-an-ai-chief-of-staff-2026',
+      points: 320,
+    }),
+    buildSeoGeoOpportunity({
+      id: 'buyer-corporate-ai-workshop-roi',
+      source: 'Corporate L&D & COO Buyer Search ($7,500 to $15,000 Labs)',
+      title: 'How to Train Non-Technical Employees on AI Workflows Without Data Leaks',
+      url: 'https://agenticarchitect.ai/blog/ai-implementation-program-vs-agency-vs-diy-guide',
+      points: 290,
+    }),
+    buildSeoGeoOpportunity({
+      id: 'buyer-ai-org-chart-service-firms',
+      source: 'Callan-Style Masterclass Funnel SEO/GEO',
+      title: 'AI Org Chart for Agencies, Clinics & Advisory Firms',
+      url: 'https://agenticarchitect.ai/blog/ai-org-chart-for-small-business-founders',
+      points: 275,
+    }),
+  ]
+
   try {
     const url =
-      'https://hn.algolia.com/api/v1/search?query=%22loop%20engineering%22%20OR%20%22unified%20memory%22%20OR%20Qwen%20OR%20DeepSeek%20OR%20MCP&tags=story&numericFilters=points>30&hitsPerPage=6'
+      'https://hn.algolia.com/api/v1/search?query=%22AI%20chief%20of%20staff%22%20OR%20%22loop%20engineering%22%20OR%20Qwen%20OR%20DeepSeek%20OR%20MCP&tags=story&numericFilters=points>30&hitsPerPage=4'
     const res = await fetch(url, { headers: { Accept: 'application/json' } })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     const hits = Array.isArray(data.hits) ? data.hits : []
     if (hits.length > 0) {
-      return hits.slice(0, 5).map(h =>
+      const liveBuilderSignals = hits.slice(0, 2).map(h =>
         buildSeoGeoOpportunity({
           id: `hn-${h.objectID}`,
-          source: `Hacker News (${h.points} pts · ${h.num_comments} comments)`,
+          source: `Builder Authority Signal (${h.points} pts · ${h.num_comments} comments)`,
           title: h.title,
           url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
           points: h.points,
         }),
       )
+      return [...buyerCoreClusters, ...liveBuilderSignals]
     }
   } catch {
-    // Fall back to curated seed below when offline
+    // Fall back cleanly to buyer core + builder seed when offline
   }
 
   return [
-    buildSeoGeoOpportunity({
-      id: 'seed-loop-verifiers-2026',
-      source: 'Engineering Leader Signal',
-      title: 'Deterministic Loop Verifiers vs Self-Critique Prompts in CI',
-      url: 'https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026',
-      points: 240,
-    }),
+    ...buyerCoreClusters,
     buildSeoGeoOpportunity({
       id: 'seed-512gb-moe-nodes',
-      source: 'r/LocalLLaMA & CTO Capex Signal',
+      source: 'Builder Authority Signal (30% Technical Moat)',
       title: '512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE',
       url: 'https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
       points: 215,

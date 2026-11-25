@@ -52,7 +52,12 @@ const HOME_ENTITY_GRAPH_LD = {
         addressCountry: 'US',
       },
       priceRange: '$$$',
-      serviceType: 'AI Workflow Enablement, Corporate Training & Advisory',
+      serviceType: [
+        'AI Implementation Program for Founders',
+        'AI Chief of Staff & Org Chart Architecture',
+        'Corporate AI Enablement Workshops',
+        'Executive AI Cost & Workflow Audits',
+      ],
       sameAs: ENTITY_PROFILES,
     },
     {
@@ -73,31 +78,31 @@ const HOME_ENTITY_GRAPH_LD = {
 
 const PATH_CARDS = [
   {
-    eyebrow: 'For CTOs, Technical Founders & VPs',
-    title: 'Architecture Audits & Cost Governance',
-    body: '90-minute teardown of your agent loop reliability, three-tier model routing, MCP permissions, and API/SaaS unit economics.',
-    cta: 'Book Audit or Advisory',
+    eyebrow: '1. For Founders & Business Owners',
+    title: 'AI Org Chart Masterclass & Accelerator',
+    body: 'See which roles belong to humans vs. AI back-end workflows in the free 60-minute live Masterclass, then install all 6 business systems over 8 weeks.',
+    cta: 'Save Free Masterclass Seat',
+    href: '/masterclass',
+    badge: 'Free Live Class -> Cohort',
+    badgeColor: 'green' as const,
+  },
+  {
+    eyebrow: '2. For COOs, L&D & Leadership Teams',
+    title: 'Corporate Workshops & VIP Audits',
+    body: 'Book a $1,500 90-minute Workflow & Cost Audit (100% creditable) or bring Sophia in for a $7,500 to $15,000 hands-on team enablement lab.',
+    cta: 'View Audits & Team Labs',
     href: '/work-with-me',
-    badge: 'High-ROI Teardown',
+    badge: '300+ Leaders Trained',
     badgeColor: 'amber' as const,
   },
   {
-    eyebrow: 'For AI Engineers & Systems Builders',
-    title: 'The Sovereign Stack & Hardware Sizer',
-    body: 'Vendor-neutral benchmarks on 512GB unified-memory nodes, sparse MoE routing, Tailscale meshes, and deterministic loop verifiers.',
-    cta: 'Open Sizer & 18-Ch. Book',
+    eyebrow: '3. Technical Credibility & Private AI',
+    title: 'The Sovereign Stack Book & Sizer',
+    body: 'Unlike hype coaches, we test the actual plumbing: read our 18-chapter field guide on model cost routing, data privacy, and private hardware.',
+    cta: 'Explore Book & Sizer',
     href: '/sovereign-stack',
-    badge: 'Free Book + 3 Manuals',
+    badge: 'Free 18-Ch. Book',
     badgeColor: 'blue' as const,
-  },
-  {
-    eyebrow: 'For Operating Teams & Classrooms',
-    title: 'Live Enablement Labs & Cohorts',
-    body: 'Install portable context files (voice.md, icp.md) and human-gated workflows across 10 to 250-person teams without fragile glue.',
-    cta: 'View Labs & Masterclass',
-    href: '/courses',
-    badge: '300+ Trained Live',
-    badgeColor: 'green' as const,
   },
 ]
 
@@ -111,7 +116,16 @@ const CREDENTIAL_CHIPS = [
 
 export default function HomePage() {
   const allPosts = getAllPosts()
-  const recentPosts = allPosts.slice(0, 6)
+  const buyerSlugs = new Set([
+    'ai-org-chart-for-small-business-founders',
+    'how-to-build-an-ai-chief-of-staff-2026',
+    'ai-implementation-program-vs-agency-vs-diy-guide',
+    'easy-ai-brand-and-workflow-setup',
+    'google-latest-models-vs-deepseek-4-1-business-guide',
+    'personal-agents-tab-instinct-openinstinct-review',
+  ])
+  const buyerFeatured = allPosts.filter(p => buyerSlugs.has(p.slug)).slice(0, 6)
+  const recentPosts = buyerFeatured.length >= 6 ? buyerFeatured : allPosts.slice(0, 6)
 
   return (
     <>
@@ -137,22 +151,22 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fg leading-[1.12]">
-              Reliable agent loops, sharp unit economics, and{' '}
-              <span className="text-accent">infrastructure you own.</span>
+              Build your AI org chart, automate busywork, and{' '}
+              <span className="text-accent">own your stack.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
-              Agentic Architect is Sophia Stein’s field guide and advisory practice for Seed-to-Series B
-              founders, engineering leaders, and builders shipping verified AI systems without burning
-              gross margin.
+              Humans on the front end, verified AI workflows on the back end. Agentic Architect
+              helps founders, leadership teams, and operators install an AI Chief of Staff and 6
+              core business systems before adding another $65,000 hire.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
               <Button variant="primary" size="lg" href="/masterclass">
-                Join the Free 60-Min Masterclass
+                Join the Free 60-Min AI Org Chart Masterclass
               </Button>
               <Button variant="outline" size="lg" href="/work-with-me">
-                Workshops & Paid Consults
+                VIP Audits &amp; Team Workshops
               </Button>
             </div>
 
@@ -161,7 +175,7 @@ export default function HomePage() {
                 href="/what-is-an-agentic-architect"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
               >
-                New to the discipline? Read What Is an Agentic Architect (2026 Role &amp; 4-Layer Stack Guide) →
+                New here? Read What Is an Agentic Architect (2026 Role &amp; 4-Layer Business Stack) →
               </Link>
             </div>
 
@@ -192,17 +206,17 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
             <div>
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Where to Start
+                Choose Your Path
               </p>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
-                Three Ways to Put AI to Work This Month
+                From Free Live Masterclass to Full Team Implementation
               </h2>
             </div>
             <Link
               href="/starter-kit"
               className="text-sm font-semibold text-accent hover:underline"
             >
-              Start with the free 20-minute Brand & Workflow Kit →
+              Grab the free 20-minute Brand Brain (voice.md) Kit →
             </Link>
           </div>
 
@@ -232,45 +246,45 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Flagship Cohort Callout */}
+        {/* Flagship Callan-Style Cohort Callout */}
         <section className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-2">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Flagship 8-Week Implementation Cohort
+              8-Week Done-With-You Implementation Program
             </span>
             <h2 className="text-2xl font-bold tracking-tight text-fg">
-              The Agentic Business Accelerator
+              The Agentic Business Accelerator ($5,997 Founding · $8,997 Standard)
             </h2>
             <p className="text-sm md:text-base text-muted leading-relaxed">
-              Install 6 production AI systems across your brand, inbox, lead pipeline, and
-              operations for a fraction of a $65,000/yr hire. Bring your Ops Lead or Executive
-              Assistant to build right alongside you.
+              Do not wait six months trying to stitch random prompts together solo. Work live with
+              Sophia (and bring your Ops Lead or EA for +$1,500) to wire your AI Brand Brain, AI
+              Chief of Staff, pre-call dossiers, inbox triage, and SOP workflows in 8 weeks.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
             <Button variant="primary" size="md" href="/accelerator">
-              See Curriculum & Tuition
+              See All 6 Installed Systems
             </Button>
             <Button variant="outline" size="md" href="/masterclass">
-              Watch Free Masterclass First
+              Attend Free Masterclass First
             </Button>
           </div>
         </section>
 
-        {/* Latest Playbooks & Articles */}
+        {/* Buyer-First Playbooks & Guides */}
         {recentPosts.length > 0 && (
           <section className="space-y-6">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                  Playbooks & Field Notes
+                  Founder, Executive &amp; Systems Playbooks
                 </p>
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
-                  Latest Guides on Workflows, Strategy & Private AI
+                  Start With Our Most-Read AI Org Chart &amp; Buyer Guides
                 </h2>
               </div>
               <Link href="/blog" className="text-sm font-semibold text-accent hover:underline shrink-0">
-                Browse all playbooks →
+                Browse all {allPosts.length} playbooks →
               </Link>
             </div>
 

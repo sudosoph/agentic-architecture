@@ -70,9 +70,76 @@ const COMPARISON = [
   },
 ]
 
+const ACCELERATOR_FAQS = [
+  {
+    q: 'Who is the Agentic Business Accelerator built for?',
+    a: 'Profitable founders, agency and service-firm owners, COOs, and Chiefs of Staff ($300K to $20M revenue, 2 to 100 staff) who want a structured AI Org Chart and 6 working systems installed in-house before hiring another $65,000/yr coordinator.',
+  },
+  {
+    q: 'Can my Executive Assistant or Operations Manager attend alongside me?',
+    a: 'Yes. Most founders add the +$1,500 Ops Lead / EA Companion Seat so your right-hand operator attends every live build call and maintains all 6 workflows for you.',
+  },
+  {
+    q: 'How is this different from hiring a $20,000 AI automation agency?',
+    a: 'Agencies hand over brittle zaps nobody on your team knows how to edit when an API or process changes. In the Accelerator, every prompt, SOP, and workflow lives in your own workspace so your team owns 100% of the intellectual property.',
+  },
+]
+
 export default function AcceleratorPage() {
+  const acceleratorLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Course',
+        '@id': `${SITE_CONFIG.siteUrl}/accelerator#course`,
+        name: 'The Agentic Business Accelerator (8-Week Done-With-You AI Implementation Cohort)',
+        description:
+          '8-week hands-on AI implementation program for founders, COOs, and leadership teams installing an AI Brand Brain, AI Chief of Staff, pre-call dossiers, inbox triage, and SOP workflows.',
+        provider: {
+          '@type': 'Organization',
+          '@id': `${SITE_CONFIG.siteUrl}/#organization`,
+          name: SITE_CONFIG.siteName,
+          url: SITE_CONFIG.siteUrl,
+        },
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'Founding Cohort Tuition',
+            price: '5997',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            url: SITE_CONFIG.cal.acceleratorFounding,
+          },
+          {
+            '@type': 'Offer',
+            name: 'Standard Cohort Tuition',
+            price: '8997',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            url: SITE_CONFIG.cal.accelerator,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: ACCELERATOR_FAQS.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
+  }
+
   return (
-    <div className="space-y-14">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(acceleratorLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <div className="space-y-14">
       {/* Hero */}
       <section className="space-y-5">
         <div className="flex flex-wrap items-center gap-2">
@@ -211,7 +278,20 @@ export default function AcceleratorPage() {
         </Card>
       </section>
 
-      <LdReimbursementCard />
-    </div>
+        <LdReimbursementCard />
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-fg">Program &amp; Enrollment FAQ</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {ACCELERATOR_FAQS.map(faq => (
+              <Card key={faq.q} className="p-6 space-y-2">
+                <h3 className="text-sm font-bold text-fg leading-snug">{faq.q}</h3>
+                <p className="text-xs text-muted leading-relaxed">{faq.a}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   )
 }

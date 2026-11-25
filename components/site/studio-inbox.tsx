@@ -31,6 +31,33 @@ type RadarItem = {
   linkedinHook: string
 }
 
+const CALLAN_BUYER_FUNNEL_PACKS = [
+  {
+    id: 'callan-li-ig-orgchart',
+    channel: 'LinkedIn + Instagram Reel/Carousel -> /masterclass ($5,997-$8,997 Funnel)',
+    url: 'https://agenticarchitect.ai/masterclass',
+    hookTitle: 'Stop asking "What can AI do?" Draw an AI Org Chart first.',
+    copyBody:
+      'Most business owners open a blank chat window on Monday, try two prompts, and go right back to answering every email and prepping every call themselves.\n\nBefore hiring your next $65,000 ops or marketing coordinator, split your company org chart in two:\n- Front end (Humans): sales calls, pricing judgment, client trust, final sign-off.\n- Back end (AI workflows): voice.md drafting, 30-min pre-call dossiers, draft-first inbox triage, and 5-day follow-up tracking.\n\nI am walking through all 6 roles live on screen in our free 60-minute AI Org Chart Masterclass.\n\nComment MASTERCLASS (or grab a seat at https://agenticarchitect.ai/masterclass) and I will send you the workbook.',
+  },
+  {
+    id: 'callan-podcast-pitch',
+    channel: 'Podcast Guest Tour Pitch (Callan’s #1 Warm Buyer Shortcut)',
+    url: 'https://agenticarchitect.ai/blog/ai-org-chart-for-small-business-founders',
+    hookTitle: 'Subject: Guest idea: Building an AI Org Chart before your next $65K hire',
+    copyBody:
+      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on keeping operations lean. Most AI guests either stay at surface-level ChatGPT tips or drown founders in developer jargon.\n\nMy background bridges both: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners love a 35-minute tactical walkthrough on "Humans on the Front End, AI on the Back End: The 6-Role AI Org Chart That Saves a $65K Hire"? Happy to give your audience our unlocked Brand Brain (voice.md) workbook free at agenticarchitect.ai/masterclass.\n\nWarmly,\nSophia Stein',
+  },
+  {
+    id: 'callan-corporate-coo',
+    channel: 'LinkedIn / Outbound Note -> $7,500-$15,000 Corporate Labs & $1,500 Audits',
+    url: 'https://agenticarchitect.ai/blog/how-to-build-an-ai-chief-of-staff-2026',
+    hookTitle: 'Why 70% of $20K AI agency builds get switched off inside 90 days',
+    copyBody:
+      'Watched three leadership teams run into the same wall this quarter: they paid an outside agency $20K+ for undocumented webhook automations, a CRM field changed six weeks later, and nobody in-house knew how to edit it.\n\nDurable AI adoption looks boring: portable markdown context files (voice.md, icp.md), draft-only inbox scopes so nothing embarrassing auto-sends, and training your own Ops Lead or Chief of Staff to own the loop.\n\nPublished our full 2026 AI Chief of Staff & Corporate Workshop buyer guide today (link in first comment).',
+  },
+]
+
 const HN_REDDIT_LAUNCH_PACKS = [
   {
     id: 'hn-loop-eng-2026',
@@ -634,18 +661,64 @@ export function StudioInbox({
         </div>
       </section>
 
-      {/* 3. OSS, Hardware & Hacker News Launch Queue */}
+      {/* 3. Callan-Style High-Ticket Buyer Funnel Packs (70% Revenue Focus) */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              3. Callan-Style Buyer Attraction (70% Revenue Engine)
+            </p>
+            <h2 className="text-xl font-bold text-fg">
+              Ready-to-Send Masterclass Hooks, Podcast Pitches &amp; Corporate Buyer Posts
+            </h2>
+          </div>
+          <Badge variant="online">Drives $5,997 Cohort + $15K Corporate Labs</Badge>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {CALLAN_BUYER_FUNNEL_PACKS.map(pack => (
+            <Card key={pack.id} className="p-6 space-y-3 border-blue-200">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-mono text-xs text-accent font-semibold">{pack.channel}</span>
+                <a
+                  href={pack.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs text-accent hover:underline"
+                >
+                  {pack.url.replace('https://agenticarchitect.ai', '')} →
+                </a>
+              </div>
+              <p className="text-sm font-bold text-fg">{pack.hookTitle}</p>
+              <p className="text-xs text-fg whitespace-pre-line bg-surface border border-border rounded-lg p-3.5 leading-relaxed">
+                {pack.copyBody}
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => copyText(`callan-${pack.id}`, pack.copyBody)}
+                  className="rounded-lg bg-accent px-3.5 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+                >
+                  {copiedId === `callan-${pack.id}` ? 'Copied Buyer Script!' : 'Copy Full Script / Pitch'}
+                </button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. OSS, Hardware & Hacker News Launch Queue (30% Technical Authority Moat) */}
       <section className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-              3. OSS, 512GB Hardware &amp; Loop Engineering Distribution
+              4. Builder &amp; Backlink Moat (30% Domain Authority)
             </p>
             <h2 className="text-xl font-bold text-fg">
               Ready-to-Post Hacker News &amp; r/LocalLLaMA Launch Packs
             </h2>
           </div>
-          <Badge variant="rig">Feeds /sovereign-stack Book &amp; Inbound Audits</Badge>
+          <Badge variant="rig">Builds Domain Rating so Buyer Pages Rank #1</Badge>
         </div>
 
         <div className="grid grid-cols-1 gap-4">

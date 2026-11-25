@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 export const metadata: Metadata = {
-  title: 'About Sophia Stein',
+  title: 'About Sophia Stein · AI Org Chart, Workflows & Corporate Enablement',
   description:
-    'Software engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO. Columbia CS, applied AI at Google (personal capacity, views my own), and Women Who Code speaker.',
+    'Columbia CS engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO helping founders and leadership teams install practical AI org charts and workflows.',
   alternates: {
     canonical: '/about',
   },
@@ -16,43 +16,43 @@ export const metadata: Metadata = {
 
 const ICP_LAYERS = [
   {
-    eyebrow: 'Primary Advisory & Audit Buyers',
-    title: 'Seed-to-Series B Technical Founders, CTOs & Operating Leaders',
+    eyebrow: '1. Founders, Agency & Service Business Owners ($300K to $20M)',
+    title: 'Done-With-You AI Org Charts & 6 Installed Business Systems',
     detail:
-      '10 to 250-person organizations where agent loops are failing silently in production or API and SaaS spend is eating gross margin. We fix model-routing unit economics, build deterministic verification harnesses, and train engineering and ops teams.',
+      'Owners tired of carrying operational busywork in their heads or spending $65,000+ on another coordinator hire. Start in the free 60-minute live Masterclass, then install your Brand Brain, AI Chief of Staff, inbox triage, and pre-call dossiers inside our 8-week Accelerator ($5,997 Founding / $8,997 Standard).',
   },
   {
-    eyebrow: 'Technical Reader & Referral Flywheel',
-    title: 'Pragmatic AI Engineers & Systems Builders',
+    eyebrow: '2. COOs, Chiefs of Staff & Corporate L&D Leaders (25 to 500+ Staff)',
+    title: 'On-Site & Virtual Team Enablement Labs ($7,500 to $15,000) & VIP Audits',
     detail:
-      'Engineers benchmarking 512 GB unified-memory desk nodes against cloud APIs, auditing personal agent permissions and MCP servers, and designing isolated worktree and test-verifier loops.',
+      'Executive teams across healthcare, professional services, and technology who want real adoption across non-technical departments backed by McKinsey-grade ROI math and Columbia CS data-security guardrails.',
   },
 ]
 
 const SNAPSHOTS = [
   {
-    label: 'Applied AI Engineering',
+    label: 'Applied AI Engineering & Teaching',
     title: 'Google (Boulder, CO)',
     detail:
-      'Build internal AI investigation tooling (cutting root-cause triage from 15 minutes to 2), co-invented a patent-pending multimodal QA engine, and run internal engineering workshops. Everything on this site is strictly in my personal capacity; views my own.',
+      'Build internal AI investigation tools (cutting complex triage from 15 minutes to 2), co-invented a patent-pending multimodal QA engine, and lead internal workshops. Everything on this site is strictly in my personal capacity, views my own.',
   },
   {
-    label: 'Unit Economics & Enterprise Rollouts',
+    label: 'Commercial Strategy & Rollouts',
     title: 'McKinsey & Company',
     detail:
-      'Restructured enterprise SaaS contracts to cut $70M in annual sales OpEx and led clinical workflow deployments across 250+ healthcare leaders (79 NPS).',
+      'Restructured enterprise SaaS contracts to cut $70M in annual sales OpEx and led clinical software rollouts across 250+ healthcare leaders at a 79 NPS.',
   },
   {
     label: 'Systems & Performance Engineering',
     title: 'Columbia University, Section.io & Meta',
     detail:
-      'B.S. in Computer Science at Columbia (Dean’s List), edge performance engineering at Section.io prior to its Webscale acquisition (+30% conversion lift, -40% support ticket load), and Mobile Engineering Fellow at Meta.',
+      'B.S. in Computer Science at Columbia (Dean’s List), edge performance engineering at Section.io ahead of its Webscale acquisition (+30% conversion lift, -40% support tickets), and Mobile Engineering Fellow at Meta.',
   },
   {
-    label: 'Investing & Technical Community',
-    title: '7x Angel Investor & Boulder Classrooms',
+    label: 'Live Classrooms & Frontier Investing',
+    title: '300+ Trained Live & 7x Angel Investor',
     detail:
-      'Angel investor across seven quantum hardware, medtech, microgrid, and supply-chain startups. Trained 300+ founders and engineers live at Boulder Startup Week and spoke for Women Who Code.',
+      'Trained 300+ founders and operators live at Boulder Startup Week, spoke for Women Who Code, and angel invest across seven quantum hardware, medtech, microgrid, and supply-chain companies.',
   },
 ]
 
@@ -60,33 +60,36 @@ export default function AboutPage() {
   return (
     <div className="space-y-12">
       <PageHeader
-        meta="Boulder, CO · Engineer, Operator & 7x Angel Investor"
+        meta="Boulder, CO · Columbia CS · Ex-McKinsey · 7x Angel Investor"
         title="Sophia Stein"
-        description="I work on agent loop reliability, inference unit economics, and private AI infrastructure for technical founders, engineering leaders, and lean operating teams."
+        description="I help founders and leadership teams redesign their org chart around humans on the front end and reliable, owned AI workflows on the back end."
       />
 
-      {/* Plain, Understated Bio */}
+      {/* Crisp, Real-Person Positioning */}
       <section className="max-w-3xl space-y-4 text-base text-muted leading-relaxed">
         <p className="text-fg font-medium text-lg leading-relaxed">
-          Most teams shipping AI hit one of two walls: unverified agent loops that quietly break
-          in production, or unrouted frontier API and SaaS bills that wreck gross margins as usage
-          scales.
+          Most business owners looking for AI help run into a frustrating split: business coaches
+          who have never shipped software selling fragile prompt packs, or hardcore infrastructure
+          engineers speaking in jargon that never helps you close a client or clear your inbox.
         </p>
         <p>
-          My work sits at the intersection of systems engineering and unit economics. I studied
-          computer science at Columbia, shipped production web and mobile code at Meta and
-          Section.io, spent two years at McKinsey restructuring enterprise software spend and
-          clinical rollouts, and now build applied AI and multimodal QA tooling in Boulder. Outside
-          of software, I speak four languages and angel invest in early hardware, biotech, and
-          energy companies.
+          My career was built across both rooms. I studied computer science at Columbia, wrote
+          production software at Meta and Section.io, spent two years at McKinsey restructuring
+          enterprise software spend and rolling out clinical tools to hundreds of healthcare
+          leaders, and now build applied AI systems in Boulder.
         </p>
         <p>
-          <strong>Agentic Architect</strong> is my independent lab notebook and advisory practice.
-          Every benchmark, hardware teardown, and architecture playbook here follows one bias:
-          keep context in plain versioned files (<code className="font-mono text-fg">voice.md</code>
-          , <code className="font-mono text-fg">AGENTS.md</code>), gate autonomous loops behind
-          deterministic verifiers, and own the substrate once recurring cloud rent stops making
-          math sense.
+          At <strong>Agentic Architect</strong>, we start with your org chart rather than a tool
+          list: which decisions require human judgment, which repetitive back-office roles belong
+          to connected AI workflows, and how to own your context files (
+          <code className="font-mono text-fg">voice.md</code>,{' '}
+          <code className="font-mono text-fg">icp.md</code>) and data boundaries so you never get
+          locked into a $20,000 agency black box. (And if your engineering team wants our raw
+          hardware and model benchmarks, we publish all 18 chapters openly in{' '}
+          <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
+            The Sovereign Stack
+          </Link>
+          .)
         </p>
         <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3.5">
           Personal capacity note: My day job is at Google. Everything published, taught, or advised
@@ -95,9 +98,9 @@ export default function AboutPage() {
         </p>
       </section>
 
-      {/* Explicit ICP Section */}
+      {/* Who I Work With */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight text-fg">Who This Work Is Built For</h2>
+        <h2 className="text-xl font-bold tracking-tight text-fg">Who I Work With</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {ICP_LAYERS.map(layer => (
             <Card key={layer.title} className="p-6 space-y-2 bg-surface">
@@ -127,28 +130,28 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Direct Next Step */}
+      {/* Clear Funnel CTA */}
       <section className="rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-bold text-fg">Audits, Team Labs &amp; Field Manuals</h2>
+          <h2 className="text-lg font-bold text-fg">Start With the Free Live AI Org Chart Masterclass</h2>
           <p className="text-sm text-muted">
-            Explore the{' '}
-            <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
-              Sovereign Stack book &amp; hardware sizer
+            Watch the live 60-minute build on{' '}
+            <Link href="/masterclass" className="text-accent font-medium hover:underline">
+              /masterclass
             </Link>
-            , download the{' '}
+            , grab the{' '}
             <Link href="/starter-kit" className="text-accent font-medium hover:underline">
-              portable context kit
+              20-Minute Starter Kit
             </Link>
-            , or book an architecture teardown.
+            , or book a 1:1 audit or team workshop.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
-          <Button variant="primary" size="sm" href="/work-with-me">
-            Work With Sophia
+          <Button variant="primary" size="sm" href="/masterclass">
+            Free 60-Min Masterclass
           </Button>
-          <Button variant="outline" size="sm" href="/contact">
-            Send a Note
+          <Button variant="outline" size="sm" href="/work-with-me">
+            Audits &amp; Workshops
           </Button>
         </div>
       </section>

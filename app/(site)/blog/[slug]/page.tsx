@@ -142,30 +142,40 @@ export default async function BlogPostPage({ params }: Props) {
 
           <div className="prose mt-10" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-          {/* Dual Starter Kit & Work-With-Me Action Card */}
-          <Card className="mt-14 p-6 md:p-8 bg-surface space-y-4">
+          {/* Track-Aware Funnel Action Card */}
+          <Card className="mt-14 p-6 md:p-8 bg-surface space-y-4 border-blue-200">
             <div className="space-y-1.5">
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Put This Playbook to Work
+                {trackKey === 'small-business'
+                  ? 'Free Live Training + Done-With-You Cohort'
+                  : 'Put This Playbook to Work'}
               </p>
               <h2 className="text-xl font-bold text-fg">
-                Grab the Free Brand Brain Kit or Build Live With Sophia
+                {trackKey === 'small-business'
+                  ? 'See the Full AI Org Chart Live (Or Install All 6 Systems With Sophia)'
+                  : 'Grab the Free Starter Kit, Hardware Sizer, or Book an Audit'}
               </h2>
               <p className="text-sm text-muted leading-relaxed">
-                Copy the unlocked <code className="font-mono text-fg">voice.md</code> template and
-                20/80 Task Scorecard in 20 minutes, join the next free 60-minute live masterclass,
-                or book a 1:1 workflow and cost audit.
+                {trackKey === 'small-business'
+                  ? 'Join the next free 60-minute AI Org Chart Masterclass to watch these workflows built live, explore the 8-week Agentic Business Accelerator ($5,997 Founding), or book a $1,500 creditable VIP Audit.'
+                  : 'Copy the unlocked voice.md template in 20 minutes, run your numbers in The Sovereign Stack 512GB/OSS sizer, or book a 90-minute architecture and cost teardown.'}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button variant="primary" size="md" href="/starter-kit">
-                Open Free Starter Kit →
+              <Button variant="primary" size="md" href="/masterclass">
+                Join Free 60-Min Masterclass →
               </Button>
-              <Button variant="outline" size="md" href="/masterclass">
-                Free 60-Min Live Masterclass
+              <Button
+                variant="outline"
+                size="md"
+                href={trackKey === 'small-business' ? '/accelerator' : '/sovereign-stack'}
+              >
+                {trackKey === 'small-business'
+                  ? 'Explore 8-Week Accelerator'
+                  : 'Open Sovereign Stack & Sizer'}
               </Button>
               <Button variant="ghost" size="md" href="/work-with-me">
-                Work With Sophia →
+                VIP Audits &amp; Team Labs →
               </Button>
             </div>
           </Card>

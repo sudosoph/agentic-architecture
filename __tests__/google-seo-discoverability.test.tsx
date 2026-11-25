@@ -25,6 +25,9 @@ import { draftHumanReply } from '../scripts/comment-copilot.mjs'
 import SovereignStackPage from '@/app/(site)/sovereign-stack/page'
 import AboutPage from '@/app/(site)/about/page'
 import StudioPage from '@/app/(site)/studio/page'
+import MasterclassPage from '@/app/(site)/masterclass/page'
+import AcceleratorPage from '@/app/(site)/accelerator/page'
+import WorkWithMePage from '@/app/(site)/work-with-me/page'
 import { GET as getKeystaticApi } from '@/app/api/keystatic/[...params]/route'
 import { SOVEREIGN_STACK_PARTS } from '../scripts/compile-book-and-freebies.mjs'
 import { getAllPosts } from '@/lib/mdx'
@@ -200,14 +203,31 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     }
   })
 
-  it('renders crisp two-layer ICP on AboutPage with zero AI cliches and serves zero-npm Cloud Studio + Keystatic setup guard', async () => {
+  it('renders Callan-style buyer ICP on AboutPage, Course/Service/FAQ JSON-LD across funnel pages, and zero-npm Cloud Studio', async () => {
     const { container: aboutContainer } = render(<AboutPage />)
-    expect(aboutContainer.textContent).toContain('Seed-to-Series B Technical Founders')
+    expect(aboutContainer.textContent).toContain('Done-With-You AI Org Charts')
     expect(aboutContainer.textContent).not.toContain('mornings back')
     expect(aboutContainer.textContent).not.toContain('\u2014')
 
+    for (const [label, Comp, expectedType] of [
+      ['MasterclassPage', MasterclassPage, 'Course'],
+      ['AcceleratorPage', AcceleratorPage, 'Course'],
+      ['WorkWithMePage', WorkWithMePage, 'Service'],
+    ] as const) {
+      const { container: fContainer, unmount } = render(<Comp />)
+      const ld = fContainer.querySelector('script[type="application/ld+json"]')
+      expect(ld, `${label} missing JSON-LD`).not.toBeNull()
+      const parsed = JSON.parse(ld!.innerHTML)
+      const types = parsed['@graph'].map((n: { '@type': string }) => n['@type'])
+      expect(types).toContain(expectedType)
+      expect(types).toContain('FAQPage')
+      expect(fContainer.textContent).not.toContain('\u2014')
+      unmount()
+    }
+
     const { container: studioContainer } = render(<StudioPage />)
     expect(studioContainer.textContent).toContain('Write & Publish Playbooks Straight From Your Browser')
+    expect(studioContainer.textContent).toContain('Callan-Style Buyer Attraction')
     expect(studioContainer.textContent).not.toContain('\u2014')
 
     const ksRes = await getKeystaticApi(new Request('https://agenticarchitect.ai/api/keystatic/github/login'))

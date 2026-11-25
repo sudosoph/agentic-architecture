@@ -34,21 +34,25 @@ const KNOWN_STATIC_PATHS = new Set([
 ])
 
 describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
-  it('includes the latest November 2026 flagship posts at the top of the 44-post archive', () => {
+  it('includes the latest November 2026 buyer & systems flagship posts at the top of the 47-post archive', () => {
     const posts = getAllPosts()
-    expect(posts).toHaveLength(44)
-    expect(posts[0].slug).toBe('loop-engineering-production-guide-2026')
-    expect(posts[0].track).toBe('engineering')
-    expect(posts[1].slug).toBe('512gb-unified-memory-mini-pcs-local-llm-2026')
-    expect(posts[1].track).toBe('models-rigs')
-    expect(posts[2].slug).toBe('easy-ai-brand-and-workflow-setup')
-    expect(posts[2].track).toBe('small-business')
-    expect(posts[3].slug).toBe('personal-agents-tab-instinct-openinstinct-review')
-    expect(posts[3].track).toBe('small-business')
-    expect(posts[4].slug).toBe('google-latest-models-vs-deepseek-4-1-business-guide')
+    expect(posts).toHaveLength(47)
+    const topFourSlugs = new Set(posts.slice(0, 4).map(p => p.slug))
+    expect(topFourSlugs).toEqual(
+      new Set([
+        'ai-org-chart-for-small-business-founders',
+        'how-to-build-an-ai-chief-of-staff-2026',
+        'ai-implementation-program-vs-agency-vs-diy-guide',
+        'loop-engineering-production-guide-2026',
+      ]),
+    )
+    expect(posts[4].slug).toBe('512gb-unified-memory-mini-pcs-local-llm-2026')
+    expect(posts[5].slug).toBe('easy-ai-brand-and-workflow-setup')
+    expect(posts[6].slug).toBe('personal-agents-tab-instinct-openinstinct-review')
+    expect(posts[7].slug).toBe('google-latest-models-vs-deepseek-4-1-business-guide')
   })
 
-  it('resolves every internal /... link across all 44 blog posts without broken slugs or em-dashes', () => {
+  it('resolves every internal /... link across all 47 blog posts without broken slugs or em-dashes', () => {
     const posts = getAllPosts()
     const validSlugs = new Set(posts.map(p => p.slug))
 
@@ -124,13 +128,13 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     }
   })
 
-  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 44 entries', async () => {
+  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 47 entries', async () => {
     const res = await getRss()
     const xml = await res.text()
     expect(xml).toContain('<title>Agentic Architect</title>')
     expect(xml).not.toContain('Local-First AI')
     expect(xml).not.toContain('\u2014')
-    expect((xml.match(/<entry>/g) ?? []).length).toBe(44)
+    expect((xml.match(/<entry>/g) ?? []).length).toBe(47)
   })
 
   it('keeps all guides free of retired localfirstai Substack branding', () => {

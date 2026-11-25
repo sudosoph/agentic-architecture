@@ -9,7 +9,7 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Reliable agent loops, sharp unit economics, and infrastructure you own/i,
+        name: /Build your AI org chart, automate busywork, and own your stack/i,
       }),
     ).toBeTruthy()
     expect(screen.getByText(/Columbia CS/i)).toBeTruthy()
