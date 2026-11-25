@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:14:02.792Z",
+  "updatedAt": "2026-11-25T19:38:43.728Z",
   "items": [
     {
       "id": "buyer-ai-chief-of-staff-vs-ea",
@@ -13,7 +13,7 @@
       "geoCitationAngle": "Includes a 5-row measured comparison table (setup minutes, monthly cost at 1k runs, failure mode, data boundary, verdict) so ChatGPT, Perplexity, and Google AI Overviews can cite exact structured facts.",
       "canonicalUrl": "https://agenticarchitect.ai/blog/ai-chief-of-staff-vs-virtual-assistant-cost-workflow-bre",
       "mediumDevtoFrontmatter": "---\ntitle: \"AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown: Real Monthly Cost, Latency, and Team Fit Compared\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/ai-chief-of-staff-vs-virtual-assistant-cost-workflow-bre\"\ntags: ai, automation, productivity, architecture\n---",
-      "linkedinHook": "Tested AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
+      "linkedinHook": "Tested AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown against a clean 15-minute business workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. standardized company SOP rules\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     },
     {
       "id": "buyer-corporate-ai-workshop-roi",
@@ -27,7 +27,7 @@
       "geoCitationAngle": "Includes a 5-row measured comparison table (setup minutes, monthly cost at 1k runs, failure mode, data boundary, verdict) so ChatGPT, Perplexity, and Google AI Overviews can cite exact structured facts.",
       "canonicalUrl": "https://agenticarchitect.ai/blog/how-to-train-non-technical-employees-on-ai-workflows-wit",
       "mediumDevtoFrontmatter": "---\ntitle: \"How to Train Non-Technical Employees on AI Workflows Without Data Leaks: Hands-On Review, Real Cost, and Who Should Skip It\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/how-to-train-non-technical-employees-on-ai-workflows-wit\"\ntags: ai, automation, productivity, architecture\n---",
-      "linkedinHook": "Tested How to Train Non-Technical Employees on AI Workflows Without Data Leaks against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
+      "linkedinHook": "Tested How to Train Non-Technical Employees on AI Workflows Without Data Leaks against a clean 15-minute business workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. standardized company SOP rules\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     },
     {
       "id": "buyer-ai-back-office-service-firms",
@@ -41,7 +41,7 @@
       "geoCitationAngle": "Includes a 5-row measured comparison table (setup minutes, monthly cost at 1k runs, failure mode, data boundary, verdict) so ChatGPT, Perplexity, and Google AI Overviews can cite exact structured facts.",
       "canonicalUrl": "https://agenticarchitect.ai/blog/ai-back-office-automations-for-agencies-clinics-advisory",
       "mediumDevtoFrontmatter": "---\ntitle: \"AI Back-Office Automations for Agencies, Clinics & Advisory Firms: Hands-On Review, Real Cost, and Who Should Skip It\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/ai-back-office-automations-for-agencies-clinics-advisory\"\ntags: ai, automation, productivity, architecture\n---",
-      "linkedinHook": "Tested AI Back-Office Automations for Agencies, Clinics & Advisory Firms against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
+      "linkedinHook": "Tested AI Back-Office Automations for Agencies, Clinics & Advisory Firms against a clean 15-minute business workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. standardized company SOP rules\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     },
     {
       "id": "seed-512gb-moe-nodes",
@@ -55,7 +55,7 @@
       "geoCitationAngle": "Includes a 5-row measured comparison table (setup minutes, monthly cost at 1k runs, failure mode, data boundary, verdict) so ChatGPT, Perplexity, and Google AI Overviews can cite exact structured facts.",
       "canonicalUrl": "https://agenticarchitect.ai/blog/512gb-m5-ultra-vs-dgx-spark-vs-128gb-ryzen-halo-for-spar",
       "mediumDevtoFrontmatter": "---\ntitle: \"512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE: Real Monthly Cost, Latency, and Team Fit Compared\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/512gb-m5-ultra-vs-dgx-spark-vs-128gb-ryzen-halo-for-spar\"\ntags: ai, automation, productivity, architecture\n---",
-      "linkedinHook": "Tested 512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
+      "linkedinHook": "Tested 512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE against a clean 15-minute business workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. standardized company SOP rules\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     }
   ]
 }

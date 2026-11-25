@@ -34,27 +34,27 @@ type RadarItem = {
 const OWNER_BUYER_FUNNEL_PACKS = [
   {
     id: 'owner-li-bottleneck',
-    channel: 'LinkedIn Post -> Free 60-Min Live Build & $297 Academy',
-    url: 'https://agenticarchitect.ai/masterclass',
+    channel: 'Audience 1 (Non-Technical Owners) · LinkedIn -> Free Live Build & $297 Academy',
+    url: 'https://agenticarchitect.ai/academy',
     hookTitle: '90% of businesses do not need an autonomous AI agent. They need 1 clean automation.',
     copyBody:
-      'Everyone is chasing complex autonomous agents right now. Here is what actually happens inside most businesses:\n\nFragile autonomous bots hallucinate on edge cases, need constant babysitting, and get turned off by week three.\n\nClean, owned back-office automations run every single day at 10x lower cost:\n- Pre-call prospect dossiers landing 30 mins before Zoom\n- Draft-first inbox triage (staged in Gmail Drafts, never blind auto-sends)\n- 5-day proposal follow-up tracking\n- Meeting transcripts extracted straight into scoped proposals\n\nI am wiring a live Prompt-to-System workflow on screen (every click shown, zero coding) in our free 60-minute workshop.\n\nGrab a free seat + our unlocked voice.md workbook at https://agenticarchitect.ai/masterclass',
+      'Everyone is chasing complex autonomous agents right now. Here is what actually happens inside most businesses:\n\nFragile autonomous bots hallucinate on edge cases, need constant babysitting, and get turned off by week three.\n\nClean, owned business automations run every single day at 10x lower cost:\n- Pre-call prospect dossiers landing 30 mins before Zoom\n- Draft-first inbox triage (staged in Gmail Drafts, never blind auto-sends)\n- 5-day proposal follow-up tracking\n- Discovery calls extracted straight into scoped proposals & onboarding checklists\n\nComment WORKFLOW (or grab a free seat at https://agenticarchitect.ai/masterclass) to watch us wire an AI Chief of Staff live with zero coding.',
   },
   {
-    id: 'owner-podcast-pitch',
-    channel: 'Podcast & Guest Workshop Pitch (Warm Owner & Operator Inbound)',
-    url: 'https://agenticarchitect.ai/blog/ai-back-office',
-    hookTitle: 'Subject: Guest idea: Why 90% of businesses need clean automations, not fragile AI agents',
+    id: 'fractional-caio-cto-note',
+    channel: 'Audience 2 (Mid-Market & Tech Leaders) · Warm 2-Paragraph Fractional CAIO / AI CTO Note',
+    url: 'https://agenticarchitect.ai/fractional-ai-cto',
+    hookTitle: 'Subject: Fractional CAIO / AI CTO bench & Substack field notes',
     copyBody:
-      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on scaling lean operations. Most AI guests either stay at surface-level ChatGPT tips or drown business owners in developer jargon.\n\nMy background bridges both rooms: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners enjoy a 35-minute tactical walkthrough on "From Chat-Box Toy to Owned Back Office: 6 Workflows to Automate Before Hiring a $65K Coordinator"? Happy to share our unlocked Company Context Vault (voice.md) free at agenticarchitect.ai/starter-kit.\n\nWarmly,\nSophia Stein',
+      'Hi [First Name],\n\nHope your quarter at [Company] is going smoothly. Quick personal note: alongside my engineering work, I opened two part-time advisory seats through Agentic Architect serving mid-market and scaling teams as a Fractional Chief AI Officer / Fractional AI CTO (helping organizations move past scattered AI chat seats into governed, cost-predictable production workflows across Sales, Ops, and Engineering).\n\nI also publish weekly breakdowns on AI unit economics and practical business automations on Substack (https://agenticarchitectai.substack.com). Overview of the fractional practice is at https://agenticarchitect.ai/fractional-ai-cto if ever useful to you or another founder/COO in your circle.\n\nWarmly,\nSophia',
   },
   {
     id: 'corporate-demo-to-prod',
-    channel: 'LinkedIn / Outbound Note -> Corporate Workshops & Custom Sprints',
-    url: 'https://agenticarchitect.ai/blog/hire-ai-agency-vs-in-house',
-    hookTitle: 'Why 70% of black-box AI agency builds get switched off inside 90 days',
+    channel: 'Audience 2 (COOs, Healthcare & L&D) · LinkedIn -> Fractional Leadership & Workshops',
+    url: 'https://agenticarchitect.ai/fractional-ai-cto',
+    hookTitle: '75% of companies bought AI seats. Fewer than 5% have governed production workflows.',
     copyBody:
-      'Watched three teams hit the exact same wall this quarter: past the initial ChatGPT demo, stuck before real production. Two paid outside contractors $20K+ for undocumented webhook spaghetti; a CRM field changed six weeks later and nobody in-house knew how to edit it.\n\nDurable adoption looks calm and boring: plain-English context files (voice.md, icp.md), draft-only inbox scopes so nothing reckless auto-sends, and building directly inside your own accounts so your team owns the keys.\n\nPublished our full 2026 buyer & workshop breakdown today (link in first comment).',
+      'Watched three mid-market teams hit the exact same wall this quarter: past the initial ChatGPT demo, stuck before real production. Two paid outside contractors $20K+ for undocumented webhook spaghetti; a CRM field changed six weeks later and nobody in-house knew how to edit it.\n\nMoving an organization from demos to EBITDA impact does not require a $350K full-time hire: it takes clear SOP rules, draft-only external scopes, evaluation guardrails, and building directly inside your own accounts.\n\nPublished how we structure 2-week AI Architecture Diagnostics and Fractional CAIO / AI CTO oversight today (link in first comment).',
   },
 ]
 
@@ -726,6 +726,21 @@ export function StudioInbox({
 
       {/* 3. Non-Technical Owner & Corporate Buyer Attraction Packs */}
       <section className="space-y-4">
+        <Card className="p-5 bg-surface space-y-2 border-border">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
+              90-Minute Weekly Distribution Cadence (Zero Scraper Risk)
+            </p>
+            <Badge variant="tag">70% Owner Courses/Sprints · 30% Fractional CAIO/CTO</Badge>
+          </div>
+          <ul className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs text-muted pt-1">
+            <li><strong className="text-fg">Mon (10m):</strong> Review Gmail Weekday Radar draft &amp; engage 3 Substack threads.</li>
+            <li><strong className="text-fg">Tue (35m):</strong> Publish 1 playbook on site + native LinkedIn breakdown.</li>
+            <li><strong className="text-fg">Wed (25m):</strong> Send Substack story issue + 1-click Official Cross-Post (+24h canonical).</li>
+            <li><strong className="text-fg">Thu (20m):</strong> Send 3 warm 2-paragraph Fractional CAIO/CTO or Founder notes.</li>
+          </ul>
+        </Card>
+
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">

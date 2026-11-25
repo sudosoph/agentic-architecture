@@ -245,6 +245,8 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     const { container: studioContainer } = render(<StudioPage />)
     expect(studioContainer.textContent).toContain('Write & Publish Playbooks Straight From Your Browser')
     expect(studioContainer.textContent).toContain('Owner Bottleneck & Corporate Buyer Attraction')
+    expect(studioContainer.textContent).toContain('90-Minute Weekly Distribution Cadence')
+    expect(studioContainer.textContent?.toLowerCase()).not.toContain('voice.md')
     expect(studioContainer.textContent?.toLowerCase()).not.toContain('callan')
     expect(studioContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(studioContainer.textContent).not.toContain('\u2014')

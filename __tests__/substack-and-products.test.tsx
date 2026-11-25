@@ -106,18 +106,31 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
     expect(ldContainer.textContent).not.toContain('\u2014')
   })
 
-  it('generates personalized zero-em-dash outreach sequences across all 4 segments and builds OG ImageResponses', async () => {
-    for (const seg of ['warm-founder', 'corporate-ld', 'podcast-partner', 'university'] as const) {
+  it('generates personalized zero-em-dash outreach sequences across all 5 segments (including fractional-cto) free of voice.md and builds OG ImageResponses', async () => {
+    for (const seg of [
+      'warm-founder',
+      'corporate-ld',
+      'fractional-cto',
+      'podcast-partner',
+      'university',
+    ] as const) {
       const pack = buildOutreachCampaignPack({
         segment: seg,
         prospectName: 'Jordan',
         company: 'Boulder Labs',
         signal: 'expanding operations across Colorado',
       })
+      expect(pack.segment).toBe(seg)
       expect(pack.emailTouch1).toContain('Jordan')
       expect(pack.emailTouch1).not.toContain('\u2014')
+      expect(pack.emailTouch1.toLowerCase()).not.toContain('voice.md')
+      expect(pack.emailTouch1.toLowerCase()).not.toContain('brand brain')
       expect(pack.linkedinDm).not.toContain('\u2014')
+      expect(pack.linkedinDm.toLowerCase()).not.toContain('voice.md')
       expect(pack.followUpDay5).not.toContain('\u2014')
+      if (seg === 'fractional-cto') {
+        expect(pack.emailTouch1).toContain('/fractional-ai-cto')
+      }
     }
 
     const rootOg = OpenGraphImage()

@@ -71,7 +71,7 @@ export function buildSeoGeoOpportunity(rawItem) {
     canonicalUrl,
     mediumDevtoFrontmatter,
     linkedinHook: stripEmDashes(
-      `Tested ${cleanTitle} against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment.`,
+      `Tested ${cleanTitle} against a clean 15-minute business workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. standardized company SOP rules\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment.`,
     ),
   }
 }
