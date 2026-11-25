@@ -24,14 +24,25 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/:path*',
+        source: '/',
         has: [
           {
             type: 'host',
             value: 'www.agenticarchitect.ai',
           },
         ],
-        destination: 'https://agenticarchitect.ai/:path*',
+        destination: 'https://agenticarchitect.ai',
+        permanent: true,
+      },
+      {
+        source: '/:path+',
+        has: [
+          {
+            type: 'host',
+            value: 'www.agenticarchitect.ai',
+          },
+        ],
+        destination: 'https://agenticarchitect.ai/:path+',
         permanent: true,
       },
       {

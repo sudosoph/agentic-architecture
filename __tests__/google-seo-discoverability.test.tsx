@@ -43,12 +43,20 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
   it('permanently redirects www.agenticarchitect.ai to apex https://agenticarchitect.ai in next.config.ts', async () => {
     expect(typeof nextConfig.redirects).toBe('function')
     const redirects = await nextConfig.redirects!()
-    const wwwRedirect = redirects.find(r =>
-      r.has?.some(h => h.type === 'host' && h.value === 'www.agenticarchitect.ai'),
+    const wwwRoot = redirects.find(
+      r =>
+        r.source === '/' &&
+        r.has?.some(h => h.type === 'host' && h.value === 'www.agenticarchitect.ai'),
     )
-    expect(wwwRedirect).toBeDefined()
-    expect(wwwRedirect?.permanent).toBe(true)
-    expect(wwwRedirect?.destination).toBe('https://agenticarchitect.ai/:path*')
+    const wwwSubpath = redirects.find(
+      r =>
+        r.source === '/:path+' &&
+        r.has?.some(h => h.type === 'host' && h.value === 'www.agenticarchitect.ai'),
+    )
+    expect(wwwRoot?.permanent).toBe(true)
+    expect(wwwRoot?.destination).toBe('https://agenticarchitect.ai')
+    expect(wwwSubpath?.permanent).toBe(true)
+    expect(wwwSubpath?.destination).toBe('https://agenticarchitect.ai/:path+')
   })
 
   it('includes Google Search Console verification tag, HTML verification file, and IndexNow key', () => {
