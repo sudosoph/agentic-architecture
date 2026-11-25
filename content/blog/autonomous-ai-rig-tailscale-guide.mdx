@@ -1,0 +1,69 @@
+---
+title: "The Pocket-Sized Private AI Cloud: Connecting to Your Own Autonomous Rig Anywhere With Tailscale"
+slug: autonomous-ai-rig-tailscale-guide
+publishedDate: "2026-11-20"
+description: "How to turn an always-on workstation or quiet office mini-PC into a zero-exposed-port private AI cloud over Tailscale, running DeepSeek 4.1 and automated n8n workflows from your phone or laptop anywhere."
+track: "models-rigs"
+tags: ["tailscale", "hardware", "local-first", "deepseek", "security", "framework"]
+kind: deep-dive
+draft: false
+---
+
+Running private open-weight models and workflow automations on your own hardware used to have an annoying catch: the moment you closed your laptop and walked into a coffee shop or airport, your local stack stayed home. Worse, well-meaning builders sometimes forward ports on their home or office router to reach `Ollama` or `n8n` remotely, accidentally exposing unauthenticated model endpoints to the public internet within minutes.
+
+**Tailscale** solves both problems in fifteen minutes. By wrapping your workstation or office node in a private, encrypted WireGuard mesh (`tailnet`), your phone and travel laptop connect to your private AI rig from anywhere in the world as if they were plugged into the same desk switch, with **zero open router ports**.
+
+## The architecture: Zero exposed ports, reachable anywhere
+
+Here is the exact layout:
+
+1. **Always-on private AI node (at your desk or office closet):** Runs Linux or macOS, local model serving (`llama.cpp` or `Ollama` with **DeepSeek 4.1**, Qwen 3.6, and Gemma 4), and Dockerized `n8n` workflows.
+2. **Tailscale encrypted mesh (`100.x.y.z`):** Installed on the AI node, your travel laptop, and your phone. Every service binds strictly to `127.0.0.1` or the Tailscale interface, never `0.0.0.0` on public Wi-Fi or WAN.
+3. **Mobile human-in-the-loop control:** Your rig runs scheduled background research, document OCR, and inbox triage while you are away, dropping drafts into your review queue so you can approve from your phone in ten seconds.
+
+## Honest hardware picks: What I run vs. what small offices buy
+
+You do not need a noisy server rack to run useful local models in late 2026. Memory capacity and memory bandwidth matter far more than flashy case lights.
+
+| Setup Tier | Hardware Specification | Realistic Sweet Spot | Who Should Pick It |
+|---|---|---|---|
+| **My Daily Workstation** | **Framework 16** (AMD Ryzen AI 9 HX 370, 96GB DDR5, 90GB unified GART pool, Ubuntu LTS) | Runs 27B to 35B dense models and quantized DeepSeek 4.1 / MoE variants at ~3 cents/session of electricity | Builders who want one repairable Linux rig for both travel and desk duty ([full breakdown](/blog/96gb-ram-thesis)) |
+| **Quiet Small-Office Node** | **Apple Mac Mini (M4 Pro, 48GB to 64GB unified memory)** | Silent, ~15W idle, plug-and-play `llama.cpp` / `Ollama` server tucked on a bookshelf | Founders, agencies, and 2 to 15 person offices wanting zero Linux driver maintenance |
+| **Compact Linux Mini-PC** | **Ryzen AI Max / Strix Halo 64GB to 128GB Mini-PC** | High unified RAM per dollar in a lunchbox footprint for Docker + Postgres + local models | Technical operators building a dedicated headless Linux automation box |
+
+*(Transparency note: The Framework 16 with 96GB DDR5 is the machine I personally own and run daily; the Mac Mini and compact Ryzen Mini-PC options above are the two dedicated desk nodes I recommend most often during client stack audits.)*
+
+## 4-step setup in 20 minutes
+
+### 1. Install Tailscale on your rig, laptop, and phone
+
+Install Tailscale on your host machine (`curl -fsSL https://tailscale.com/install.sh | sh` on Ubuntu LTS) and sign in with passkey/SSO MFA enabled. Install the companion app on your laptop and phone. Enable **MagicDNS** in the Tailscale admin console so your machine gets a clean private hostname like `ai-rig.tail-scale.ts.net`.
+
+### 2. Bind local model servers away from public interfaces
+
+Never expose port `11434` (`Ollama`) or `8080` (`llama-server`) to `0.0.0.0` on an untrusted network. Instead, keep the service bound locally (`127.0.0.1`) and publish it exclusively inside your private tailnet with automatic TLS via `tailscale serve`:
+
+```bash
+# Exposes localhost:8080 ONLY to devices signed into your private Tailscale network over HTTPS
+sudo tailscale serve --bg 8080
+```
+
+Now your travel laptop or mobile client can point any OpenAI-compatible SDK or chat UI at `https://ai-rig.tail-scale.ts.net` over encrypted HTTPS, while the rest of the internet sees zero open ports.
+
+### 3. Run `n8n` and local models side by side
+
+Run `n8n` in Docker bound to `127.0.0.1:5678` (published on a second Tailscale Serve path or port). Wire your scheduled workflows to follow the hybrid pattern from [Cloud vs. Private Local AI](/blog/local-vs-cloud-inference):
+- Use local **DeepSeek 4.1** or Qwen 3.6 on the rig for private PDF parsing, invoice checks, CRM note cleanup, and overnight research digests at $0 marginal token cost.
+- Escalate only the hardest 5% of multimodal or client-facing turns to a cloud API when needed.
+
+### 4. Enforce Tailscale ACLs and human approval gates
+
+Even inside a private mesh, apply least privilege:
+- Use **Tailscale ACL tags** (`tag:ai-node`, `tag:admin-devices`) so IoT devices or guest laptops cannot reach your model or n8n ports.
+- Keep write actions behind the [Human-in-the-Loop standard](/blog/the-hitl-standard): let your autonomous rig prepare drafts, summaries, and pull requests around the clock, and require your explicit tap before sending external emails or mutating production data.
+
+## Where to go next
+
+- Compare every tool in both the 15-minute business stack and the sovereign rig on [/stack](/stack).
+- Check which tasks belong on local open weights vs. cloud APIs in [Google's Latest Gemini Models vs. DeepSeek 4.1](/blog/google-latest-models-vs-deepseek-4-1-business-guide).
+- Want help designing a private AI workflow architecture for your company or firm? Book a [VIP Audit or Advisory Scoping Call](/work-with-me).

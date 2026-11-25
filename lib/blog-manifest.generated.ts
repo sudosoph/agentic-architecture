@@ -375,6 +375,46 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "autonomous-ai-rig-tailscale-guide",
+    "frontmatter": {
+      "title": "The Pocket-Sized Private AI Cloud: Connecting to Your Own Autonomous Rig Anywhere With Tailscale",
+      "slug": "autonomous-ai-rig-tailscale-guide",
+      "publishedDate": "2026-11-20",
+      "description": "How to turn an always-on workstation or quiet office mini-PC into a zero-exposed-port private AI cloud over Tailscale, running DeepSeek 4.1 and automated n8n workflows from your phone or laptop anywhere.",
+      "track": "models-rigs",
+      "tags": [
+        "tailscale",
+        "hardware",
+        "local-first",
+        "deepseek",
+        "security",
+        "framework"
+      ],
+      "kind": "deep-dive",
+      "draft": false,
+      "readingMinutes": 4
+    },
+    "html": "<p>Running private open-weight models and workflow automations on your own hardware used to have an annoying catch: the moment you closed your laptop and walked into a coffee shop or airport, your local stack stayed home. Worse, well-meaning builders sometimes forward ports on their home or office router to reach <code>Ollama</code> or <code>n8n</code> remotely, accidentally exposing unauthenticated model endpoints to the public internet within minutes.</p>\n<p><strong>Tailscale</strong> solves both problems in fifteen minutes. By wrapping your workstation or office node in a private, encrypted WireGuard mesh (<code>tailnet</code>), your phone and travel laptop connect to your private AI rig from anywhere in the world as if they were plugged into the same desk switch, with <strong>zero open router ports</strong>.</p>\n<h2 id=\"the-architecture-zero-exposed-ports-reachable-anywhere\">The architecture: Zero exposed ports, reachable anywhere</h2>\n<p>Here is the exact layout:</p>\n<ol>\n<li><strong>Always-on private AI node (at your desk or office closet):</strong> Runs Linux or macOS, local model serving (<code>llama.cpp</code> or <code>Ollama</code> with <strong>DeepSeek 4.1</strong>, Qwen 3.6, and Gemma 4), and Dockerized <code>n8n</code> workflows.</li>\n<li><strong>Tailscale encrypted mesh (<code>100.x.y.z</code>):</strong> Installed on the AI node, your travel laptop, and your phone. Every service binds strictly to <code>127.0.0.1</code> or the Tailscale interface, never <code>0.0.0.0</code> on public Wi-Fi or WAN.</li>\n<li><strong>Mobile human-in-the-loop control:</strong> Your rig runs scheduled background research, document OCR, and inbox triage while you are away, dropping drafts into your review queue so you can approve from your phone in ten seconds.</li>\n</ol>\n<h2 id=\"honest-hardware-picks-what-i-run-vs-what-small-offices-buy\">Honest hardware picks: What I run vs. what small offices buy</h2>\n<p>You do not need a noisy server rack to run useful local models in late 2026. Memory capacity and memory bandwidth matter far more than flashy case lights.</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>Setup Tier</th>\n<th>Hardware Specification</th>\n<th>Realistic Sweet Spot</th>\n<th>Who Should Pick It</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>My Daily Workstation</strong></td>\n<td><strong>Framework 16</strong> (AMD Ryzen AI 9 HX 370, 96GB DDR5, 90GB unified GART pool, Ubuntu LTS)</td>\n<td>Runs 27B to 35B dense models and quantized DeepSeek 4.1 / MoE variants at ~3 cents/session of electricity</td>\n<td>Builders who want one repairable Linux rig for both travel and desk duty (<a href=\"/blog/96gb-ram-thesis\">full breakdown</a>)</td>\n</tr>\n<tr>\n<td><strong>Quiet Small-Office Node</strong></td>\n<td><strong>Apple Mac Mini (M4 Pro, 48GB to 64GB unified memory)</strong></td>\n<td>Silent, ~15W idle, plug-and-play <code>llama.cpp</code> / <code>Ollama</code> server tucked on a bookshelf</td>\n<td>Founders, agencies, and 2 to 15 person offices wanting zero Linux driver maintenance</td>\n</tr>\n<tr>\n<td><strong>Compact Linux Mini-PC</strong></td>\n<td><strong>Ryzen AI Max / Strix Halo 64GB to 128GB Mini-PC</strong></td>\n<td>High unified RAM per dollar in a lunchbox footprint for Docker + Postgres + local models</td>\n<td>Technical operators building a dedicated headless Linux automation box</td>\n</tr>\n</tbody>\n</table></div>\n<p><em>(Transparency note: The Framework 16 with 96GB DDR5 is the machine I personally own and run daily; the Mac Mini and compact Ryzen Mini-PC options above are the two dedicated desk nodes I recommend most often during client stack audits.)</em></p>\n<h2 id=\"4-step-setup-in-20-minutes\">4-step setup in 20 minutes</h2>\n<h3 id=\"1-install-tailscale-on-your-rig-laptop-and-phone\">1. Install Tailscale on your rig, laptop, and phone</h3>\n<p>Install Tailscale on your host machine (<code>curl -fsSL https://tailscale.com/install.sh | sh</code> on Ubuntu LTS) and sign in with passkey/SSO MFA enabled. Install the companion app on your laptop and phone. Enable <strong>MagicDNS</strong> in the Tailscale admin console so your machine gets a clean private hostname like <code>ai-rig.tail-scale.ts.net</code>.</p>\n<h3 id=\"2-bind-local-model-servers-away-from-public-interfaces\">2. Bind local model servers away from public interfaces</h3>\n<p>Never expose port <code>11434</code> (<code>Ollama</code>) or <code>8080</code> (<code>llama-server</code>) to <code>0.0.0.0</code> on an untrusted network. Instead, keep the service bound locally (<code>127.0.0.1</code>) and publish it exclusively inside your private tailnet with automatic TLS via <code>tailscale serve</code>:</p>\n<pre><code class=\"language-bash\"># Exposes localhost:8080 ONLY to devices signed into your private Tailscale network over HTTPS\nsudo tailscale serve --bg 8080\n</code></pre>\n<p>Now your travel laptop or mobile client can point any OpenAI-compatible SDK or chat UI at <code>https://ai-rig.tail-scale.ts.net</code> over encrypted HTTPS, while the rest of the internet sees zero open ports.</p>\n<h3 id=\"3-run-n8n-and-local-models-side-by-side\">3. Run <code>n8n</code> and local models side by side</h3>\n<p>Run <code>n8n</code> in Docker bound to <code>127.0.0.1:5678</code> (published on a second Tailscale Serve path or port). Wire your scheduled workflows to follow the hybrid pattern from <a href=\"/blog/local-vs-cloud-inference\">Cloud vs. Private Local AI</a>:</p>\n<ul>\n<li>Use local <strong>DeepSeek 4.1</strong> or Qwen 3.6 on the rig for private PDF parsing, invoice checks, CRM note cleanup, and overnight research digests at $0 marginal token cost.</li>\n<li>Escalate only the hardest 5% of multimodal or client-facing turns to a cloud API when needed.</li>\n</ul>\n<h3 id=\"4-enforce-tailscale-acls-and-human-approval-gates\">4. Enforce Tailscale ACLs and human approval gates</h3>\n<p>Even inside a private mesh, apply least privilege:</p>\n<ul>\n<li>Use <strong>Tailscale ACL tags</strong> (<code>tag:ai-node</code>, <code>tag:admin-devices</code>) so IoT devices or guest laptops cannot reach your model or n8n ports.</li>\n<li>Keep write actions behind the <a href=\"/blog/the-hitl-standard\">Human-in-the-Loop standard</a>: let your autonomous rig prepare drafts, summaries, and pull requests around the clock, and require your explicit tap before sending external emails or mutating production data.</li>\n</ul>\n<h2 id=\"where-to-go-next\">Where to go next</h2>\n<ul>\n<li>Compare every tool in both the 15-minute business stack and the sovereign rig on <a href=\"/stack\">/stack</a>.</li>\n<li>Check which tasks belong on local open weights vs. cloud APIs in <a href=\"/blog/google-latest-models-vs-deepseek-4-1-business-guide\">Google's Latest Gemini Models vs. DeepSeek 4.1</a>.</li>\n<li>Want help designing a private AI workflow architecture for your company or firm? Book a <a href=\"/work-with-me\">VIP Audit or Advisory Scoping Call</a>.</li>\n</ul>",
+    "toc": [
+      {
+        "id": "the-architecture-zero-exposed-ports-reachable-anywhere",
+        "text": "The architecture: Zero exposed ports, reachable anywhere"
+      },
+      {
+        "id": "honest-hardware-picks-what-i-run-vs-what-small-offices-buy",
+        "text": "Honest hardware picks: What I run vs. what small offices buy"
+      },
+      {
+        "id": "4-step-setup-in-20-minutes",
+        "text": "4-step setup in 20 minutes"
+      },
+      {
+        "id": "where-to-go-next",
+        "text": "Where to go next"
+      }
+    ]
+  },
+  {
     "slug": "below-the-waterline",
     "frontmatter": {
       "title": "Below the Waterline: What Decides Whether Your Agent Ships",
@@ -729,6 +769,45 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "easy-ai-brand-and-workflow-setup",
+    "frontmatter": {
+      "title": "How Small Businesses Can Hook Up an AI Brand Brain and 3 Workflows in One Afternoon",
+      "slug": "easy-ai-brand-and-workflow-setup",
+      "publishedDate": "2026-11-24",
+      "description": "A plain-English afternoon blueprint for founders and small teams: build a 1-page voice.md Brand Brain, wire free-tier workspace tools, and automate inbox triage, call prep, and content repurposing.",
+      "track": "small-business",
+      "tags": [
+        "smb",
+        "founders",
+        "automation",
+        "n8n",
+        "operations"
+      ],
+      "kind": "deep-dive",
+      "draft": false,
+      "readingMinutes": 4
+    },
+    "html": "<p>Most small business owners do not have an AI problem; they have a blank-box problem. Every morning starts by opening a fresh chat tab, re-explaining what the company sells, pasting a rough email, and spending twenty minutes editing out stiff corporate phrasing. After two weeks, the team quietly goes back to doing everything manually.</p>\n<p>You can fix that in a single focused afternoon without hiring a developer or buying expensive agency retainers. The secret is separating <strong>context</strong> (a 1-page Brand Brain file you write once) from <strong>workflows</strong> (three simple triggers connected to your existing inbox, calendar, and docs).</p>\n<h2 id=\"step-1-build-your-1-page-brand-brain-voicemd--icpmd-in-30-minutes\">Step 1: Build your 1-page Brand Brain (<code>voice.md</code> + <code>icp.md</code>) in 30 minutes</h2>\n<p>Before connecting any automation tool, create two plain text or Google Docs files in a shared folder:</p>\n<ol>\n<li><strong><code>voice.md</code> (How you sound):</strong> Three sentences on what your business does, four strict tone rules (for example: short paragraphs, concrete numbers, zero jargon, never use filler openers), and <strong>five real examples</strong> of emails or posts you wrote yourself that got great client responses.</li>\n<li><strong><code>icp.md</code> (Who buys and why):</strong> Your ideal customer profile, the top three problems they pay to solve, your pricing tiers, and common objections.</li>\n</ol>\n<p>Why plain files beat locked prompt libraries: a markdown file or Google Doc works everywhere. You can drop it into a workspace project today, read it automatically from an <a href=\"/bsw/tutorial\">n8n or Zapier workflow</a> tomorrow, and keep 100% ownership if you switch providers next quarter. You can copy the exact template free inside the <a href=\"/starter-kit\">20-Minute Starter Kit</a>.</p>\n<h2 id=\"step-2-pick-the-right-zero-bloat-glue\">Step 2: Pick the right zero-bloat glue</h2>\n<p>Lean businesses rarely need custom code. Use the tools your team already opens every day:</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>Layer</th>\n<th>Practical Zero-Bloat Pick</th>\n<th>Monthly Fixed Cost</th>\n<th>Role in Your Stack</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Context Files</strong></td>\n<td>Google Docs or Markdown in Git/Drive</td>\n<td>$0</td>\n<td>Stores <code>voice.md</code>, <code>icp.md</code>, and SOP checklists</td>\n</tr>\n<tr>\n<td><strong>Bookings &#x26; Payments</strong></td>\n<td>Cal.com + Stripe</td>\n<td>$0 fixed</td>\n<td>Captures structured intake answers and paid consults</td>\n</tr>\n<tr>\n<td><strong>Workflow Glue</strong></td>\n<td>n8n (self-hosted OSS) or Zapier Free</td>\n<td>$0 to $24</td>\n<td>Triggers on bookings, emails, or new notes</td>\n</tr>\n<tr>\n<td><strong>Human Approval Gate</strong></td>\n<td>Gmail Drafts + Google Sheets</td>\n<td>$0</td>\n<td>Holds every outbound message until you click Send</td>\n</tr>\n<tr>\n<td><strong>Publishing</strong></td>\n<td>Website Blog + Substack + Buffer Free</td>\n<td>$0</td>\n<td>Turns one weekly article into email and social posts</td>\n</tr>\n</tbody>\n</table></div>\n<p>Notice the fourth row: <strong>Gmail Drafts</strong>. Following the <a href=\"/blog/the-hitl-standard\">5 Levels of AI Autonomy</a>, small businesses get the fastest ROI at Level 2 (Draft &#x26; Approve). Let the workflow gather context and prepare the draft; keep a ten-second human check before anything reaches a customer.</p>\n<h2 id=\"step-3-wire-these-3-workflows-first\">Step 3: Wire these 3 workflows first</h2>\n<p>Once <code>voice.md</code> exists, connect the three repetitive loops that eat the most founder and operator hours each week. Every one of these scores 18 or higher on the <a href=\"/blog/agent-ready-tasks\">90-minute Agent-Readiness Audit</a>.</p>\n<h3 id=\"workflow-1-pre-call-lead-brief-and-tailored-agenda-saves-3-to-4-hrsweek\">Workflow 1: Pre-call lead brief and tailored agenda (Saves 3 to 4 hrs/week)</h3>\n<p>Whenever a prospect books on your calendar, trigger a simple three-step flow:</p>\n<ul>\n<li>Pull the company domain and intake answers from the calendar webhook.</li>\n<li>Summarize what the company sells, team size signals, and likely bottlenecks onto a 1-page Google Doc.</li>\n<li>Draft a three-bullet confirmation note in Gmail Drafts confirming the agenda.</li>\n</ul>\n<p>Instead of scrambling five minutes before Zoom, you show up prepared like an executive advisor.</p>\n<h3 id=\"workflow-2-the-4-bucket-inbox-triage-and-follow-up-queue-saves-4-to-6-hrsweek\">Workflow 2: The 4-bucket inbox triage and follow-up queue (Saves 4 to 6 hrs/week)</h3>\n<p>Summarizers just give you more reading. Instead, use the <a href=\"/blog/the-zero-inbox-agent\">4-Bucket Zero-Inbox pattern</a>:</p>\n<ul>\n<li><strong>Ignore / Archive:</strong> Newsletters, receipts, automated alerts.</li>\n<li><strong>Quick Reply Drafted:</strong> Scheduling, standard pricing questions, and intro replies drafted using <code>voice.md</code> and parked in Gmail Drafts.</li>\n<li><strong>Needs Context:</strong> Pulls the client's recent invoice or project row from Google Sheets and attaches a two-line summary beside the draft.</li>\n<li><strong>5-Day Gentle Nudge:</strong> Checks sent threads with no reply after five business days and queues a polite two-sentence check-in draft.</li>\n</ul>\n<h3 id=\"workflow-3-one-voice-memo-to-omnichannel-brand-pack-saves-4-hrsweek\">Workflow 3: One voice memo to omnichannel brand pack (Saves 4 hrs/week)</h3>\n<p>Consistent marketing fails when every platform requires starting from scratch. Record one 5-minute voice note answering a real client question from that week:</p>\n<ol>\n<li>Transcribe the note and pass it through <code>voice.md</code> to draft one helpful 900-word canonical guide on your website.</li>\n<li>Send the same guide to your <a href=\"https://agenticarchitectai.substack.com\">Substack newsletter</a> list.</li>\n<li>Extract three standalone lessons for LinkedIn and X, queued across Tuesday, Thursday, and Saturday.</li>\n</ol>\n<h2 id=\"your-3-hour-afternoon-schedule\">Your 3-hour afternoon schedule</h2>\n<ul>\n<li><strong>Hour 1:</strong> Copy <code>voice.md</code> and <code>icp.md</code> from the <a href=\"/starter-kit\">Starter Kit</a> and paste five real writing samples.</li>\n<li><strong>Hour 2:</strong> Turn on Workflow 1 (Calendar booking to Pre-Call Brief Doc).</li>\n<li><strong>Hour 3:</strong> Turn on Workflow 3 (Weekly voice note to Blog + Newsletter + 3 Social Drafts).</li>\n</ul>\n<p>If you want to watch all three systems built live on screen, save a seat for the next <a href=\"/masterclass\">Free 60-Min Live Masterclass</a>, or explore the 8-week <a href=\"/accelerator\">Agentic Business Accelerator</a> where we install all six core business workflows directly alongside you and your ops lead.</p>",
+    "toc": [
+      {
+        "id": "step-1-build-your-1-page-brand-brain-voicemd--icpmd-in-30-minutes",
+        "text": "Step 1: Build your 1-page Brand Brain (voice.md + icp.md) in 30 minutes"
+      },
+      {
+        "id": "step-2-pick-the-right-zero-bloat-glue",
+        "text": "Step 2: Pick the right zero-bloat glue"
+      },
+      {
+        "id": "step-3-wire-these-3-workflows-first",
+        "text": "Step 3: Wire these 3 workflows first"
+      },
+      {
+        "id": "your-3-hour-afternoon-schedule",
+        "text": "Your 3-hour afternoon schedule"
+      }
+    ]
+  },
+  {
     "slug": "eu-ai-act-deadline",
     "frontmatter": {
       "title": "Data Privacy, Compliance, and the EU AI Act: 4 Questions Every Business Must Ask",
@@ -881,6 +960,45 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "google-latest-models-vs-deepseek-4-1-business-guide",
+    "frontmatter": {
+      "title": "Google's Latest Gemini Models vs. DeepSeek 4.1: Which AI to Use for Daily Business Work, Coding, and Cost Control",
+      "slug": "google-latest-models-vs-deepseek-4-1-business-guide",
+      "publishedDate": "2026-11-22",
+      "description": "A plain-English model routing guide for founders and technical leads comparing multimodal long-context Gemini tiers against open-weight DeepSeek 4.1 and Qwen for cost, privacy, and daily work.",
+      "track": "models-rigs",
+      "tags": [
+        "economics",
+        "local-models",
+        "open-weights",
+        "deepseek",
+        "cost-benefit"
+      ],
+      "kind": "deep-dive",
+      "draft": false,
+      "readingMinutes": 4
+    },
+    "html": "<p><em>Personal-capacity note: I work in AI Systems &#x26; Enablement at Google; everything in this article is written strictly in my personal capacity based on publicly available documentation, open weights, and independent benchmarks. Views are entirely my own.</em></p>\n<p>Every few weeks a new model release floods social feeds with leaderboard charts, and business owners ask the same practical question: <em>Should we switch everything, or stick with what we use?</em></p>\n<p>The calm, profitable answer in late 2026 is that <strong>one single model is almost never the right default for every task</strong>. Teams that cut their AI bills by 70% while improving output quality treat models like specialists on a clean org chart: pairing multimodal cloud models for massive workspace context with open-weight workhorses like <strong>DeepSeek 4.1</strong> and Qwen for high-volume extraction, coding loops, and private data.</p>\n<h2 id=\"plain-english-strengths-multimodal-workspace-engines-vs-open-weight-workhorses\">Plain-English strengths: Multimodal workspace engines vs. open-weight workhorses</h2>\n<h3 id=\"where-googles-latest-gemini-pro-and-flash-tiers-shine\">Where Google's latest Gemini Pro and Flash tiers shine</h3>\n<ol>\n<li><strong>Massive multimodal context in one pass:</strong> When you need to drop a 45-minute recorded client call, three PDFs, a slide deck, and a spreadsheet into one prompt and ask for a grounded synthesis, native multimodal long-context models save hours of brittle chunking glue.</li>\n<li><strong>Low-latency Flash routing:</strong> For real-time customer classification, calendar parsing, and interactive UI responses, Flash-class endpoints deliver near-instant responses at pennies per thousand runs.</li>\n<li><strong>Zero-setup Google Workspace fit:</strong> For non-technical teams living inside Docs, Gmail, Drive, and Sheets, native workspace integration beats maintaining custom connectors.</li>\n</ol>\n<h3 id=\"where-deepseek-41-and-open-weight-qwen-36-shine\">Where DeepSeek 4.1 (and open-weight Qwen 3.6) shine</h3>\n<ol>\n<li><strong>High-volume structured JSON &#x26; reasoning:</strong> <strong>DeepSeek 4.1</strong> excels at deterministic schema extraction, multi-step analytical reasoning, SQL/code generation, and batch processing tens of thousands of rows without runaway API bills.</li>\n<li><strong>Data sovereignty and zero external retention:</strong> Because the weights are open, you can run quantized variants on <a href=\"/blog/autonomous-ai-rig-tailscale-guide\">hardware you own</a> or inside an isolated private VPC so sensitive legal, healthcare, or financial records never cross a third-party training boundary (see <a href=\"/blog/eu-ai-act-deadline\">EU AI Act &#x26; privacy controls</a>).</li>\n<li><strong>Predictable unit economics at scale:</strong> Once a recurring background workflow runs thousands of times per week, routing routine steps to open weights keeps gross margins clean.</li>\n</ol>\n<h2 id=\"the-5-workload-decision-table\">The 5-workload decision table</h2>\n<p>Use this table before wiring any new workflow:</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th>Business Workload</th>\n<th>Best Primary Choice</th>\n<th>Why It Wins</th>\n<th>Cost &#x26; Privacy Tip</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Meeting video, audio &#x26; 100-page PDF synthesis</strong></td>\n<td>Latest Gemini Pro tier</td>\n<td>Native multimodal ingestion without OCR glue</td>\n<td>Strip confidential IDs if using standard cloud tiers</td>\n</tr>\n<tr>\n<td><strong>High-volume lead scoring, CSV tagging &#x26; JSON extraction</strong></td>\n<td>DeepSeek 4.1 or Gemini Flash</td>\n<td>Fast, cheap, high schema obedience</td>\n<td>Validate output with a strict JSON schema</td>\n</tr>\n<tr>\n<td><strong>Sensitive client contracts, patient or financial docs</strong></td>\n<td>Local DeepSeek 4.1 / Qwen on owned rig</td>\n<td>Zero third-party data movement</td>\n<td>Pair with <a href=\"/blog/document-ocr-for-agents\">layout-aware OCR verification</a></td>\n</tr>\n<tr>\n<td><strong>Repository refactoring &#x26; automated test loops</strong></td>\n<td>DeepSeek 4.1 + frontier planner</td>\n<td>Keep expensive reasoning on plan step; loop cheaply on diffs</td>\n<td>See the <a href=\"/blog/mixing-and-matching-open-weight-models\">3-tier routing recipe</a></td>\n</tr>\n<tr>\n<td><strong>Executive emails, proposals &#x26; brand content</strong></td>\n<td>Frontier model + <code>voice.md</code></td>\n<td>Nuance and tone obedience matter more than token price</td>\n<td>Attach your <a href=\"/starter-kit\">Starter Kit <code>voice.md</code></a> with prompt caching</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"the-80--15--5-cascade-that-stops-surprise-bills\">The 80 / 15 / 5 cascade that stops surprise bills</h2>\n<p>As covered in <a href=\"/blog/token-budgeting-for-startups\">Why AI Bills Spike Overnight</a>, runaway API spend happens when teams point their most expensive frontier model at every background cron job. Instead, split your workflows into three tiers:</p>\n<ul>\n<li><strong>80% of runs (Triage, classification, extraction, formatting):</strong> Route to Gemini Flash or self-hosted/open-weight <strong>DeepSeek 4.1</strong>. Cost is fractions of a cent per run.</li>\n<li><strong>15% of runs (Long-context multimodal research &#x26; synthesis):</strong> Route to a long-context multimodal Pro model where reading the entire source file avoids hallucinated summaries.</li>\n<li><strong>5% of runs (Final client-facing prose &#x26; complex architectural decisions):</strong> Use your sharpest frontier model with cached <code>voice.md</code> context and a <a href=\"/blog/the-hitl-standard\">human approval gate</a>.</li>\n</ul>\n<h2 id=\"how-to-stay-model-agnostic-so-switching-takes-5-minutes\">How to stay model-agnostic so switching takes 5 minutes</h2>\n<p>Models will change again in six months. Your business logic should not break when they do:</p>\n<ol>\n<li><strong>Keep prompts and rules in portable files (<code>voice.md</code>, <code>icp.md</code>, JSON schemas)</strong> rather than hardcoding them inside proprietary chat sidebars.</li>\n<li><strong>Centralize model names in one config variable</strong> inside n8n or your application environment so upgrading takes one line.</li>\n<li><strong>Keep a 20-example golden test sheet</strong> of real tasks from your company. Whenever a new model drops, run those 20 examples side-by-side in ten minutes instead of trusting social-media hype.</li>\n</ol>\n<p>Want help auditing your team's current AI spend and picking the cleanest stack? Explore the full tool breakdown on <a href=\"/stack\">/stack</a> or book a <a href=\"/work-with-me\">VIP 90-Minute Workflow &#x26; Cost Audit</a>.</p>",
+    "toc": [
+      {
+        "id": "plain-english-strengths-multimodal-workspace-engines-vs-open-weight-workhorses",
+        "text": "Plain-English strengths: Multimodal workspace engines vs. open-weight workhorses"
+      },
+      {
+        "id": "the-5-workload-decision-table",
+        "text": "The 5-workload decision table"
+      },
+      {
+        "id": "the-80--15--5-cascade-that-stops-surprise-bills",
+        "text": "The 80 / 15 / 5 cascade that stops surprise bills"
+      },
+      {
+        "id": "how-to-stay-model-agnostic-so-switching-takes-5-minutes",
+        "text": "How to stay model-agnostic so switching takes 5 minutes"
       }
     ]
   },

@@ -1,9 +1,9 @@
 import { getAllPosts } from '@/lib/mdx'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const SITE_URL = 'https://agenticarchitect.ai'
-const FEED_TITLE = 'Local-First AI'
-const FEED_DESC =
-  'Field notes on local-first AI, agentic architecture, and what is actually working in 2026. By Sophia Stein, Boulder CO.'
+const SITE_URL = SITE_CONFIG.siteUrl
+const FEED_TITLE = SITE_CONFIG.siteName
+const FEED_DESC = SITE_CONFIG.tagline
 
 function escapeXml(s: string): string {
   return s
@@ -23,16 +23,14 @@ export async function GET() {
     .map(post => {
       const url = `${SITE_URL}/blog/${post.slug}`
       const date = new Date(post.publishedDate).toISOString()
-      const tags = post.tags
-        .map(t => `    <category term="${escapeXml(t)}" />`)
-        .join('\n')
+      const tags = post.tags.map(t => `    <category term="${escapeXml(t)}" />`).join('\n')
       return `  <entry>
     <id>${url}</id>
     <title>${escapeXml(post.title)}</title>
     <link href="${url}" />
     <updated>${date}</updated>
     <published>${date}</published>
-    <author><name>Sophia Stein</name></author>
+    <author><name>${escapeXml(SITE_CONFIG.authorName)}</name></author>
     <summary type="text">${escapeXml(post.description)}</summary>
 ${tags}
   </entry>`
@@ -47,7 +45,7 @@ ${tags}
   <link href="${SITE_URL}/" rel="alternate" />
   <link href="${SITE_URL}/rss.xml" rel="self" type="application/atom+xml" />
   <updated>${updatedIso}</updated>
-  <author><name>Sophia Stein</name><uri>${SITE_URL}/about</uri></author>
+  <author><name>${escapeXml(SITE_CONFIG.authorName)}</name><uri>${SITE_URL}/about</uri></author>
 ${entries}
 </feed>`
 
