@@ -1,19 +1,23 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/mdx'
+import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import { HeroBlueprintSwitcher } from '@/components/site/hero-blueprint'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 const PROFESSIONAL_SERVICE_LD = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Agentic Architecture',
-  description: 'Local-first LLM infrastructure, agentic systems, and open-source tools for lean teams.',
-  url: 'https://agenticarchitect.ai',
+  name: SITE_CONFIG.siteName,
+  description: SITE_CONFIG.tagline,
+  url: SITE_CONFIG.siteUrl,
   founder: {
     '@type': 'Person',
-    name: 'Sophia Stein',
-    jobTitle: 'AI Architect',
-    url: 'https://agenticarchitect.ai/about',
+    name: SITE_CONFIG.authorName,
+    jobTitle: 'AI Systems Architect & Educator',
+    url: `${SITE_CONFIG.siteUrl}/about`,
   },
   address: {
     '@type': 'PostalAddress',
@@ -21,23 +25,51 @@ const PROFESSIONAL_SERVICE_LD = {
     addressRegion: 'CO',
     addressCountry: 'US',
   },
-  priceRange: '$$',
-  serviceType: 'AI Architecture',
+  priceRange: '$$$',
+  serviceType: 'AI Workflow Enablement, Corporate Training & Advisory',
 }
 
-// Three evergreen posts that establish the thesis. New visitors land here first.
-const FEATURED_SLUGS = [
-  '96gb-ram-thesis',
-  'the-40k-token-wall',
-  'local-vs-cloud-inference',
+const PATH_CARDS = [
+  {
+    eyebrow: 'For Founders & Lean Teams',
+    title: 'Small Business Setups & Cohort',
+    body: 'Install your Brand Brain and 6 core business AI workflows without hiring or writing code. Start with the free 60-minute live Masterclass.',
+    cta: 'Explore Programs & Kits',
+    href: '/courses',
+    badge: 'Free Kit + Live Class',
+    badgeColor: 'green' as const,
+  },
+  {
+    eyebrow: 'For Corporate & Universities',
+    title: 'Workshops, Speaking & Teaching',
+    body: 'Hands-on AI enablement intensives for executive and non-technical teams, conference keynotes, and university guest lectures.',
+    cta: 'View Speaking & Syllabi',
+    href: '/teaching',
+    badge: '300+ Trained Live',
+    badgeColor: 'blue' as const,
+  },
+  {
+    eyebrow: 'For Leaders & Builders',
+    title: '1:1 Audits & Private AI Stack',
+    body: 'Book a 90-minute workflow and cost teardown, or explore reference blueprints for private AI infrastructure you control.',
+    cta: 'Work With Sophia',
+    href: '/work-with-me',
+    badge: 'Advisory & Audits',
+    badgeColor: 'amber' as const,
+  },
+]
+
+const CREDENTIAL_CHIPS = [
+  'Columbia CS',
+  'ex-McKinsey',
+  'AI Systems & Enablement at Google*',
+  '300+ Trained at Boulder Startup Week',
+  'Women Who Code Speaker',
 ]
 
 export default function HomePage() {
   const allPosts = getAllPosts()
-  const featured = FEATURED_SLUGS.map(slug => allPosts.find(p => p.slug === slug)).filter(
-    (p): p is NonNullable<typeof p> => p !== undefined,
-  )
-  const posts = allPosts.slice(0, 5)
+  const recentPosts = allPosts.slice(0, 6)
 
   return (
     <>
@@ -47,183 +79,151 @@ export default function HomePage() {
           __html: JSON.stringify(PROFESSIONAL_SERVICE_LD).replace(/</g, '\\u003c'),
         }}
       />
-      <div className="space-y-12">
-        {/* Hero */}
-        <section className="pt-8 pb-4 border-b border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-online animate-pulse" />
-            <p className="font-mono text-xs text-muted tracking-widest uppercase">
-              Sophia Stein · Boulder, CO · online
+
+      <div className="space-y-16">
+        {/* Split Visual Hero */}
+        <section
+          data-testid="hero-section"
+          className="pt-2 pb-10 border-b border-border grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+        >
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5">
+              <span className="inline-block h-2 w-2 rounded-full bg-online" />
+              <span className="font-mono text-xs font-medium text-muted">
+                Sophia Stein · Boulder, CO
+              </span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fg leading-[1.12]">
+              Hook up AI workflows, build your brand, and{' '}
+              <span className="text-accent">own your stack.</span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
+              Practical AI systems, live workshops, and strategic advisory for business owners,
+              leadership teams, and builders who want measurable ROI instead of hype.
             </p>
-          </div>
-          <h1 className="font-mono text-3xl md:text-4xl text-fg leading-tight mb-4">
-            AI Architect.
-            <br />
-            <span className="text-accent">Local-first by design.</span>
-          </h1>
-          <p className="text-muted text-sm leading-relaxed max-w-xl mb-6">
-            I design and ship agentic systems that run on hardware you own. Local
-            inference, smaller models, deliberate architecture. The benchmark
-            below is real.
-          </p>
 
-          {/* Benchmark callout */}
-          <div className="inline-flex items-center gap-3 border border-border bg-surface px-4 py-2">
-            <span className="font-mono text-bench text-lg font-bold">28.4 t/s</span>
-            <span className="font-mono text-muted text-xs">
-              GLM-4 9B Q8_0 · ROCm 7.3 · 90GB GART · AMD Strix Point
-            </span>
-          </div>
-        </section>
-
-        {/* PRIMARY CTA: Newsletter signup */}
-        <NewsletterSignup source="homepage" />
-
-        {/* Secondary navigation links */}
-        <section className="flex flex-wrap items-center gap-4 text-sm">
-          <Link href="/blog" className="font-mono text-accent hover:underline">
-            read the blog →
-          </Link>
-          <span className="font-mono text-muted">·</span>
-          <Link href="/guides" className="font-mono text-accent hover:underline">
-            beginner guides →
-          </Link>
-          <span className="font-mono text-muted">·</span>
-          <Link href="/work-with-me" className="font-mono text-accent hover:underline">
-            work with me →
-          </Link>
-        </section>
-
-        {/* Featured posts — 3 evergreen entry points for new readers */}
-        {featured.length > 0 && (
-          <section>
-            <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
-              Start here
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {featured.map(post => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="block group border border-border bg-surface p-5 hover:border-accent transition-colors"
-                >
-                  <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors mb-2 leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="text-xs text-muted leading-relaxed">{post.description}</p>
-                </Link>
-              ))}
+            <div className="flex flex-wrap items-center gap-3">
+              <Button variant="primary" size="lg" href="/masterclass">
+                Join the Free 60-Min Masterclass
+              </Button>
+              <Button variant="outline" size="lg" href="/work-with-me">
+                Workshops & Paid Consults
+              </Button>
             </div>
-          </section>
-        )}
 
-        {/* BSW talk callout · expires Thu May 7 */}
-        <section className="border border-border bg-surface p-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="pt-2 space-y-2">
+              <div className="flex flex-wrap gap-2">
+                {CREDENTIAL_CHIPS.map(chip => (
+                  <span
+                    key={chip}
+                    className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-fg"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[11px] text-muted">
+                *Writing, speaking, and advising here in a personal capacity; views my own.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <HeroBlueprintSwitcher />
+          </div>
+        </section>
+
+        {/* 3-Card Bento: Where to Start */}
+        <section className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
             <div>
-              <p className="font-mono text-xs text-bench uppercase tracking-widest mb-1">
-                Speaking next · Boulder Startup Week 2026
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                Where to Start
               </p>
-              <p className="font-mono text-sm text-fg">
-                Architecting Agentic Workflows for the Lean 2026 Startup
-              </p>
-              <p className="font-mono text-xs text-muted mt-1">
-                Thu May 7 · 11:00 AM · RegenHub
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href="/bsw"
-                className="font-mono text-xs px-3 py-1.5 border border-border text-muted hover:text-accent hover:border-accent transition-colors"
-              >
-                materials
-              </Link>
-              <Link
-                href="https://revelco.org/events/bsw-2026?session=5044310e-90eb-4942-babb-ae511817c0d4"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs px-3 py-1.5 border border-accent text-accent hover:bg-surface transition-colors"
-              >
-                rsvp ↗
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Flagship e-book pre-order callout */}
-        <section className="border border-border bg-surface p-6">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-5">
-            <div className="flex-1 min-w-0">
-              <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
-                Pre-order · The Sovereign Stack
-              </p>
-              <p className="font-mono text-sm text-fg leading-relaxed mb-2">
-                An interactive e-book on production agents on hardware you own — built to update for free as the local-AI stack changes.
-              </p>
-              <p className="font-mono text-xs text-muted leading-relaxed">
-                Hardware selection, ROCm + Metal setup, model picks across Qwen / Gemma / Kimi / DeepSeek with the benchmark numbers I actually ran, agent harness design with paste-able eval harnesses, n8n + MCP orchestration patterns from production. PDF + EPUB + browsable web version. ~220 pages, ships fall 2026. Pre-order locks in lifetime free updates.
-              </p>
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
+                Three Ways to Put AI to Work This Month
+              </h2>
             </div>
             <Link
-              href="/library#ebooks"
-              className="font-mono text-xs px-4 py-2 border border-accent text-accent hover:bg-bg transition-colors shrink-0 self-start whitespace-nowrap"
+              href="/starter-kit"
+              className="text-sm font-semibold text-accent hover:underline"
             >
-              see the table of contents →
+              Start with the free 20-minute Brand & Workflow Kit →
             </Link>
           </div>
-        </section>
 
-        {/* What I do */}
-        <section>
-          <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
-            What I do
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-            {[
-              {
-                label: 'Architecture',
-                body: 'Hands-on projects: agentic system design, local LLM infrastructure, cost teardowns. Corporate trainings + custom course creation for orgs.',
-                href: '/work-with-me',
-              },
-              {
-                label: 'OSS Tools',
-                body: 'Open-source libraries for AMD APU configuration, ROCm tuning, local inference benchmarking, and the n8n templates that run my own business.',
-                href: 'https://github.com/sudosoph',
-              },
-              {
-                label: 'Field Notes',
-                body: 'Benchmarks, deep dives, and what is actually working in 2026. Written from the projects, not the marketing decks.',
-                href: '/blog',
-              },
-            ].map(({ label, body, href }) => (
-              <Link
-                key={label}
-                href={href}
-                {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="block bg-bg p-6 group hover:bg-surface transition-colors"
-              >
-                <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors mb-2">
-                  {label}
-                </h3>
-                <p className="text-xs text-muted leading-relaxed">{body}</p>
-              </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {PATH_CARDS.map(card => (
+              <Card key={card.title} interactive className="p-6 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-xs text-muted">{card.eyebrow}</span>
+                    <Badge variant="status" color={card.badgeColor}>
+                      {card.badge}
+                    </Badge>
+                  </div>
+                  <h3 className="text-lg font-bold text-fg">{card.title}</h3>
+                  <p className="text-sm text-muted leading-relaxed">{card.body}</p>
+                </div>
+                <div className="pt-5 mt-5 border-t border-border">
+                  <Link
+                    href={card.href}
+                    className="text-sm font-semibold text-accent hover:underline"
+                  >
+                    {card.cta} →
+                  </Link>
+                </div>
+              </Card>
             ))}
           </div>
         </section>
 
-        {/* Recent posts */}
-        {posts.length > 0 && (
-          <section>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-mono text-xs text-muted uppercase tracking-widest">
-                Recent posts
-              </h2>
-              <Link href="/blog" className="font-mono text-xs text-accent hover:underline">
-                all posts →
+        {/* Flagship Cohort Callout */}
+        <section className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="max-w-2xl space-y-2">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Flagship 8-Week Implementation Cohort
+            </span>
+            <h2 className="text-2xl font-bold tracking-tight text-fg">
+              The Agentic Business Accelerator
+            </h2>
+            <p className="text-sm md:text-base text-muted leading-relaxed">
+              Install 6 production AI systems across your brand, inbox, lead pipeline, and
+              operations for a fraction of a $65,000/yr hire. Bring your Ops Lead or Executive
+              Assistant to build right alongside you.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 shrink-0">
+            <Button variant="primary" size="md" href="/accelerator">
+              See Curriculum & Tuition
+            </Button>
+            <Button variant="outline" size="md" href="/masterclass">
+              Watch Free Masterclass First
+            </Button>
+          </div>
+        </section>
+
+        {/* Latest Playbooks & Articles */}
+        {recentPosts.length > 0 && (
+          <section className="space-y-6">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                  Playbooks & Field Notes
+                </p>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
+                  Latest Guides on Workflows, Strategy & Private AI
+                </h2>
+              </div>
+              <Link href="/blog" className="text-sm font-semibold text-accent hover:underline shrink-0">
+                Browse all playbooks →
               </Link>
             </div>
-            <div className="divide-y divide-border">
-              {posts.map(post => {
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {recentPosts.map(post => {
                 const date = new Date(post.publishedDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'short',
@@ -233,35 +233,34 @@ export default function HomePage() {
                   <Link
                     key={post.slug}
                     href={`/blog/${post.slug}`}
-                    className="block group py-5 first:pt-0 last:pb-0"
+                    className="group rounded-xl border border-border bg-surface p-5 flex flex-col justify-between hover:border-accent hover:bg-white hover:shadow-sm transition-all"
                   >
-                    <div className="flex items-start justify-between gap-4 mb-1.5">
-                      <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between gap-2 text-xs text-muted font-mono">
+                        <time dateTime={post.publishedDate}>{date}</time>
+                        {'readingMinutes' in post && post.readingMinutes ? (
+                          <span>{String(post.readingMinutes)} min read</span>
+                        ) : null}
+                      </div>
+                      <h3 className="text-base font-bold text-fg group-hover:text-accent transition-colors leading-snug">
                         {post.title}
                       </h3>
-                      <time
-                        dateTime={post.publishedDate}
-                        className="font-mono text-xs text-muted shrink-0"
-                      >
-                        {date}
-                      </time>
+                      <p className="text-sm text-muted leading-relaxed line-clamp-3">
+                        {post.description}
+                      </p>
                     </div>
-                    <p className="text-sm text-muted leading-relaxed mb-2">{post.description}</p>
-                    {post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 4).map(tag => (
-                          <Badge key={tag} variant="tag">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
+                    <span className="mt-4 pt-3 border-t border-border text-xs font-semibold text-accent">
+                      Read playbook →
+                    </span>
                   </Link>
                 )
               })}
             </div>
           </section>
         )}
+
+        {/* Native Substack + Starter Kit Banner */}
+        <NewsletterSignup source="homepage" />
       </div>
     </>
   )
