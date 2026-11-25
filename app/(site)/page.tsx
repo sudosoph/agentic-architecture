@@ -120,7 +120,7 @@ export default function HomePage() {
     'ai-back-office',
     'ai-chief-of-staff',
     'hire-ai-agency-vs-in-house',
-    'easy-ai-brand-and-workflow-setup',
+    'loop-engineering',
     'gemini-4-neon-vs-deepseek-v4',
     'instinct-ai-vs-tab-review',
   ])

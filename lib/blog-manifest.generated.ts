@@ -856,7 +856,7 @@ export const blogPosts: Array<{
       "title": "How Business Owners Wire a Company Context Vault and 3 AI Workflows in One Afternoon",
       "slug": "easy-ai-brand-and-workflow-setup",
       "publishedDate": "2026-11-24",
-      "description": "An afternoon blueprint for $1M to $50M founders and firm principals: build a portable voice.md + icp.md Context Vault and automate inbox triage, pre-call dossiers, and follow-ups.",
+      "description": "An afternoon blueprint for $1M to $50M founders and firm principals: standardize company operating rules and automate inbox triage, pre-call dossiers, and follow-ups.",
       "track": "small-business",
       "tags": [
         "smb",

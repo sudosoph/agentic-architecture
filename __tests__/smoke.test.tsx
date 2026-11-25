@@ -13,6 +13,7 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
       }),
     ).toBeTruthy()
     expect(container.textContent?.toLowerCase()).not.toContain('ai org chart')
+    expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
     expect(screen.getAllByText(/Columbia CS/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/ex-McKinsey/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/Women Who Code/i).length).toBeGreaterThan(0)
