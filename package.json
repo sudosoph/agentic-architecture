@@ -13,6 +13,7 @@
     "seo:ping": "node scripts/ping-search-engines.mjs",
     "radar": "node scripts/brand-radar.mjs",
     "comments": "node scripts/comment-copilot.mjs",
+    "book:build": "node scripts/compile-book-and-freebies.mjs",
     "deploy": "opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare preview",
     "start": "next start",

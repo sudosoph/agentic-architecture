@@ -3,6 +3,7 @@ import { SITE_CONFIG } from '@/lib/site-config'
 
 const EXPLORE_LINKS = [
   { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
+  { href: '/sovereign-stack', label: 'The Sovereign Stack (Book & OSS)' },
   { href: '/blog', label: 'Playbooks & Tool Reviews' },
   { href: '/starter-kit', label: 'Free Brand & Workflow Kit' },
   { href: '/guides', label: 'Workflow Templates & Guides' },

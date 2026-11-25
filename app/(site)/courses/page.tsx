@@ -137,8 +137,8 @@ export default function CoursesPage() {
             your prompts, SOPs, and private infrastructure.
           </p>
           <div className="flex flex-wrap gap-3 pt-1">
-            <Button variant="primary" size="md" href={SITE_CONFIG.substackUrl}>
-              Read Serialized Chapters Free on Substack →
+            <Button variant="primary" size="md" href="/sovereign-stack">
+              Read All 15 Live Chapters &amp; Download 3 OSS Manuals →
             </Button>
             <Button
               variant="outline"

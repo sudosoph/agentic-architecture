@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.95,
     },
+    {
+      url: `${BASE}/sovereign-stack`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.92,
+    },
     { url: `${BASE}/masterclass`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/accelerator`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/starter-kit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },

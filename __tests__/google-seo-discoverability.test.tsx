@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 
 vi.mock('next/font/google', () => ({
   JetBrains_Mono: () => ({ variable: '--font-mono' }),
@@ -22,6 +22,9 @@ import WhatIsAgenticArchitectPage, {
 } from '@/app/(site)/what-is-an-agentic-architect/page'
 import { buildSeoGeoOpportunity } from '../scripts/brand-radar.mjs'
 import { draftHumanReply } from '../scripts/comment-copilot.mjs'
+import SovereignStackPage from '@/app/(site)/sovereign-stack/page'
+import { SOVEREIGN_STACK_PARTS } from '../scripts/compile-book-and-freebies.mjs'
+import { getAllPosts } from '@/lib/mdx'
 
 describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', () => {
   it('allows Next.js static assets in robots.txt and only disallows /api/ and /keystatic/', () => {
@@ -163,5 +166,34 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     })
     expect(reply).toContain('Joshua')
     expect(reply).not.toContain('\u2014')
+  })
+
+  it('compiles all 15 Sovereign Stack chapters and 3 OSS/hardware freebies cleanly and renders interactive sizer', () => {
+    const validSlugs = new Set(getAllPosts().map(p => p.slug))
+    const allChapters = SOVEREIGN_STACK_PARTS.flatMap(p => p.chapters)
+    expect(allChapters).toHaveLength(15)
+    for (const ch of allChapters) {
+      expect(validSlugs.has(ch.slug), `missing chapter post ${ch.slug}`).toBe(true)
+    }
+
+    const { container } = render(<SovereignStackPage />)
+    expect(container.textContent).not.toContain('\u2014')
+    expect(screen.getByTestId('oss-annual-savings').textContent).toBe('$1,392/yr')
+
+    fireEvent.click(screen.getByRole('tab', { name: /96GB Unified Memory/i }))
+    expect(screen.getByTestId('oss-annual-savings').textContent).toBe('$11,820/yr')
+
+    for (const rel of [
+      'content/book/the-sovereign-stack-manuscript.md',
+      'public/downloads/cut-your-ai-bill-84-percent-manual.md',
+      'public/downloads/private-hardware-and-tailscale-rig-guide.md',
+      'public/downloads/trusted-mcp-and-eval-checklist.md',
+    ]) {
+      const full = path.join(process.cwd(), rel)
+      expect(fs.existsSync(full), `${rel} should exist`).toBe(true)
+      const text = fs.readFileSync(full, 'utf8')
+      expect(text.length).toBeGreaterThan(400)
+      expect(text, `${rel} em-dash`).not.toContain('\u2014')
+    }
   })
 })

@@ -9,6 +9,7 @@ import { GET as getRss } from '@/app/rss.xml/route'
 const KNOWN_STATIC_PATHS = new Set([
   '/',
   '/what-is-an-agentic-architect',
+  '/sovereign-stack',
   '/about',
   '/boulder',
   '/blog',

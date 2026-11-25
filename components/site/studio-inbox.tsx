@@ -31,6 +31,36 @@ type RadarItem = {
   linkedinHook: string
 }
 
+const HN_REDDIT_LAUNCH_PACKS = [
+  {
+    id: 'hn-hetzner-oss',
+    target: 'Hacker News (Tue/Thu 7:00 AM ET) + r/SelfHosted',
+    url: 'https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner',
+    hnTitle:
+      'Replacing $125/mo of creator SaaS with Caddy, Listmonk, Cal.com, and Umami on a 4GB VPS',
+    hnFirstComment:
+      'Author here. I wanted to see if a single 4GB Linux box (Hetzner CX22) could comfortably run newsletter delivery (Listmonk + Resend SMTP), scheduling (Cal.com Docker), analytics (Umami), and status checks (Uptime Kuma) on one shared Postgres 16 instance with daily Restic backups. Total idle RAM sits around 1.5 GB; Plane and self-hosted PostHog did not fit in 4 GB, so I documented exact memory footprints, Caddyfile TLS snippets, and where self-hosting is not worth the trouble.',
+  },
+  {
+    id: 'hn-mcp-audit',
+    target: 'Hacker News + r/LocalLLaMA + r/programming',
+    url: 'https://agenticarchitect.ai/blog/mcp-server-audit-2026',
+    hnTitle:
+      'Auditing MCP servers in 2026: archived repos, shell injection, and the ~30 worth trusting',
+    hnFirstComment:
+      'Author here. While reviewing MCP configs across real developer setups, I kept running into links pointing at the 14 unmaintained servers-archived packages and wrappers piping unvalidated tool args into shell exec. Put together a plain engineering audit of the 4-legged OAuth delegation gap (RFC 9728/8414/7591/8707), five concrete failure modes, and the subset of company-backed or least-privilege servers that survive scrutiny.',
+  },
+  {
+    id: 'hn-96gb-tailscale',
+    target: 'r/LocalLLaMA + Hacker News',
+    url: 'https://agenticarchitect.ai/blog/96gb-ram-thesis',
+    hnTitle:
+      'Why 96GB of unified memory and a zero-port Tailscale mesh changed what I run locally',
+    hnFirstComment:
+      'Sharing notes and memory math from running 27B dense and 35B MoE open-weight workhorses locally on modular hardware (Framework 16 / high-RAM Linux node) exposed solely over Tailscale Serve with zero router port-forwarding, plus where cloud frontier APIs still win.',
+  },
+]
+
 export function StudioInbox({
   initialReplies,
   initialRadar,
@@ -254,6 +284,59 @@ export function StudioInbox({
                   className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
                 >
                   {copiedId === `cmd-${item.id}` ? 'Copied Command!' : 'Copy 1-Command Pack Generator'}
+                </button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. OSS, Hardware & Hacker News Launch Queue */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
+              3. OSS, Hardware &amp; Show HN Distribution
+            </p>
+            <h2 className="text-xl font-bold text-fg">
+              Ready-to-Post Hacker News &amp; r/LocalLLaMA Launch Packs
+            </h2>
+          </div>
+          <Badge variant="rig">Feeds /sovereign-stack Book &amp; Freebies</Badge>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {HN_REDDIT_LAUNCH_PACKS.map(pack => (
+            <Card key={pack.id} className="p-6 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-mono text-xs text-muted">{pack.target}</span>
+                <a
+                  href={pack.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs text-accent hover:underline"
+                >
+                  {pack.url.replace('https://agenticarchitect.ai', '')} →
+                </a>
+              </div>
+              <p className="text-sm font-bold text-fg">HN Title: {pack.hnTitle}</p>
+              <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3 leading-relaxed">
+                <strong>First-Comment Technical Context:</strong> {pack.hnFirstComment}
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => copyText(`hn-t-${pack.id}`, pack.hnTitle)}
+                  className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-fg hover:border-accent cursor-pointer"
+                >
+                  {copiedId === `hn-t-${pack.id}` ? 'Copied HN Title!' : 'Copy HN Title'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => copyText(`hn-c-${pack.id}`, pack.hnFirstComment)}
+                  className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+                >
+                  {copiedId === `hn-c-${pack.id}` ? 'Copied First Comment!' : 'Copy HN First Comment'}
                 </button>
               </div>
             </Card>
