@@ -20,6 +20,8 @@ import { generateMetadata as generateBlogPostMetadata } from '@/app/(site)/blog/
 import WhatIsAgenticArchitectPage, {
   metadata as pillarMetadata,
 } from '@/app/(site)/what-is-an-agentic-architect/page'
+import { buildSeoGeoOpportunity } from '../scripts/brand-radar.mjs'
+import { draftHumanReply } from '../scripts/comment-copilot.mjs'
 
 describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', () => {
   it('allows Next.js static assets in robots.txt and only disallows /api/ and /keystatic/', () => {
@@ -134,5 +136,24 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
 
     const urls = new Set(sitemap().map(e => e.url))
     expect(urls.has('https://agenticarchitect.ai/what-is-an-agentic-architect')).toBe(true)
+  })
+
+  it('builds anti-cannibalization SEO/GEO briefs and human-in-the-loop comment replies free of em-dashes', () => {
+    const opp = buildSeoGeoOpportunity({
+      title: 'MCP Browser Connectors vs API Workflows',
+      points: 150,
+    })
+    expect(opp.seoBlogTitle).not.toBe(opp.substackStoryTitle)
+    expect(opp.mediumDevtoFrontmatter).toContain(`canonical_url: "${opp.canonicalUrl}"`)
+    expect(opp.seoBlogTitle).not.toContain('\u2014')
+    expect(opp.substackStoryTitle).not.toContain('\u2014')
+    expect(opp.linkedinHook).not.toContain('\u2014')
+
+    const reply = draftHumanReply({
+      commenterName: 'Joshua Miller',
+      commentBody: 'People stop reading what they approve when volume is high.',
+    })
+    expect(reply).toContain('Joshua')
+    expect(reply).not.toContain('\u2014')
   })
 })

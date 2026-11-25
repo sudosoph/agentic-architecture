@@ -4,193 +4,110 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
-import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'About Sophia Stein',
   description:
-    'Agentic Architect, AI Systems Educator & Advisor in Boulder, CO. Columbia CS, ex-McKinsey, AI Systems & Enablement at Google (personal capacity, views my own), and Women Who Code speaker.',
+    'Builder, writer, and angel investor in Boulder, CO. Columbia CS, ex-McKinsey, AI work at Google (personal capacity, views my own), and Women Who Code speaker.',
   alternates: {
     canonical: '/about',
   },
 }
 
-const CREDENTIAL_CARDS = [
+const SNAPSHOTS = [
   {
-    label: 'Enterprise AI & Enablement',
-    title: 'AI Systems & Enablement at Google',
+    label: 'Day Job & Applied Research',
+    title: 'Google (Boulder, CO)',
     detail:
-      'Leading extensive internal AI enablement trainings and co-inventing a patent-pending AI engineering system. All writing, teaching, and advising on this site are in a personal capacity, views my own.',
+      'Building internal AI investigation tools (cutting complex triage from 15 minutes to 2), co-inventing a patent-pending multimodal QA engine, and teaching internal workshops. Everything on this site is strictly in my personal capacity, views my own.',
   },
   {
-    label: 'Executive Strategy & Transformation',
-    title: 'Ex-McKinsey & Company',
+    label: 'Commercial Strategy & Rollouts',
+    title: 'McKinsey & Company',
     detail:
-      'Advised Fortune 500 technology and healthcare organizations on high-ROI operational workflows, executive enablement, and measurable adoption across hundreds of business leaders.',
+      'Restructured enterprise SaaS contracts to save $70M in annual sales OpEx and led clinical software rollouts across 250+ healthcare leaders at a 79 NPS.',
   },
   {
-    label: 'Computer Science Foundation',
-    title: 'Columbia University (B.S. in CS)',
+    label: 'Early Engineering & Computer Science',
+    title: 'Columbia University, Section.io & Meta',
     detail:
-      'Trained in systems engineering and machine learning fundamentals, translating complex technical architecture into plain-English workflows any operator can run.',
+      'B.S. in Computer Science at Columbia (Dean’s List), performance engineering at Section.io ahead of its Webscale acquisition (+30% conversion lift, -40% support tickets), and Mobile Engineering Fellow at Meta.',
   },
   {
-    label: 'Live Teaching & Keynotes',
-    title: 'Boulder Startup Week & Women Who Code',
+    label: 'Community & Frontier Investing',
+    title: 'Boulder Classrooms & 7x Angel Investor',
     detail:
-      'Trained 300+ founders, executives, and builders live at Boulder Startup Week and spoke for Women Who Code on practical AI systems and sovereign infrastructure.',
-  },
-]
-
-const PILLARS = [
-  {
-    step: '01',
-    title: 'Systems Over Chatting',
-    body: 'Prompting from a blank box every morning wastes hours. A 1-page Brand Brain plus three connected workflows turns AI from a novelty into reliable weekly output.',
-  },
-  {
-    step: '02',
-    title: 'Plain English for Business Leaders',
-    body: 'Founders, COOs, and department heads do not need jargon. Every workshop and playbook focuses on hours saved, quality gates, and clear unit economics.',
-  },
-  {
-    step: '03',
-    title: 'Own Your Data & Infrastructure',
-    body: 'Your prompts, SOPs, customer context, and private workflows should live in portable files and infrastructure you control rather than locked vendor silos.',
+      'Taught 300+ founders live at Boulder Startup Week, spoke for Women Who Code, advise Seed biotech teams, and angel invest across quantum hardware, medtech, microgrids, and zero-waste supply chains.',
   },
 ]
 
 export default function AboutPage() {
   return (
-    <div className="space-y-14">
+    <div className="space-y-12">
       <PageHeader
-        meta="Boulder, CO · Practitioner, Educator & Advisor"
-        title="About Sophia Stein"
-        description="I help business owners, leadership teams, and builders turn AI into calm, repeatable workflows that save real hours and protect your data."
+        meta="Boulder, CO · Builder, Writer & Angel Investor"
+        title="Hi, I’m Sophia."
+        description="I build practical AI setups so founders and teams spend less time fighting software and more time doing actual work."
       />
 
-      {/* Intro + Quick Actions */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-7 space-y-4 text-base text-muted leading-relaxed">
-          <p className="text-fg font-medium text-lg leading-relaxed">
-            Most organizations sit at one of two extremes with AI: either pasting one-off prompts
-            into chat windows with inconsistent results, or over-engineering fragile multi-agent
-            science projects that nobody on the team actually uses.
-          </p>
-          <p>
-            My work bridges rigorous systems engineering and boardroom-clear business execution.
-            Across Columbia Computer Science, McKinsey enterprise engagements, leading internal AI
-            trainings, and teaching 300+ operators in Boulder, I focus on the practical middle:
-            documenting your Brand Brain, automating the 20% of tasks that eat 80% of your week, and
-            keeping your stack lean and sovereign.
-          </p>
-          <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3.5">
-            Note: I work in AI Systems & Enablement at Google. Everything published, taught, and
-            advised through Agentic Architect is done strictly in my personal capacity; all views
-            and materials are my own.
-          </p>
-        </div>
-
-        <Card className="lg:col-span-5 p-6 space-y-4 bg-surface">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Work Together
-          </p>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start justify-between gap-3 pb-3 border-b border-border">
-              <div>
-                <p className="font-semibold text-fg">Free 60-Min Live Masterclass</p>
-                <p className="text-xs text-muted">Build your Brand Brain & first workflows</p>
-              </div>
-              <Link href="/masterclass" className="text-xs font-semibold text-accent shrink-0 hover:underline">
-                Register →
-              </Link>
-            </li>
-            <li className="flex items-start justify-between gap-3 pb-3 border-b border-border">
-              <div>
-                <p className="font-semibold text-fg">Agentic Business Accelerator</p>
-                <p className="text-xs text-muted">8-week cohort for founders & ops leads</p>
-              </div>
-              <Link href="/accelerator" className="text-xs font-semibold text-accent shrink-0 hover:underline">
-                Details →
-              </Link>
-            </li>
-            <li className="flex items-start justify-between gap-3 pb-3 border-b border-border">
-              <div>
-                <p className="font-semibold text-fg">Corporate Workshops & University</p>
-                <p className="text-xs text-muted">Team intensives, keynotes & syllabi</p>
-              </div>
-              <Link href="/teaching" className="text-xs font-semibold text-accent shrink-0 hover:underline">
-                Portfolio →
-              </Link>
-            </li>
-            <li className="flex items-start justify-between gap-3">
-              <div>
-                <p className="font-semibold text-fg">1:1 Workflow Audits & Advisory</p>
-                <p className="text-xs text-muted">Direct sessions booked via Cal.com</p>
-              </div>
-              <Link href="/work-with-me" className="text-xs font-semibold text-accent shrink-0 hover:underline">
-                Book →
-              </Link>
-            </li>
-          </ul>
-        </Card>
+      {/* Real-Person Narrative */}
+      <section className="max-w-3xl space-y-4 text-base text-muted leading-relaxed">
+        <p className="text-fg font-medium text-lg leading-relaxed">
+          I started <strong>Agentic Architect</strong> after watching smart people get stuck in the
+          same trap: either re-typing context into a blank chat window every morning, or paying
+          for complicated AI science projects that nobody uses two weeks later.
+        </p>
+        <p>
+          My background sits halfway between code and messy human operations. I studied computer
+          science at Columbia, shipped production web and mobile software at Meta and Section.io,
+          spent two years at McKinsey fixing commercial math and clinical rollouts, and now build
+          applied AI tools in Boulder. Outside of software, I speak four languages fluently, back
+          early deep-tech and climate founders as an angel investor, and care deeply about owning
+          your own data and margins.
+        </p>
+        <p>
+          My rule for every tool review, playbook, or live workshop here is simple: if a plain
+          markdown file (<code className="font-mono text-fg">voice.md</code>) and a 15-minute
+          workflow solve the problem at near-zero monthly cost, do not overcomplicate it.
+        </p>
+        <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3.5">
+          Personal capacity note: My day job is at Google. Everything published, taught, or advised
+          through Agentic Architecture LLC (<code className="font-mono">agenticarchitect.ai</code>)
+          is independent, uses zero employer resources, and reflects my own views.
+        </p>
       </section>
 
-      {/* Scannable Credential Bento */}
-      <section className="space-y-5">
-        <div>
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Background & Track Record
-          </p>
-          <h2 className="text-2xl font-bold tracking-tight text-fg mt-1">
-            Built Across Engineering, Strategy & Live Classrooms
-          </h2>
-        </div>
-
+      {/* Crisp 4-Card Track Record */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold tracking-tight text-fg">Where I Have Built</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {CREDENTIAL_CARDS.map(item => (
+          {SNAPSHOTS.map(item => (
             <Card key={item.title} className="p-6 space-y-2">
               <p className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
                 {item.label}
               </p>
-              <h3 className="text-lg font-bold text-fg">{item.title}</h3>
+              <h3 className="text-base font-bold text-fg">{item.title}</h3>
               <p className="text-sm text-muted leading-relaxed">{item.detail}</p>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Operating Principles */}
-      <section className="space-y-5">
-        <h2 className="text-2xl font-bold tracking-tight text-fg">How I Teach and Build</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {PILLARS.map(p => (
-            <div key={p.step} className="rounded-xl border border-border bg-white p-6 space-y-2">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50 font-mono text-xs font-bold text-accent">
-                {p.step}
-              </span>
-              <h3 className="text-base font-bold text-fg">{p.title}</h3>
-              <p className="text-sm text-muted leading-relaxed">{p.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Direct Contact Strip */}
-      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      {/* Low-Key Next Step */}
+      <section className="rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-fg">Invite Sophia to Speak, Teach, or Advise</h2>
+          <h2 className="text-lg font-bold text-fg">Want to Build Together or Say Hello?</h2>
           <p className="text-sm text-muted">
-            Based in Boulder and Denver, available nationwide and remotely for corporate workshops,
-            keynotes, and university courses.
+            Grab the free <Link href="/starter-kit" className="text-accent font-medium hover:underline">20-Minute Starter Kit</Link>, join the next{' '}
+            <Link href="/masterclass" className="text-accent font-medium hover:underline">live class</Link>, or reach out directly.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
-          <Button variant="primary" size="md" href={SITE_CONFIG.cal.speaking}>
-            Book Speaking / Workshop Intake
+          <Button variant="primary" size="sm" href="/work-with-me">
+            Ways to Work Together
           </Button>
-          <Button variant="outline" size="md" href="/contact">
-            Send a Message
+          <Button variant="outline" size="sm" href="/contact">
+            Send a Note
           </Button>
         </div>
       </section>

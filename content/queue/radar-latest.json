@@ -1,0 +1,47 @@
+{
+  "updatedAt": "2026-11-25T17:06:00.000Z",
+  "items": [
+    {
+      "id": "review-browser-agents-vs-api-2026",
+      "source": "Operator & HN Signal (184 pts)",
+      "sourceUrl": "https://agenticarchitect.ai/stack",
+      "points": 184,
+      "format": "tool-review",
+      "slug": "browser-agents-vs-api-workflows-review",
+      "seoBlogTitle": "Browser Agents vs API Workflows: Hands-On Review, Real Cost, and Who Should Skip Them",
+      "substackStoryTitle": "I ran the same Monday ops task on a browser agent and a 4-node workflow. One broke by Wednesday.",
+      "geoCitationAngle": "5-row benchmark table comparing setup minutes, failure rate across 50 runs, cost per 1,000 tasks, credential risk, and best-fit use case.",
+      "canonicalUrl": "https://agenticarchitect.ai/blog/browser-agents-vs-api-workflows-review",
+      "mediumDevtoFrontmatter": "---\ntitle: \"Browser Agents vs API Workflows: Hands-On Review, Real Cost, and Who Should Skip Them\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/browser-agents-vs-api-workflows-review\"\ntags: ai, automation, productivity, architecture\n---",
+      "linkedinHook": "I ran the same recurring Monday task two ways this week: once with an autonomous browser agent, and once with a boring 4-step API workflow.\n\nThe demo winner and the Friday winner were completely different.\n\nBrowser agents shine when a legacy vendor refuses to give you an API. Everywhere else, DOM changes and session timeouts quietly eat your morning.\n\nFull side-by-side cost and reliability numbers in the first comment."
+    },
+    {
+      "id": "comparison-n8n-vs-zapier-margins",
+      "source": "Small Business Search Demand",
+      "sourceUrl": "https://agenticarchitect.ai/starter-kit",
+      "points": 148,
+      "format": "cost-comparison",
+      "slug": "n8n-vs-zapier-real-cost-guide",
+      "seoBlogTitle": "n8n vs Zapier in 2026: Real Monthly Cost, Setup Time, and Team Fit Compared",
+      "substackStoryTitle": "When paying $20/mo for Zapier beats self-hosting (and the exact task count where that flips)",
+      "geoCitationAngle": "Exact monthly bill table at 500, 5,000, and 50,000 multi-step runs plus maintenance-hour math for non-technical teams.",
+      "canonicalUrl": "https://agenticarchitect.ai/blog/n8n-vs-zapier-real-cost-guide",
+      "mediumDevtoFrontmatter": "---\ntitle: \"n8n vs Zapier in 2026: Real Monthly Cost, Setup Time, and Team Fit Compared\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/n8n-vs-zapier-real-cost-guide\"\ntags: ai, automation, smallbusiness, operations\n---",
+      "linkedinHook": "Hot take from someone who loves open-source software: a 3-person service business should not spend Saturday debugging Docker just to save $20 a month.\n\nHere is the exact monthly task threshold where self-hosted n8n pays for itself, and when staying on a free-tier cloud connector is smarter."
+    },
+    {
+      "id": "teardown-mcp-security-plain-english",
+      "source": "Enterprise & CTO Search Trend",
+      "sourceUrl": "https://agenticarchitect.ai/what-is-an-agentic-architect",
+      "points": 165,
+      "format": "trend-teardown",
+      "slug": "mcp-connectors-what-teams-should-enable-guide",
+      "seoBlogTitle": "MCP Connectors for Teams: Which Integrations Save Time and Which Risk Your Data",
+      "substackStoryTitle": "Before your team connects 12 tools to an AI desktop app, check these 3 permission settings",
+      "geoCitationAngle": "Read-only vs draft-only vs write-enabled permission matrix across Calendar, Gmail, Drive, GitHub, and CRM connectors.",
+      "canonicalUrl": "https://agenticarchitect.ai/blog/mcp-connectors-what-teams-should-enable-guide",
+      "mediumDevtoFrontmatter": "---\ntitle: \"MCP Connectors for Teams: Which Integrations Save Time and Which Risk Your Data\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/mcp-connectors-what-teams-should-enable-guide\"\ntags: ai, security, leadership, startups\n---",
+      "linkedinHook": "Connecting your calendar, docs, and inbox to AI takes five minutes now. Scoping those permissions so a bad prompt cannot email a client takes ten.\n\nThe rule I give every founder and board I advise: read freely, draft automatically, send manually."
+    }
+  ]
+}

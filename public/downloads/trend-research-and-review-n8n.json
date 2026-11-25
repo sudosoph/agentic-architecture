@@ -1,0 +1,59 @@
+{
+  "name": "Agentic Architect · Weekly AI Trend, Tool Review & SEO/GEO Radar",
+  "nodes": [
+    {
+      "id": "schedule-monday",
+      "name": "Every Monday 7:30 AM MT",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300],
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "triggerAtDay": [1], "triggerAtHour": 7, "triggerAtMinute": 30 }]
+        }
+      }
+    },
+    {
+      "id": "hn-ai-releases",
+      "name": "Fetch Top AI & Tool Stories (HN Algolia)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 200],
+      "parameters": {
+        "url": "https://hn.algolia.com/api/v1/search?query=MCP%20OR%20agent%20workflow%20OR%20open%20weights&tags=story&hitsPerPage=10",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "reddit-operator-pain",
+      "name": "Fetch Operator Questions (r/smallbusiness + r/AI_Agents)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 400],
+      "parameters": {
+        "url": "https://www.reddit.com/r/AI_Agents/top.json?t=week&limit=10",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "stage-gmail-brief",
+      "name": "Create Approval Brief in Gmail Drafts",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [740, 300],
+      "parameters": {
+        "resource": "draft",
+        "subject": "[Approve Weekly Topic] Top 3 Tool Reviews & SEO/GEO Angles",
+        "message": "Pick #1, #2, or #3 to scaffold this week's blog post, Substack adaptation, and LinkedIn note."
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday 7:30 AM MT": {
+      "main": [[{ "node": "Fetch Top AI & Tool Stories (HN Algolia)", "type": "main", "index": 0 }, { "node": "Fetch Operator Questions (r/smallbusiness + r/AI_Agents)", "type": "main", "index": 0 }]]
+    },
+    "Fetch Top AI & Tool Stories (HN Algolia)": {
+      "main": [[{ "node": "Create Approval Brief in Gmail Drafts", "type": "main", "index": 0 }]]
+    }
+  }
+}

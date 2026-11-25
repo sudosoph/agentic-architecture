@@ -3,10 +3,10 @@ import { SITE_CONFIG } from '@/lib/site-config'
 
 const EXPLORE_LINKS = [
   { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
-  { href: '/blog', label: 'Playbooks & Articles' },
+  { href: '/blog', label: 'Playbooks & Tool Reviews' },
   { href: '/starter-kit', label: 'Free Brand & Workflow Kit' },
+  { href: '/guides', label: 'Workflow Templates & Guides' },
   { href: '/stack', label: 'Stack & Rigs' },
-  { href: '/bsw', label: 'Boulder Startup Week Lab' },
   { href: '/about', label: 'About Sophia' },
 ]
 
