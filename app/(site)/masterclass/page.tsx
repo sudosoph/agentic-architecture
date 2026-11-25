@@ -70,7 +70,7 @@ export default function MasterclassPage() {
             <Button
               variant="primary"
               size="lg"
-              href="/contact?subject=Save%20My%20Seat%3A%20Free%2060-Min%20AI%20Workflow%20Masterclass"
+              href={SITE_CONFIG.cal.masterclass}
             >
               Save My Free Masterclass Seat →
             </Button>

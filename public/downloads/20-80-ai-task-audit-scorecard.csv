@@ -1,0 +1,8 @@
+Task Name,Department,Volume (1-5),Variability (1-5),Safety / Reversibility (1-5),Structured Signal (1-5),Total Readiness Score (Out of 25),Recommended Action
+"Pre-call prospect research dossier & agenda",Sales & Advisory,4,4,5,4,21,"Ship Now (Internal Google Doc + Draft)"
+"4-bucket inbound email triage & reply drafting",Operations,5,3,3,4,20,"Ship Now with 10-Sec Gmail Draft Gate"
+"Weekly voice memo to blog + Substack + social drafts",Marketing,3,4,5,3,18,"Ship with HITL Review"
+"Invoice & PDF line-item extraction to Sheet",Finance & Ops,4,4,4,4,20,"Ship Now with Subtotal Check"
+"5-day polite no-reply follow-up draft",Sales & Partnerships,4,4,3,4,19,"Ship with HITL Review"
+"End-to-end unreviewed cold email auto-sending",Outbound,4,2,1,2,13,"Decompose: Automate Dossier Only, Human Sends"
+"Custom enterprise contract negotiation",Legal & Exec,2,1,1,2,8,"Keep Human"

@@ -83,7 +83,7 @@ describe('Blog query compatibility, ContactForm 503 fallback, and WCAG AA tokens
 
   it('defines WCAG AA >= 4.5:1 tokens for --color-online and --color-rig in app/globals.css', () => {
     const css = fs.readFileSync(path.join(process.cwd(), 'app/globals.css'), 'utf8')
-    expect(css).toContain('--color-online: #047857')
-    expect(css).toContain('--color-rig: #b45309')
+    expect(css).toMatch(/--color-online:\s*#047857/i)
+    expect(css).toMatch(/--color-rig:\s*#b45309/i)
   })
 })

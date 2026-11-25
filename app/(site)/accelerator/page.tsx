@@ -89,15 +89,11 @@ export default function AcceleratorPage() {
         </p>
 
         <div className="flex flex-wrap gap-3 pt-1">
-          <Button variant="primary" size="lg" href={SITE_CONFIG.cal.scoping}>
-            Book a 20-Min Cohort Fit Call →
+          <Button variant="primary" size="lg" href={SITE_CONFIG.cal.acceleratorFounding}>
+            Enroll in Founding Cohort ($5,997) →
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            href="/contact?subject=Accelerator%20Cohort%20Application"
-          >
-            Request Syllabus &amp; Apply by Email
+          <Button variant="outline" size="lg" href={SITE_CONFIG.cal.accelerator}>
+            Book a 20-Min Cohort Fit Call
           </Button>
           <Button variant="ghost" size="lg" href="/masterclass">
             Watch the Free 60-Min Masterclass First
@@ -182,11 +178,11 @@ export default function AcceleratorPage() {
           </ul>
 
           <div className="flex flex-wrap gap-3 pt-2">
-            <Button variant="primary" size="lg" href={SITE_CONFIG.cal.scoping}>
-              Book Your 20-Min Fit Call →
+            <Button variant="primary" size="lg" href={SITE_CONFIG.cal.acceleratorFounding}>
+              Enroll Now + Book 1:1 Kickoff ($5,997) →
             </Button>
-            <Button variant="outline" size="lg" href={SITE_CONFIG.cal.audit}>
-              Start With a $1,500 VIP 90-Min Audit
+            <Button variant="outline" size="lg" href={SITE_CONFIG.cal.scoping}>
+              Book a Fit Call First
             </Button>
           </div>
 

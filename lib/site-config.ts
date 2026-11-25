@@ -15,8 +15,12 @@ export const SITE_CONFIG = {
   githubUrl: 'https://github.com/sudosoph',
   email: 'sophia@agenticarchitect.ai',
   cal: {
+    hub: 'https://cal.com/sophia-stein',
+    masterclass: 'https://cal.com/sophia-stein/masterclass',
     officeHours: 'https://cal.com/sophia-stein/office-hours',
     audit: 'https://cal.com/sophia-stein/audit',
+    accelerator: 'https://cal.com/sophia-stein/accelerator',
+    acceleratorFounding: 'https://cal.com/sophia-stein/accelerator-founding',
     speaking: 'https://cal.com/sophia-stein/speaking',
     scoping: 'https://cal.com/sophia-stein/scoping',
   },

@@ -1,0 +1,66 @@
+{
+  "name": "Agentic Architect - Pre-Call Lead Dossier & Gmail Draft",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cal-booking-intake",
+        "responseMode": "onReceived"
+      },
+      "id": "webhook-cal",
+      "name": "Cal.com Booking Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $input.first().json.payload || $input.first().json;\nconst attendee = (payload.attendees && payload.attendees[0]) || {};\nconst email = attendee.email || '';\nconst domain = email.includes('@') ? email.split('@')[1] : '';\nreturn [{ json: { name: attendee.name || 'Guest', email, domain, eventTitle: payload.title || 'Strategy Session', startTime: payload.startTime || '', notes: payload.additionalNotes || '' } }];"
+      },
+      "id": "extract-booking",
+      "name": "Extract Attendee & Domain",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://r.jina.ai/https://{{ $json.domain }}",
+        "options": { "timeout": 20000 }
+      },
+      "id": "fetch-company-site",
+      "name": "Fetch Company Website Markdown",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "operation": "create",
+        "subject": "=Looking forward to our {{ $('Extract Attendee & Domain').item.json.eventTitle }}",
+        "message": "=Hi {{ $('Extract Attendee & Domain').item.json.name }},\n\nLooking forward to speaking soon. Ahead of our call, I reviewed {{ $('Extract Attendee & Domain').item.json.domain }} and noted three high-ROI workflow areas we can walk through together.\n\nIf there is one specific bottleneck you want to tackle first, feel free to reply with a one-liner.\n\nSophia",
+        "options": {
+          "sendTo": "={{ $('Extract Attendee & Domain').item.json.email }}"
+        }
+      },
+      "id": "create-gmail-draft",
+      "name": "Queue Human-Reviewed Gmail Draft",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [960, 300]
+    }
+  ],
+  "connections": {
+    "Cal.com Booking Webhook": {
+      "main": [[{ "node": "Extract Attendee & Domain", "type": "main", "index": 0 }]]
+    },
+    "Extract Attendee & Domain": {
+      "main": [[{ "node": "Fetch Company Website Markdown", "type": "main", "index": 0 }]]
+    },
+    "Fetch Company Website Markdown": {
+      "main": [[{ "node": "Queue Human-Reviewed Gmail Draft", "type": "main", "index": 0 }]]
+    }
+  }
+}

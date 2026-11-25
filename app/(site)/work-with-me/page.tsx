@@ -22,6 +22,8 @@ const PRIMARY_OFFERS = [
       'Done-With-You implementation installing 6 revenue, content, and operations AI workflows inside your business over 8 weeks. Optional +$1,500 seat for your Ops Lead or EA.',
     href: '/accelerator',
     cta: 'Explore the Accelerator →',
+    secondaryHref: SITE_CONFIG.cal.acceleratorFounding,
+    secondaryCta: 'Instant Founding Seat ($5,997)',
   },
   {
     badge: '90-Min Deep Dive · 100% Creditable',
@@ -97,10 +99,15 @@ export default function WorkWithMePage() {
                 <p className="font-mono text-sm font-semibold text-accent">{offer.price}</p>
                 <p className="text-sm text-muted leading-relaxed">{offer.detail}</p>
               </div>
-              <div>
+              <div className="flex flex-wrap gap-2.5">
                 <Button variant="primary" size="md" href={offer.href}>
                   {offer.cta}
                 </Button>
+                {'secondaryHref' in offer && offer.secondaryHref && (
+                  <Button variant="outline" size="md" href={offer.secondaryHref}>
+                    {offer.secondaryCta}
+                  </Button>
+                )}
               </div>
             </Card>
           ))}
