@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: '/blog', label: 'Owner Playbooks' },
   { href: '/courses', label: 'Courses & Cohort' },
   { href: '/work-with-me', label: 'Bespoke AI Builds' },
+  { href: '/fractional-ai-cto', label: 'Fractional AI / CTO' },
   { href: '/research', label: 'Research & Teaching' },
   { href: '/about', label: 'About' },
 ]
@@ -65,8 +66,8 @@ export function Nav() {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-7">
-          <div className="flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex items-center gap-5">
             {NAV_LINKS.map(({ href, label }) => {
               const active = pathname === href || pathname.startsWith(`${href}/`)
               return (

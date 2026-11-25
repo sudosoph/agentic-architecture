@@ -5,6 +5,7 @@ import { getAllPosts, getPost } from '@/lib/mdx'
 import { getGuide } from '@/lib/guides'
 import sitemap from '@/app/sitemap'
 import { GET as getRss } from '@/app/rss.xml/route'
+import { collectCanonicalUrls } from '../scripts/ping-search-engines.mjs'
 
 const KNOWN_STATIC_PATHS = new Set([
   '/',
@@ -131,6 +132,11 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     for (const p of getAllPosts()) {
       expect(urls.has(`https://agenticarchitect.ai/blog/${p.slug}`)).toBe(true)
     }
+
+    const indexNowUrls = new Set(collectCanonicalUrls())
+    expect(indexNowUrls.has('https://agenticarchitect.ai/academy')).toBe(true)
+    expect(indexNowUrls.has('https://agenticarchitect.ai/fractional-ai-cto')).toBe(true)
+    expect(indexNowUrls.has('https://agenticarchitect.ai/research')).toBe(true)
   })
 
   it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 47 entries', async () => {

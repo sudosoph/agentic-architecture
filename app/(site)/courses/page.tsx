@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
+import fiveDayChallenge from '@/content/courses/five-day-prompt-to-system.json'
 
 export const metadata: Metadata = {
   title: 'AI Automation Courses for Non-Technical Owners, Cohort & Custom Sprints',
@@ -88,6 +89,43 @@ export default function CoursesPage() {
             </div>
           </Card>
         ))}
+      </section>
+
+      {/* 5-Day Prompt-to-System Free Business Challenge Preview */}
+      <section className="rounded-2xl border border-border bg-white p-6 md:p-8 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div className="space-y-1">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Step 01 Preview · 5 Daily Business Lessons
+            </p>
+            <h2 className="text-2xl font-bold text-fg">
+              Inside the Free 5-Day Prompt-to-System Challenge
+            </h2>
+          </div>
+          <Button variant="outline" size="sm" href="/starter-kit">
+            Start Day 1 Scorer Now →
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {fiveDayChallenge.map(lesson => (
+            <Card key={lesson.day} className="p-4 flex flex-col justify-between space-y-3 bg-surface">
+              <div className="space-y-1.5">
+                <span className="font-mono text-xs font-semibold text-accent">
+                  Day 0{lesson.day}
+                </span>
+                <h3 className="text-sm font-bold text-fg leading-snug">{lesson.subject}</h3>
+                <p className="text-xs text-muted leading-relaxed">{lesson.goal}</p>
+              </div>
+              <a
+                href={lesson.ctaUrl.replace('https://agenticarchitect.ai', '') || '/'}
+                className="font-mono text-xs font-semibold text-accent hover:underline"
+              >
+                Open Day {lesson.day} Tool →
+              </a>
+            </Card>
+          ))}
+        </div>
       </section>
 
       {/* Open-Source Workshop & Guides Strip */}

@@ -13,11 +13,12 @@ describe('Nav', () => {
     expect(brand.getAttribute('href')).toBe('/')
   })
 
-  it('renders Two-Room navigation separating Owner Playbooks & Bespoke Builds from Research & Teaching', () => {
+  it('renders audience-separated navigation including Owner Playbooks, Courses, Bespoke Builds, Fractional AI / CTO, and Research & Teaching', () => {
     render(<Nav />)
     expect(screen.getByRole('link', { name: 'Owner Playbooks' }).getAttribute('href')).toBe('/blog')
     expect(screen.getByRole('link', { name: 'Courses & Cohort' }).getAttribute('href')).toBe('/courses')
     expect(screen.getByRole('link', { name: 'Bespoke AI Builds' }).getAttribute('href')).toBe('/work-with-me')
+    expect(screen.getByRole('link', { name: 'Fractional AI / CTO' }).getAttribute('href')).toBe('/fractional-ai-cto')
     expect(screen.getByRole('link', { name: 'Research & Teaching' }).getAttribute('href')).toBe('/research')
     expect(screen.getByRole('link', { name: 'About' }).getAttribute('href')).toBe('/about')
     expect(screen.getByRole('link', { name: /Free Live Briefing/i }).getAttribute('href')).toBe('/masterclass')

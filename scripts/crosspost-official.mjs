@@ -44,6 +44,8 @@ export function sanitizeCleanCopy(text) {
     .replace(/\u2014/g, ': ')
     .replace(/\s+--\s+/g, ': ')
     .replace(/Brand Brain/gi, 'Company Context Vault')
+    .replace(/`?voice\.md`?/gi, 'company operating rules')
+    .replace(/`?icp\.md`?/gi, 'buyer qualification criteria')
 }
 
 export function resolvePostBySlug(inputSlug) {

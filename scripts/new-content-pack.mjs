@@ -55,19 +55,19 @@ Explain what goes wrong when operators try to solve this with ad-hoc chat prompt
 
 | Step | Input Signal | Automated Action | Human Gate |
 |---|---|---|---|
-| 1. Context | \`voice.md\` + \`icp.md\` | Grounds tone and customer rules | Written once by you |
-| 2. Workflow | Calendar / Inbox / Sheet | Prepares structured draft or brief | Zero external auto-send |
+| 1. Operating Rules | Company SOP + Buyer Criteria | Grounds communication rules and scope boundaries | Written once by your team |
+| 2. Workflow | Calendar / Inbox / CRM | Prepares structured pre-call brief or draft | Zero external auto-send |
 | 3. Review | Drafts queue | 10-second approval tap | You click Send |
 
 ## Step-by-step setup
 
-1. Copy your portable Brand Brain from the [20-Minute Starter Kit](/starter-kit).
-2. Connect the trigger and output draft folder.
-3. Score the workflow with the [90-minute readiness rubric](/blog/agent-ready-tasks) and keep a [human approval gate](/blog/the-hitl-standard).
+1. Score your highest-friction workflow with the [Free 20/80 Bottleneck Scorecard](/starter-kit).
+2. Connect the calendar, form, or inbox trigger to your output draft queue.
+3. Verify against the [90-minute readiness rubric](/blog/agent-ready-tasks) and keep a [human approval gate](/blog/the-hitl-standard).
 
 ## Next steps
 
-Join the next [Free 60-Min Live Masterclass](/masterclass) to watch these systems built live, or explore [1:1 Audits & Corporate Workshops](/work-with-me).
+Join the next [Free 60-Min Live Build](/masterclass) to watch these workflows built step by step, explore [Custom Sprints & Courses](/work-with-me), or review [Fractional CAIO & AI CTO Advisory](/fractional-ai-cto).
 `
 
   const substack = `# Substack Edition + 2 Notes: ${title}
@@ -80,23 +80,23 @@ Join the next [Free 60-Min Live Masterclass](/masterclass) to watch these system
 2. The 20-minute workflow that saved hours this week
 
 ## Newsletter Body
-Open with a 3-line personal story from a recent workshop or audit, paste the core framework and table from \`content/blog/${slug}.mdx\`, and close with one clean invitation:
+Open with a 3-line personal story from a recent workshop or client build, paste the core framework and table from \`content/blog/${slug}.mdx\`, and close with one clean invitation:
 
-- Save a free seat for the next 60-minute live masterclass: https://agenticarchitect.ai/masterclass
-- Or grab the unlocked \`voice.md\` Brand Brain Starter Kit: https://agenticarchitect.ai/starter-kit
+- Save a free seat for the next 60-minute live build: https://agenticarchitect.ai/masterclass
+- Or run the unlocked 20/80 Bottleneck Scorecard & SOP Kit: https://agenticarchitect.ai/starter-kit
 
 ## Substack Note #1 (Framework Hook)
-Most teams lose hours every week re-explaining their business to a blank chat box.
+Most teams lose hours every week re-explaining their business to a blank chat box instead of automating a real operational handoff.
 
 Here is the 3-step fix we just published on Agentic Architect:
-1. Put your tone and 5 real examples in one \`voice.md\` file.
-2. Trigger drafts automatically into Gmail Drafts.
-3. Keep a 10-second human review click.
+1. Document 1 page of company communication rules and buyer qualification criteria.
+2. Trigger pre-call briefs and follow-ups automatically into Gmail Drafts.
+3. Keep a 10-second human review click before anything goes out.
 
 Full breakdown: ${canonicalUrl}
 
 ## Substack Note #2 (Contrarian / Numbers Take)
-Before adding another SaaS subscription or junior ops seat, score your top 5 weekly chores on volume, bounded variability, reversibility, and structured signal. Anything 18+ out of 25 ships in an afternoon.
+Before adding another SaaS subscription or $65,000 coordinator hire, score your top 5 weekly chores on volume, bounded variability, reversibility, and structured signal. Anything 18+ out of 25 ships in an afternoon.
 `
 
   const linkedinX = `# LinkedIn & X (@sudosoph) Queue: ${title}
@@ -106,32 +106,32 @@ Before adding another SaaS subscription or junior ops seat, score your top 5 wee
 ## LinkedIn Post #1 (Practitioner Story + Framework)
 ${title}
 
-After training 300+ founders and operators, the pattern is remarkably consistent: teams do not stall because they picked the wrong AI tool. They stall because every team member prompts from a blank box with zero shared context.
+After training 300+ founders, executives, and operators, the pattern is remarkably consistent: companies do not stall because they picked the wrong AI model. They stall because every employee prompts from scratch with zero shared SOP rules or workflow triggers.
 
 Three changes fix 80% of the friction:
-1. Document a 1-page Brand Brain (\`voice.md\` + \`icp.md\`).
-2. Route repetitive research and inbox prep into a draft queue.
+1. Standardize a 1-page Company Operating Rules & Buyer Qualification sheet.
+2. Route repetitive lead research, inbox triage, and proposal prep into a draft queue.
 3. Keep a strict human-in-the-loop click before external sends.
 
-(Link to the full step-by-step guide and unlocked template in the first comment: ${canonicalUrl})
+(Link to the full step-by-step guide and unlocked scorecard in the first comment: ${canonicalUrl})
 
 ## LinkedIn 7-Slide PDF Carousel Outline
 - Slide 1: ${title}
-- Slide 2: Why blank-box prompting burns 6+ hours/week
-- Slide 3: Step 1 - The 1-page \`voice.md\` Brand Brain
+- Slide 2: Why blank-box prompting burns 6+ hours/week per team member
+- Slide 3: Step 1 - 1-page Company Operating & Qualification Rules
 - Slide 4: Step 2 - Connecting existing workspace tools at $0 software bloat
 - Slide 5: Step 3 - The 10-second human approval gate
-- Slide 6: Real weekly hours & cost math
-- Slide 7: Grab the free Starter Kit at agenticarchitect.ai/starter-kit
+- Slide 6: Real weekly hours & margin math
+- Slide 7: Run the free 20/80 Bottleneck Scorer at agenticarchitect.ai/starter-kit
 
 ## X (@sudosoph) 4-Post Thread
 1/ ${title}
 
 Here is the exact blueprint and cost math (0 fluff):
 
-2/ Step 1: Stop re-prompting from scratch. Put 5 real writing samples + tone rules in a plain \`voice.md\` file every tool can read.
+2/ Step 1: Stop re-prompting from scratch. Standardize 5 approved company examples + escalation boundaries so every workflow stays on-policy.
 
-3/ Step 2: Wire triggers to create drafts, never blind auto-sends. Ten seconds of human review protects client trust while reclaiming hours.
+3/ Step 2: Wire calendar and inbox triggers to stage drafts, never blind auto-sends. Ten seconds of human review protects client trust while reclaiming hours.
 
 4/ Full writeup + copy-paste templates from @sudosoph: ${canonicalUrl}
 `
@@ -148,7 +148,7 @@ I documented our exact setup for ${title.toLowerCase()} (step-by-step + what bro
 ### Body
 Sharing the exact setup and numbers in case it saves someone else an afternoon:
 
-1. Context file (\`voice.md\`): ...
+1. Operating rules & qualification inputs: ...
 2. Trigger + draft queue: ...
 3. Guardrails and cost per run: ...
 

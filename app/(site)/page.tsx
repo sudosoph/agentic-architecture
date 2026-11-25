@@ -157,8 +157,9 @@ export default function HomePage() {
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
               90% of businesses do not need fragile bots that hallucinate or another $65,000
-              coordinator hire. Learn to wire bulletproof AI workflows in our non-coder courses,
-              commission a focused automation sprint, or bring our team in for corporate training.
+              coordinator hire. Learn to wire durable AI workflows in our non-coder courses,
+              commission a focused automation sprint, or engage Sophia for Fractional CAIO / AI CTO
+              leadership and corporate training.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">

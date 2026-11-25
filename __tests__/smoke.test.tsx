@@ -19,6 +19,7 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
     expect(container.textContent).not.toContain('Speaking next')
     expect(container.textContent).not.toContain('Lesbians Who Tech')
     expect(container.textContent).not.toContain('\u2014')
+    expect(screen.getByTestId('hero-section').textContent).toMatch(/Fractional/i)
     expect(screen.getByTestId('hero-section').textContent).not.toMatch(/DeepSeek|Gemini/i)
 
     const privateTab = screen.getByRole('tab', { name: /Private AI/i })

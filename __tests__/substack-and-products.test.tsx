@@ -16,11 +16,13 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
     vi.restoreAllMocks()
   })
 
-  it('converts MDX blog posts into valid Substack ProseMirror JSON with absolute links and funnel footer', () => {
-    const payload = convertMdxToSubstackPayload('easy-ai-brand-and-workflow-setup')
-    expect(payload.draft_title).toContain('How Business Owners Wire a Company Context Vault')
+  it('converts MDX blog posts into valid Substack ProseMirror JSON with absolute links and funnel footer free of voice.md', () => {
+    const payload = convertMdxToSubstackPayload('ai-back-office')
+    expect(payload.draft_title.length).toBeGreaterThan(15)
     expect(payload.draft_subtitle.length).toBeGreaterThan(20)
     expect(payload.draft_body).not.toContain('\u2014')
+    expect(payload.draft_body.toLowerCase()).not.toContain('voice.md')
+    expect(payload.draft_body).not.toContain('8-Week Accelerator')
 
     const doc = JSON.parse(payload.draft_body)
     expect(doc.type).toBe('doc')
@@ -30,21 +32,24 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
     expect(payload.draft_body).toContain('https://cal.com/sophia-stein/masterclass')
   })
 
-  it('ships all 4 downloadable Starter Kit files in public/downloads free of em-dashes', () => {
-    const files = [
-      'public/downloads/voice-md-brand-brain-template.md',
-      'public/downloads/icp-and-offer-positioning.md',
+  it('ships clean business Starter Kit & Corporate Workshop download files free of voice.md, icp.md, Brand Brain, and em-dashes', () => {
+    const cleanBusinessFiles = [
+      'public/downloads/company-operating-rules-template.md',
+      'public/downloads/buyer-qualification-criteria.md',
       'public/downloads/20-80-ai-task-audit-scorecard.csv',
       'public/downloads/pre-call-lead-dossier-n8n.json',
       'public/downloads/corporate-ai-workshop-sheet.md',
     ]
 
-    for (const rel of files) {
+    for (const rel of cleanBusinessFiles) {
       const full = path.join(process.cwd(), rel)
       expect(fs.existsSync(full), `${rel} should exist`).toBe(true)
       const content = fs.readFileSync(full, 'utf8')
       expect(content.length).toBeGreaterThan(100)
       expect(content, `${rel} em-dash`).not.toContain('\u2014')
+      expect(content.toLowerCase(), `${rel} voice.md`).not.toContain('voice.md')
+      expect(content.toLowerCase(), `${rel} icp.md`).not.toContain('icp.md')
+      expect(content.toLowerCase(), `${rel} brand brain`).not.toContain('brand brain')
       if (rel.endsWith('.json')) {
         const parsed = JSON.parse(content)
         expect(Array.isArray(parsed.nodes)).toBe(true)
@@ -52,7 +57,7 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
     }
   })
 
-  it('renders StarterKitBuilder with 4 download cards and updates 20/80 readiness score interactively', () => {
+  it('renders StarterKitBuilder with 4 clean business download cards (zero voice-md/icp-and-offer hrefs) and updates 20/80 readiness score interactively', () => {
     const { container } = render(<StarterKitBuilder />)
     // Default: (4 * 2) + 4 + 5 + 4 = 21 -> Ship Now
     expect(screen.getByTestId('readiness-score').textContent).toContain('21')
@@ -70,6 +75,10 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
       a.getAttribute('href'),
     )
     expect(downloadLinks).toHaveLength(4)
+    expect(downloadLinks).toContain('/downloads/company-operating-rules-template.md')
+    expect(downloadLinks).toContain('/downloads/buyer-qualification-criteria.md')
+    expect(downloadLinks).not.toContain('/downloads/voice-md-brand-brain-template.md')
+    expect(downloadLinks).not.toContain('/downloads/icp-and-offer-positioning.md')
   })
 
   it('submits inline email signup in NewsletterSignup to /api/subscribe and shows confirmation', async () => {

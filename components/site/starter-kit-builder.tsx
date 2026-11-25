@@ -26,14 +26,14 @@ const DOWNLOADS = [
     title: 'Company Operating & Communication Rules',
     meta: 'SOP Template · 10-Min Setup',
     desc: 'Standardizes company tone, escalation rules, and real examples across your team workflows.',
-    href: '/downloads/voice-md-brand-brain-template.md',
+    href: '/downloads/company-operating-rules-template.md',
     cta: 'Download SOP Template ↓',
   },
   {
     title: 'Buyer Qualification & Offer Criteria',
     meta: 'Qualification Sheet · Sales & Intake',
     desc: 'Codifies ideal client criteria, green-flag signals, and scope boundaries for intake triage.',
-    href: '/downloads/icp-and-offer-positioning.md',
+    href: '/downloads/buyer-qualification-criteria.md',
     cta: 'Download Qualification Sheet ↓',
   },
   {

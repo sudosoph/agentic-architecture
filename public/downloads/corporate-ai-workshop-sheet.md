@@ -14,19 +14,23 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor based in Boulder,
 
 ### 1. Half-Day Applied AI Workflow Intensive ($7,500 · Up to 40 Attendees)
 - **Duration:** 3.5 hours (on-site in Boulder/Denver/Front Range or live virtual)
-- **Deliverables:** Pre-workshop team task audit, 90-minute interactive Brand & SOP Brain (`voice.md`) build, live workflow automation lab, human-in-the-loop governance rubric, and 30-day recording + template vault.
+- **Deliverables:** Pre-workshop team task audit, 90-minute interactive Company Operating & SOP Rules setup, live department workflow automation lab, human-in-the-loop governance rubric, and 30-day recording + template vault.
 
 ### 2. Full-Day Organization-Wide AI Enablement Lab ($15,000 · Leadership + Dept Tracks)
 - **Duration:** 6.5 hours (morning executive ROI & governance session + afternoon hands-on department workflow builds)
-- **Deliverables:** Ranked 90-day automation roadmap across Operations, Sales/Marketing, and Finance/Delivery, custom prompt/workflow vault, and 30-day post-workshop leadership Q&A check-in.
+- **Deliverables:** Ranked 90-day automation roadmap across Operations, Sales/Marketing, and Finance/Delivery, custom workflow vault, and 30-day post-workshop leadership Q&A check-in.
 
-### 3. Conference Keynote or Fireside (45 to 60 Minutes · Custom Honorarium)
+### 3. Fractional Chief AI Officer (CAIO) & Fractional AI CTO Retainers (2 to 4 Days / Month)
+- Ongoing executive AI strategy, vendor/build-vs-buy governance, production verification gates, and engineering architecture oversight for mid-market CEOs, COOs, and CTOs.
+- Details & executive comparison: https://agenticarchitect.ai/fractional-ai-cto
+
+### 4. Conference Keynote or Fireside (45 to 60 Minutes · Custom Honorarium)
 - *From Chatting to Systems: Practical AI Enablement for Non-Technical Teams*
 - *Choosing What Ships: AI Cost Control, Model Strategy, and Measurable ROI*
 - *Sovereign AI for Organizations: Private Infrastructure and Human-in-the-Loop Governance*
 
-### 4. VIP 90-Minute Executive Workflow & Cost Audit ($1,500 · 100% Creditable)
-- Rapid 1:1 teardown for COOs, founders, and department heads, 100% credited if your organization books a Half-Day or Full-Day Intensive within 30 days.
+### 5. Single-Session Executive AI Workflow & Cost Roadmap ($750 · 100% Creditable)
+- Rapid 90-minute 1:1 teardown for COOs, founders, and department heads, 100% credited if your organization books a Half-Day Intensive, Full-Day Lab, or Custom Sprint within 30 days.
 - Book directly: https://cal.com/sophia-stein/audit
 
 ## Procurement & Contact

@@ -25,6 +25,7 @@ const FRACTIONAL_ROLES = [
       'Data privacy, HIPAA/SOC2-aligned usage policies & human sign-off gates',
       'Department rollout oversight and board/leadership progress reporting',
     ],
+    ctaLabel: 'Scope Fractional CAIO Fit →',
   },
   {
     badge: 'Engineering & Product Mandate · Architecture + Eval Rigor',
@@ -37,6 +38,7 @@ const FRACTIONAL_ROLES = [
       'Deterministic evaluation harnesses & cost/latency circuit breakers',
       'Build-vs-buy matrices and technical AI due diligence for boards & investors',
     ],
+    ctaLabel: 'Scope Fractional AI CTO Fit →',
   },
   {
     badge: 'Time-Boxed Starting Wedge · Fixed Scope',
@@ -49,6 +51,7 @@ const FRACTIONAL_ROLES = [
       'Security & data-boundary audit across workspace and vendor integrations',
       'Optional transition into light monthly Fractional CAIO or AI CTO oversight',
     ],
+    ctaLabel: 'Book 2-Week Diagnostic Call →',
   },
 ]
 
@@ -187,7 +190,7 @@ export default function FractionalAiCtoPage() {
                   </ul>
                 </div>
                 <Button variant="outline" size="sm" href={SITE_CONFIG.cal.speaking}>
-                  Scope {role.title.split(' ')[0]} Fit →
+                  {role.ctaLabel}
                 </Button>
               </Card>
             ))}

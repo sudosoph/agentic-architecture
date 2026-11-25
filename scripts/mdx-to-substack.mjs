@@ -207,10 +207,10 @@ function buildFunnelFooterBlocks(slug) {
             {
               type: 'paragraph',
               content: [
-                { type: 'text', text: 'Free 20-Minute Starter Kit (voice.md + 20/80 Scorecard): ', marks: [{ type: 'strong' }] },
+                { type: 'text', text: 'Free 20-Minute Bottleneck Scorecard & SOP Kit: ', marks: [{ type: 'strong' }] },
                 {
                   type: 'text',
-                  text: 'Download the templates and score your workflows',
+                  text: 'Score your #1 workflow and download the operating templates',
                   marks: [{ type: 'link', attrs: { href: `${SITE_URL}/starter-kit`, target: '_blank', rel: 'noopener noreferrer nofollow', class: null } }],
                 },
               ],
@@ -223,7 +223,7 @@ function buildFunnelFooterBlocks(slug) {
             {
               type: 'paragraph',
               content: [
-                { type: 'text', text: 'Free Live 60-Min Masterclass: ', marks: [{ type: 'strong' }] },
+                { type: 'text', text: 'Free Live 60-Min Business Automation Build: ', marks: [{ type: 'strong' }] },
                 {
                   type: 'text',
                   text: 'Save your seat on Cal.com',
@@ -239,11 +239,11 @@ function buildFunnelFooterBlocks(slug) {
             {
               type: 'paragraph',
               content: [
-                { type: 'text', text: 'Work With Sophia (8-Week Accelerator, VIP Audits & Corporate Training): ', marks: [{ type: 'strong' }] },
+                { type: 'text', text: 'Work With Sophia (Courses, Custom Sprints, Fractional CAIO/CTO & Corporate Training): ', marks: [{ type: 'strong' }] },
                 {
                   type: 'text',
-                  text: 'View all tiers and book directly',
-                  marks: [{ type: 'link', attrs: { href: CAL_URL, target: '_blank', rel: 'noopener noreferrer nofollow', class: null } }],
+                  text: 'Explore tracks for business owners and executive teams',
+                  marks: [{ type: 'link', attrs: { href: `${SITE_URL}/work-with-me`, target: '_blank', rel: 'noopener noreferrer nofollow', class: null } }],
                 },
               ],
             },
@@ -277,7 +277,11 @@ export function convertMdxToSubstackPayload(slug) {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
   const raw = fs.readFileSync(filePath, 'utf8')
   const { frontmatter, content } = parseMdxFile(raw)
-  const stripped = content.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+  const stripped = content
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+    .replace(/Brand Brain/gi, 'Company Context Vault')
+    .replace(/`?voice\.md`?/gi, 'company operating rules')
+    .replace(/`?icp\.md`?/gi, 'buyer qualification criteria')
   const tree = unified().use(remarkParse).use(remarkGfm).parse(stripped)
   const bodyBlocks = blockMdastToProseMirror(tree.children)
   const fullDoc = {

@@ -115,6 +115,11 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(rawLessons.toLowerCase()).not.toContain('voice.md')
     const lessons = JSON.parse(rawLessons)
     expect(lessons).toHaveLength(5)
+
+    const { container: coursesContainer } = render(<CoursesPage />)
+    for (const lesson of lessons) {
+      expect(coursesContainer.textContent).toContain(lesson.subject)
+    }
   })
 
   it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and Approach 2 accessible cohort floor', () => {
@@ -165,6 +170,10 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(text.toLowerCase()).not.toContain('voice.md')
     expect(text.toLowerCase()).not.toContain('ai org chart')
     expect(text).not.toContain('$5,000+/mo')
+    expect(text).toContain('Scope Fractional CAIO Fit')
+    expect(text).toContain('Scope Fractional AI CTO Fit')
+    expect(text).toContain('Book 2-Week Diagnostic Call')
+    expect(text).not.toContain('Scope 2-Week Fit')
     const ld = container.querySelector('script[type="application/ld+json"]')
     expect(ld).not.toBeNull()
     const types = JSON.parse(ld!.innerHTML)['@graph'].map((n: { '@type': string }) => n['@type'])
