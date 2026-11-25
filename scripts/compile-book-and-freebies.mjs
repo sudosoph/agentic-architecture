@@ -4,10 +4,10 @@ import path from 'node:path'
 
 export const SOVEREIGN_STACK_PARTS = [
   {
-    part: 'Part I · Portable Context & Human-in-the-Loop Design',
-    summary: 'Separating organizational memory (AGENTS.md, voice.md, icp.md) from models and enforcing explicit autonomy gates.',
+    part: 'Part I · Portable SOPs & Human-in-the-Loop Design',
+    summary: 'Separating organizational operating rules and qualification criteria from models and enforcing explicit autonomy gates.',
     chapters: [
-      { num: 1, slug: 'easy-ai-brand-and-workflow-setup', title: 'Portable Context Files Over Prompt Silos' },
+      { num: 1, slug: 'easy-ai-brand-and-workflow-setup', title: 'Plain-English SOPs Over Prompt Silos' },
       { num: 2, slug: 'agent-ready-tasks', title: 'The 20/80 Task Readiness Scorecard' },
       { num: 3, slug: 'the-hitl-standard', title: 'The 5 Levels of Autonomy and Human Checkpoints' },
     ],
@@ -131,7 +131,7 @@ Never route 100% of background classification, test scaffolding, or extraction t
 
 1. **Tier 0 · Fast Router / Subagent (<100ms, ~80% of volume):** Route triage, JSON extraction, and file scans to \`Gemini 4 Hydrogen\` (\`$1.50/$7.50\`), \`DeepSeek V4.1 Flash-1017\` (MIT), or local \`Qwen 3.8-27B\` (Apache 2.0, \`17 GB\` @ 4-bit).
 2. **Tier 1 · Loop Orchestrator (~15% of volume):** Use \`Gemini 4 Neon\` (\`$3/$15\`, \`$0.15\` cached, ~100 tok/s) or \`Kimi K3.1 Pro\` (\`$2/$10\`, capped max output tokens) for multi-step coding and multimodal synthesis.
-3. **Tier 2 · Deliberate Escalation (~5% of volume):** Reserve \`Gemini 4 Carbon\` or \`Neon\` \`xhigh\` strictly for ambiguous cross-repo deadlocks and final executive prose paired with \`voice.md\`.
+3. **Tier 2 · Deliberate Escalation (~5% of volume):** Reserve \`Gemini 4 Carbon\` or \`Neon\` \`xhigh\` strictly for ambiguous cross-repo deadlocks and final executive synthesis paired with written SOP guardrails.
 
 Full benchmarks:
 - https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner

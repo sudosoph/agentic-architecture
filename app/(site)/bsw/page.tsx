@@ -55,8 +55,8 @@ const MATERIALS: Material[] = [
     cta: 'Download templates →',
   },
   {
-    label: 'Printable Handouts & voice.md Worksheets',
-    body: 'Brand voice template, ICP template, JSON schemas, and the 20/80 task readiness worksheet.',
+    label: 'Printable SOP & Qualification Handouts',
+    body: 'Plain-English SOP sheet, buyer qualification criteria, JSON schemas, and the 20/80 task readiness worksheet.',
     href: '/bsw/handouts',
     external: false,
     cta: 'Open handouts →',
@@ -77,7 +77,7 @@ const TAKEAWAYS = [
   },
   {
     title: 'Ship a working discovery workflow',
-    body: 'Connect Google Sheets, your portable voice.md file, and n8n to draft personalized outreach into Gmail Drafts automatically.',
+    body: 'Connect Google Sheets, your plain-English SOP and qualification criteria, and n8n to draft personalized outreach into Gmail Drafts automatically.',
   },
   {
     title: 'Keep a strict human-in-the-loop gate',

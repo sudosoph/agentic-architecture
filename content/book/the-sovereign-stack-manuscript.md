@@ -4,11 +4,11 @@ By Sophia Stein (https://agenticarchitect.ai)
 
 > Compiled November 2026 working manuscript generated from field-tested OSS builds, vendor-neutral hardware benchmarks, and deterministic loop-engineering playbooks. Convertible to EPUB or PDF with `pandoc content/book/the-sovereign-stack-manuscript.md -o sovereign-stack.epub`.
 
-## Part I · Portable Context & Human-in-the-Loop Design
+## Part I · Portable SOPs & Human-in-the-Loop Design
 
-Separating organizational memory (AGENTS.md, voice.md, icp.md) from models and enforcing explicit autonomy gates.
+Separating organizational operating rules and qualification criteria from models and enforcing explicit autonomy gates.
 
-### Chapter 1: Portable Context Files Over Prompt Silos
+### Chapter 1: Plain-English SOPs Over Prompt Silos
 
 *Canonical web edition: https://agenticarchitect.ai/blog/easy-ai-brand-and-workflow-setup*
 

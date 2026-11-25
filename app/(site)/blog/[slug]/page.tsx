@@ -153,17 +153,23 @@ export default async function BlogPostPage({ params }: Props) {
               <h2 className="text-xl font-bold text-fg">
                 {trackKey === 'small-business'
                   ? 'Go From Prompting to a Working Automation (Solo or Built With Us)'
-                  : 'Grab the Context Kit, Run the Hardware Sizer, or Scope Team Advisory'}
+                  : 'Run the Hardware Sizer, Audit Your Architecture, or Scope Fractional AI Leadership'}
               </h2>
               <p className="text-sm text-muted leading-relaxed">
                 {trackKey === 'small-business'
                   ? 'Watch a live 60-minute non-coder build in our free workshop, unlock all 6 modules in our $297 Academy, or book a free 20-minute 1-Bottleneck Call to scope a custom sprint.'
-                  : 'Run your numbers in The Sovereign Stack 512GB/OSS sizer, explore our 29 systems benchmarks, or scope Fractional CAIO / AI CTO leadership on /fractional-ai-cto.'}
+                  : 'Run your numbers in The Sovereign Stack 512GB/OSS sizer, explore our 29 systems benchmarks, or scope Fractional CAIO / AI CTO leadership and Corporate Labs.'}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button variant="primary" size="md" href="/masterclass">
-                Free 60-Min Live Build →
+              <Button
+                variant="primary"
+                size="md"
+                href={trackKey === 'small-business' ? '/masterclass' : '/fractional-ai-cto'}
+              >
+                {trackKey === 'small-business'
+                  ? 'Free 60-Min Live Build →'
+                  : 'Fractional CAIO / AI CTO →'}
               </Button>
               <Button
                 variant="outline"
@@ -175,7 +181,9 @@ export default async function BlogPostPage({ params }: Props) {
                   : 'Open Sovereign Stack & Sizer'}
               </Button>
               <Button variant="ghost" size="md" href="/work-with-me">
-                Free 20-Min Bottleneck Call →
+                {trackKey === 'small-business'
+                  ? 'Free 20-Min Bottleneck Call →'
+                  : '2-Week Audit & Corporate Labs →'}
               </Button>
             </div>
           </Card>
