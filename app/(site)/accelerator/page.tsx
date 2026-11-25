@@ -240,7 +240,10 @@ export default function AcceleratorPage() {
               <Button variant="primary" size="lg" href={SITE_CONFIG.cal.scoping}>
                 Book 20-Min Cohort Fit Call →
               </Button>
-              <Button variant="outline" size="lg" href="/courses">
+              <Button variant="outline" size="lg" href={SITE_CONFIG.cal.cohortKickoff}>
+                Ready Now? Enroll + Book Kickoff ($1,497)
+              </Button>
+              <Button variant="ghost" size="lg" href="/academy">
                 Compare $297 Self-Paced Academy
               </Button>
             </div>

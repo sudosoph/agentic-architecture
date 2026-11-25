@@ -17,10 +17,12 @@ export const SITE_CONFIG = {
   cal: {
     hub: 'https://cal.com/sophia-stein',
     masterclass: 'https://cal.com/sophia-stein/masterclass',
+    academy: 'https://cal.com/sophia-stein/academy',
     officeHours: 'https://cal.com/sophia-stein/office-hours',
     audit: 'https://cal.com/sophia-stein/audit',
     accelerator: 'https://cal.com/sophia-stein/accelerator',
     acceleratorFounding: 'https://cal.com/sophia-stein/accelerator-founding',
+    cohortKickoff: 'https://cal.com/sophia-stein/cohort-kickoff',
     speaking: 'https://cal.com/sophia-stein/speaking',
     scoping: 'https://cal.com/sophia-stein/scoping',
   },

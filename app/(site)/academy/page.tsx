@@ -89,7 +89,7 @@ export default function AcademyPage() {
           price: '297',
           priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
-          url: `${SITE_CONFIG.siteUrl}/academy`,
+          url: SITE_CONFIG.cal.academy,
         },
       },
       {

@@ -108,6 +108,8 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
     expect(bContainer.textContent).toContain('Boulder & Denver Corporate AI Training')
     expect(bContainer.textContent).toContain('$7,500')
     expect(bContainer.textContent).toContain('$15,000')
+    expect(bContainer.textContent).toContain('$750')
+    expect(bContainer.textContent).not.toContain('$1,500')
     expect(bContainer.textContent).not.toContain('\u2014')
 
     const { container: ldContainer } = render(<LdReimbursementCard />)

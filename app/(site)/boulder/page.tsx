@@ -26,9 +26,9 @@ const COLORADO_PROGRAMS = [
     body: 'Morning executive ROI, data privacy, and cost-governance session paired with afternoon department build tracks across Operations, Sales/Marketing, and Client Delivery.',
   },
   {
-    badge: '90-Min Executive Session ($1,500 · 100% Creditable)',
-    title: 'Front Range Founder & COO Workflow Audit',
-    body: 'Rapid 1:1 teardown of your team’s weekly busywork and software spend, delivered with a written 90-day implementation roadmap. 100% credited toward a Half-Day or Full-Day Intensive.',
+    badge: '90-Min Executive Session ($750 · 100% Creditable)',
+    title: 'Front Range Founder & COO Workflow Roadmap',
+    body: 'Rapid 1:1 teardown of your team’s weekly busywork and software spend, delivered with a written 48-hour implementation roadmap. 100% credited toward a Half-Day Intensive, Full-Day Lab, or Custom Sprint.',
   },
   {
     badge: 'Conferences, Offsites & Universities',
@@ -76,7 +76,7 @@ export default function BoulderPage() {
             Book a 20-Min Colorado Workshop Intake →
           </Button>
           <Button variant="outline" size="lg" href={SITE_CONFIG.cal.audit}>
-            Book a $1,500 VIP 90-Min Audit
+            Book a $750 90-Min Roadmap
           </Button>
           <a
             href="/downloads/corporate-ai-workshop-sheet.md"

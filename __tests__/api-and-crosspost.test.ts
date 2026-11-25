@@ -72,12 +72,13 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
     expect(payload.reply_to).toBe('jordan@company.com')
   })
 
-  it('forwards /api/subscribe to Substack and completes background Resend notification to both Sophia inboxes', async () => {
+  it('forwards /api/subscribe to Substack, dispatches Sophia alert + 5-day Prompt-to-System drip via Resend batch, and upserts Resend contact', async () => {
     process.env.RESEND_API_KEY = 're_test_key'
     const fetchSpy = vi
       .spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify({ didSignup: true }), { status: 200 }))
-      .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'notify_123' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ data: [{ id: 'b1' }] }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ id: 'contact_1' }), { status: 200 }))
 
     const res = await postSubscribe(
       new Request('https://agenticarchitect.ai/api/subscribe', {
@@ -88,11 +89,21 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
     )
 
     expect(res.status).toBe(200)
-    expect(fetchSpy).toHaveBeenCalledTimes(2)
+    expect(fetchSpy).toHaveBeenCalledTimes(3)
     expect(fetchSpy.mock.calls[0][0]).toContain('substack.com/api/v1/free')
-    expect(fetchSpy.mock.calls[1][0]).toBe('https://api.resend.com/emails')
-    const notifyPayload = JSON.parse(String(fetchSpy.mock.calls[1][1]?.body))
-    expect(notifyPayload.to).toEqual(['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com'])
+    expect(fetchSpy.mock.calls[1][0]).toBe('https://api.resend.com/emails/batch')
+    const batchBody = JSON.parse(String(fetchSpy.mock.calls[1][1]?.body))
+    expect(Array.isArray(batchBody)).toBe(true)
+    expect(batchBody).toHaveLength(6)
+    expect(batchBody[0].to).toEqual(['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com'])
+    expect(batchBody[1].to).toEqual(['ceo@firm.com'])
+    expect(batchBody[1].subject).toContain('Day 1:')
+    expect(batchBody[1].scheduled_at).toBeUndefined()
+    expect(batchBody[2].subject).toContain('Day 2:')
+    expect(batchBody[2].scheduled_at).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+    expect(batchBody[5].subject).toContain('Day 5:')
+    expect(batchBody[5].scheduled_at).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+    expect(fetchSpy.mock.calls[2][0]).toBe('https://api.resend.com/contacts')
   })
 
   it('returns clean 200 health JSON on /api/system without exposing secrets', () => {

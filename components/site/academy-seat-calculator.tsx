@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 const BASE_PRICE = 297
 const EXTRA_SEAT_PRICE = 97
@@ -78,13 +79,27 @@ export function AcademySeatCalculator() {
       </ul>
 
       <div className="flex flex-col gap-2.5 pt-1">
-        <Button
-          variant="primary"
-          size="lg"
-          href={`/contact?subject=${encodeURIComponent(`AI Workflow Academy Enrollment (${totalSeats} Seat${totalSeats > 1 ? 's' : ''} - ${formattedTotal})`)}`}
-        >
-          Enroll Now ({formattedTotal}) →
-        </Button>
+        {extraSeats === 0 ? (
+          <Button variant="primary" size="lg" href={SITE_CONFIG.cal.academy}>
+            Enroll Now ({formattedTotal}) →
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="primary"
+              size="lg"
+              href={`/contact?subject=${encodeURIComponent(`AI Workflow Academy Team Invoice (${totalSeats} Seats - ${formattedTotal})`)}`}
+            >
+              Request Team Invoice ({formattedTotal}) →
+            </Button>
+            <a
+              href={SITE_CONFIG.cal.academy}
+              className="text-center font-mono text-[11px] font-semibold text-accent hover:underline"
+            >
+              Or enroll 1 owner seat ($297) instantly via Stripe →
+            </a>
+          </>
+        )}
         <Button variant="outline" size="md" href="/masterclass">
           Try the Free 60-Min Live Build First
         </Button>

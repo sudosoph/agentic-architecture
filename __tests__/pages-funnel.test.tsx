@@ -96,10 +96,14 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(container.textContent).toMatch(/AI Chief of Staff/i)
     expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
     expect(screen.getByTestId('academy-total-price').textContent).toBe('$297')
+    const soloCheckoutLink = screen.getByRole('link', { name: /Enroll Now \(\$297\)/i })
+    expect(soloCheckoutLink.getAttribute('href')).toBe('https://cal.com/sophia-stein/academy')
 
     const seatInput = screen.getByLabelText(/Additional team seats/i)
     fireEvent.change(seatInput, { target: { value: '3' } })
     expect(screen.getByTestId('academy-total-price').textContent).toBe('$588')
+    const teamInvoiceLink = screen.getByRole('link', { name: /Request Team Invoice \(\$588\)/i })
+    expect(teamInvoiceLink.getAttribute('href')).toContain('/contact?subject=')
 
     fireEvent.change(seatInput, { target: { value: '-5' } })
     expect(screen.getByTestId('academy-total-price').textContent).toBe('$297')
@@ -132,6 +136,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(text).not.toContain('$8,997')
     const links = Array.from(container.querySelectorAll('a')).map(a => a.getAttribute('href'))
     expect(links).toContain('https://cal.com/sophia-stein/scoping')
+    expect(links).toContain('https://cal.com/sophia-stein/cohort-kickoff')
   })
 
   it('renders WorkWithMePage with Approach 2 light floors, Ritesh-style 20-min bottleneck flow, verified Cal.com slugs, and zero aggressive guarantees', () => {
