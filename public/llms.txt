@@ -31,12 +31,12 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background s
 
 ## Start-Here Buyer & Systems Playbooks
 
-- /blog/ai-org-chart-for-small-business-founders : The 6-role AI Org Chart (humans front-end, AI workflows back-end) before hiring a $65,000 coordinator
-- /blog/how-to-build-an-ai-chief-of-staff-2026 : 2026 setup guide, SaaS vs owned comparison, and security rules for an executive AI Chief of Staff
-- /blog/ai-implementation-program-vs-agency-vs-diy-guide : Cost & ROI comparison of $20k AI agencies vs $5,997 Done-With-You Accelerator vs $7.5k-$15k Corporate Workshops
-- /blog/loop-engineering-production-guide-2026 : Isolated git worktrees, deterministic verifiers, token circuit breakers, and Nov 2026 loop economics
-- /blog/512gb-unified-memory-mini-pcs-local-llm-2026 : Vendor-neutral physics & ROI comparing 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, and Ryzen AI Halo mini-PCs
-- /blog/personal-agents-tab-instinct-openinstinct-review : Security & OAuth audit of Instinct, Tab, and Dots vs self-hosted MIT OpenInstinct & OpenClaw
+- /blog/ai-org-chart : The 6-role AI Org Chart (humans front-end, AI workflows back-end) before hiring a $65,000 coordinator
+- /blog/ai-chief-of-staff : 2026 setup guide, SaaS vs owned comparison, and security rules for an executive AI Chief of Staff
+- /blog/hire-ai-agency-vs-in-house : Cost & ROI comparison of $20k AI agencies vs $5,997 Done-With-You Accelerator vs $7.5k-$15k Corporate Workshops
+- /blog/loop-engineering : Isolated git worktrees, deterministic verifiers, token circuit breakers, and Nov 2026 loop economics
+- /blog/mac-studio-512gb-vs-dgx-spark : Vendor-neutral physics & ROI comparing 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, and Ryzen AI Halo mini-PCs
+- /blog/instinct-ai-vs-tab-review : Security & OAuth audit of Instinct, Tab, and Dots vs self-hosted MIT OpenInstinct & OpenClaw
 
 ## Newsletter & Contact
 

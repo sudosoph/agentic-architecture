@@ -17,7 +17,7 @@ export const SOVEREIGN_STACK_PARTS = [
     summary: 'Collapsing $125+/mo of SaaS onto a $9/mo Linux VPS and auditing personal texting/browser agents (OpenInstinct vs Instinct & Tab).',
     chapters: [
       { num: 4, slug: 'self-hosting-ai-stack-hetzner', title: 'Self-Hosting Listmonk, Cal.com, Umami, and Uptime Kuma on Hetzner' },
-      { num: 5, slug: 'personal-agents-tab-instinct-openinstinct-review', title: 'Personal Texting & Browser Agents Audited: Instinct, Tab, and MIT OpenInstinct' },
+      { num: 5, slug: 'instinct-ai-vs-tab-review', title: 'Personal Texting & Browser Agents Audited: Instinct, Tab, and MIT OpenInstinct' },
       { num: 6, slug: 'the-zero-inbox-agent', title: 'Draft-First Inbox Triage Without Handing Over Send Keys' },
       { num: 7, slug: 'automated-competitive-intelligence', title: 'Scheduled OSS Research and Signal Pipelines' },
     ],
@@ -26,7 +26,7 @@ export const SOVEREIGN_STACK_PARTS = [
     part: 'Part III · 512GB Desk Nodes, Unified Memory Physics & Mesh Networking',
     summary: 'Vendor-neutral hardware benchmarks across 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, Ryzen AI Halo mini-PCs, and Tailscale.',
     chapters: [
-      { num: 8, slug: '512gb-unified-memory-mini-pcs-local-llm-2026', title: '512GB Mini Computers & Desk Nodes: M5 Ultra vs. DGX Spark vs. Ryzen AI Halo' },
+      { num: 8, slug: 'mac-studio-512gb-vs-dgx-spark', title: '512GB Mini Computers & Desk Nodes: M5 Ultra vs. DGX Spark vs. Ryzen AI Halo' },
       { num: 9, slug: '96gb-ram-thesis', title: '96GB Unified Memory on a Travel Rig: GART & Sustained Token Math' },
       { num: 10, slug: 'framework-laptop-thesis', title: 'Repairable Mobile Linux Compute vs. Stationary Desk Nodes' },
       { num: 11, slug: 'autonomous-ai-rig-tailscale-guide', title: 'Zero-Exposed-Port Private AI Rigs Over Tailscale' },
@@ -36,7 +36,7 @@ export const SOVEREIGN_STACK_PARTS = [
     part: 'Part IV · Late-2026 Model Routing (Neon, Carbon, DeepSeek V4.1, Kimi K3.1, Qwen 3.8)',
     summary: 'Routing 80% of routine turns to fast open-weight or subagent tiers while reserving deliberate frontier planners for the hardest 5%.',
     chapters: [
-      { num: 12, slug: 'google-latest-models-vs-deepseek-4-1-business-guide', title: 'Gemini 4 Neon & Carbon vs. DeepSeek V4.1, Kimi K3.1 Pro & Qwen 3.8' },
+      { num: 12, slug: 'gemini-4-neon-vs-deepseek-v4', title: 'Gemini 4 Neon & Carbon vs. DeepSeek V4.1, Kimi K3.1 Pro & Qwen 3.8' },
       { num: 13, slug: 'mixing-and-matching-open-weight-models', title: 'The Three-Tier Open-Weight Routing Recipe Book' },
       { num: 14, slug: 'three-ways-to-run-open-weight-models', title: 'llama.cpp, MLX, vLLM, and Hosted Open-Weight Trade-Offs' },
       { num: 15, slug: 'cost-quality-pareto-coding-agents', title: 'The Cost-Quality Pareto Curve for Coding and Ops Agents' },
@@ -46,7 +46,7 @@ export const SOVEREIGN_STACK_PARTS = [
     part: 'Part V · Loop Engineering, MCP Security & Deterministic Verifiers',
     summary: 'Isolated git worktrees, deterministic test/schema verifiers, token circuit breakers, and least-privilege MCP delegation.',
     chapters: [
-      { num: 16, slug: 'loop-engineering-production-guide-2026', title: 'Loop Engineering in Production: Worktrees, Deterministic Verifiers & Cost Ceilings' },
+      { num: 16, slug: 'loop-engineering', title: 'Loop Engineering in Production: Worktrees, Deterministic Verifiers & Cost Ceilings' },
       { num: 17, slug: 'mcp-server-audit-2026', title: 'Auditing MCP Servers: Least Privilege and the Trusted Set' },
       { num: 18, slug: 'eval-harness-catches-regressions', title: 'The 6-Layer Eval Harness & Scoped OAuth Delegation' },
     ],
@@ -135,7 +135,7 @@ Never route 100% of background classification, test scaffolding, or extraction t
 
 Full benchmarks:
 - https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner
-- https://agenticarchitect.ai/blog/google-latest-models-vs-deepseek-4-1-business-guide
+- https://agenticarchitect.ai/blog/gemini-4-neon-vs-deepseek-v4
 `)
 
   // Freebie 2: Private Hardware & Tailscale Rig Guide
@@ -161,7 +161,7 @@ Autoregressive token decode is governed by **memory bandwidth divided by active 
 3. Run \`tailscale serve --bg 8080\` so authenticated laptops, phones, and CI runners reach \`https://desk-node.tailnet.ts.net/v1\` over WireGuard.
 
 Full teardowns:
-- https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026
+- https://agenticarchitect.ai/blog/mac-studio-512gb-vs-dgx-spark
 - https://agenticarchitect.ai/blog/autonomous-ai-rig-tailscale-guide
 `)
 
@@ -183,8 +183,8 @@ By Sophia Stein · Agentic Architect (https://agenticarchitect.ai/sovereign-stac
 3. **Pin & Audit MCP Servers:** Reject deprecated \`servers-archived\` packages, grep against \`shell=True\` / \`child_process.exec\`, and pin exact package hashes.
 
 Full deep dives:
-- https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026
-- https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review
+- https://agenticarchitect.ai/blog/loop-engineering
+- https://agenticarchitect.ai/blog/instinct-ai-vs-tab-review
 - https://agenticarchitect.ai/blog/mcp-server-audit-2026
 `)
 

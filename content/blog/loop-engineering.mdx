@@ -1,6 +1,6 @@
 ---
 title: "Loop Engineering in Production: Isolated Worktrees, Deterministic Verifiers, and Token Circuit Breakers"
-slug: loop-engineering-production-guide-2026
+slug: loop-engineering
 publishedDate: "2026-11-25"
 description: "Why late-2026 teams are moving past prompt and context tweaks to closed-loop engineering: isolated git worktrees, independent deterministic verifiers, and model-routing economics across Gemini 4 Neon, Kimi K3.1 Pro, DeepSeek V4.1, and Qwen 3.8."
 track: "engineering"
@@ -56,7 +56,7 @@ Here is how current public frontier and open-weight options stack up for multi-s
 | **Gemini 4 Carbon** *(Nov 10, 2026)* | Cloud API (`1M` ctx) | `$2/$10` intro -> `$4.00` / `$20.00` (Dec 1) | Deepest deliberate synthesis on ambiguous multi-file architecture (~55 tok/s) | `$16.50` avg coding session makes it overkill as a default inner-loop worker |
 | **Kimi K3.1 Pro** *(Nov 6 open weights)* | Open Weights (`2.8T` / `104B` active) & `$2/$10` API | `$2.00` / `$10.00` API (or self-hosted cluster) | Built specifically for multi-hour tool-use trajectories (`1M` context) | High output verbosity inflates per-task token count without strict `max_tokens` caps |
 | **DeepSeek V4.1 Flash-1017** | **MIT** Open Weights (`763B` sparse MoE, multimodal) | Pennies via API or private VPC | Exceptional cost-to-reasoning ratio for batch code diffs, SQL, and JSON extraction | Pair with strict schema/test verifiers on ambiguous UI specs |
-| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/512gb-unified-memory-mini-pcs-local-llm-2026) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
+| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/mac-studio-512gb-vs-dgx-spark) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
 
 The clear architectural pattern in November 2026 is **orchestrator-subagent routing**: run an orchestrator (`Gemini 4 Neon` at medium/high thinking, or your primary frontier planner) to decompose the spec and own final verification, while fanning routine file reads, test scaffolds, and classification turns out to cheaper subagents (`Hydrogen`, `DeepSeek V4.1 Flash`, or a local `Qwen 3.8-27B` endpoint over Tailscale).
 

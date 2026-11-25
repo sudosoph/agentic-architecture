@@ -8,9 +8,9 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Kits, Live Masterclass & Accelerator',
+  title: 'Executive AI Courses, Free Briefing & 8-Week Cohort',
   description:
-    'Start free with the 20-Minute Brand Brain Starter Kit and Live 60-Min Masterclass, or install 6 business AI systems inside the 8-week Agentic Business Accelerator.',
+    'Start free with the 20-Minute Company Context Kit and 60-Min Live AI Org Chart Briefing, train your EA/Ops Lead free inside our 8-week Cohort, or request a Bespoke Build.',
   alternates: { canonical: '/courses' },
 }
 
@@ -19,37 +19,37 @@ const LADDER = [
     step: 'Step 01 · Free Today',
     badge: 'Unlocked & Live',
     badgeVariant: 'online' as const,
-    title: 'Starter Kit & Free Live 60-Min Masterclass',
+    title: 'Context Kit & Free 60-Min AI Org Chart Briefing',
     price: '$0',
-    body: 'Copy the portable voice.md Brand Brain template and 20/80 Task Scorecard immediately, then join the next live 60-minute screen walkthrough.',
+    body: 'Download the portable voice.md + icp.md Company Context Vault immediately, then watch 6 back-office AI roles running live on screen.',
     primaryHref: '/masterclass',
-    primaryCta: 'Save Free Masterclass Seat →',
+    primaryCta: 'Save Free Briefing Seat →',
     secondaryHref: '/starter-kit',
-    secondaryCta: 'Open Starter Kit Now',
+    secondaryCta: 'Open Context Kit Now',
   },
   {
-    step: 'Step 02 · Flagship 8-Week Cohort',
-    badge: 'Founding Cohort Open',
+    step: 'Step 02 · Done-With-You Cohort',
+    badge: 'Free Operator Seat Included',
     badgeVariant: 'rig' as const,
-    title: 'The Agentic Business Accelerator',
+    title: '8-Week Executive AI Operating System Cohort',
     price: '$5,997 Founding ($8,997 Standard)',
-    body: 'Done-With-You implementation program installing all 6 revenue, content, and operations AI workflows for a fraction of a $65,000/yr hire. Optional +$1,500 Ops/EA seat.',
+    body: 'Install all 6 revenue and operations AI workflows in 8 weeks. Includes a FREE seat ($2,500 value) for your EA, COO, or Ops Manager + our 14-Day Live-System Guarantee.',
     primaryHref: '/accelerator',
-    primaryCta: 'Explore the Accelerator →',
+    primaryCta: 'See Cohort & Value Stack →',
     secondaryHref: SITE_CONFIG.cal.scoping,
-    secondaryCta: 'Book 20-Min Fit Call',
+    secondaryCta: 'Book 15-Min Fit Call',
   },
   {
-    step: 'Step 03 · 1:1 & Private Teams',
-    badge: 'Direct Booking',
+    step: 'Step 03 · Done-For-You Bespoke',
+    badge: '$15K Savings Guarantee',
     badgeVariant: 'tag' as const,
-    title: 'VIP Workflow Audits & Corporate Rollouts',
-    price: 'From $500 to $15,000',
-    body: 'Book a focused 60-minute 1:1 Strategy Session ($500), a 90-minute VIP Workflow & Cost Audit ($1,500, 100% creditable toward the Accelerator), or a private corporate workshop.',
+    title: '48-Hour AI Blueprint & 30-Day Bespoke Sprints',
+    price: '$1,500 Blueprint · $12.5K+ Custom Build',
+    body: 'Prefer white-glove execution? Start with a guaranteed $1,500 48-Hour Custom AI Blueprint (100% credited) or have Sophia build your workflows custom in 30 days.',
     primaryHref: '/work-with-me',
-    primaryCta: 'See 1:1 & Team Options →',
+    primaryCta: 'Explore Bespoke Builds →',
     secondaryHref: SITE_CONFIG.cal.audit,
-    secondaryCta: 'Book $1,500 VIP Audit',
+    secondaryCta: 'Book $1,500 Blueprint',
   },
 ]
 
@@ -57,9 +57,9 @@ export default function CoursesPage() {
   return (
     <div className="space-y-14">
       <PageHeader
-        meta="Templates · Live Training · Done-With-You Implementation"
-        title="Kits, Masterclass & Accelerator"
-        description="Start free in 20 minutes with portable Brand Brain templates, or work directly with Sophia to wire repeatable AI systems across your business."
+        meta="Free Live Briefing · 8-Week Owner + Operator Cohort · Bespoke Builds"
+        title="Courses, Cohort & Custom Builds"
+        description="Built for non-technical $1M to $50M business owners: train your right-hand operator in our 8-week Cohort, or have Sophia custom-build your AI workflows for you."
       />
 
       {/* 3-Step Value Ladder */}

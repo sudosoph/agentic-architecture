@@ -12,9 +12,9 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
         name: /Build your AI org chart, automate busywork, and own your stack/i,
       }),
     ).toBeTruthy()
-    expect(screen.getByText(/Columbia CS/i)).toBeTruthy()
-    expect(screen.getByText(/ex-McKinsey/i)).toBeTruthy()
-    expect(screen.getByText(/Women Who Code/i)).toBeTruthy()
+    expect(screen.getAllByText(/Columbia CS/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/ex-McKinsey/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/Women Who Code/i).length).toBeGreaterThan(0)
     expect(container.textContent).not.toContain('Speaking next')
     expect(container.textContent).not.toContain('Lesbians Who Tech')
     expect(container.textContent).not.toContain('\u2014')

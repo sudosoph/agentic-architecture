@@ -20,5 +20,5 @@ Autoregressive token decode is governed by **memory bandwidth divided by active 
 3. Run `tailscale serve --bg 8080` so authenticated laptops, phones, and CI runners reach `https://desk-node.tailnet.ts.net/v1` over WireGuard.
 
 Full teardowns:
-- https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026
+- https://agenticarchitect.ai/blog/mac-studio-512gb-vs-dgx-spark
 - https://agenticarchitect.ai/blog/autonomous-ai-rig-tailscale-guide

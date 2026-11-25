@@ -1,16 +1,1 @@
-[
-  {
-    "id": "396541631",
-    "channel": "Substack Comment",
-    "postId": 226474342,
-    "postTitle": "The 5 Levels of AI Autonomy: How Smart Teams Automate Without Embarrassing Mistakes",
-    "postUrl": "https://agenticarchitectai.substack.com/p/the-5-levels-of-ai-autonomy-how-smart/comments",
-    "authorName": "Joshua Miller",
-    "authorHandle": "@joshhmiller",
-    "authorContext": "Writes 'The Human Intelligence Brief' on Substack (https://brief.joshhmiller.com) · Discovered your post organically via Substack's AI & Technology feed",
-    "receivedAt": "2026-11-25T13:03:51.008Z",
-    "commentBody": "Interesting that organizations put checkpoints back after removing them. People stop reading what they approve when volume is high. Rung 2, \"AI drafts, human approves,\" needs a practice behind it: approvers write their own view first, then compare.",
-    "draftReply": "Spot on, Joshua. Rubber-stamping is the #1 trap once volume picks up. Writing a 1-line take before opening the draft is great; another trick that works well for busy ops teams is having the workflow flag the two assumptions it was least confident about right at the top so the reviewer has to resolve a real choice instead of skimming polished text.",
-    "status": "pending_approval"
-  }
-]
+[]

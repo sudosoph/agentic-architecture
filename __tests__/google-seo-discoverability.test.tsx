@@ -66,6 +66,20 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(wwwRoot?.destination).toBe('https://agenticarchitect.ai')
     expect(wwwSubpath?.permanent).toBe(true)
     expect(wwwSubpath?.destination).toBe('https://agenticarchitect.ai/:path+')
+
+    for (const [oldSlug, newSlug] of [
+      ['personal-agents-tab-instinct-openinstinct-review', 'instinct-ai-vs-tab-review'],
+      ['ai-org-chart-for-small-business-founders', 'ai-org-chart'],
+      ['how-to-build-an-ai-chief-of-staff-2026', 'ai-chief-of-staff'],
+      ['ai-implementation-program-vs-agency-vs-diy-guide', 'hire-ai-agency-vs-in-house'],
+      ['512gb-unified-memory-mini-pcs-local-llm-2026', 'mac-studio-512gb-vs-dgx-spark'],
+      ['loop-engineering-production-guide-2026', 'loop-engineering'],
+      ['google-latest-models-vs-deepseek-4-1-business-guide', 'gemini-4-neon-vs-deepseek-v4'],
+    ]) {
+      const rule = redirects.find(r => r.source === `/blog/${oldSlug}`)
+      expect(rule?.permanent, `${oldSlug} 308 redirect`).toBe(true)
+      expect(rule?.destination).toBe(`/blog/${newSlug}`)
+    }
   })
 
   it('includes Google Search Console verification tag, HTML verification file, and IndexNow key', () => {

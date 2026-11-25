@@ -7,9 +7,9 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Free 20-Min AI Brand Voice & Workflow Starter Kit',
+  title: 'Free 20-Min Company Context Vault & AI Workflow Kit',
   description:
-    'Download the portable voice.md Brand Brain, icp.md template, 20/80 Scorecard CSV, and n8n Pre-Call Dossier workflow, plus score your tasks interactively.',
+    'Download the portable voice.md + icp.md Company Context Vault, 20/80 Task Scorecard CSV, and Pre-Call Lead Dossier workflow, plus score your team bottlenecks live.',
   alternates: { canonical: '/starter-kit' },
 }
 
@@ -17,10 +17,10 @@ export default function StarterKitPage() {
   return (
     <div className="space-y-14">
       <div className="space-y-4">
-        <Badge variant="online">Instant Access · 4 Downloadable Templates + Live Scorer</Badge>
+        <Badge variant="online">Instant Access · 4 Executive Templates + Live Bottleneck Scorer</Badge>
         <PageHeader
-          title="The 20-Minute AI Brand Voice & Workflow Starter Kit"
-          description="Download the portable Brand Brain files (voice.md + icp.md), importable n8n Pre-Call Lead Dossier workflow, and 20/80 Task Readiness Scorecard."
+          title="The 20-Minute Company Context Vault & Workflow Kit"
+          description="Download the portable voice.md and icp.md context files, importable Pre-Call Lead Dossier workflow, and 20/80 Task Readiness Scorecard."
         />
       </div>
 

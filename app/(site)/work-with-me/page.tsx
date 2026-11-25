@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -7,69 +8,77 @@ import { RoiCalculator } from '@/components/site/roi-calculator'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Work With Me',
+  title: 'Bespoke AI Builds, $1,500 Blueprint & Executive Rollouts',
   description:
-    'Book a VIP 90-Min AI Workflow Audit, 1:1 Strategy Session, 8-week Agentic Business Accelerator seat, Private Corporate AI Workshop, or Executive Advisory.',
+    'Have Sophia Stein custom-build AI workflows inside your business in 30 days, start with a guaranteed $1,500 48-Hour AI Blueprint, or book a private leadership team intensive.',
   alternates: { canonical: '/work-with-me' },
 }
 
-const PRIMARY_OFFERS = [
+const GRAND_SLAM_OFFERS = [
   {
-    badge: 'Flagship 8-Week Cohort',
+    badge: 'Step 1 Diagnostic · $15,000 Savings Guarantee',
     badgeVariant: 'online' as const,
-    title: 'Agentic Business Accelerator',
+    title: '48-Hour Custom AI Blueprint & Margin Audit',
+    price: '$1,500 (100% Credited Toward Any Build or Cohort)',
+    detail:
+      'Replaces open-ended hourly consulting with a concrete asset in 48 hours: your custom 6-Role AI Org Chart, SaaS/payroll waste teardown, and private data boundary plan.',
+    guarantee:
+      'The $15,000 Savings Guarantee: If we do not identify at least $15,000/yr in recoverable payroll/software spend and 10+ hrs/week of executive capacity on our 90-minute teardown, I refund 100% on the spot.',
+    href: SITE_CONFIG.cal.audit,
+    cta: 'Book 48-Hour AI Blueprint ($1,500) →',
+  },
+  {
+    badge: 'Done-For-You White-Glove Sprint · 30 Days',
+    badgeVariant: 'rig' as const,
+    title: 'Bespoke AI Automation Build (We Build It For You)',
+    price: '$12,500 to $25,000 (Fixed Scope)',
+    detail:
+      'For $1M to $50M owners who have more capital than free hours. We custom-build 3 to 6 production AI workflows directly inside your inbox, calendar, CRM, and docs, complete with video SOPs and live handoff training for your staff.',
+    guarantee:
+      '30-Day Zero-Break Warranty: Every workflow ships inside your own accounts (zero agency lock-in) with 30 days of post-launch tuning and operator support included.',
+    href: SITE_CONFIG.cal.scoping,
+    cta: 'Apply for a Bespoke Build Call →',
+  },
+  {
+    badge: 'Done-With-You Cohort · EA / COO Seat Included FREE',
+    badgeVariant: 'online' as const,
+    title: '8-Week Executive AI Operating System Cohort',
     price: '$5,997 Founding · $8,997 Standard',
     detail:
-      'Done-With-You implementation installing 6 revenue, content, and operations AI workflows inside your business over 8 weeks. Optional +$1,500 seat for your Ops Lead or EA.',
+      'Want your in-house team to master the workflows permanently? Attend Week 1 strategy while we train your EA, Chief of Staff, or Ops Manager (included FREE, $2,500 value) over 8 weeks to wire and maintain all 6 systems.',
+    guarantee:
+      '14-Day Live-System Promise: At least 2 AI workflows live and saving 8+ hrs/week by Day 14, or we keep coaching your operator free until they run.',
     href: '/accelerator',
-    cta: 'Explore the Accelerator →',
+    cta: 'Explore the 8-Week Cohort →',
     secondaryHref: SITE_CONFIG.cal.acceleratorFounding,
-    secondaryCta: 'Instant Founding Seat ($5,997)',
+    secondaryCta: 'Claim Founding Seat ($5,997)',
   },
   {
-    badge: '90-Min Deep Dive · 100% Creditable',
-    badgeVariant: 'rig' as const,
-    title: 'VIP 90-Min AI Workflow & Cost Audit',
-    price: '$1,500 (Paid on Booking via Stripe)',
-    detail:
-      '1:1 executive teardown of your team’s weekly bottlenecks, SaaS spend, and highest-ROI automation opportunities. Includes a written 90-day roadmap and 100% fee credit toward the Accelerator or Corporate Training.',
-    href: SITE_CONFIG.cal.audit,
-    cta: 'Book VIP 90-Min Audit →',
-  },
-  {
-    badge: 'Half-Day or Full-Day Team Lab',
+    badge: 'Private Leadership & Staff Intensive (10 to 100+ Staff)',
     badgeVariant: 'tag' as const,
-    title: 'Private Corporate AI Intensive & Enablement',
-    price: '$7,500 to $15,000',
+    title: 'Executive & Team AI Deployment Lab',
+    price: '$9,500 Half-Day · $15,000 Full-Day',
     detail:
-      'Hands-on on-site or remote training rolling out portable Brand Brains, human-approved operational workflows, and AI governance across 10 to 100+ staff.',
+      'On-site (zero travel fee in Boulder & Denver) or virtual build day for established companies, clinics, and advisory firms. Includes pre-workshop department audit and 30-day champion check-in.',
+    guarantee:
+      'Same-Day Output Standard: Every department leaves with shared company context files and 2 live, human-approved workflows running before 5 PM.',
     href: SITE_CONFIG.cal.speaking,
-    cta: 'Book Corporate Workshop Intake →',
-  },
-  {
-    badge: 'Monthly Retainer',
-    badgeVariant: 'tag' as const,
-    title: 'Executive AI Advisory / Fractional Architect',
-    price: '$5,000+/mo',
-    detail:
-      'Ongoing architectural guidance, vendor/cost governance, internal curriculum design, and private infrastructure oversight for leadership teams.',
-    href: SITE_CONFIG.cal.scoping,
-    cta: 'Book Advisory Scoping Call →',
+    cta: 'Scope a Private Team Lab →',
   },
 ]
 
 const WORK_FAQS = [
   {
-    q: 'What happens inside the $1,500 VIP 90-Minute AI Workflow & Cost Audit?',
-    a: 'Before we meet, we review your current tool stack and team bottlenecks. Live on the 90-minute call, we map your AI Org Chart, identify the top 3 workflows with immediate payback, cut overlapping SaaS/API spend, and deliver a written 90-day roadmap. 100% of the $1,500 fee credits toward the Accelerator or a Corporate Intensive within 30 days.',
+    q: 'Should I choose the Bespoke AI Build ($12.5K+) or the 8-Week Cohort ($5,997)?',
+    a: 'Choose the 30-Day Bespoke Build if you want Sophia to engineer your custom workflows directly inside your company workspace and hand the keys to your staff. Choose the 8-Week Cohort if you want your EA, COO, or Ops Manager trained step-by-step (their seat is included free) to build and expand workflows in-house.',
   },
   {
-    q: 'What is included in a $7,500 to $15,000 Private Corporate AI Intensive?',
-    a: 'A tailored half-day ($7,500) or full-day ($15,000) hands-on lab for 10 to 100+ executives and staff, building shared Brand & SOP context files, human-approved department workflows, and clear data-privacy governance.',
+    q: 'Why is there no $500 1-hour consultation on this page?',
+    a: 'Selling an isolated hour of advice leaves busy owners with a to-do list instead of a result. New clients either join our free 60-minute live AI Org Chart Briefing, apply via a 15-minute Executive Fit Call ($500K+ revenue or 5+ team size), or book the $1,500 48-Hour Custom AI Blueprint backed by our $15,000 Savings Guarantee.',
   },
   {
-    q: 'Do you travel or host on-site corporate workshops in Colorado and nationwide?',
-    a: 'Yes. Sophia is based in Boulder, CO (zero travel fees across Boulder, Denver, and the Front Range) and delivers virtual and on-site executive workshops nationwide.',
+    q: 'What if I am a CTO or investor looking for technical architecture advisory?',
+    a: 'Sophia reserves two monthly technical advisory seats ($5,000+/mo) for engineering leaders and boards. Visit our Research & Teaching hub (/research) or book an Executive Fit Call to check availability.',
   },
 ]
 
@@ -80,7 +89,7 @@ export default function WorkWithMePage() {
       {
         '@type': 'Service',
         '@id': `${SITE_CONFIG.siteUrl}/work-with-me#service`,
-        name: 'Executive AI Workflow Audits, Implementation Cohort & Corporate Workshops',
+        name: 'Bespoke AI Automation Builds, Custom AI Blueprints & Executive Rollouts',
         provider: {
           '@type': 'Organization',
           '@id': `${SITE_CONFIG.siteUrl}/#organization`,
@@ -89,12 +98,12 @@ export default function WorkWithMePage() {
         areaServed: ['Boulder, CO', 'Denver, CO', 'United States'],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
-          name: 'Agentic Architect Advisory & Training Tiers',
+          name: 'Agentic Architect Owner & Enterprise Offers',
           itemListElement: [
-            { '@type': 'Offer', name: '1:1 AI Strategy Session (60 Min)', price: '500', priceCurrency: 'USD' },
-            { '@type': 'Offer', name: 'VIP 90-Min AI Workflow & Cost Audit', price: '1500', priceCurrency: 'USD' },
-            { '@type': 'Offer', name: 'Agentic Business Accelerator (8 Weeks)', price: '5997', priceCurrency: 'USD' },
-            { '@type': 'Offer', name: 'Private Corporate AI Intensive (Half-Day)', price: '7500', priceCurrency: 'USD' },
+            { '@type': 'Offer', name: '48-Hour Custom AI Blueprint & Margin Audit', price: '1500', priceCurrency: 'USD' },
+            { '@type': 'Offer', name: '8-Week Executive AI Operating System Cohort (Includes Free Operator Seat)', price: '5997', priceCurrency: 'USD' },
+            { '@type': 'Offer', name: 'Executive & Team AI Deployment Lab (Half-Day)', price: '9500', priceCurrency: 'USD' },
+            { '@type': 'Offer', name: '30-Day Bespoke AI Automation Build', price: '12500', priceCurrency: 'USD' },
           ],
         },
       },
@@ -119,108 +128,115 @@ export default function WorkWithMePage() {
       />
       <div className="space-y-14">
         <PageHeader
-          meta="Boulder, CO & Worldwide · Direct Calendar Booking"
-          title="Work With Sophia"
-          description="Done-with-you AI Org Chart implementation, 90-minute executive workflow & cost audits, and live corporate enablement built for founders, COOs, and leadership teams."
+          meta="Done-For-You Bespoke Sprints · Guaranteed Blueprints · Team Labs"
+          title="Bespoke AI Builds & Advisory"
+          description="Outcome-guaranteed AI engagements for $1M to $50M business owners, firm principals, and leadership teams who want working systems instead of hourly advice."
         />
 
-      {/* Interactive ROI Calculator */}
-      <section className="space-y-4">
-        <div>
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Estimate Your Return First
-          </p>
-          <h2 className="text-2xl font-bold text-fg mt-1">
-            Hiring Headcount vs. Automating Repetitive Workflows
-          </h2>
-        </div>
-        <RoiCalculator />
-      </section>
+        {/* Interactive ROI Calculator */}
+        <section className="space-y-4">
+          <div>
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Run the Payroll vs. Automation Math First
+            </p>
+            <h2 className="text-2xl font-bold text-fg mt-1">
+              Adding $65,000+ Headcount vs. Installing Owned AI Workflows
+            </h2>
+          </div>
+          <RoiCalculator />
+        </section>
 
-      {/* 2x2 High-Margin Offer Grid */}
-      <section id="offers" className="space-y-5 scroll-mt-20">
-        <div>
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Core Ways to Work Together
-          </p>
-          <h2 className="text-2xl font-bold text-fg mt-1">
-            Choose the Right Engagement Model
-          </h2>
-        </div>
+        {/* 2x2 Hormozi Grand Slam Offer Grid */}
+        <section id="offers" className="space-y-5 scroll-mt-20">
+          <div>
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Outcome-Backed Offers (Zero Hourly Billing)
+            </p>
+            <h2 className="text-2xl font-bold text-fg mt-1">
+              Have Us Build It Custom, Or Train Your Operator In-House
+            </h2>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {PRIMARY_OFFERS.map(offer => (
-            <Card key={offer.title} className="p-6 flex flex-col justify-between space-y-5">
-              <div className="space-y-2.5">
-                <Badge variant={offer.badgeVariant}>{offer.badge}</Badge>
-                <h3 className="text-xl font-bold text-fg">{offer.title}</h3>
-                <p className="font-mono text-sm font-semibold text-accent">{offer.price}</p>
-                <p className="text-sm text-muted leading-relaxed">{offer.detail}</p>
-              </div>
-              <div className="flex flex-wrap gap-2.5">
-                <Button variant="primary" size="md" href={offer.href}>
-                  {offer.cta}
-                </Button>
-                {'secondaryHref' in offer && offer.secondaryHref && (
-                  <Button variant="outline" size="md" href={offer.secondaryHref}>
-                    {offer.secondaryCta}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {GRAND_SLAM_OFFERS.map(offer => (
+              <Card key={offer.title} className="p-6 flex flex-col justify-between space-y-5">
+                <div className="space-y-3">
+                  <Badge variant={offer.badgeVariant}>{offer.badge}</Badge>
+                  <h3 className="text-xl font-bold text-fg">{offer.title}</h3>
+                  <p className="font-mono text-sm font-semibold text-accent">{offer.price}</p>
+                  <p className="text-sm text-muted leading-relaxed">{offer.detail}</p>
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-xs text-fg leading-relaxed">
+                    <strong className="text-online">Guarantee:</strong> {offer.guarantee}
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  <Button variant="primary" size="md" href={offer.href}>
+                    {offer.cta}
                   </Button>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
+                  {'secondaryHref' in offer && offer.secondaryHref && (
+                    <Button variant="outline" size="md" href={offer.secondaryHref}>
+                      {offer.secondaryCta}
+                    </Button>
+                  )}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
 
-      {/* Focused 1:1 Single Session + Contact Fallback */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <Card className="lg:col-span-7 p-6 bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-          <div className="space-y-1">
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-              Single 60-Minute Session · $500
-            </p>
-            <h3 className="text-lg font-bold text-fg">1:1 AI Strategy &amp; Systems Session</h3>
-            <p className="text-sm text-muted leading-relaxed">
-              Have one specific workflow, tool stack decision, or architecture bottleneck? Book a
-              focused 60-minute working session directly on Cal.com with Stripe checkout.
-            </p>
-          </div>
-          <div className="shrink-0">
-            <Button variant="outline" size="md" href={SITE_CONFIG.cal.officeHours}>
-              Book 60-Min Session ($500) →
-            </Button>
-          </div>
-        </Card>
+        {/* Qualified 15-Min Executive Fit Call + Technical Wing Bridge */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <Card className="lg:col-span-7 p-6 bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+            <div className="space-y-1">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
+                For $500K+ Revenue Owners &amp; 5+ Person Teams · $0
+              </p>
+              <h3 className="text-lg font-bold text-fg">15-Minute Executive Fit &amp; Scoping Call</h3>
+              <p className="text-sm text-muted leading-relaxed">
+                Deciding between a 30-Day Bespoke AI Build, the 8-Week Cohort, or a Private Team Lab?
+                Book a quick 15-minute fit check to pick the highest-return path.
+              </p>
+            </div>
+            <div className="shrink-0">
+              <Button variant="outline" size="md" href={SITE_CONFIG.cal.scoping}>
+                Book 15-Min Fit Call →
+              </Button>
+            </div>
+          </Card>
 
-        <Card className="lg:col-span-5 p-6 flex flex-col justify-between space-y-4">
-          <div className="space-y-1">
-            <h3 className="text-base font-bold text-fg">Questions, Custom Scope, or Sponsorships?</h3>
-            <p className="text-sm text-muted leading-relaxed">
-              Send a short note with your team size and goals, or view newsletter sponsorship tiers.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="outline" size="sm" href="/contact">
-              Send a Message
-            </Button>
-            <Button variant="ghost" size="sm" href="/sponsor">
-              Sponsorship Tiers →
-            </Button>
-          </div>
-        </Card>
-      </section>
+          <Card className="lg:col-span-5 p-6 flex flex-col justify-between space-y-4">
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-fg">University, Keynotes &amp; CTO Research?</h3>
+              <p className="text-sm text-muted leading-relaxed">
+                Explore our CU Boulder syllabi, 18-chapter Sovereign Stack book, and CTO advisory in{' '}
+                <Link href="/research" className="text-accent font-medium hover:underline">
+                  Research &amp; Teaching
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="outline" size="sm" href="/contact">
+                Send a Note
+              </Button>
+              <Button variant="ghost" size="sm" href="/sponsor">
+                Sponsorships →
+              </Button>
+            </div>
+          </Card>
+        </section>
 
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold text-fg">Advisory, Audit &amp; Corporate Workshop FAQ</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {WORK_FAQS.map(faq => (
-            <Card key={faq.q} className="p-6 space-y-2">
-              <h3 className="text-sm font-bold text-fg leading-snug">{faq.q}</h3>
-              <p className="text-xs text-muted leading-relaxed">{faq.a}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-fg">Bespoke Build &amp; Guarantee FAQ</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {WORK_FAQS.map(faq => (
+              <Card key={faq.q} className="p-6 space-y-2">
+                <h3 className="text-sm font-bold text-fg leading-snug">{faq.q}</h3>
+                <p className="text-xs text-muted leading-relaxed">{faq.a}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
       </div>
     </>
   )

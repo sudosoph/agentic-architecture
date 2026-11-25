@@ -13,14 +13,14 @@ describe('Nav', () => {
     expect(brand.getAttribute('href')).toBe('/')
   })
 
-  it('renders Crisp Operator V2 navigation links', () => {
+  it('renders Two-Room navigation separating Owner Playbooks & Bespoke Builds from Research & Teaching', () => {
     render(<Nav />)
-    expect(screen.getByRole('link', { name: 'Playbooks' }).getAttribute('href')).toBe('/blog')
-    expect(screen.getByRole('link', { name: 'Kits & Courses' }).getAttribute('href')).toBe('/courses')
-    expect(screen.getByRole('link', { name: 'Speaking & Teaching' }).getAttribute('href')).toBe('/teaching')
-    expect(screen.getByRole('link', { name: 'Stack & Rigs' }).getAttribute('href')).toBe('/stack')
+    expect(screen.getByRole('link', { name: 'Owner Playbooks' }).getAttribute('href')).toBe('/blog')
+    expect(screen.getByRole('link', { name: 'Courses & Cohort' }).getAttribute('href')).toBe('/courses')
+    expect(screen.getByRole('link', { name: 'Bespoke AI Builds' }).getAttribute('href')).toBe('/work-with-me')
+    expect(screen.getByRole('link', { name: 'Research & Teaching' }).getAttribute('href')).toBe('/research')
     expect(screen.getByRole('link', { name: 'About' }).getAttribute('href')).toBe('/about')
-    expect(screen.getByRole('link', { name: /Work With Me/i }).getAttribute('href')).toBe('/work-with-me')
+    expect(screen.getByRole('link', { name: /Free Live Briefing/i }).getAttribute('href')).toBe('/masterclass')
   })
 
   it('opens and closes mobile drawer cleanly', () => {

@@ -82,21 +82,21 @@ export async function fetchLiveRadarItems() {
       id: 'buyer-ai-chief-of-staff-vs-ea',
       source: 'High-Intent Buyer SEO/GEO ($5,997 Cohort + $1,500 Audit)',
       title: 'AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown',
-      url: 'https://agenticarchitect.ai/blog/how-to-build-an-ai-chief-of-staff-2026',
+      url: 'https://agenticarchitect.ai/blog/ai-chief-of-staff',
       points: 320,
     }),
     buildSeoGeoOpportunity({
       id: 'buyer-corporate-ai-workshop-roi',
       source: 'Corporate L&D & COO Buyer Search ($7,500 to $15,000 Labs)',
       title: 'How to Train Non-Technical Employees on AI Workflows Without Data Leaks',
-      url: 'https://agenticarchitect.ai/blog/ai-implementation-program-vs-agency-vs-diy-guide',
+      url: 'https://agenticarchitect.ai/blog/hire-ai-agency-vs-in-house',
       points: 290,
     }),
     buildSeoGeoOpportunity({
       id: 'buyer-ai-org-chart-service-firms',
       source: 'Callan-Style Masterclass Funnel SEO/GEO',
       title: 'AI Org Chart for Agencies, Clinics & Advisory Firms',
-      url: 'https://agenticarchitect.ai/blog/ai-org-chart-for-small-business-founders',
+      url: 'https://agenticarchitect.ai/blog/ai-org-chart',
       points: 275,
     }),
   ]
@@ -130,7 +130,7 @@ export async function fetchLiveRadarItems() {
       id: 'seed-512gb-moe-nodes',
       source: 'Builder Authority Signal (30% Technical Moat)',
       title: '512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE',
-      url: 'https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
+      url: 'https://agenticarchitect.ai/blog/mac-studio-512gb-vs-dgx-spark',
       points: 215,
     }),
   ]

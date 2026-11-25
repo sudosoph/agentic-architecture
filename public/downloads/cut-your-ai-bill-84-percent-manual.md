@@ -25,4 +25,4 @@ Never route 100% of background classification, test scaffolding, or extraction t
 
 Full benchmarks:
 - https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner
-- https://agenticarchitect.ai/blog/google-latest-models-vs-deepseek-4-1-business-guide
+- https://agenticarchitect.ai/blog/gemini-4-neon-vs-deepseek-v4

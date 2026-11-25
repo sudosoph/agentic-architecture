@@ -3,13 +3,13 @@ import { describe, it, expect } from 'vitest'
 import { HeroBlueprintSwitcher } from '@/components/site/hero-blueprint'
 
 describe('HeroBlueprintSwitcher', () => {
-  it('defaults to Brand & Content Engine and switches across all 3 blueprints cleanly', () => {
+  it('defaults to Executive Voice Context Vault and switches across all 3 blueprints cleanly', () => {
     const { container } = render(<HeroBlueprintSwitcher />)
-    expect(screen.getByRole('tab', { name: /Brand & Content/i })).toBeTruthy()
-    expect(screen.getByText(/voice\.md Brand Brain/i)).toBeTruthy()
+    expect(screen.getByRole('tab', { name: /Executive Voice/i })).toBeTruthy()
+    expect(screen.getByText(/voice\.md \+ icp\.md Context Vault/i)).toBeTruthy()
 
-    fireEvent.click(screen.getByRole('tab', { name: /Small Business Ops/i }))
-    expect(screen.getByText(/Inbound Lead or Email/i)).toBeTruthy()
+    fireEvent.click(screen.getByRole('tab', { name: /Back-Office Ops/i }))
+    expect(screen.getByText(/Inbound Lead or Booking/i)).toBeTruthy()
 
     fireEvent.click(screen.getByRole('tab', { name: /Private AI/i }))
     expect(screen.getByText(/Encrypted Private Mesh/i)).toBeTruthy()

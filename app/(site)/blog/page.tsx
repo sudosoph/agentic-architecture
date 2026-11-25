@@ -6,44 +6,18 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'Playbooks & Technical Deep Dives',
+  title: 'Owner Playbooks & AI Frameworks',
   description:
-    'Practical AI workflow playbooks for small businesses, model & autonomous rig guides, and production agent engineering deep dives by Sophia Stein.',
+    'Plain-English AI Org Charts, AI Chief of Staff setups, security reviews, and ROI frameworks for business owners and principals by Sophia Stein.',
   alternates: {
     canonical: '/blog',
   },
 }
 
-const TRACK_TABS: Array<{
-  slug: BlogTrack
-  label: string
-  badgeVariant: 'online' | 'rig' | 'tag'
-  blurb: string
-}> = [
-  {
-    slug: 'small-business',
-    label: 'Small Business & Workflows',
-    badgeVariant: 'online',
-    blurb: 'Plain-English playbooks to automate inbox, research, content, and operations.',
-  },
-  {
-    slug: 'models-rigs',
-    label: 'Models, Tailscale & Rigs',
-    badgeVariant: 'rig',
-    blurb: 'Model comparisons, cost routing, privacy compliance, and private AI hardware.',
-  },
-  {
-    slug: 'engineering',
-    label: 'Engineering Deep Dives',
-    badgeVariant: 'tag',
-    blurb: 'Production evaluations, MCP security, OAuth identity, and system architecture.',
-  },
-]
-
 const TRACK_LABELS: Record<BlogTrack, string> = {
-  'small-business': 'Small Business & Workflows',
-  'models-rigs': 'Models, Tailscale & Rigs',
-  engineering: 'Engineering Deep Dive',
+  'small-business': 'Owner Playbook',
+  'models-rigs': 'Models & Private Rigs',
+  engineering: 'Systems Research',
 }
 
 const TRACK_BADGE_VARIANT: Record<BlogTrack, 'online' | 'rig' | 'tag'> = {
@@ -119,7 +93,7 @@ const LEGACY_THEMES: Theme[] = [
   },
   {
     slug: 'founders-smb',
-    label: 'Founders & SMB',
+    label: 'Founders & Principals',
     tags: [
       'smb',
       'founders',
@@ -191,32 +165,43 @@ export default async function BlogPage({
   const tag = firstParam(rawParams.tag)
   const allPosts = getAllPosts()
 
-  const activeTrack = TRACK_TABS.find(t => t.slug === trackParam) ?? null
   const activeTheme = LEGACY_THEMES.find(t => t.slug === themeSlug) ?? null
+  // Default /blog strictly to non-technical Owner Playbooks ('small-business' track) unless another filter or ?track=all is explicitly chosen
+  const effectiveTrack: BlogTrack | 'all' =
+    trackParam === 'all'
+      ? 'all'
+      : trackParam === 'models-rigs' || trackParam === 'engineering' || trackParam === 'small-business'
+        ? trackParam
+        : activeTheme || tag
+          ? 'all'
+          : 'small-business'
 
   const posts = allPosts.filter(post => {
-    if (activeTrack && post.track !== activeTrack.slug) return false
+    if (effectiveTrack !== 'all' && post.track !== effectiveTrack) return false
     if (tag && !post.tags.includes(tag)) return false
     if (activeTheme && !postMatchesTheme(post.tags, activeTheme)) return false
     return true
   })
 
+  const ownerCount = allPosts.filter(p => p.track === 'small-business').length
+  const researchCount = allPosts.length - ownerCount
+
   return (
     <div className="space-y-10">
       <PageHeader
-        meta="AI Org Charts · Chief of Staff Setups · Systems Research"
-        title="AI Workflow Playbooks & Buyer Guides"
-        description="Filter by track below: founder & executive AI org chart playbooks, model cost & privacy guides, or deep production engineering benchmarks."
+        meta="Executive Frameworks · AI Org Charts · ROI & Tool Audits"
+        title="Business Owner Playbooks"
+        description="Plain-English playbooks for $1M to $50M founders, firm principals, and COOs automating back-office work without writing code. (Looking for our engineering & hardware papers? Visit Research & Teaching.)"
       />
 
-      {/* Callan-Style Buyer Funnel Strip at Top of Blog */}
+      {/* Owner Conversion Strip */}
       <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Free Live 60-Min Training · Zero Coding Required
+            Two Ways to Put These Frameworks Into Your Business
           </p>
           <p className="text-sm font-bold text-fg">
-            Want to see a live AI Org Chart &amp; 6 back-end workflows running before you hire?
+            Train your team in our 8-week Cohort (EA seat included free) or have Sophia build your workflows custom.
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5 shrink-0">
@@ -224,54 +209,50 @@ export default async function BlogPage({
             href="/masterclass"
             className="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
           >
-            Save Free Masterclass Seat →
+            Free 60-Min Live Briefing →
           </Link>
           <Link
-            href="/accelerator"
+            href="/work-with-me"
             className="inline-flex items-center rounded-lg border border-border bg-white px-4 py-2 text-xs font-semibold text-fg hover:border-accent transition-colors"
           >
-            8-Week Accelerator
+            Bespoke AI Builds
           </Link>
         </div>
       </div>
 
-      {/* Primary 3-Track Tabs */}
+      {/* Clean Two-Room Filter Bar */}
       <div className="space-y-3">
-        <div className="flex flex-wrap gap-2">
-          <Link
-            href="/blog"
-            className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
-              !activeTrack && !activeTheme && !tag
-                ? 'bg-accent text-white border-accent'
-                : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
-            }`}
-          >
-            All Playbooks ({allPosts.length})
-          </Link>
-          {TRACK_TABS.map(tab => {
-            const count = allPosts.filter(p => p.track === tab.slug).length
-            const isSelected = activeTrack?.slug === tab.slug
-            return (
-              <Link
-                key={tab.slug}
-                href={`/blog?track=${tab.slug}`}
-                className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
-                  isSelected
-                    ? 'bg-accent text-white border-accent'
-                    : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
-                }`}
-              >
-                {tab.label} ({count})
-              </Link>
-            )
-          })}
-        </div>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/blog"
+              className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
+                effectiveTrack === 'small-business' && !activeTheme && !tag
+                  ? 'bg-accent text-white border-accent'
+                  : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
+              }`}
+            >
+              Owner Playbooks ({ownerCount})
+            </Link>
+            <Link
+              href="/blog?track=all"
+              className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
+                effectiveTrack === 'all' && !activeTheme && !tag
+                  ? 'bg-accent text-white border-accent'
+                  : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
+              }`}
+            >
+              All Archive ({allPosts.length})
+            </Link>
+          </div>
 
-        {activeTrack && (
-          <p className="text-sm text-muted bg-surface border border-border rounded-xl px-4 py-3">
-            <strong className="text-fg">{activeTrack.label}:</strong> {activeTrack.blurb}
-          </p>
-        )}
+          <Link
+            href="/research"
+            className="text-xs font-semibold text-accent hover:underline"
+          >
+            Systems Benchmarks, 18-Ch. Book &amp; University Syllabi ({researchCount}) →
+          </Link>
+        </div>
 
         {(activeTheme || tag) && (
           <p className="font-mono text-xs text-muted">
@@ -290,7 +271,7 @@ export default async function BlogPage({
             )}{' '}
             ·{' '}
             <Link href="/blog" className="text-accent hover:underline">
-              Clear filter
+              Back to Owner Playbooks
             </Link>
           </p>
         )}
@@ -301,7 +282,7 @@ export default async function BlogPage({
         <Card className="p-8 text-center space-y-3">
           <p className="text-sm text-muted">No playbooks matched that filter.</p>
           <Link href="/blog" className="text-sm font-semibold text-accent hover:underline">
-            View all playbooks →
+            View Owner Playbooks →
           </Link>
         </Card>
       ) : (

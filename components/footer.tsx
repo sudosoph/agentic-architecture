@@ -2,21 +2,21 @@ import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 const EXPLORE_LINKS = [
+  { href: '/blog', label: 'Owner Playbooks & Reviews' },
+  { href: '/starter-kit', label: 'Free Company Context Kit' },
+  { href: '/research', label: 'Systems Research & Benchmarks' },
+  { href: '/sovereign-stack', label: 'The Sovereign Stack (18-Ch. Book)' },
   { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
-  { href: '/sovereign-stack', label: 'The Sovereign Stack (Book & OSS)' },
-  { href: '/blog', label: 'Playbooks & Tool Reviews' },
-  { href: '/starter-kit', label: 'Free Brand & Workflow Kit' },
-  { href: '/guides', label: 'Workflow Templates & Guides' },
   { href: '/stack', label: 'Stack & Rigs' },
   { href: '/about', label: 'About Sophia' },
 ]
 
 const PROGRAM_LINKS = [
-  { href: '/masterclass', label: 'Free Live 60-Min Masterclass' },
-  { href: '/accelerator', label: 'Agentic Business Accelerator' },
-  { href: '/teaching', label: 'Speaking, Corporate & University' },
-  { href: '/boulder', label: 'Boulder & Denver Training' },
-  { href: '/work-with-me', label: 'Audits & Executive Advisory' },
+  { href: '/masterclass', label: 'Free 60-Min AI Org Chart Briefing' },
+  { href: '/accelerator', label: '8-Week Executive AI Cohort' },
+  { href: '/work-with-me', label: 'Bespoke AI Builds & $1.5K Blueprint' },
+  { href: '/teaching', label: 'Speaking & University Teaching' },
+  { href: '/boulder', label: 'Boulder & Denver Executive Labs' },
   { href: '/contact', label: 'Contact' },
 ]
 

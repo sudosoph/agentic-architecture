@@ -15,6 +15,6 @@ By Sophia Stein · Agentic Architect (https://agenticarchitect.ai/sovereign-stac
 3. **Pin & Audit MCP Servers:** Reject deprecated `servers-archived` packages, grep against `shell=True` / `child_process.exec`, and pin exact package hashes.
 
 Full deep dives:
-- https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026
-- https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review
+- https://agenticarchitect.ai/blog/loop-engineering
+- https://agenticarchitect.ai/blog/instinct-ai-vs-tab-review
 - https://agenticarchitect.ai/blog/mcp-server-audit-2026

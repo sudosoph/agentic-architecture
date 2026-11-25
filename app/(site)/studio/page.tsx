@@ -15,7 +15,10 @@ export const metadata: Metadata = {
 export default function StudioPage() {
   const isLocal = process.env.NODE_ENV !== 'production'
   // Never serialize queue or radar data into unauthenticated production HTML
-  const initialReplies = isLocal && Array.isArray(pendingRepliesData) ? pendingRepliesData : []
+  const initialReplies =
+    isLocal && Array.isArray(pendingRepliesData)
+      ? (pendingRepliesData as Parameters<typeof StudioInbox>[0]['initialReplies'])
+      : []
   const initialRadar = isLocal && Array.isArray(radarLatestData?.items) ? radarLatestData.items : []
 
   return (

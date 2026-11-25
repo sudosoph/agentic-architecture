@@ -227,7 +227,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, replies })
     }
 
-    const baseReplies = Array.isArray(pendingRepliesData) ? pendingRepliesData : []
+type ReplyQueueItem = {
+  id: string
+  status: string
+  draftReply: string
+  [key: string]: unknown
+}
+
+    const baseReplies: ReplyQueueItem[] = Array.isArray(pendingRepliesData)
+      ? (pendingRepliesData as ReplyQueueItem[])
+      : []
     const updated = baseReplies.map(item =>
       String(item.id) === String(body.id)
         ? {

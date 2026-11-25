@@ -1,6 +1,6 @@
 ---
-title: "512GB Mini Computers & Desk Nodes in Late 2026: M5 Ultra Mac Studio vs. DGX Spark vs. 128GB Ryzen AI Halo"
-slug: 512gb-unified-memory-mini-pcs-local-llm-2026
+title: "Mac Studio 512GB (M5 Ultra) vs. NVIDIA DGX Spark vs. 128GB Ryzen AI Halo: Local LLM Guide"
+slug: mac-studio-512gb-vs-dgx-spark
 publishedDate: "2026-11-24"
 description: "A vendor-neutral hardware physics and ROI guide comparing Apple's 512GB M5 Ultra Mac Studio (1.2 TB/s), NVIDIA DGX Spark (128GB), and 128GB AMD Ryzen AI Halo mini-PCs for sparse MoE models and private team inference."
 track: "models-rigs"
@@ -54,6 +54,6 @@ Whichever vendor sits under your desk, the network rule never changes:
 
 1. Bind `llama-server`, `vLLM`, or MLX server strictly to `127.0.0.1:8080`.
 2. Expose it solely to your authenticated team tailnet with `tailscale serve --bg 8080`.
-3. Point your IDE, CI runner, or [loop-engineering verifier](/blog/loop-engineering-production-guide-2026) at `https://desk-node.your-tailnet.ts.net/v1` while routing complex multi-repo planning turns to frontier cloud endpoints.
+3. Point your IDE, CI runner, or [loop-engineering verifier](/blog/loop-engineering) at `https://desk-node.your-tailnet.ts.net/v1` while routing complex multi-repo planning turns to frontier cloud endpoints.
 
 Run your own numbers in the interactive sizer on [/sovereign-stack](/sovereign-stack), grab the updated **Private Hardware & Tailscale Rig Cheatsheet** free download, or book a [90-Minute Infrastructure & Cost Audit](/work-with-me).

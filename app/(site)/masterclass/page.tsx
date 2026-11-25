@@ -9,18 +9,18 @@ import { AiOrgChartMapper } from '@/components/site/ai-org-chart-mapper'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Free Live 60-Min AI Org Chart & Workflow Masterclass',
+  title: 'Free Live 60-Min AI Org Chart Briefing for Business Owners',
   description:
-    'See how lean businesses map an AI Org Chart, hook up a 1-page Brand Brain (voice.md), and install 6 back-end AI workflows without hiring or coding. Taught live by Sophia Stein.',
+    'See how $1M to $50M owners map an AI Org Chart, set up a 1-page Company Context Vault (voice.md), and delegate 6 back-office roles to AI workflows without hiring or coding.',
   alternates: { canonical: '/masterclass' },
 }
 
 const AGENDA = [
   {
     window: 'Minutes 00 to 20',
-    title: 'The AI Org Chart & 1-Page Brand Brain (voice.md + icp.md)',
+    title: 'The AI Org Chart & Company Context Vault (voice.md + icp.md)',
     detail:
-      'Stop prompting from a blank chat window. Map which jobs in your company belong to humans vs. AI workflows, and build a portable Brand Brain so every draft sounds like you.',
+      'Stop prompting from a blank chat window. Map which jobs in your firm belong to humans vs. AI workflows, and build a 1-page Context Vault so every draft sounds like you.',
     outcome: 'Live AI Org Chart + copy-paste voice.md template',
   },
   {
@@ -119,21 +119,21 @@ export default function MasterclassPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-fg leading-tight">
-              The AI Org Chart Masterclass: How Lean Businesses Hook Up a Brand Brain &amp; 6 Back-End Workflows Without Hiring or Coding
+              The AI Org Chart Briefing: How Business Owners Install 6 Back-Office AI Roles Without Adding Payroll or Coding
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed">
-              Humans belong on high-trust client work, strategy, and leadership. In 60 live minutes,
-              see the exact AI Org Chart and back-end workflows I teach founders and corporate teams
-              to reclaim 10 to 15 hours a week using tools you already own.
+              Humans belong on high-trust client work, dealmaking, and leadership. In 60 live
+              minutes, see the exact AI Org Chart and back-office workflows we install for $1M to
+              $50M owners and firms to reclaim 10 to 15 hours a week.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-1">
               <Button variant="primary" size="lg" href={SITE_CONFIG.cal.masterclass}>
-                Save My Free Masterclass Seat →
+                Save My Free Briefing Seat →
               </Button>
               <Button variant="outline" size="lg" href="/starter-kit">
-                Start Now: Open Brand Brain Kit (voice.md)
+                Start Now: Open Context Vault (voice.md)
               </Button>
             </div>
 

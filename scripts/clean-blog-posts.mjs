@@ -54,7 +54,7 @@ const MODELS_RIGS_SLUGS = new Set([
   'personal-ai-agent-weekend',
   'cost-quality-pareto-coding-agents',
   // New Nov 2026 posts if already present:
-  'google-latest-models-vs-deepseek-4-1-business-guide',
+  'gemini-4-neon-vs-deepseek-v4',
   'autonomous-ai-rig-tailscale-guide',
 ])
 

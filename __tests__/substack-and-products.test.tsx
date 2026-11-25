@@ -18,7 +18,7 @@ describe('MDX-to-Substack converter, Downloadable Products, and Interactive Lead
 
   it('converts MDX blog posts into valid Substack ProseMirror JSON with absolute links and funnel footer', () => {
     const payload = convertMdxToSubstackPayload('easy-ai-brand-and-workflow-setup')
-    expect(payload.draft_title).toContain('How Small Businesses Can Hook Up an AI Brand Brain')
+    expect(payload.draft_title).toContain('How Business Owners Wire a Company Context Vault')
     expect(payload.draft_subtitle.length).toBeGreaterThan(20)
     expect(payload.draft_body).not.toContain('\u2014')
 

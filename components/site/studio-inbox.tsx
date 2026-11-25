@@ -43,7 +43,7 @@ const CALLAN_BUYER_FUNNEL_PACKS = [
   {
     id: 'callan-podcast-pitch',
     channel: 'Podcast Guest Tour Pitch (Callan’s #1 Warm Buyer Shortcut)',
-    url: 'https://agenticarchitect.ai/blog/ai-org-chart-for-small-business-founders',
+    url: 'https://agenticarchitect.ai/blog/ai-org-chart',
     hookTitle: 'Subject: Guest idea: Building an AI Org Chart before your next $65K hire',
     copyBody:
       'Hi [Host Name],\n\nLoved your recent episode with [Guest] on keeping operations lean. Most AI guests either stay at surface-level ChatGPT tips or drown founders in developer jargon.\n\nMy background bridges both: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners love a 35-minute tactical walkthrough on "Humans on the Front End, AI on the Back End: The 6-Role AI Org Chart That Saves a $65K Hire"? Happy to give your audience our unlocked Brand Brain (voice.md) workbook free at agenticarchitect.ai/masterclass.\n\nWarmly,\nSophia Stein',
@@ -51,7 +51,7 @@ const CALLAN_BUYER_FUNNEL_PACKS = [
   {
     id: 'callan-corporate-coo',
     channel: 'LinkedIn / Outbound Note -> $7,500-$15,000 Corporate Labs & $1,500 Audits',
-    url: 'https://agenticarchitect.ai/blog/how-to-build-an-ai-chief-of-staff-2026',
+    url: 'https://agenticarchitect.ai/blog/ai-chief-of-staff',
     hookTitle: 'Why 70% of $20K AI agency builds get switched off inside 90 days',
     copyBody:
       'Watched three leadership teams run into the same wall this quarter: they paid an outside agency $20K+ for undocumented webhook automations, a CRM field changed six weeks later, and nobody in-house knew how to edit it.\n\nDurable AI adoption looks boring: portable markdown context files (voice.md, icp.md), draft-only inbox scopes so nothing embarrassing auto-sends, and training your own Ops Lead or Chief of Staff to own the loop.\n\nPublished our full 2026 AI Chief of Staff & Corporate Workshop buyer guide today (link in first comment).',
@@ -62,7 +62,7 @@ const HN_REDDIT_LAUNCH_PACKS = [
   {
     id: 'hn-loop-eng-2026',
     target: 'Hacker News (Tue/Thu 7:00 AM ET) + r/ExperiencedDevs',
-    url: 'https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026',
+    url: 'https://agenticarchitect.ai/blog/loop-engineering',
     hnTitle:
       'Loop Engineering in Production: Isolated git worktrees, deterministic verifiers, and cost circuit breakers',
     hnFirstComment:
@@ -71,7 +71,7 @@ const HN_REDDIT_LAUNCH_PACKS = [
   {
     id: 'hn-512gb-nodes',
     target: 'r/LocalLLaMA + Hacker News',
-    url: 'https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
+    url: 'https://agenticarchitect.ai/blog/mac-studio-512gb-vs-dgx-spark',
     hnTitle:
       '512GB desk nodes in late 2026: M5 Ultra Mac Studio (1.2 TB/s) vs. DGX Spark (273 GB/s) vs. Ryzen AI Halo',
     hnFirstComment:
@@ -80,7 +80,7 @@ const HN_REDDIT_LAUNCH_PACKS = [
   {
     id: 'hn-openinstinct-audit',
     target: 'Hacker News + r/SelfHosted + r/netsec',
-    url: 'https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review',
+    url: 'https://agenticarchitect.ai/blog/instinct-ai-vs-tab-review',
     hnTitle:
       'Auditing texting and browser agents: Instinct and Tab vs. self-hosted MIT OpenInstinct',
     hnFirstComment:

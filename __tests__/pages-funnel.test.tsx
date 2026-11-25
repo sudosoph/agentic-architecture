@@ -94,17 +94,18 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(links).toContain('https://cal.com/sophia-stein/scoping')
   })
 
-  it('renders WorkWithMePage with ROI calculator, verified Cal.com slugs, and no bare cal.com root link', () => {
+  it('renders WorkWithMePage with Hormozi guarantees, Bespoke Build tier, verified Cal.com slugs, and zero $500 hourly call', () => {
     const { container } = render(<WorkWithMePage />)
     const links = Array.from(container.querySelectorAll('a')).map(a => a.getAttribute('href'))
     expect(links).toContain('/accelerator')
     expect(links).toContain('https://cal.com/sophia-stein/audit')
-    expect(links).toContain('https://cal.com/sophia-stein/office-hours')
     expect(links).toContain('https://cal.com/sophia-stein/speaking')
     expect(links).toContain('https://cal.com/sophia-stein/scoping')
+    expect(links).not.toContain('https://cal.com/sophia-stein/office-hours')
     expect(links).not.toContain('https://cal.com/sophia-stein')
     expect(container.textContent).toContain('$1,500')
-    expect(container.textContent).toContain('$500')
+    expect(container.textContent).toContain('$12,500')
+    expect(container.textContent).toContain('$15,000 Savings Guarantee')
   })
 
   it('renders TeachingPage with 3 keynotes, 2 CU Boulder syllabi, Women Who Code, and 300+ BSW proof', () => {

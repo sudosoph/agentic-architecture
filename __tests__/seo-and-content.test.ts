@@ -18,6 +18,7 @@ const KNOWN_STATIC_PATHS = new Set([
   '/accelerator',
   '/starter-kit',
   '/teaching',
+  '/research',
   '/stack',
   '/work-with-me',
   '/contact',
@@ -40,16 +41,16 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     const topFourSlugs = new Set(posts.slice(0, 4).map(p => p.slug))
     expect(topFourSlugs).toEqual(
       new Set([
-        'ai-org-chart-for-small-business-founders',
-        'how-to-build-an-ai-chief-of-staff-2026',
-        'ai-implementation-program-vs-agency-vs-diy-guide',
-        'loop-engineering-production-guide-2026',
+        'ai-org-chart',
+        'ai-chief-of-staff',
+        'hire-ai-agency-vs-in-house',
+        'loop-engineering',
       ]),
     )
-    expect(posts[4].slug).toBe('512gb-unified-memory-mini-pcs-local-llm-2026')
-    expect(posts[5].slug).toBe('easy-ai-brand-and-workflow-setup')
-    expect(posts[6].slug).toBe('personal-agents-tab-instinct-openinstinct-review')
-    expect(posts[7].slug).toBe('google-latest-models-vs-deepseek-4-1-business-guide')
+    expect(posts[4].slug).toBe('easy-ai-brand-and-workflow-setup')
+    expect(posts[5].slug).toBe('mac-studio-512gb-vs-dgx-spark')
+    expect(posts[6].slug).toBe('instinct-ai-vs-tab-review')
+    expect(posts[7].slug).toBe('gemini-4-neon-vs-deepseek-v4')
   })
 
   it('resolves every internal /... link across all 47 blog posts without broken slugs or em-dashes', () => {

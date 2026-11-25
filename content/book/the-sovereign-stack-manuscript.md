@@ -12,11 +12,11 @@ Separating organizational memory (AGENTS.md, voice.md, icp.md) from models and e
 
 *Canonical web edition: https://agenticarchitect.ai/blog/easy-ai-brand-and-workflow-setup*
 
-Most small business owners do not have an AI problem; they have a blank-box problem. Every morning starts by opening a fresh chat tab, re-explaining what the company sells, pasting a rough email, and spending twenty minutes editing out stiff corporate phrasing. After two weeks, the team quietly goes back to doing everything manually.
+Most business owners do not have an AI problem; they have a blank-box problem. Every morning starts by opening a fresh chat tab, re-explaining what the company sells, pasting a rough email, and spending twenty minutes editing out stiff corporate phrasing. After two weeks, the team quietly goes back to doing everything manually.
 
-You can fix that in a single focused afternoon without hiring a developer or buying expensive agency retainers. The secret is separating **context** (a 1-page Brand Brain file you write once) from **workflows** (three simple triggers connected to your existing inbox, calendar, and docs).
+You can fix that in a single focused afternoon without writing code or buying bloated agency retainers. The secret is separating **context** (a 1-page Company Context Vault you write once) from **workflows** (three connected triggers wired to your existing inbox, calendar, and docs).
 
-## Step 1: Build your 1-page Brand Brain (`voice.md` + `icp.md`) in 30 minutes
+## Step 1: Build your Company Context Vault (`voice.md` + `icp.md`) in 30 minutes
 
 Before connecting any automation tool, create two plain text or Google Docs files in a shared folder:
 
@@ -653,7 +653,7 @@ The CX22 pays for itself in the first 24 hours of every month. Everything after 
 
 ### Chapter 5: Personal Texting & Browser Agents Audited: Instinct, Tab, and MIT OpenInstinct
 
-*Canonical web edition: https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review*
+*Canonical web edition: https://agenticarchitect.ai/blog/instinct-ai-vs-tab-review*
 
 Two completely different product categories are sharing the exact same names in founder group chats right now, so let us disambiguate them in thirty seconds before looking at the security math:
 
@@ -1013,7 +1013,7 @@ Vendor-neutral hardware benchmarks across 512GB M5 Ultra Mac Studio (1.2 TB/s), 
 
 ### Chapter 8: 512GB Mini Computers & Desk Nodes: M5 Ultra vs. DGX Spark vs. Ryzen AI Halo
 
-*Canonical web edition: https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026*
+*Canonical web edition: https://agenticarchitect.ai/blog/mac-studio-512gb-vs-dgx-spark*
 
 Earlier this year I wrote about running [96GB of DDR5 in a repairable Linux laptop](/blog/96gb-ram-thesis) as a portable daily driver. Since August 2026, however, the desk-side hardware conversation among founders and AI engineers has shifted dramatically: teams are buying **512 GB unified-memory mini computers**, stacking **128 GB desk nodes**, and asking which box actually makes financial sense versus cloud APIs.
 
@@ -1060,7 +1060,7 @@ Whichever vendor sits under your desk, the network rule never changes:
 
 1. Bind `llama-server`, `vLLM`, or MLX server strictly to `127.0.0.1:8080`.
 2. Expose it solely to your authenticated team tailnet with `tailscale serve --bg 8080`.
-3. Point your IDE, CI runner, or [loop-engineering verifier](/blog/loop-engineering-production-guide-2026) at `https://desk-node.your-tailnet.ts.net/v1` while routing complex multi-repo planning turns to frontier cloud endpoints.
+3. Point your IDE, CI runner, or [loop-engineering verifier](/blog/loop-engineering) at `https://desk-node.your-tailnet.ts.net/v1` while routing complex multi-repo planning turns to frontier cloud endpoints.
 
 Run your own numbers in the interactive sizer on [/sovereign-stack](/sovereign-stack), grab the updated **Private Hardware & Tailscale Rig Cheatsheet** free download, or book a [90-Minute Infrastructure & Cost Audit](/work-with-me).
 
@@ -1070,7 +1070,7 @@ Run your own numbers in the interactive sizer on [/sovereign-stack](/sovereign-s
 
 *Canonical web edition: https://agenticarchitect.ai/blog/96gb-ram-thesis*
 
-> **November 2026 Update:** While 96 GB DDR5 remains my sweet spot in a travel laptop (now running `Qwen 3.8-27B` Q4_K_M alongside dev containers), stationary desk setups have jumped to **128 GB Ryzen AI Halo / DGX Spark** and **512 GB M5 Ultra Mac Studio (1.2 TB/s)** nodes capable of holding 500B sparse MoE models in RAM. See the updated physics and ROI comparison in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/512gb-unified-memory-mini-pcs-local-llm-2026).
+> **November 2026 Update:** While 96 GB DDR5 remains my sweet spot in a travel laptop (now running `Qwen 3.8-27B` Q4_K_M alongside dev containers), stationary desk setups have jumped to **128 GB Ryzen AI Halo / DGX Spark** and **512 GB M5 Ultra Mac Studio (1.2 TB/s)** nodes capable of holding 500B sparse MoE models in RAM. See the updated physics and ROI comparison in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/mac-studio-512gb-vs-dgx-spark).
 
 Framework 16 with Ryzen AI 9 HX 370, RX 7700S, and 96GB DDR5 runs GLM-4 9B at Q8_0 at **28.4 tokens/sec** under ROCm 7.3, with a 90GB GART carve-out feeding the iGPU directly out of system RAM. That number is not a benchmark trophy. It is the threshold where agentic loops stop being a budgeting problem.
 
@@ -1207,7 +1207,7 @@ The line between "local inference is a hobby" and "local inference is the produc
 
 *Canonical web edition: https://agenticarchitect.ai/blog/framework-laptop-thesis*
 
-> **November 2026 Hardware Update:** For fixed desk inference and team nodes, Apple's **512 GB M5 Ultra Mac Studio (1.2 TB/s)**, NVIDIA's **128 GB DGX Spark**, and **128 GB Ryzen AI Halo mini-PCs** (`HP Z2 Mini G1a`, `GMKtec EVO-X2`) now dominate stationary workloads for sparse MoE models and multi-agent loops. Read the full vendor-neutral benchmark in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/512gb-unified-memory-mini-pcs-local-llm-2026). Below are my original April 2026 notes on choosing a **repairable Linux travel laptop**.
+> **November 2026 Hardware Update:** For fixed desk inference and team nodes, Apple's **512 GB M5 Ultra Mac Studio (1.2 TB/s)**, NVIDIA's **128 GB DGX Spark**, and **128 GB Ryzen AI Halo mini-PCs** (`HP Z2 Mini G1a`, `GMKtec EVO-X2`) now dominate stationary workloads for sparse MoE models and multi-agent loops. Read the full vendor-neutral benchmark in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/mac-studio-512gb-vs-dgx-spark). Below are my original April 2026 notes on choosing a **repairable Linux travel laptop**.
 
 I run a Framework 16 with the Ryzen AI 9 HX 370 (Strix Point) and 96GB DDR5 as my Linux travel machine. It remains a strong repairable laptop choice for engineers who want modular mobile hardware in 2026. Repairable, upgradeable, [first-class ROCm 7.3 support](/blog/96gb-ram-thesis), and unified memory capacity that fits 27B dense models on battery. The desktop Strix Halo mini-PC class (Ryzen AI Max+ 395 across HP, GMKtec, and Framework) takes the x86 playbook to 128GB. This post covers the mobile repairability case and its tradeoffs.
 
@@ -1371,7 +1371,7 @@ Even inside a private mesh, apply least privilege:
 ## Where to go next
 
 - Compare every tool in both the 15-minute business stack and the sovereign rig on [/stack](/stack).
-- Check which tasks belong on local open weights vs. cloud APIs in [Google's Latest Gemini Models vs. DeepSeek 4.1](/blog/google-latest-models-vs-deepseek-4-1-business-guide).
+- Check which tasks belong on local open weights vs. cloud APIs in [Google's Latest Gemini Models vs. DeepSeek 4.1](/blog/gemini-4-neon-vs-deepseek-v4).
 - Want help designing a private AI workflow architecture for your company or firm? Book a [VIP Audit or Advisory Scoping Call](/work-with-me).
 
 ---
@@ -1382,7 +1382,7 @@ Routing 80% of routine turns to fast open-weight or subagent tiers while reservi
 
 ### Chapter 12: Gemini 4 Neon & Carbon vs. DeepSeek V4.1, Kimi K3.1 Pro & Qwen 3.8
 
-*Canonical web edition: https://agenticarchitect.ai/blog/google-latest-models-vs-deepseek-4-1-business-guide*
+*Canonical web edition: https://agenticarchitect.ai/blog/gemini-4-neon-vs-deepseek-v4*
 
 *Personal-capacity note: My day job is in applied AI at Google; everything in this article is written strictly in my personal capacity using publicly released documentation, open-weight model cards, and independent third-party benchmarks (such as Artificial Analysis). Views are entirely my own.*
 
@@ -1402,17 +1402,17 @@ Based on published November 2026 specs (`1M` unified multimodal context across t
 ### 2. Late-2026 Open-Weight Powerhouses (`DeepSeek V4.1`, `Kimi K3.1 Pro`, `Qwen 3.8`)
 
 - **DeepSeek V4.1 Flash-1017** *(MIT License · `763B` sparse MoE, multimodal text+image, `1M` context)* & **V4 Pro-0813** (`1.7T`, MIT): Permissive MIT licensing, strong deterministic JSON schema obedience, SQL/code diffs, and pennies-per-task batch economics in private VPCs.
-- **Kimi K3.1 Pro & Highspeed** *(Moonshot AI · Open weights Nov 6, 2026; `2.8T` total / `104B` active, `1M` context, `$2/$10` API)*: Engineered specifically for multi-hour tool-calling trajectories. Watch output token verbosity: pair with explicit `max_tokens` caps inside [verified agent loops](/blog/loop-engineering-production-guide-2026).
+- **Kimi K3.1 Pro & Highspeed** *(Moonshot AI · Open weights Nov 6, 2026; `2.8T` total / `104B` active, `1M` context, `$2/$10` API)*: Engineered specifically for multi-hour tool-calling trajectories. Watch output token verbosity: pair with explicit `max_tokens` caps inside [verified agent loops](/blog/loop-engineering).
 - **Qwen 3.8 Family** *(`Qwen3.8-27B` dense vision-language under **Apache 2.0**, `17 GB` @ 4-bit; `Qwen3.8-Max` `2.4T-A95B` Gated DeltaNet; `Qwen3.8-Flash-Next` `125B/6B-active`)*: `Qwen3.8-27B` is the standout local workhorse for data visualization (`38/43` Plotly benchmark), document vision, and private on-desk coding with zero external data retention.
 
 ## The 5-workload routing matrix
 
 | Production Workload | Primary Choice | Why It Wins | Margin & Governance Rule |
 |---|---|---|---|
-| **Multi-file coding loops & tool orchestration** | `Gemini 4 Neon` orchestrating `Hydrogen` or `DeepSeek V4.1` workers | Fast ~100 tok/s planning + cheap parallel subagent execution | Gate merges behind [deterministic worktree verifiers](/blog/loop-engineering-production-guide-2026) |
+| **Multi-file coding loops & tool orchestration** | `Gemini 4 Neon` orchestrating `Hydrogen` or `DeepSeek V4.1` workers | Fast ~100 tok/s planning + cheap parallel subagent execution | Gate merges behind [deterministic worktree verifiers](/blog/loop-engineering) |
 | **45-min call video, slide deck & 100-page PDF synthesis** | `Gemini 4 Neon` or `Carbon` (`1M` multimodal ctx) | Native multimodal ingestion eliminates brittle chunking glue | Use cached context (`$0.15/1M`) for repeated corpus queries |
 | **High-volume CSV triage, classification & JSON extraction** | `DeepSeek V4.1 Flash` or `Hydrogen` / `Qwen 3.8-Flash` | Pennies per 1,000 runs with strict schema adherence | Validate against a deterministic JSON Schema before DB writes |
-| **Regulated contracts, medical, defense, or board docs** | Local `Qwen 3.8-27B` or `MiniMax M3.1 Flash` on [owned desk node](/blog/512gb-unified-memory-mini-pcs-local-llm-2026) | Zero third-party network egress or retention | Expose internally solely via [zero-port Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide) |
+| **Regulated contracts, medical, defense, or board docs** | Local `Qwen 3.8-27B` or `MiniMax M3.1 Flash` on [owned desk node](/blog/mac-studio-512gb-vs-dgx-spark) | Zero third-party network egress or retention | Expose internally solely via [zero-port Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide) |
 | **Multi-hour autonomous research & competitive sweeps** | `Kimi K3.1 Pro` or `Neon` + scheduled pipeline | Long-horizon tool persistence across 50+ search/extract steps | Enforce a hard dollar circuit breaker per run |
 
 ## The 80 / 15 / 5 cascade that protects gross margin
@@ -1870,7 +1870,7 @@ Isolated git worktrees, deterministic test/schema verifiers, token circuit break
 
 ### Chapter 16: Loop Engineering in Production: Worktrees, Deterministic Verifiers & Cost Ceilings
 
-*Canonical web edition: https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026*
+*Canonical web edition: https://agenticarchitect.ai/blog/loop-engineering*
 
 *Personal-capacity note: My day job is in applied AI at Google. Everything in this article is written independently in my personal capacity using strictly public model cards, open-weight releases, academic papers, and third-party benchmarks (such as Artificial Analysis). Views are my own.*
 
@@ -1919,7 +1919,7 @@ Here is how current public frontier and open-weight options stack up for multi-s
 | **Gemini 4 Carbon** *(Nov 10, 2026)* | Cloud API (`1M` ctx) | `$2/$10` intro -> `$4.00` / `$20.00` (Dec 1) | Deepest deliberate synthesis on ambiguous multi-file architecture (~55 tok/s) | `$16.50` avg coding session makes it overkill as a default inner-loop worker |
 | **Kimi K3.1 Pro** *(Nov 6 open weights)* | Open Weights (`2.8T` / `104B` active) & `$2/$10` API | `$2.00` / `$10.00` API (or self-hosted cluster) | Built specifically for multi-hour tool-use trajectories (`1M` context) | High output verbosity inflates per-task token count without strict `max_tokens` caps |
 | **DeepSeek V4.1 Flash-1017** | **MIT** Open Weights (`763B` sparse MoE, multimodal) | Pennies via API or private VPC | Exceptional cost-to-reasoning ratio for batch code diffs, SQL, and JSON extraction | Pair with strict schema/test verifiers on ambiguous UI specs |
-| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/512gb-unified-memory-mini-pcs-local-llm-2026) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
+| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/mac-studio-512gb-vs-dgx-spark) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
 
 The clear architectural pattern in November 2026 is **orchestrator-subagent routing**: run an orchestrator (`Gemini 4 Neon` at medium/high thinking, or your primary frontier planner) to decompose the spec and own final verification, while fanning routine file reads, test scaffolds, and classification turns out to cheaper subagents (`Hydrogen`, `DeepSeek V4.1 Flash`, or a local `Qwen 3.8-27B` endpoint over Tailscale).
 

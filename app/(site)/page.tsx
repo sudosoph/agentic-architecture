@@ -78,30 +78,30 @@ const HOME_ENTITY_GRAPH_LD = {
 
 const PATH_CARDS = [
   {
-    eyebrow: '1. For Founders & Business Owners',
-    title: 'AI Org Chart Masterclass & Accelerator',
-    body: 'See which roles belong to humans vs. AI back-end workflows in the free 60-minute live Masterclass, then install all 6 business systems over 8 weeks.',
-    cta: 'Save Free Masterclass Seat',
+    eyebrow: '1. Courses & Cohort (Done-With-You)',
+    title: '8-Week Executive AI Operating System',
+    body: 'Start in our free 60-minute live AI Org Chart Briefing, then install all 6 back-office AI roles in 8 weeks (includes a FREE seat for your EA or Ops Manager).',
+    cta: 'Save Free Briefing Seat',
     href: '/masterclass',
-    badge: 'Free Live Class -> Cohort',
+    badge: 'Free EA Seat + Guarantee',
     badgeColor: 'green' as const,
   },
   {
-    eyebrow: '2. For COOs, L&D & Leadership Teams',
-    title: 'Corporate Workshops & VIP Audits',
-    body: 'Book a $1,500 90-minute Workflow & Cost Audit (100% creditable) or bring Sophia in for a $7,500 to $15,000 hands-on team enablement lab.',
-    cta: 'View Audits & Team Labs',
+    eyebrow: '2. White-Glove Custom (Done-For-You)',
+    title: 'Bespoke AI Builds & $1,500 Blueprint',
+    body: 'Have Sophia custom-build 3 to 6 AI workflows inside your business in 30 days ($12.5K to $25K), or start with a guaranteed 48-Hour AI Blueprint ($1,500, 100% credited).',
+    cta: 'Explore Bespoke Builds',
     href: '/work-with-me',
-    badge: '300+ Leaders Trained',
+    badge: '$15K Savings Guarantee',
     badgeColor: 'amber' as const,
   },
   {
-    eyebrow: '3. Technical Credibility & Private AI',
-    title: 'The Sovereign Stack Book & Sizer',
-    body: 'Unlike hype coaches, we test the actual plumbing: read our 18-chapter field guide on model cost routing, data privacy, and private hardware.',
-    cta: 'Explore Book & Sizer',
-    href: '/sovereign-stack',
-    badge: 'Free 18-Ch. Book',
+    eyebrow: '3. Research, Book & University Wing',
+    title: 'Systems Benchmarks & Adjunct Syllabi',
+    body: 'Inspect the Columbia CS & applied engineering rigor behind our builds: 30+ benchmarks, our 18-chapter Sovereign Stack book, CU Boulder syllabi, and CTO advisory.',
+    cta: 'Visit Research & Teaching',
+    href: '/research',
+    badge: '300+ Trained Live',
     badgeColor: 'blue' as const,
   },
 ]
@@ -117,12 +117,12 @@ const CREDENTIAL_CHIPS = [
 export default function HomePage() {
   const allPosts = getAllPosts()
   const buyerSlugs = new Set([
-    'ai-org-chart-for-small-business-founders',
-    'how-to-build-an-ai-chief-of-staff-2026',
-    'ai-implementation-program-vs-agency-vs-diy-guide',
+    'ai-org-chart',
+    'ai-chief-of-staff',
+    'hire-ai-agency-vs-in-house',
     'easy-ai-brand-and-workflow-setup',
-    'google-latest-models-vs-deepseek-4-1-business-guide',
-    'personal-agents-tab-instinct-openinstinct-review',
+    'gemini-4-neon-vs-deepseek-v4',
+    'instinct-ai-vs-tab-review',
   ])
   const buyerFeatured = allPosts.filter(p => buyerSlugs.has(p.slug)).slice(0, 6)
   const recentPosts = buyerFeatured.length >= 6 ? buyerFeatured : allPosts.slice(0, 6)
@@ -246,27 +246,27 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Flagship Callan-Style Cohort Callout */}
+        {/* Flagship Hormozi Dual Offer Callout */}
         <section className="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-2">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              8-Week Done-With-You Implementation Program
+              Outcome-Guaranteed Implementation for $1M to $50M Owners
             </span>
             <h2 className="text-2xl font-bold tracking-tight text-fg">
-              The Agentic Business Accelerator ($5,997 Founding · $8,997 Standard)
+              Train Your Operator Free ($5,997 Cohort) or Have Us Build It Custom ($12.5K+)
             </h2>
             <p className="text-sm md:text-base text-muted leading-relaxed">
-              Do not wait six months trying to stitch random prompts together solo. Work live with
-              Sophia (and bring your Ops Lead or EA for +$1,500) to wire your AI Brand Brain, AI
-              Chief of Staff, pre-call dossiers, inbox triage, and SOP workflows in 8 weeks.
+              Bring your Executive Assistant, COO, or Ops Manager at $0 extra tuition inside our
+              8-week Cohort (backed by our 14-Day Live-System Guarantee), or book a white-glove
+              30-Day Bespoke AI Automation Build.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
             <Button variant="primary" size="md" href="/accelerator">
-              See All 6 Installed Systems
+              8-Week Cohort + Free EA Seat
             </Button>
-            <Button variant="outline" size="md" href="/masterclass">
-              Attend Free Masterclass First
+            <Button variant="outline" size="md" href="/work-with-me">
+              Bespoke Custom Builds
             </Button>
           </div>
         </section>

@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 const NAV_LINKS = [
-  { href: '/blog', label: 'Playbooks' },
-  { href: '/courses', label: 'Kits & Courses' },
-  { href: '/teaching', label: 'Speaking & Teaching' },
-  { href: '/stack', label: 'Stack & Rigs' },
+  { href: '/blog', label: 'Owner Playbooks' },
+  { href: '/courses', label: 'Courses & Cohort' },
+  { href: '/work-with-me', label: 'Bespoke AI Builds' },
+  { href: '/research', label: 'Research & Teaching' },
   { href: '/about', label: 'About' },
 ]
 
@@ -82,8 +82,8 @@ export function Nav() {
               )
             })}
           </div>
-          <Button variant="primary" size="sm" href="/work-with-me">
-            Work With Me
+          <Button variant="primary" size="sm" href="/masterclass">
+            Free Live Briefing
           </Button>
         </div>
 
@@ -128,8 +128,8 @@ export function Nav() {
                 </Link>
               ))}
               <div className="pt-2">
-                <Button variant="primary" size="md" href="/work-with-me" className="w-full">
-                  Work With Me
+                <Button variant="primary" size="md" href="/masterclass" className="w-full">
+                  Free Live Briefing
                 </Button>
               </div>
             </div>
