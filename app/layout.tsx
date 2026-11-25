@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import { Analytics } from '@/components/site/analytics'
+import { SITE_CONFIG } from '@/lib/site-config'
 import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
@@ -12,20 +13,22 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Agentic Architecture, Sophia Stein',
-    template: '%s | Agentic Architecture',
+    default: `${SITE_CONFIG.siteName} | ${SITE_CONFIG.authorName}`,
+    template: `%s | ${SITE_CONFIG.siteName}`,
   },
   description:
-    'Agentic Architecture, by Sophia Stein. AI Architect, sovereign-compute consultancy, and the publisher of Local-First AI. Boulder, CO.',
-  metadataBase: new URL('https://agenticarchitect.ai'),
+    'Practical AI workflows, brand systems, corporate enablement, and private infrastructure for founders, operators, and leaders. By Sophia Stein in Boulder, CO.',
+  metadataBase: new URL(SITE_CONFIG.siteUrl),
   openGraph: {
-    siteName: 'Agentic Architecture',
+    siteName: SITE_CONFIG.siteName,
     locale: 'en_US',
     type: 'website',
+    images: [{ url: '/brand/substack-cover-1200x600.png', width: 1200, height: 600 }],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@sudosoph',
+    images: ['/brand/substack-cover-1200x600.png'],
   },
   robots: {
     index: true,

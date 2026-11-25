@@ -1,70 +1,65 @@
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { SITE_CONFIG } from '@/lib/site-config'
+
 type Props = {
-  /** Origin of the signup (homepage / bsw / library / blog) — informational only. */
+  /** Origin of the signup (homepage / bsw / blog) for context. */
   source?: string
   /** Optional headline override. */
   headline?: string
   /** Optional sub-line override. */
   sub?: string
-  /** Optional surface variant. Inline = compact, no surrounding card. */
+  /** Optional surface variant. Inline = compact bar without surrounding hero card. */
   variant?: 'card' | 'inline'
 }
 
-// Substack's official iframe embed. The earlier AJAX path returned 200 from
-// Substack but didn't reliably trigger the confirmation email when the email
-// was already associated with a Substack account (returns didSignup: false +
-// prompt_to_login: true). The iframe widget always sends the email because
-// it's user interaction inside Substack's domain. The white background of
-// the embed is unfortunate but unavoidable without losing the confirmation flow.
-const SUBSTACK_EMBED_URL = 'https://localfirstai.substack.com/embed'
-
 export function NewsletterSignup({
   source: _source,
-  headline = 'Local-First AI',
+  headline = 'Weekly AI Systems & Workflow Playbooks',
   sub,
   variant = 'card',
 }: Props) {
   if (variant === 'inline') {
     return (
-      <div className="max-w-md">
-        <iframe
-          src={SUBSTACK_EMBED_URL}
-          title="Subscribe to Local-First AI"
-          width="100%"
-          height="160"
-          style={{ border: '1px solid var(--color-border)', background: 'transparent' }}
-          scrolling="no"
-          loading="lazy"
-        />
+      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
+        <div className="flex-1 min-w-[200px]">
+          <p className="text-sm font-semibold text-fg">{SITE_CONFIG.newsletterName}</p>
+          <p className="text-xs text-muted">
+            Practical weekly teardowns on AI workflows, brand systems, and private setups.
+          </p>
+        </div>
+        <Button variant="primary" size="sm" href={SITE_CONFIG.substackUrl}>
+          Subscribe on Substack
+        </Button>
       </div>
     )
   }
 
   return (
-    <section className="border border-border bg-surface p-6">
-      <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
-        {headline}
-      </p>
-      {sub ? (
-        <p className="font-mono text-sm text-fg leading-relaxed mb-1">{sub}</p>
-      ) : (
-        <p className="font-mono text-sm text-fg leading-relaxed mb-1">
-          One email a week on local-first AI, agentic architecture, and what
-          is actually working in 2026.
-        </p>
-      )}
-      <p className="font-mono text-xs text-muted leading-relaxed mb-4">
-        n8n templates, cost teardowns, and what is actually working in 2026.
-        No drip sequences, no upsells. Reply to opt out.
-      </p>
-      <iframe
-        src={SUBSTACK_EMBED_URL}
-        title="Subscribe to Local-First AI"
-        width="100%"
-        height="160"
-        style={{ border: 0, background: 'transparent' }}
-        scrolling="no"
-        loading="lazy"
-      />
+    <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="max-w-xl space-y-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 font-mono text-xs font-semibold text-accent">
+            {SITE_CONFIG.newsletterName}
+          </span>
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-fg">{headline}</h3>
+          <p className="text-sm md:text-base text-muted leading-relaxed">
+            {sub ??
+              'One practical briefing each week on automating repetitive business work, scaling your brand voice, and owning your AI stack without subscription bloat.'}
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-3 shrink-0">
+          <Button variant="primary" size="md" href={SITE_CONFIG.substackUrl}>
+            Subscribe Free on Substack
+          </Button>
+          <Link
+            href={SITE_CONFIG.offers.starterKitUrl}
+            className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-accent hover:text-accent transition-colors"
+          >
+            Get the Free Starter Kit
+          </Link>
+        </div>
+      </div>
     </section>
   )
 }

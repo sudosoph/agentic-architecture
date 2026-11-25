@@ -10,14 +10,18 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Click me' })).toBeTruthy()
   })
 
-  it('primary variant applies bg-accent class', () => {
+  it('primary variant applies bg-accent and text-white classes', () => {
     render(<Button variant="primary">Go</Button>)
-    expect(screen.getByRole('button', { name: 'Go' }).className).toContain('bg-accent')
+    const cls = screen.getByRole('button', { name: 'Go' }).className
+    expect(cls).toContain('bg-accent')
+    expect(cls).toContain('text-white')
   })
 
-  it('outline variant applies border-accent class', () => {
+  it('outline variant applies border-border and hover:border-accent classes', () => {
     render(<Button variant="outline">Go</Button>)
-    expect(screen.getByRole('button', { name: 'Go' }).className).toContain('border-accent')
+    const cls = screen.getByRole('button', { name: 'Go' }).className
+    expect(cls).toContain('border-border')
+    expect(cls).toContain('hover:border-accent')
   })
 
   it('ghost variant applies text-muted class', () => {

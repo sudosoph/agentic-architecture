@@ -7,50 +7,26 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('Nav', () => {
-  it('renders wordmark text', () => {
+  it('renders wordmark linking to /', () => {
     render(<Nav />)
-    expect(screen.getByText('Agentic Architect')).toBeTruthy()
+    const brand = screen.getByRole('link', { name: /Agentic Architect/i })
+    expect(brand.getAttribute('href')).toBe('/')
   })
 
-  it('wordmark links to /', () => {
+  it('renders Crisp Operator V2 navigation links', () => {
     render(<Nav />)
-    expect(screen.getByRole('link', { name: 'Agentic Architect' }).getAttribute('href')).toBe('/')
+    expect(screen.getByRole('link', { name: 'Playbooks' }).getAttribute('href')).toBe('/blog')
+    expect(screen.getByRole('link', { name: 'Kits & Courses' }).getAttribute('href')).toBe('/courses')
+    expect(screen.getByRole('link', { name: 'Speaking & Teaching' }).getAttribute('href')).toBe('/teaching')
+    expect(screen.getByRole('link', { name: 'Stack & Rigs' }).getAttribute('href')).toBe('/stack')
+    expect(screen.getByRole('link', { name: 'About' }).getAttribute('href')).toBe('/about')
+    expect(screen.getByRole('link', { name: /Work With Me/i }).getAttribute('href')).toBe('/work-with-me')
   })
 
-  it('renders about link', () => {
-    render(<Nav />)
-    expect(screen.getByRole('link', { name: 'about' })).toBeTruthy()
-  })
-
-  it('renders blog link', () => {
-    render(<Nav />)
-    expect(screen.getByRole('link', { name: 'blog' })).toBeTruthy()
-  })
-
-  it('renders contact link', () => {
-    render(<Nav />)
-    expect(screen.getByRole('link', { name: 'contact' })).toBeTruthy()
-  })
-
-  it('renders work with me link', () => {
-    render(<Nav />)
-    expect(screen.getByRole('link', { name: 'work with me ›' })).toBeTruthy()
-  })
-
-  it('renders hamburger button', () => {
-    render(<Nav />)
-    expect(screen.getByRole('button', { name: 'Open menu' })).toBeTruthy()
-  })
-
-  it('opens drawer when hamburger is clicked', () => {
+  it('opens and closes mobile drawer cleanly', () => {
     render(<Nav />)
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }))
     expect(screen.getByRole('button', { name: 'Close menu' })).toBeTruthy()
-  })
-
-  it('closes drawer when close button is clicked', () => {
-    render(<Nav />)
-    fireEvent.click(screen.getByRole('button', { name: 'Open menu' }))
     fireEvent.click(screen.getByRole('button', { name: 'Close menu' }))
     expect(screen.queryByRole('button', { name: 'Close menu' })).toBeNull()
   })

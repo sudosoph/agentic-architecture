@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 type Status = 'idle' | 'sending' | 'success' | 'error' | 'fallback'
 
@@ -49,11 +50,9 @@ export function ContactForm() {
           unconfigured?: boolean
         }
         if (res.status === 503 && json.unconfigured) {
-          // Email service isn't wired up yet — give them a mailto fallback
-          // pre-filled with the message so nothing's lost.
           const subjectPart = data.subject?.trim() || `Note from ${data.name.trim()}`
           const bodyPart = `From: ${data.name.trim()} <${data.email.trim()}>\n\n${data.message.trim()}`
-          const href = `mailto:sophia@agenticarchitect.ai?subject=${encodeURIComponent(
+          const href = `mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent(
             subjectPart,
           )}&body=${encodeURIComponent(bodyPart)}`
           setMailtoHref(href)
@@ -71,30 +70,29 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="border border-online bg-surface px-6 py-8 font-mono text-sm text-online">
-        Message sent. I'll get back to you within 1–2 business days.
+      <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-8 text-sm font-medium text-green-800">
+        Message sent. I will reply within 1 to 2 business days.
       </div>
     )
   }
 
   if (status === 'fallback') {
     return (
-      <div className="border border-border bg-surface px-6 py-8 space-y-4">
-        <p className="font-mono text-sm text-fg leading-relaxed">
-          The contact form is being wired up this week. In the meantime, your
-          message has been packaged into an email to Sophia — one click below
-          opens it in your default mail client.
+      <div className="rounded-xl border border-border bg-surface px-6 py-8 space-y-4">
+        <p className="text-sm text-fg leading-relaxed">
+          Your message is ready to send directly to Sophia. Click below to open it pre-filled in
+          your default email client:
         </p>
         <a
           href={mailtoHref}
-          className="inline-block bg-fg text-bg px-4 py-2 font-mono text-sm hover:bg-accent transition-colors"
+          className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-4 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors"
         >
-          open mail client →
+          Open in Email Client
         </a>
-        <p className="font-mono text-xs text-muted leading-relaxed">
-          Or copy this address directly:{' '}
-          <a href="mailto:sophia@agenticarchitect.ai" className="text-accent hover:underline">
-            sophia@agenticarchitect.ai
+        <p className="text-xs text-muted leading-relaxed">
+          Or email directly:{' '}
+          <a href={`mailto:${SITE_CONFIG.email}`} className="text-accent font-medium hover:underline">
+            {SITE_CONFIG.email}
           </a>
         </p>
       </div>
@@ -104,17 +102,17 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 max-w-xl border border-border bg-surface p-6 md:p-8"
+      className="space-y-5 max-w-xl rounded-2xl border border-border bg-surface p-6 md:p-8 shadow-xs"
     >
-      <p className="font-mono text-xs text-bench uppercase tracking-widest">
-        Send a message
+      <p className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
+        Send a Message
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Field label="Name" name="name" type="text" required placeholder="Your name" />
-        <Field label="Email" name="email" type="email" required placeholder="you@example.com" />
+        <Field label="Email" name="email" type="email" required placeholder="you@company.com" />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="subject" className="font-mono text-xs text-muted uppercase tracking-widest">
+        <label htmlFor="subject" className="text-xs font-semibold text-fg">
           Subject
         </label>
         <input
@@ -123,37 +121,30 @@ export function ContactForm() {
           type="text"
           value={subject}
           onChange={e => setSubject(e.target.value)}
-          placeholder="What's this about?"
-          className="bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-sans focus:outline-none focus:border-accent"
+          placeholder="Corporate workshop, Accelerator cohort, CU lecture, or advisory"
+          className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent"
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="message" className="font-mono text-xs text-muted uppercase tracking-widest">
+        <label htmlFor="message" className="text-xs font-semibold text-fg">
           Message <span className="text-pressure">*</span>
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={6}
+          rows={5}
           value={message}
           onChange={e => setMessage(e.target.value)}
-          placeholder="Your message..."
-          className="bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-sans focus:outline-none focus:border-accent resize-none"
+          placeholder="Share your goals, team size, or timeline..."
+          className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent resize-none"
         />
       </div>
 
-      {status === 'error' && (
-        <p className="font-mono text-xs text-pressure">{errorMsg}</p>
-      )}
+      {status === 'error' && <p className="text-xs font-medium text-pressure">{errorMsg}</p>}
 
-      <Button
-        type="submit"
-        variant="primary"
-        size="md"
-        disabled={status === 'sending'}
-      >
-        {status === 'sending' ? 'sending…' : 'send message ›'}
+      <Button type="submit" variant="primary" size="md" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending...' : 'Send Message'}
       </Button>
     </form>
   )
@@ -174,7 +165,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={name} className="font-mono text-xs text-muted uppercase tracking-widest">
+      <label htmlFor={name} className="text-xs font-semibold text-fg">
         {label} {required && <span className="text-pressure">*</span>}
       </label>
       <input
@@ -183,7 +174,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-sans focus:outline-none focus:border-accent"
+        className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent"
       />
     </div>
   )

@@ -1,23 +1,28 @@
 import Link from 'next/link'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const CONTENT_LINKS = [
-  { href: '/about', label: 'about' },
-  { href: '/blog', label: 'blog' },
-  { href: '/stack', label: 'stack' },
-  { href: '/guides', label: 'guides' },
+const EXPLORE_LINKS = [
+  { href: '/blog', label: 'Playbooks & Articles' },
+  { href: '/starter-kit', label: 'Free Brand & Workflow Kit' },
+  { href: '/stack', label: 'Stack & Rigs' },
+  { href: '/bsw', label: 'Boulder Startup Week Lab' },
+  { href: '/about', label: 'About Sophia' },
 ]
 
-const WORK_LINKS = [
-  { href: '/work-with-me', label: 'work with me' },
-  { href: '/library', label: 'library' },
-  { href: '/courses', label: 'courses' },
-  { href: '/sponsor', label: 'sponsor' },
+const PROGRAM_LINKS = [
+  { href: '/masterclass', label: 'Free Live 60-Min Masterclass' },
+  { href: '/accelerator', label: 'Agentic Business Accelerator' },
+  { href: '/teaching', label: 'Speaking, Corporate & University' },
+  { href: '/work-with-me', label: 'Audits & Executive Advisory' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 const CONNECT_LINKS = [
-  { href: 'https://github.com/sudosoph', label: 'GitHub ↗', accent: false },
-  { href: 'https://x.com/agenticarchitect', label: 'X ↗', accent: false },
-  { href: '/rss.xml', label: 'RSS ↗', accent: true },
+  { href: SITE_CONFIG.substackUrl, label: 'Substack Newsletter', accent: true },
+  { href: SITE_CONFIG.linkedinUrl, label: 'LinkedIn', accent: false },
+  { href: SITE_CONFIG.xUrl, label: 'X (@sudosoph)', accent: false },
+  { href: SITE_CONFIG.githubUrl, label: 'GitHub', accent: false },
+  { href: '/rss.xml', label: 'RSS Feed', accent: false },
 ]
 
 function FooterCol({
@@ -29,39 +34,40 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4 className="text-[#52525b] text-[0.6rem] uppercase tracking-widest mb-3 font-mono">
+      <h4 className="text-fg text-xs font-semibold uppercase tracking-wider mb-3">
         {heading}
       </h4>
-      {links.map(({ href, label, accent }) => (
-        <Link
-          key={href}
-          href={href}
-          className={`block mb-1.5 text-xs font-mono no-underline transition-colors ${
-            accent ? 'text-accent' : 'text-muted hover:text-fg'
-          }`}
-        >
-          {label}
-        </Link>
-      ))}
+      <ul className="space-y-2">
+        {links.map(({ href, label, accent }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className={`text-sm transition-colors ${
+                accent ? 'text-accent font-medium hover:underline' : 'text-muted hover:text-fg'
+              }`}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
 
 export function Footer() {
   return (
-    <footer className="bg-surface border-t border-border font-mono">
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-3 gap-8 mb-6">
-          <FooterCol heading="Content" links={CONTENT_LINKS} />
-          <FooterCol heading="Work" links={WORK_LINKS} />
+    <footer className="bg-surface border-t border-border">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+          <FooterCol heading="Explore" links={EXPLORE_LINKS} />
+          <FooterCol heading="Programs & Advisory" links={PROGRAM_LINKS} />
           <FooterCol heading="Connect" links={CONNECT_LINKS} />
         </div>
-        <div className="border-t border-border pt-4 flex justify-between items-baseline gap-8">
-          <span className="text-[#3f3f46] text-[0.66rem] whitespace-nowrap">
-            © 2026 Agentic Architecture LLC
-          </span>
-          <span className="text-[#3f3f46] text-[0.64rem] text-right leading-relaxed">
-            🤖 Runs on a Framework 16 · 96GB DDR5 · local LLMs · open source
+        <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-muted">
+          <span>© 2026 {SITE_CONFIG.legalName} · Boulder, CO</span>
+          <span>
+            Sophia Stein writes and teaches here in a personal capacity, views my own.
           </span>
         </div>
       </div>
