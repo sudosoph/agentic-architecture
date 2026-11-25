@@ -18,7 +18,7 @@ const KEYNOTES = [
     audience: 'Founders, Leadership & Non-Technical Teams',
     title: 'From Chatting to Systems: Practical AI Enablement for Non-Technical Teams',
     takeaway:
-      'Moves organizations beyond ad-hoc prompting into portable Brand Brains, scored task roadmaps, and human-approved operational workflows.',
+      'Moves organizations beyond ad-hoc prompting into standardized SOP rules, scored task roadmaps, and human-approved operational workflows.',
   },
   {
     audience: 'Executives, COOs & Engineering/Product Leads',

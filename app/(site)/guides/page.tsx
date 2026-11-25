@@ -10,17 +10,17 @@ import { SITE_CONFIG } from '@/lib/site-config'
 export const metadata: Metadata = {
   title: 'Workflow Templates & Step-by-Step AI Guides',
   description:
-    'Copy-paste 2026 AI workflow templates, Brand Brain files, lead dossier blueprints, and beginner-friendly build guides by Sophia Stein.',
+    'Copy-paste 2026 AI workflow templates, bottleneck scorecards, lead dossier blueprints, and beginner-friendly build guides by Sophia Stein.',
   alternates: { canonical: '/guides' },
 }
 
 const TEMPLATES_2026 = [
   {
     slug: 'starter-kit',
-    title: '20-Minute Brand Brain (voice.md + icp.md) & Task Scorecard',
+    title: '20/80 Bottleneck Readiness Calculator & SOP Starter Kit',
     description:
-      'Portable context files and interactive 20/80 Task Readiness Scorer so every AI tool and workflow sounds like you without re-prompting.',
-    meta: '2026 Core Kit · Markdown + CSV',
+      'Company operating rules, buyer qualification criteria, and interactive 20/80 Task Readiness Scorer for ranking your highest-ROI workflow.',
+    meta: '2026 Core Kit · SOP + CSV',
     href: '/starter-kit',
   },
   {

@@ -113,7 +113,7 @@ const COMMON_QUESTIONS = [
   },
   {
     q: 'What skills separate top Agentic Architects in 2026?',
-    a: 'Four capabilities compound fastest: (1) process decomposition (turning vague team pain into scored inputs and outputs), (2) context engineering (writing crisp schemas and Brand Brains), (3) security and unit-economics discipline (least-privilege tool scopes and token cost control), and (4) clear executive enablement so non-technical teammates actually adopt what gets built.',
+    a: 'Four capabilities compound fastest: (1) process decomposition (turning vague team pain into scored inputs and outputs), (2) context engineering (writing crisp schemas and SOP rules), (3) security and unit-economics discipline (least-privilege tool scopes and token cost control), and (4) clear executive enablement so non-technical teammates actually adopt what gets built.',
   },
 ]
 

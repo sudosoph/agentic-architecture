@@ -14,8 +14,8 @@ type ToolItem = {
 
 const BUSINESS_STACK: ToolItem[] = [
   {
-    category: 'Portable Repo & Org Context',
-    name: 'AGENTS.md + voice.md + icp.md',
+    category: 'Portable Repo & Org Rules',
+    name: 'AGENTS.md + Department SOP Checklists',
     cost: '$0 (Versioned Markdown)',
     summary:
       'Keep engineering rules, buyer positioning, and calibration examples in plain Git-tracked files so switching models takes five minutes.',

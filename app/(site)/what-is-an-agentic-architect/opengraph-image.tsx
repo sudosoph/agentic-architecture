@@ -71,7 +71,7 @@ export default function PillarOpenGraphImage() {
             What Is an Agentic Architect?
           </div>
           <div style={{ fontSize: '26px', color: '#475569', lineHeight: 1.38 }}>
-            The vendor-neutral 4-layer stack: portable Brand Brains, scoped tool permissions,
+            The vendor-neutral 4-layer stack: shared SOP rules, scoped tool permissions,
             readiness scoring, evaluation loops, and human-in-the-loop governance.
           </div>
         </div>

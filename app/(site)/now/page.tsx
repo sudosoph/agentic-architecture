@@ -27,14 +27,18 @@ export default function NowPage() {
           </p>
           <h2 className="text-lg font-bold text-fg">The Agentic Business Accelerator</h2>
           <p className="text-sm text-muted leading-relaxed">
-            Teaching lean business owners and operations leads how to install a portable Brand Brain
-            and 6 high-ROI workflows through the{' '}
+            Teaching non-technical business owners and operations leads how to automate repetitive
+            bottlenecks through our{' '}
             <Link href="/masterclass" className="text-accent font-medium hover:underline">
-              Free 60-Min Live Masterclass
+              Free 60-Min Live Build
             </Link>{' '}
-            and 8-week{' '}
-            <Link href="/accelerator" className="text-accent font-medium hover:underline">
-              Accelerator cohort
+            and{' '}
+            <Link href="/academy" className="text-accent font-medium hover:underline">
+              Practical AI Workflow Academy
+            </Link>
+            , alongside Fractional CAIO / AI CTO partnerships on{' '}
+            <Link href="/fractional-ai-cto" className="text-accent font-medium hover:underline">
+              /fractional-ai-cto
             </Link>
             .
           </p>

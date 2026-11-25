@@ -10,8 +10,8 @@ interface Props {
 }
 
 export function LdReimbursementCard({
-  programName = 'The Agentic Business Accelerator (8-Week Implementation Cohort)',
-  tuitionLabel = '$5,997 Founding Tuition',
+  programName = 'The 6-System AI Back-Office Implementation Cohort',
+  tuitionLabel = 'From $1,497 (Includes Free Teammate Seat)',
 }: Props) {
   const [copied, setCopied] = useState(false)
 
@@ -21,11 +21,11 @@ Hi [Manager / Finance Name],
 
 I would like to use my professional development / operations budget to enroll in ${programName} (${tuitionLabel}), led by AI Systems Architect Sophia Stein (Columbia CS, ex-McKinsey, 300+ operators trained at Boulder Startup Week).
 
-Unlike passive video courses, this is an 8-week implementation program where we build and document six production workflows directly for our team:
-1. Shared company Brand & SOP Brain (voice.md + icp.md)
+Unlike passive video courses, this is a guided implementation program where we build and document six production workflows directly for our team:
+1. Shared company operating rules, qualification criteria, and SOP templates
 2. Pre-call client research and follow-up automation
-3. 4-bucket inbox and scheduling triage with human approval gates
-4. Document/PDF extraction and cost governance
+3. Draft-first inbox and scheduling triage with human approval gates
+4. Proposal, onboarding, and document extraction with cost governance
 
 Reclaiming even 6 hours per week across our team returns more than 300 hours over the next year at a fraction of a $65,000/yr coordinator hire or $20,000 agency retainer.
 

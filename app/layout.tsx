@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_CONFIG.siteName}`,
   },
   description:
-    'Agentic Architect by Sophia Stein: practical AI workflows, Brand Brains, corporate workshops, and private infrastructure in Boulder, CO.',
+    'Agentic Architect by Sophia Stein: non-coder AI workflow courses, custom automation sprints, Fractional CAIO / AI CTO leadership, and corporate training in Boulder, CO.',
   metadataBase: new URL(SITE_CONFIG.siteUrl),
   alternates: {
     canonical: '/',
