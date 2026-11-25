@@ -30,7 +30,8 @@ const SITE_URL = 'https://agenticarchitect.ai'
 // Canonical slug overrides matching next.config.ts short-slug rewrites
 const SHORT_SLUG_MAP = {
   'instinct-ai-vs-tab-dots-and-openinstinct-texting-browser-agents-review': 'instinct-ai-vs-tab-review',
-  'building-an-ai-org-chart-before-your-next-hire': 'ai-org-chart',
+  'building-an-ai-org-chart-before-your-next-hire': 'ai-back-office',
+  'ai-org-chart': 'ai-back-office',
   'ai-chief-of-staff-for-founders-and-small-teams': 'ai-chief-of-staff',
   'hire-ai-automation-agency-vs-build-in-house': 'hire-ai-agency-vs-in-house',
   '512gb-unified-memory-mac-studio-vs-dgx-spark-and-mini-pcs': 'mac-studio-512gb-vs-dgx-spark',
@@ -148,7 +149,7 @@ export function buildCrosspostPayloads(inputSlug, options = {}) {
 
   const cleanMarkdownBody = absolutizeMarkdownLinks(content.trim())
   const canonicalFooter = isOwnerTrack
-    ? `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Join the next free 60-minute [AI Org Chart Masterclass](${SITE_URL}/masterclass) or explore [48-Hour Custom AI Blueprints](${SITE_URL}/work-with-me).*`
+    ? `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Join the next free 60-minute [Prompt-to-System Live Build](${SITE_URL}/masterclass), explore our [$297 AI Workflow Academy](${SITE_URL}/courses), or book a [Free 20-Min Bottleneck Call](${SITE_URL}/work-with-me).*`
     : `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Explore more reproducible benchmarks in the [Research & University Lab](${SITE_URL}/research) and [The Sovereign Stack](${SITE_URL}/sovereign-stack).*`
 
   const bullets = extractKeyBullets(content, 3)

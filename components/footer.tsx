@@ -12,11 +12,12 @@ const EXPLORE_LINKS = [
 ]
 
 const PROGRAM_LINKS = [
-  { href: '/masterclass', label: 'Free 60-Min AI Org Chart Briefing' },
-  { href: '/accelerator', label: '8-Week Executive AI Cohort' },
-  { href: '/work-with-me', label: 'Bespoke AI Builds & $1.5K Blueprint' },
-  { href: '/teaching', label: 'Speaking & University Teaching' },
-  { href: '/boulder', label: 'Boulder & Denver Executive Labs' },
+  { href: '/masterclass', label: 'Free 60-Min Live Workflow Build' },
+  { href: '/courses', label: 'Courses & $297 Workflow Academy' },
+  { href: '/accelerator', label: '6-System Back-Office Cohort' },
+  { href: '/work-with-me', label: 'Custom Sprints & Bottleneck Call' },
+  { href: '/teaching', label: 'Corporate Training & University' },
+  { href: '/boulder', label: 'Boulder & Denver Team Workshops' },
   { href: '/contact', label: 'Contact' },
 ]
 

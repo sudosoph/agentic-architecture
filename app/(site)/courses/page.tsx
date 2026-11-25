@@ -8,48 +8,48 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Executive AI Courses, Free Briefing & 8-Week Cohort',
+  title: 'AI Automation Courses for Non-Technical Owners, Cohort & Custom Sprints',
   description:
-    'Start free with the 20-Minute Company Context Kit and 60-Min Live AI Org Chart Briefing, train your EA/Ops Lead free inside our 8-week Cohort, or request a Bespoke Build.',
+    'Start free in our 5-Day Prompt-to-System Challenge and 60-Min Live Build, learn step-by-step in our $297 Self-Paced Academy, or train your operator in our guided cohort.',
   alternates: { canonical: '/courses' },
 }
 
 const LADDER = [
   {
-    step: 'Step 01 · Free Today',
-    badge: 'Unlocked & Live',
+    step: 'Step 01 · Start Free',
+    badge: 'Every Click Shown',
     badgeVariant: 'online' as const,
-    title: 'Context Kit & Free 60-Min AI Org Chart Briefing',
+    title: '5-Day Prompt-to-System Challenge & 60-Min Live Build',
     price: '$0',
-    body: 'Download the portable voice.md + icp.md Company Context Vault immediately, then watch 6 back-office AI roles running live on screen.',
+    body: 'Download the unlocked voice.md + icp.md Context Vault, score your #1 operational bottleneck, and watch a working automation built live without code.',
     primaryHref: '/masterclass',
-    primaryCta: 'Save Free Briefing Seat →',
+    primaryCta: 'Join Free Live Workshop →',
     secondaryHref: '/starter-kit',
-    secondaryCta: 'Open Context Kit Now',
+    secondaryCta: 'Open Unlocked Context Kit',
   },
   {
-    step: 'Step 02 · Done-With-You Cohort',
-    badge: 'Free Operator Seat Included',
+    step: 'Step 02 · Self-Paced Course',
+    badge: '+$97 Per Team Seat',
     badgeVariant: 'rig' as const,
-    title: '8-Week Executive AI Operating System Cohort',
-    price: '$5,997 Founding ($8,997 Standard)',
-    body: 'Install all 6 revenue and operations AI workflows in 8 weeks. Includes a FREE seat ($2,500 value) for your EA, COO, or Ops Manager + our 14-Day Live-System Guarantee.',
-    primaryHref: '/accelerator',
-    primaryCta: 'See Cohort & Value Stack →',
-    secondaryHref: SITE_CONFIG.cal.scoping,
-    secondaryCta: 'Book 15-Min Fit Call',
+    title: 'Practical AI Workflow Academy (For Non-Coders)',
+    price: 'From $297 (Lifetime Access)',
+    body: 'Six concise build modules showing non-technical founders, EAs, and ops leads how to wire pre-call dossiers, draft-first inbox triage, SOP search, and follow-up loops.',
+    primaryHref: '/contact?subject=AI%20Workflow%20Academy%20Access',
+    primaryCta: 'Get Academy Access ($297) →',
+    secondaryHref: '/guides',
+    secondaryCta: 'Preview Free Sample Build',
   },
   {
-    step: 'Step 03 · Done-For-You Bespoke',
-    badge: '$15K Savings Guarantee',
+    step: 'Step 03 · Guided Cohort or Custom',
+    badge: 'Includes Free Operator Seat',
     badgeVariant: 'tag' as const,
-    title: '48-Hour AI Blueprint & 30-Day Bespoke Sprints',
-    price: '$1,500 Blueprint · $12.5K+ Custom Build',
-    body: 'Prefer white-glove execution? Start with a guaranteed $1,500 48-Hour Custom AI Blueprint (100% credited) or have Sophia build your workflows custom in 30 days.',
-    primaryHref: '/work-with-me',
-    primaryCta: 'Explore Bespoke Builds →',
-    secondaryHref: SITE_CONFIG.cal.audit,
-    secondaryCta: 'Book $1,500 Blueprint',
+    title: '6-System Back-Office Cohort & Custom Sprints',
+    price: 'Cohort from $1,497 · Sprints from $2,500',
+    body: 'Want live feedback alongside your EA/Ops Manager over 6 weeks, or want Sophia to ship a custom bottleneck automation inside your workspace? Book a quick 20-minute fit call.',
+    primaryHref: '/accelerator',
+    primaryCta: 'Explore Guided Cohort →',
+    secondaryHref: SITE_CONFIG.cal.scoping,
+    secondaryCta: 'Free 20-Min Fit Call',
   },
 ]
 
@@ -57,9 +57,9 @@ export default function CoursesPage() {
   return (
     <div className="space-y-14">
       <PageHeader
-        meta="Free Live Briefing · 8-Week Owner + Operator Cohort · Bespoke Builds"
-        title="Courses, Cohort & Custom Builds"
-        description="Built for non-technical $1M to $50M business owners: train your right-hand operator in our 8-week Cohort, or have Sophia custom-build your AI workflows for you."
+        meta="Free 5-Day Challenge · $297 Self-Paced Academy · Guided Cohort"
+        title="Where Are You With AI Right Now?"
+        description="Practical, zero-jargon automation training built for non-technical business owners and operators, backed by Columbia CS and ex-McKinsey engineering standards."
       />
 
       {/* 3-Step Value Ladder */}
@@ -97,14 +97,14 @@ export default function CoursesPage() {
             Open-Source Lab Archives
           </p>
           <h2 className="text-xl font-bold text-fg">
-            Prefer Self-Paced Code-Alongs &amp; Forkable GitHub Repos?
+            Prefer Self-Paced Technical Labs &amp; Forkable GitHub Workflows?
           </h2>
           <p className="text-sm text-muted leading-relaxed">
             Explore the full 17-step Boulder Startup Week Discovery Engine lab at{' '}
             <Link href="/bsw" className="text-accent font-medium hover:underline">
               /bsw
             </Link>{' '}
-            and beginner copy-paste builds at{' '}
+            and beginner step-by-step builds at{' '}
             <Link href="/guides" className="text-accent font-medium hover:underline">
               /guides
             </Link>
@@ -116,7 +116,7 @@ export default function CoursesPage() {
             BSW Workshop Archive →
           </Button>
           <Button variant="ghost" size="md" href="/guides">
-            Beginner Guides →
+            Step-by-Step Guides →
           </Button>
         </div>
       </section>
@@ -125,16 +125,18 @@ export default function CoursesPage() {
       <section id="book" className="scroll-mt-20">
         <Card className="p-6 md:p-8 space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="tag">Executive &amp; Operator Field Guide</Badge>
-            <span className="font-mono text-xs text-muted">Serializing on Substack + Corporate Bulk Editions</span>
+            <Badge variant="tag">Executive &amp; Builder Field Guide</Badge>
+            <span className="font-mono text-xs text-muted">
+              18 Live Chapters + 3 Free Downloadable Manuals
+            </span>
           </div>
           <h2 className="text-2xl font-bold text-fg">
             The Sovereign Stack: Practical Workflows, Cost Strategy &amp; Private AI You Actually Own
           </h2>
           <p className="text-sm text-muted leading-relaxed max-w-3xl">
-            A concise handbook for founders, operators, and engineering leaders on designing portable
-            Brand Brains, auditing agent-ready tasks, keeping cloud spend predictable, and owning
-            your prompts, SOPs, and private infrastructure.
+            Our open field manual for founders, operators, and engineering leaders on designing
+            portable context vaults, scoring automation-ready tasks, keeping cloud spend
+            predictable, and owning your workflows and private infrastructure.
           </p>
           <div className="flex flex-wrap gap-3 pt-1">
             <Button variant="primary" size="md" href="/sovereign-stack">

@@ -83,18 +83,19 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(links).toContain('/accelerator')
   })
 
-  it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and cohort pricing', () => {
+  it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and Approach 2 accessible cohort floor', () => {
     const { container } = render(<AcceleratorPage />)
     const text = container.textContent ?? ''
     expect(text).toContain('$65,000')
-    expect(text).toContain('$5,997')
-    expect(text).toContain('$8,997')
-    expect(text).toContain('$1,500')
+    expect(text).toContain('$1,497')
+    expect(text).toContain('$297')
+    expect(text.toLowerCase()).not.toContain('ai org chart')
+    expect(text).not.toContain('$8,997')
     const links = Array.from(container.querySelectorAll('a')).map(a => a.getAttribute('href'))
     expect(links).toContain('https://cal.com/sophia-stein/scoping')
   })
 
-  it('renders WorkWithMePage with Hormozi guarantees, Bespoke Build tier, verified Cal.com slugs, and zero $500 hourly call', () => {
+  it('renders WorkWithMePage with Approach 2 light floors, Ritesh-style 20-min bottleneck flow, verified Cal.com slugs, and zero aggressive guarantees', () => {
     const { container } = render(<WorkWithMePage />)
     const links = Array.from(container.querySelectorAll('a')).map(a => a.getAttribute('href'))
     expect(links).toContain('/accelerator')
@@ -103,9 +104,10 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(links).toContain('https://cal.com/sophia-stein/scoping')
     expect(links).not.toContain('https://cal.com/sophia-stein/office-hours')
     expect(links).not.toContain('https://cal.com/sophia-stein')
-    expect(container.textContent).toContain('$1,500')
-    expect(container.textContent).toContain('$12,500')
-    expect(container.textContent).toContain('$15,000 Savings Guarantee')
+    expect(container.textContent).toContain('$750')
+    expect(container.textContent).toContain('$2,500')
+    expect(container.textContent).not.toContain('$15,000 Savings Guarantee')
+    expect(container.textContent?.toLowerCase()).not.toContain('ai org chart')
   })
 
   it('renders TeachingPage with 3 keynotes, 2 CU Boulder syllabi, Women Who Code, and 300+ BSW proof', () => {

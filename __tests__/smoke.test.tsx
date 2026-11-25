@@ -9,9 +9,10 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Build your AI org chart, automate busywork, and own your stack/i,
+        name: /Automate the bottleneck, keep the growth, and own your stack/i,
       }),
     ).toBeTruthy()
+    expect(container.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(screen.getAllByText(/Columbia CS/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/ex-McKinsey/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/Women Who Code/i).length).toBeGreaterThan(0)

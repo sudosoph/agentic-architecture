@@ -9,54 +9,54 @@ import { AiOrgChartMapper } from '@/components/site/ai-org-chart-mapper'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Free Live 60-Min AI Org Chart Briefing for Business Owners',
+  title: 'Free 60-Min Live AI Workflow Workshop + 5-Day Prompt-to-System Challenge',
   description:
-    'See how $1M to $50M owners map an AI Org Chart, set up a 1-page Company Context Vault (voice.md), and delegate 6 back-office roles to AI workflows without hiring or coding.',
+    'Go from ChatGPT prompting to a working business automation without writing code. Join Sophia Stein live for 60 minutes plus our free 5-day Prompt-to-System walkthrough.',
   alternates: { canonical: '/masterclass' },
 }
 
 const AGENDA = [
   {
     window: 'Minutes 00 to 20',
-    title: 'The AI Org Chart & Company Context Vault (voice.md + icp.md)',
+    title: 'From Chat-Box Toy to Owned Company Context (voice.md + icp.md)',
     detail:
-      'Stop prompting from a blank chat window. Map which jobs in your firm belong to humans vs. AI workflows, and build a 1-page Context Vault so every draft sounds like you.',
-    outcome: 'Live AI Org Chart + copy-paste voice.md template',
+      'Why blank-window prompting makes you the bottleneck, how to score repetitive work for ROI, and how to set up a 1-page Context Vault every workflow reads automatically.',
+    outcome: 'Copy-paste voice.md + 1-Bottleneck Scorecard',
   },
   {
     window: 'Minutes 20 to 40',
-    title: 'AI Chief of Staff: Inbox, Calendar & Pre-Call Dossiers',
+    title: 'Live Build: Pre-Call Dossiers & Draft-First Inbox Triage',
     detail:
-      'Watch how inbound lead research, meeting prep briefs, and follow-up drafts connect to your existing workspace with a 10-second human approval gate.',
-    outcome: 'Reclaims 10 to 15 hrs/week of founder & ops admin',
+      'Watch a real non-coder setup connecting calendar bookings, prospect research, and Gmail Drafts with a 10-second human sign-off so nothing reckless ever auto-sends.',
+    outcome: 'Reclaims 8 to 15 hrs/week of manual follow-up',
   },
   {
     window: 'Minutes 40 to 60',
-    title: 'Data Privacy, Cost Guardrails & Live Q&A',
+    title: 'Data Privacy, Cost Ceilings & Your Next Workflow',
     detail:
-      'How to keep sensitive client files off public training pipelines, avoid bloated agency retainers, and choose the first 2 workflows to ship this week.',
-    outcome: '90-day implementation roadmap + open Q&A',
+      'How to keep client files off public training pipelines, avoid $20,000 black-box agency lock-in, and decide whether to DIY in our courses or commission a sprint.',
+    outcome: '5-day Prompt-to-System challenge checklist + Q&A',
   },
 ]
 
 const WHO_ITS_FOR = [
-  'Founders, agency owners, and service businesses tired of carrying repetitive follow-ups and content busywork in their heads',
-  'COOs, Chiefs of Staff, and operators who want repeatable AI workflows running before adding another $65,000/yr coordinator hire',
-  'Clinics, advisory firms, and leadership teams that care about real data privacy and human sign-off rather than black-box bots',
+  'Non-technical founders, agency owners, and service businesses tired of manual follow-ups, proposals, and inbox busywork',
+  'COOs, Chiefs of Staff, and operators who want dependable automations running before adding another $65,000/yr coordinator hire',
+  'Clinics, advisory firms, and leadership teams that want human approval gates and clear data boundaries rather than fragile bots',
 ]
 
 const MASTERCLASS_FAQS = [
   {
-    q: 'Do I need to know how to code to build the workflows in this Masterclass?',
-    a: 'No. Every build in the 60-minute session uses plain-English markdown files (voice.md and icp.md) and visual workspace connectors your team or Executive Assistant can maintain without writing software.',
+    q: 'Do I need to know how to code to build the workflows shown in this session?',
+    a: 'No. Every build uses plain-English markdown files (voice.md and icp.md) and visual workspace connectors that non-technical owners, EAs, and Ops Managers can run and edit themselves.',
   },
   {
-    q: 'What is the difference between this free Masterclass and the Agentic Business Accelerator?',
-    a: 'The free 60-minute Masterclass shows the complete AI Org Chart framework live and gives you the Starter Kit templates to build your first workflow solo. The Agentic Business Accelerator ($5,997 Founding / $8,997 Standard) is our 8-week Done-With-You implementation program where Sophia helps you and your Ops Lead/EA install all 6 systems directly inside your business.',
+    q: 'What happens after the free 60-minute workshop and 5-day challenge?',
+    a: 'Most attendees take the templates and ship their first automation solo. If you want to go deeper, you can join our self-paced AI Workflow Academy ($297), enroll with your operator in our guided 6-System Cohort (from $1,497), or book a free 20-minute 1-Bottleneck Call to have us build a custom workflow for you.',
   },
   {
-    q: 'What if I cannot wait for the next live session?',
-    a: 'You can open the unlocked Starter Kit workbook immediately after registering, book a $1,500 VIP 90-Minute Workflow & Cost Audit (100% credited toward the Accelerator within 30 days), or schedule a 20-minute Cohort Fit Call today.',
+    q: 'What if I already have a specific bottleneck I want scoped right away?',
+    a: 'Skip the wait: open the unlocked Context Kit immediately, book a free 20-minute 1-Bottleneck Discovery Call, or schedule a 90-minute Workflow & Cost Roadmap session (from $750, credited toward any custom build).',
   },
 ]
 
@@ -67,9 +67,9 @@ export default function MasterclassPage() {
       {
         '@type': 'Course',
         '@id': `${SITE_CONFIG.siteUrl}/masterclass#course`,
-        name: 'The AI Org Chart Masterclass: Brand Brain & 6 Business Workflows',
+        name: 'Prompt-to-System: Free 60-Min Live AI Workflow Workshop & 5-Day Challenge',
         description:
-          'Free 60-minute live training for founders and operators on mapping an AI Org Chart, building a portable Brand Brain (voice.md), and automating inbox, lead prep, and operations without coding.',
+          'Free 60-minute live build and 5-day Prompt-to-System challenge for non-technical business owners and operators automating inbox, lead prep, and operations without coding.',
         provider: {
           '@type': 'Organization',
           '@id': `${SITE_CONFIG.siteUrl}/#organization`,
@@ -112,28 +112,29 @@ export default function MasterclassPage() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-7 space-y-5">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="online">Free Live 60-Min Masterclass</Badge>
+              <Badge variant="online">Free 60-Min Live Workshop + 5-Day Challenge</Badge>
               <span className="font-mono text-xs text-muted">
-                Live Screen Walkthrough + AI Org Chart Workbook
+                Every Click Shown · Zero Coding Required
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-fg leading-tight">
-              The AI Org Chart Briefing: How Business Owners Install 6 Back-Office AI Roles Without Adding Payroll or Coding
+              Prompt-to-System: Go From Ad-Hoc ChatGPT Prompts to 1 Running Business Automation in 60 Minutes
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed">
-              Humans belong on high-trust client work, dealmaking, and leadership. In 60 live
-              minutes, see the exact AI Org Chart and back-office workflows we install for $1M to
-              $50M owners and firms to reclaim 10 to 15 hours a week.
+              Most businesses do not need complex autonomous agents that break every Tuesday; they
+              need clean, owned workflows that handle intake, call prep, and follow-ups reliably.
+              Watch us wire a real back-office workflow live on screen and get our 5-day starter
+              challenge free.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-1">
               <Button variant="primary" size="lg" href={SITE_CONFIG.cal.masterclass}>
-                Save My Free Briefing Seat →
+                Save My Free Live Seat →
               </Button>
               <Button variant="outline" size="lg" href="/starter-kit">
-                Start Now: Open Context Vault (voice.md)
+                Open Unlocked Context Kit (voice.md)
               </Button>
             </div>
 
@@ -152,7 +153,7 @@ export default function MasterclassPage() {
           <Card className="lg:col-span-5 p-6 space-y-5 bg-surface">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Your 2-Step Onboarding
+                What You Get Free
               </span>
               <span className="font-mono text-xs text-online font-semibold">$0 Cost</span>
             </div>
@@ -163,10 +164,10 @@ export default function MasterclassPage() {
                   1
                 </span>
                 <div>
-                  <p className="font-semibold text-fg">Reserve your live seat &amp; calendar invite</p>
+                  <p className="font-semibold text-fg">60-minute live build + replay</p>
                   <p className="text-xs text-muted mt-0.5 leading-relaxed">
-                    Grab the next live session link and join the {SITE_CONFIG.newsletterName} list so
-                    you receive the slide deck and replay automatically.
+                    Grab the next live session invite and receive the 5-day Prompt-to-System lessons
+                    and replay via {SITE_CONFIG.newsletterName}.
                   </p>
                 </div>
               </li>
@@ -176,17 +177,17 @@ export default function MasterclassPage() {
                 </span>
                 <div>
                   <p className="font-semibold text-fg">
-                    Complete your 10-minute Pre-Masterclass Brand Brain Workbook (`voice.md`)
+                    Unlocked Company Context Workbook (`voice.md` + 20/80 Scorecard)
                   </p>
                   <p className="text-xs text-muted mt-0.5 leading-relaxed">
-                    Open the unlocked Starter Kit before we meet so you can map your own business
-                    roles live during the walkthrough.
+                    Score your single biggest operational bottleneck in 10 minutes before the live
+                    build starts.
                   </p>
                   <Link
                     href="/starter-kit"
                     className="inline-block mt-1.5 text-xs font-semibold text-accent hover:underline"
                   >
-                    Open Step 2 Workbook →
+                    Open Workbook Now →
                   </Link>
                 </div>
               </li>
@@ -202,7 +203,7 @@ export default function MasterclassPage() {
           </Card>
         </section>
 
-        {/* Interactive AI Org Chart Mapper */}
+        {/* Interactive Back-Office Bottleneck Map */}
         <AiOrgChartMapper />
 
         {/* 60-Min Live Screen Demo Breakdown */}
@@ -210,7 +211,7 @@ export default function MasterclassPage() {
           <PageHeader
             meta="60-Min Live Agenda"
             title="Three Live Builds, Zero Slide Filler"
-            description="Every 20-minute block shows a real working business workflow you can deploy the same week."
+            description="Every 20-minute block shows a practical business automation you can put to work the same week."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -235,7 +236,7 @@ export default function MasterclassPage() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <Card className="lg:col-span-7 p-6 md:p-8 space-y-4">
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Built For Busy Decision-Makers
+              Built For Non-Technical Operators
             </p>
             <h2 className="text-2xl font-bold text-fg">Who Gets the Most Out of This Session</h2>
             <ul className="space-y-3 text-sm text-muted leading-relaxed">
@@ -251,23 +252,23 @@ export default function MasterclassPage() {
           <Card className="lg:col-span-5 p-6 md:p-8 bg-surface flex flex-col justify-between space-y-5">
             <div className="space-y-2">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-rig">
-                Do Not Want to Wait for the Next Live Date?
+                Want Guided Implementation or a Custom Build?
               </span>
               <h2 className="text-xl font-bold text-fg">
-                Skip Straight to the 8-Week Accelerator
+                Explore Courses, Cohort, or a Free 20-Min Bottleneck Call
               </h2>
               <p className="text-sm text-muted leading-relaxed">
-                Ready for Sophia to work directly with you and your Ops Lead or EA to install all 6
-                AI systems across your business? Explore the cohort or book a 100%-creditable $1,500
-                VIP Audit this week.
+                Move at your own pace in our self-paced Academy ($297), bring your EA or Ops Lead
+                into our guided 6-System Cohort, or book a free 20-minute call to scope a custom
+                workflow sprint.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" size="md" href="/accelerator">
-                Explore the Accelerator →
+                See 6-System Cohort →
               </Button>
               <Button variant="outline" size="md" href={SITE_CONFIG.cal.scoping}>
-                Book a Cohort Fit Call
+                Free 20-Min Bottleneck Call
               </Button>
             </div>
           </Card>
@@ -288,8 +289,8 @@ export default function MasterclassPage() {
 
         <NewsletterSignup
           source="masterclass"
-          headline="Get Masterclass Dates & Weekly AI Org Chart Blueprints"
-          sub="Subscribe free on Substack to get notified of the next live 60-minute session plus copy-paste business workflows every week."
+          headline="Get Workshop Dates & Weekly Prompt-to-System Playbooks"
+          sub="Subscribe free on Substack to receive the 5-day starter walkthrough plus practical automation blueprints every week."
         />
       </div>
     </>

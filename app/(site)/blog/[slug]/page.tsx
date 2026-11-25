@@ -12,7 +12,7 @@ import { SITE_CONFIG } from '@/lib/site-config'
 type Props = { params: Promise<{ slug: string }> }
 
 const TRACK_LABELS: Record<BlogTrack, string> = {
-  'small-business': 'Small Business & Workflows',
+  'small-business': 'Owner Playbook',
   'models-rigs': 'Models, Tailscale & Rigs',
   engineering: 'Engineering Deep Dive',
 }
@@ -147,35 +147,35 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="space-y-1.5">
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
                 {trackKey === 'small-business'
-                  ? 'Free Live Training + Done-With-You Cohort'
-                  : 'Put This Playbook to Work'}
+                  ? 'Free Live Build · Courses · Custom Sprints'
+                  : 'Put This Architecture to Work'}
               </p>
               <h2 className="text-xl font-bold text-fg">
                 {trackKey === 'small-business'
-                  ? 'See the Full AI Org Chart Live (Or Install All 6 Systems With Sophia)'
-                  : 'Grab the Free Starter Kit, Hardware Sizer, or Book an Audit'}
+                  ? 'Go From Prompting to a Working Automation (Solo or Built With Us)'
+                  : 'Grab the Context Kit, Run the Hardware Sizer, or Scope Team Advisory'}
               </h2>
               <p className="text-sm text-muted leading-relaxed">
                 {trackKey === 'small-business'
-                  ? 'Join the next free 60-minute AI Org Chart Masterclass to watch these workflows built live, explore the 8-week Agentic Business Accelerator ($5,997 Founding), or book a $1,500 creditable VIP Audit.'
-                  : 'Copy the unlocked voice.md template in 20 minutes, run your numbers in The Sovereign Stack 512GB/OSS sizer, or book a 90-minute architecture and cost teardown.'}
+                  ? 'Watch a live 60-minute non-coder build in our free workshop, learn step-by-step in our $297 Academy and guided Cohort, or book a free 20-minute 1-Bottleneck Call to scope a custom sprint.'
+                  : 'Copy the unlocked voice.md template in 20 minutes, run your numbers in The Sovereign Stack 512GB/OSS sizer, or book a 20-minute technical advisory or corporate workshop call.'}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" size="md" href="/masterclass">
-                Join Free 60-Min Masterclass →
+                Free 60-Min Live Build →
               </Button>
               <Button
                 variant="outline"
                 size="md"
-                href={trackKey === 'small-business' ? '/accelerator' : '/sovereign-stack'}
+                href={trackKey === 'small-business' ? '/courses' : '/sovereign-stack'}
               >
                 {trackKey === 'small-business'
-                  ? 'Explore 8-Week Accelerator'
+                  ? 'See $297 Academy & Cohort'
                   : 'Open Sovereign Stack & Sizer'}
               </Button>
               <Button variant="ghost" size="md" href="/work-with-me">
-                VIP Audits &amp; Team Labs →
+                Free 20-Min Bottleneck Call →
               </Button>
             </div>
           </Card>

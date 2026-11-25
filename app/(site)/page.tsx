@@ -53,10 +53,10 @@ const HOME_ENTITY_GRAPH_LD = {
       },
       priceRange: '$$$',
       serviceType: [
-        'AI Implementation Program for Founders',
-        'AI Chief of Staff & Org Chart Architecture',
+        'AI Automation Courses for Non-Technical Operators',
+        'Bespoke Business Workflow Automation Sprints',
         'Corporate AI Enablement Workshops',
-        'Executive AI Cost & Workflow Audits',
+        'Production AI Architecture & CTO Advisory',
       ],
       sameAs: ENTITY_PROFILES,
     },
@@ -78,27 +78,27 @@ const HOME_ENTITY_GRAPH_LD = {
 
 const PATH_CARDS = [
   {
-    eyebrow: '1. Courses & Cohort (Done-With-You)',
-    title: '8-Week Executive AI Operating System',
-    body: 'Start in our free 60-minute live AI Org Chart Briefing, then install all 6 back-office AI roles in 8 weeks (includes a FREE seat for your EA or Ops Manager).',
-    cta: 'Save Free Briefing Seat',
-    href: '/masterclass',
-    badge: 'Free EA Seat + Guarantee',
+    eyebrow: '1. Learn to Build It Yourself (Non-Coders)',
+    title: '5-Day Challenge, $297 Academy & Cohort',
+    body: 'Go from ChatGPT prompting to a working automation in our free 5-day challenge and 60-min live workshop, then master all 6 workflows in our self-paced Academy or guided cohort.',
+    cta: 'Start Free Workshop & Courses',
+    href: '/courses',
+    badge: 'Free Challenge + From $297',
     badgeColor: 'green' as const,
   },
   {
-    eyebrow: '2. White-Glove Custom (Done-For-You)',
-    title: 'Bespoke AI Builds & $1,500 Blueprint',
-    body: 'Have Sophia custom-build 3 to 6 AI workflows inside your business in 30 days ($12.5K to $25K), or start with a guaranteed 48-Hour AI Blueprint ($1,500, 100% credited).',
-    cta: 'Explore Bespoke Builds',
+    eyebrow: '2. Have Us Automate 1 Bottleneck',
+    title: 'Custom Workflow Sprints (Done-For-You)',
+    body: 'Book a free 20-minute 1-Bottleneck Audit Call. We inspect one manual drain in your business, send a clear fixed-scope proposal (sprints from $2,500), and ship inside your own accounts.',
+    cta: 'Explore Custom Sprints',
     href: '/work-with-me',
-    badge: '$15K Savings Guarantee',
+    badge: 'Free 20-Min Bottleneck Call',
     badgeColor: 'amber' as const,
   },
   {
-    eyebrow: '3. Research, Book & University Wing',
-    title: 'Systems Benchmarks & Adjunct Syllabi',
-    body: 'Inspect the Columbia CS & applied engineering rigor behind our builds: 30+ benchmarks, our 18-chapter Sovereign Stack book, CU Boulder syllabi, and CTO advisory.',
+    eyebrow: '3. Organizations & Technical Authority',
+    title: 'Corporate Training, Book & CTO Advisory',
+    body: 'For teams past the demo and stuck before production: department workshops, 30+ systems benchmarks, our 18-chapter Sovereign Stack book, and CU Boulder syllabi.',
     cta: 'Visit Research & Teaching',
     href: '/research',
     badge: '300+ Trained Live',
@@ -117,7 +117,7 @@ const CREDENTIAL_CHIPS = [
 export default function HomePage() {
   const allPosts = getAllPosts()
   const buyerSlugs = new Set([
-    'ai-org-chart',
+    'ai-back-office',
     'ai-chief-of-staff',
     'hire-ai-agency-vs-in-house',
     'easy-ai-brand-and-workflow-setup',
@@ -151,22 +151,22 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fg leading-[1.12]">
-              Build your AI org chart, automate busywork, and{' '}
+              Automate the bottleneck, keep the growth, and{' '}
               <span className="text-accent">own your stack.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
-              Humans on the front end, verified AI workflows on the back end. Agentic Architect
-              helps founders, leadership teams, and operators install an AI Chief of Staff and 6
-              core business systems before adding another $65,000 hire.
+              90% of businesses do not need fragile bots that hallucinate or another $65,000
+              coordinator hire. Learn to wire bulletproof AI workflows in our non-coder courses,
+              commission a focused automation sprint, or bring our team in for corporate training.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
               <Button variant="primary" size="lg" href="/masterclass">
-                Join the Free 60-Min AI Org Chart Masterclass
+                Join the Free 60-Min Live Build
               </Button>
               <Button variant="outline" size="lg" href="/work-with-me">
-                VIP Audits &amp; Team Workshops
+                Automate a Bottleneck
               </Button>
             </div>
 
@@ -280,7 +280,7 @@ export default function HomePage() {
                   Founder, Executive &amp; Systems Playbooks
                 </p>
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
-                  Start With Our Most-Read AI Org Chart &amp; Buyer Guides
+                  Start With Our Most-Read Automation &amp; Buyer Playbooks
                 </h2>
               </div>
               <Link href="/blog" className="text-sm font-semibold text-accent hover:underline shrink-0">

@@ -80,23 +80,23 @@ export async function fetchLiveRadarItems() {
   const buyerCoreClusters = [
     buildSeoGeoOpportunity({
       id: 'buyer-ai-chief-of-staff-vs-ea',
-      source: 'High-Intent Buyer SEO/GEO ($5,997 Cohort + $1,500 Audit)',
+      source: 'Owner Buyer Search (Courses + Custom Sprints)',
       title: 'AI Chief of Staff vs Virtual Assistant Cost & Workflow Breakdown',
       url: 'https://agenticarchitect.ai/blog/ai-chief-of-staff',
       points: 320,
     }),
     buildSeoGeoOpportunity({
       id: 'buyer-corporate-ai-workshop-roi',
-      source: 'Corporate L&D & COO Buyer Search ($7,500 to $15,000 Labs)',
+      source: 'Corporate L&D & COO Buyer Search (Workshops & Advisory)',
       title: 'How to Train Non-Technical Employees on AI Workflows Without Data Leaks',
       url: 'https://agenticarchitect.ai/blog/hire-ai-agency-vs-in-house',
       points: 290,
     }),
     buildSeoGeoOpportunity({
-      id: 'buyer-ai-org-chart-service-firms',
-      source: 'Callan-Style Masterclass Funnel SEO/GEO',
-      title: 'AI Org Chart for Agencies, Clinics & Advisory Firms',
-      url: 'https://agenticarchitect.ai/blog/ai-org-chart',
+      id: 'buyer-ai-back-office-service-firms',
+      source: 'Owner Bottleneck Funnel SEO/GEO',
+      title: 'AI Back-Office Automations for Agencies, Clinics & Advisory Firms',
+      url: 'https://agenticarchitect.ai/blog/ai-back-office',
       points: 275,
     }),
   ]

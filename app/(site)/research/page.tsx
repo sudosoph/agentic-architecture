@@ -35,9 +35,9 @@ const PILLARS = [
     badge: 'Technical & Board Advisory',
     badgeVariant: 'tag' as const,
     title: 'CTO Advisory & AI Architecture Due Diligence',
-    body: 'Monthly technical advisory ($5,000+/mo) and architecture reviews for engineering leaders, Seed-to-Series B teams, and investors auditing loop reliability and inference margins.',
+    body: 'Custom-scoped technical advisory and architecture reviews for engineering leaders, Seed-to-Series B teams, and investors auditing loop reliability, security boundaries, and inference margins.',
     href: SITE_CONFIG.cal.scoping,
-    cta: 'Scope Technical Advisory →',
+    cta: 'Book 20-Min Advisory Scoping Call →',
   },
 ]
 

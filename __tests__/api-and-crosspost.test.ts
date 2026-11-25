@@ -116,7 +116,7 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
         },
         body: JSON.stringify({
           action: 'trigger-crosspost-workflow',
-          slug: 'ai-org-chart',
+          slug: 'ai-back-office',
           platforms: 'devto,bluesky',
           dryRun: true,
         }),
@@ -131,10 +131,10 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
   })
 
   it('builds canonical-protected, zero-em-dash crosspost payloads for both short owner slugs and technical posts with idempotent ledger', async () => {
-    const ownerPack = buildCrosspostPayloads('ai-org-chart')
-    expect(ownerPack.canonicalUrl).toBe('https://agenticarchitect.ai/blog/ai-org-chart')
-    expect(ownerPack.devto.article.canonical_url).toBe('https://agenticarchitect.ai/blog/ai-org-chart')
-    expect(ownerPack.hashnode.originalArticleURL).toBe('https://agenticarchitect.ai/blog/ai-org-chart')
+    const ownerPack = buildCrosspostPayloads('ai-back-office')
+    expect(ownerPack.canonicalUrl).toBe('https://agenticarchitect.ai/blog/ai-back-office')
+    expect(ownerPack.devto.article.canonical_url).toBe('https://agenticarchitect.ai/blog/ai-back-office')
+    expect(ownerPack.hashnode.originalArticleURL).toBe('https://agenticarchitect.ai/blog/ai-back-office')
     expect(ownerPack.linkedin.text).not.toContain('\u2014')
     expect(ownerPack.linkedin.text.toLowerCase()).not.toContain('brand brain')
     expect(ownerPack.manualSafePack.redditNativePost.body).not.toContain('https://')

@@ -1,39 +1,40 @@
 # Agentic Architect · Sophia Stein
 # https://llmstxt.org
 
-> Practical AI workflows, brand systems, and private infrastructure for founders, operators, and modern organizations. Based in Boulder, Colorado.
+> Practical AI workflows, non-coder automation courses, custom bottleneck sprints, and production AI advisory for business owners and modern organizations. Based in Boulder, Colorado.
 
 Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background spans a B.S. in Computer Science from Columbia University, enterprise strategy and healthcare AI enablement at McKinsey & Company, and AI Systems & Enablement at Google (where she has led extensive internal AI trainings and co-invented a patent-pending AI system; all writing, teaching, and advising on this site are strictly in her personal capacity, views her own). She has trained 300+ founders and operators live at Boulder Startup Week and spoken for Women Who Code.
 
 ## Core Focus Areas
 
-1. Small Business & Team AI Enablement: Portable Brand Brain files (`voice.md` + `icp.md`), 90-minute task readiness audits, and human-in-the-loop operational workflows using zero-bloat tools.
-2. Cost Governance & Sovereign AI Infrastructure: Practical model routing, data privacy compliance, and encrypted private AI setups you own.
-3. Corporate Workshops, Keynotes & University Teaching: Hands-on executive workshops, conference keynotes, and applied university syllabi in Boulder, Denver, and nationwide.
+1. Non-Technical Business Owners & Operators: Portable Company Context Vaults (`voice.md` + `icp.md`), our free 5-day Prompt-to-System challenge, self-paced AI Workflow Academy ($297), guided 6-System Cohort, and focused custom automation sprints.
+2. Cost Governance & Sovereign AI Infrastructure: Practical model routing, data privacy boundaries, and encrypted private AI setups you own.
+3. Corporate Workshops, Keynotes & CTO Advisory: Hands-on enablement for organizations past the demo and stuck before production, plus CU Boulder course syllabi.
 
 ## Key Pages
 
-- / : Overview, interactive workflow blueprints, and featured playbooks
+- / : Three-door overview across DIY Courses, Custom Bottleneck Sprints, and Corporate/Technical Authority
 - /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
 - /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, vendor-neutral 512GB/128GB hardware sizer, and 3 downloadable Markdown field manuals
-- /masterclass : Free Live 60-Min AI Workflow & Brand Brain Masterclass
-- /accelerator : Flagship 8-week Done-With-You Agentic Business Accelerator ($5,997 Founding / $8,997 Standard)
-- /starter-kit : Free unlocked 20-Minute Brand Brain (`voice.md`) & 20/80 Task Readiness Scorecard
-- /courses : 3-step learning ladder plus serialized book (*The Sovereign Stack*)
-- /work-with-me : Interactive Hiring-vs-AI ROI calculator, $1,500 VIP 90-Min Audit, $500 1:1 Strategy Session, Corporate Workshops, and Executive Advisory
+- /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
+- /courses : Free 5-day challenge, $297 Self-Paced AI Workflow Academy (+$97/team seat), and guided cohort
+- /accelerator : Guided 6-System Back-Office Implementation Cohort (from $1,497, includes free EA/Ops seat)
+- /starter-kit : Free unlocked 20-Minute Company Context Vault (`voice.md`) & 20/80 Task Readiness Scorecard
+- /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 90-Min Workflow Roadmap, Custom Sprints (from $2,500), and Corporate/Advisory Scoping
+- /research : 29 systems & hardware benchmarks, The Sovereign Stack book, CU Boulder syllabi, and CTO advisory
 - /teaching : Keynotes, corporate L&D workshops, and CU Boulder course syllabi
 - /stack : 15-Minute Team & Loop Stack and Private & Sovereign AI Rig reference
-- /blog : 47 playbooks organized into Small Business & Workflows, Models & Rigs, and Engineering Deep Dives
+- /blog : 47 playbooks defaulting to plain-English Owner Playbooks with full engineering archive access
 - /bsw : Open-source Boulder Startup Week 2026 workshop archive (slides, 17-step n8n tutorial, handouts)
-- /guides : Beginner step-by-step workflow tutorials
-- /about : Full biography, two-layer ICP, and credentials
+- /guides : Step-by-step workflow tutorials
+- /about : Biography, dual-track positioning, and credentials
 - /rss.xml : Atom feed of all playbooks
 
 ## Start-Here Buyer & Systems Playbooks
 
-- /blog/ai-org-chart : The 6-role AI Org Chart (humans front-end, AI workflows back-end) before hiring a $65,000 coordinator
+- /blog/ai-back-office : The 6-workflow AI Back Office to automate before hiring a $65,000 coordinator
 - /blog/ai-chief-of-staff : 2026 setup guide, SaaS vs owned comparison, and security rules for an executive AI Chief of Staff
-- /blog/hire-ai-agency-vs-in-house : Cost & ROI comparison of $20k AI agencies vs $5,997 Done-With-You Accelerator vs $7.5k-$15k Corporate Workshops
+- /blog/hire-ai-agency-vs-in-house : Cost & ownership comparison of $20k agencies vs courses, guided cohorts, custom sprints, and corporate workshops
 - /blog/loop-engineering : Isolated git worktrees, deterministic verifiers, token circuit breakers, and Nov 2026 loop economics
 - /blog/mac-studio-512gb-vs-dgx-spark : Vendor-neutral physics & ROI comparing 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, and Ryzen AI Halo mini-PCs
 - /blog/instinct-ai-vs-tab-review : Security & OAuth audit of Instinct, Tab, and Dots vs self-hosted MIT OpenInstinct & OpenClaw

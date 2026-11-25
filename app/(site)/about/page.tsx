@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 export const metadata: Metadata = {
-  title: 'About Sophia Stein · AI Org Chart, Workflows & Corporate Enablement',
+  title: 'About Sophia Stein · Practical AI Workflows, Courses & Corporate Enablement',
   description:
-    'Columbia CS engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO helping founders and leadership teams install practical AI org charts and workflows.',
+    'Columbia CS engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO helping non-technical businesses automate bottlenecks and helping organizations move from AI demos to production.',
   alternates: {
     canonical: '/about',
   },
@@ -16,16 +16,16 @@ export const metadata: Metadata = {
 
 const ICP_LAYERS = [
   {
-    eyebrow: '1. Founders, Agency & Service Business Owners ($300K to $20M)',
-    title: 'Done-With-You AI Org Charts & 6 Installed Business Systems',
+    eyebrow: '1. Non-Technical Business Owners & Operators',
+    title: 'Practical Courses, Cohorts & Focused Bottleneck Sprints',
     detail:
-      'Owners tired of carrying operational busywork in their heads or spending $65,000+ on another coordinator hire. Start in the free 60-minute live Masterclass, then install your Brand Brain, AI Chief of Staff, inbox triage, and pre-call dossiers inside our 8-week Accelerator ($5,997 Founding / $8,997 Standard).',
+      'Founders, agencies, clinics, and service firms tired of manual follow-ups or fragile contractor zaps. Start free in our 60-minute live Prompt-to-System build, learn step-by-step in our $297 Academy or guided Cohort, or book a free 20-minute call to scope a custom sprint (from $2,500).',
   },
   {
-    eyebrow: '2. COOs, Chiefs of Staff & Corporate L&D Leaders (25 to 500+ Staff)',
-    title: 'On-Site & Virtual Team Enablement Labs ($7,500 to $15,000) & VIP Audits',
+    eyebrow: '2. Corporate L&D, COOs & Engineering Leaders',
+    title: 'Workshops & Technical Advisory for Teams Stuck Before Production',
     detail:
-      'Executive teams across healthcare, professional services, and technology who want real adoption across non-technical departments backed by McKinsey-grade ROI math and Columbia CS data-security guardrails.',
+      'Organizations across healthcare, professional services, and technology that are past the ChatGPT demo and need real workflow adoption, McKinsey-grade ROI discipline, and Columbia CS security and verification guardrails.',
   },
 ]
 
@@ -62,15 +62,15 @@ export default function AboutPage() {
       <PageHeader
         meta="Boulder, CO · Columbia CS · Ex-McKinsey · 7x Angel Investor"
         title="Sophia Stein"
-        description="I help founders and leadership teams redesign their org chart around humans on the front end and reliable, owned AI workflows on the back end."
+        description="I help non-technical business owners replace repetitive bottlenecks with owned AI workflows, and help leadership teams move past demos into reliable production."
       />
 
       {/* Crisp, Real-Person Positioning */}
       <section className="max-w-3xl space-y-4 text-base text-muted leading-relaxed">
         <p className="text-fg font-medium text-lg leading-relaxed">
-          Most business owners looking for AI help run into a frustrating split: business coaches
-          who have never shipped software selling fragile prompt packs, or hardcore infrastructure
-          engineers speaking in jargon that never helps you close a client or clear your inbox.
+          Most business owners looking for AI help run into a frustrating split: internet marketers
+          who have never shipped software selling surface-level prompt packs, or infrastructure
+          engineers speaking in jargon that never clears your inbox or moves a client deliverable.
         </p>
         <p>
           My career was built across both rooms. I studied computer science at Columbia, wrote
@@ -79,15 +79,19 @@ export default function AboutPage() {
           leaders, and now build applied AI systems in Boulder.
         </p>
         <p>
-          At <strong>Agentic Architect</strong>, we start with your org chart rather than a tool
-          list: which decisions require human judgment, which repetitive back-office roles belong
-          to connected AI workflows, and how to own your context files (
+          At <strong>Agentic Architect</strong>, we start with your single biggest operational
+          bottleneck rather than a shiny tool list: what should stay 100% human, what belongs to a
+          clean, auditable automation, and how to own your context files (
           <code className="font-mono text-fg">voice.md</code>,{' '}
-          <code className="font-mono text-fg">icp.md</code>) and data boundaries so you never get
-          locked into a $20,000 agency black box. (And if your engineering team wants our raw
-          hardware and model benchmarks, we publish all 18 chapters openly in{' '}
+          <code className="font-mono text-fg">icp.md</code>) and data boundaries inside your own
+          accounts. (And if your CTO or engineering team wants our raw hardware and loop-engineering
+          benchmarks, we publish all 18 chapters openly in{' '}
           <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
             The Sovereign Stack
+          </Link>{' '}
+          and{' '}
+          <Link href="/research" className="text-accent font-medium hover:underline">
+            Research &amp; Teaching
           </Link>
           .)
         </p>
@@ -100,7 +104,7 @@ export default function AboutPage() {
 
       {/* Who I Work With */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight text-fg">Who I Work With</h2>
+        <h2 className="text-xl font-bold tracking-tight text-fg">Two Tracks, One Quality Bar</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {ICP_LAYERS.map(layer => (
             <Card key={layer.title} className="p-6 space-y-2 bg-surface">
@@ -133,25 +137,27 @@ export default function AboutPage() {
       {/* Clear Funnel CTA */}
       <section className="rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-bold text-fg">Start With the Free Live AI Org Chart Masterclass</h2>
+          <h2 className="text-lg font-bold text-fg">
+            Start Free or Book a 20-Minute Bottleneck Audit Call
+          </h2>
           <p className="text-sm text-muted">
-            Watch the live 60-minute build on{' '}
+            Join the live 60-minute build on{' '}
             <Link href="/masterclass" className="text-accent font-medium hover:underline">
               /masterclass
             </Link>
-            , grab the{' '}
-            <Link href="/starter-kit" className="text-accent font-medium hover:underline">
-              20-Minute Starter Kit
+            , explore self-paced courses on{' '}
+            <Link href="/courses" className="text-accent font-medium hover:underline">
+              /courses
             </Link>
-            , or book a 1:1 audit or team workshop.
+            , or scope a custom sprint or corporate workshop.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
           <Button variant="primary" size="sm" href="/masterclass">
-            Free 60-Min Masterclass
+            Free 60-Min Live Build
           </Button>
           <Button variant="outline" size="sm" href="/work-with-me">
-            Audits &amp; Workshops
+            Custom Sprints &amp; Training
           </Button>
         </div>
       </section>

@@ -69,7 +69,8 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
 
     for (const [oldSlug, newSlug] of [
       ['personal-agents-tab-instinct-openinstinct-review', 'instinct-ai-vs-tab-review'],
-      ['ai-org-chart-for-small-business-founders', 'ai-org-chart'],
+      ['ai-org-chart-for-small-business-founders', 'ai-back-office'],
+      ['ai-org-chart', 'ai-back-office'],
       ['how-to-build-an-ai-chief-of-staff-2026', 'ai-chief-of-staff'],
       ['ai-implementation-program-vs-agency-vs-diy-guide', 'hire-ai-agency-vs-in-house'],
       ['512gb-unified-memory-mini-pcs-local-llm-2026', 'mac-studio-512gb-vs-dgx-spark'],
@@ -217,10 +218,11 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     }
   })
 
-  it('renders Callan-style buyer ICP on AboutPage, Course/Service/FAQ JSON-LD across funnel pages, and zero-npm Cloud Studio', async () => {
+  it('renders dual-track owner + corporate positioning on AboutPage, Course/Service/FAQ JSON-LD across funnel pages, and zero-npm Cloud Studio', async () => {
     const { container: aboutContainer } = render(<AboutPage />)
-    expect(aboutContainer.textContent).toContain('Done-With-You AI Org Charts')
+    expect(aboutContainer.textContent).toContain('Two Tracks, One Quality Bar')
     expect(aboutContainer.textContent).not.toContain('mornings back')
+    expect(aboutContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(aboutContainer.textContent).not.toContain('\u2014')
 
     for (const [label, Comp, expectedType] of [
@@ -235,13 +237,16 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
       const types = parsed['@graph'].map((n: { '@type': string }) => n['@type'])
       expect(types).toContain(expectedType)
       expect(types).toContain('FAQPage')
+      expect(fContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
       expect(fContainer.textContent).not.toContain('\u2014')
       unmount()
     }
 
     const { container: studioContainer } = render(<StudioPage />)
     expect(studioContainer.textContent).toContain('Write & Publish Playbooks Straight From Your Browser')
-    expect(studioContainer.textContent).toContain('Callan-Style Buyer Attraction')
+    expect(studioContainer.textContent).toContain('Owner Bottleneck & Corporate Buyer Attraction')
+    expect(studioContainer.textContent?.toLowerCase()).not.toContain('callan')
+    expect(studioContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(studioContainer.textContent).not.toContain('\u2014')
 
     const ksRes = await getKeystaticApi(new Request('https://agenticarchitect.ai/api/keystatic/github/login'))

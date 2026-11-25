@@ -1,0 +1,87 @@
+{
+  "fileSlug": "ai-back-office",
+  "publicSlug": "ai-back-office",
+  "track": "small-business",
+  "publishedDate": "2026-11-25",
+  "canonicalUrl": "https://agenticarchitect.ai/blog/ai-back-office",
+  "title": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+  "description": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.",
+  "devto": {
+    "article": {
+      "title": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+      "published": false,
+      "body_markdown": "Most founders approach AI backward. They open a blank chat window on Monday morning, try two ad-hoc prompts, watch an overhyped \"autonomous agent\" hallucinate on a simple task, and go right back to answering every email and prepping every client call manually.\n\n90% of growing businesses do not need a complex autonomous agent that needs constant babysitting. They need **six bulletproof back-office automations** that run the same way every time at 10x lower cost.\n\nInstead of shopping for shiny tools, audit every repetitive bottleneck in your week using one rule: **humans stay on judgment, trust, pricing, and final sign-off; owned workflows handle research, intake, first drafts, extraction, and follow-up tracking**.\n\n## Why hiring headcount first makes messy operations heavier\n\nFounders stall between $250K and $5M in revenue because dozens of repeatable micro-processes live unrecorded inside the owner's head:\n\n- Remembering how you respond when a prospect asks for a rush timeline or discount\n- Researching every calendar booking ten minutes before Zoom starts\n- Turning messy call notes into a clean proposal and action list\n- Following up with warm leads five days after a great discovery call\n\nHiring a $65,000/year junior operations or marketing coordinator before turning those habits into documented workflows rarely removes the bottleneck; now you spend six hours a week reviewing their work. Writing two plain-English context files ([`voice.md` and `icp.md`](https://agenticarchitect.ai/starter-kit)) lets back-office workflows execute 80% of the prep immediately, and makes any Executive Assistant or Ops Manager you already have three times faster.\n\n## The 6 back-office workflows to install first\n\nHere are the six highest-ROI automations we teach non-technical operators inside our [Courses & 6-System Cohort](https://agenticarchitect.ai/courses) and build custom in [Bottleneck Sprints](https://agenticarchitect.ai/work-with-me):\n\n| Back-Office Workflow | Bottleneck Removed | Inputs It Reads | Human Checkpoint (10 Seconds) | Hours Reclaimed / Week |\n|---|---|---|---|---|\n| **1. Company Context Drafter** | Blank-page writing & generic ghostwriters | Your 1-page `voice.md` + 10-min weekly voice memo | Owner reviews & publishes | `4 to 5 hrs` |\n| **2. Pre-Call Dossier Pipeline** | Last-minute LinkedIn & website scrambling | New Cal.com booking + company site + `icp.md` | Lands in inbox 30 mins pre-call | `2 to 3 hrs` |\n| **3. Draft-First Inbox Triage** | Repetitive FAQ replies & scheduling ping-pong | Inbound Gmail threads + calendar availability | Stages reply in **Gmail Drafts** (never auto-sends) | `3 to 5 hrs` |\n| **4. 5-Day Follow-Up Loop** | Warm leads slipping through the cracks | Sent proposals + call notes + CRM/Sheet row | 1-click approve on Day 2 & Day 5 nudges | `2 hrs` |\n| **5. Proposal & SOP Extractor** | Rewriting meeting notes into deliverables | Call transcript + approved scope template | Principal checks numbers before sending | `2 to 3 hrs` |\n| **6. Software & Spend Watchdog** | Overlapping $30 to $200/mo SaaS creep | Monthly tool usage + [model routing rules](https://agenticarchitect.ai/blog/gemini-4-neon-vs-deepseek-v4) | Monthly summary flag | Saves `$300 to $1,500/mo` |\n\nNotice what **never gets handed to an unreviewed bot**: live discovery calls, pricing decisions, sensitive client relationships, and external send permissions ([Rung 2 on the 5 Levels of AI Autonomy](https://agenticarchitect.ai/blog/the-hitl-standard)).\n\n## Cost & ownership comparison: Hiring vs. Agency vs. Owned Workflows\n\n| Path | Year-1 Cash Cost | Time to First Working Workflow | Who Owns It When Staff Changes? |\n|---|---|---|---|\n| **Full-Time Junior Ops / Marketing Hire** | `$65,000 to $80,000` + payroll taxes | `90 to 120 days` of recruiting & ramp | Walks out the door when they leave |\n| **Black-Box Automation Agency** | `$15,000 to $30,000` + monthly retainer | `6 to 10 weeks` of scoping calls | Contractor owns brittle zaps your staff cannot edit |\n| **DIY via Free Live Build & $297 Academy** | `$0 to $297` + existing workspace tools | **This week** (first workflow in 60 mins) | **100% owned inside your accounts** |\n| **Guided Cohort or Focused Custom Sprint** | Cohort from `$1,497` · Sprints from `$2,500` | **Week 1 to Day 14** | **100% owned by you + full video SOPs** |\n\n## Three steps to remove your #1 bottleneck this week\n\n1. **Score one repetitive drain in 10 minutes:** List every task you or your team repeated three or more times this week and score the top culprit using our [20/80 Task Readiness Scorecard](https://agenticarchitect.ai/blog/agent-ready-tasks).\n2. **Create your 1-page `voice.md` and `icp.md`:** Grab the unlocked templates inside our [free Context Kit](https://agenticarchitect.ai/starter-kit) so every workflow sounds like your company, not generic AI slop.\n3. **Pick your speed:** Watch a real workflow wired live in our [Free 60-Minute Prompt-to-System Workshop](https://agenticarchitect.ai/masterclass), go self-paced in our [$297 Workflow Academy](https://agenticarchitect.ai/courses), or book a [Free 20-Minute 1-Bottleneck Discovery Call](https://agenticarchitect.ai/work-with-me).\n\n---\n\n*Originally published on [Agentic Architect](https://agenticarchitect.ai/blog/ai-back-office). Join the next free 60-minute [Prompt-to-System Live Build](https://agenticarchitect.ai/masterclass), explore our [$297 AI Workflow Academy](https://agenticarchitect.ai/courses), or book a [Free 20-Min Bottleneck Call](https://agenticarchitect.ai/work-with-me).*",
+      "tags": [
+        "ai",
+        "founders",
+        "smb",
+        "operations"
+      ],
+      "canonical_url": "https://agenticarchitect.ai/blog/ai-back-office",
+      "description": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead "
+    }
+  },
+  "hashnode": {
+    "title": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+    "subtitle": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or",
+    "contentMarkdown": "Most founders approach AI backward. They open a blank chat window on Monday morning, try two ad-hoc prompts, watch an overhyped \"autonomous agent\" hallucinate on a simple task, and go right back to answering every email and prepping every client call manually.\n\n90% of growing businesses do not need a complex autonomous agent that needs constant babysitting. They need **six bulletproof back-office automations** that run the same way every time at 10x lower cost.\n\nInstead of shopping for shiny tools, audit every repetitive bottleneck in your week using one rule: **humans stay on judgment, trust, pricing, and final sign-off; owned workflows handle research, intake, first drafts, extraction, and follow-up tracking**.\n\n## Why hiring headcount first makes messy operations heavier\n\nFounders stall between $250K and $5M in revenue because dozens of repeatable micro-processes live unrecorded inside the owner's head:\n\n- Remembering how you respond when a prospect asks for a rush timeline or discount\n- Researching every calendar booking ten minutes before Zoom starts\n- Turning messy call notes into a clean proposal and action list\n- Following up with warm leads five days after a great discovery call\n\nHiring a $65,000/year junior operations or marketing coordinator before turning those habits into documented workflows rarely removes the bottleneck; now you spend six hours a week reviewing their work. Writing two plain-English context files ([`voice.md` and `icp.md`](https://agenticarchitect.ai/starter-kit)) lets back-office workflows execute 80% of the prep immediately, and makes any Executive Assistant or Ops Manager you already have three times faster.\n\n## The 6 back-office workflows to install first\n\nHere are the six highest-ROI automations we teach non-technical operators inside our [Courses & 6-System Cohort](https://agenticarchitect.ai/courses) and build custom in [Bottleneck Sprints](https://agenticarchitect.ai/work-with-me):\n\n| Back-Office Workflow | Bottleneck Removed | Inputs It Reads | Human Checkpoint (10 Seconds) | Hours Reclaimed / Week |\n|---|---|---|---|---|\n| **1. Company Context Drafter** | Blank-page writing & generic ghostwriters | Your 1-page `voice.md` + 10-min weekly voice memo | Owner reviews & publishes | `4 to 5 hrs` |\n| **2. Pre-Call Dossier Pipeline** | Last-minute LinkedIn & website scrambling | New Cal.com booking + company site + `icp.md` | Lands in inbox 30 mins pre-call | `2 to 3 hrs` |\n| **3. Draft-First Inbox Triage** | Repetitive FAQ replies & scheduling ping-pong | Inbound Gmail threads + calendar availability | Stages reply in **Gmail Drafts** (never auto-sends) | `3 to 5 hrs` |\n| **4. 5-Day Follow-Up Loop** | Warm leads slipping through the cracks | Sent proposals + call notes + CRM/Sheet row | 1-click approve on Day 2 & Day 5 nudges | `2 hrs` |\n| **5. Proposal & SOP Extractor** | Rewriting meeting notes into deliverables | Call transcript + approved scope template | Principal checks numbers before sending | `2 to 3 hrs` |\n| **6. Software & Spend Watchdog** | Overlapping $30 to $200/mo SaaS creep | Monthly tool usage + [model routing rules](https://agenticarchitect.ai/blog/gemini-4-neon-vs-deepseek-v4) | Monthly summary flag | Saves `$300 to $1,500/mo` |\n\nNotice what **never gets handed to an unreviewed bot**: live discovery calls, pricing decisions, sensitive client relationships, and external send permissions ([Rung 2 on the 5 Levels of AI Autonomy](https://agenticarchitect.ai/blog/the-hitl-standard)).\n\n## Cost & ownership comparison: Hiring vs. Agency vs. Owned Workflows\n\n| Path | Year-1 Cash Cost | Time to First Working Workflow | Who Owns It When Staff Changes? |\n|---|---|---|---|\n| **Full-Time Junior Ops / Marketing Hire** | `$65,000 to $80,000` + payroll taxes | `90 to 120 days` of recruiting & ramp | Walks out the door when they leave |\n| **Black-Box Automation Agency** | `$15,000 to $30,000` + monthly retainer | `6 to 10 weeks` of scoping calls | Contractor owns brittle zaps your staff cannot edit |\n| **DIY via Free Live Build & $297 Academy** | `$0 to $297` + existing workspace tools | **This week** (first workflow in 60 mins) | **100% owned inside your accounts** |\n| **Guided Cohort or Focused Custom Sprint** | Cohort from `$1,497` · Sprints from `$2,500` | **Week 1 to Day 14** | **100% owned by you + full video SOPs** |\n\n## Three steps to remove your #1 bottleneck this week\n\n1. **Score one repetitive drain in 10 minutes:** List every task you or your team repeated three or more times this week and score the top culprit using our [20/80 Task Readiness Scorecard](https://agenticarchitect.ai/blog/agent-ready-tasks).\n2. **Create your 1-page `voice.md` and `icp.md`:** Grab the unlocked templates inside our [free Context Kit](https://agenticarchitect.ai/starter-kit) so every workflow sounds like your company, not generic AI slop.\n3. **Pick your speed:** Watch a real workflow wired live in our [Free 60-Minute Prompt-to-System Workshop](https://agenticarchitect.ai/masterclass), go self-paced in our [$297 Workflow Academy](https://agenticarchitect.ai/courses), or book a [Free 20-Minute 1-Bottleneck Discovery Call](https://agenticarchitect.ai/work-with-me).\n\n---\n\n*Originally published on [Agentic Architect](https://agenticarchitect.ai/blog/ai-back-office). Join the next free 60-minute [Prompt-to-System Live Build](https://agenticarchitect.ai/masterclass), explore our [$297 AI Workflow Academy](https://agenticarchitect.ai/courses), or book a [Free 20-Min Bottleneck Call](https://agenticarchitect.ai/work-with-me).*",
+    "originalArticleURL": "https://agenticarchitect.ai/blog/ai-back-office",
+    "tags": [
+      {
+        "slug": "ai",
+        "name": "ai"
+      },
+      {
+        "slug": "founders",
+        "name": "founders"
+      },
+      {
+        "slug": "smb",
+        "name": "smb"
+      },
+      {
+        "slug": "operations",
+        "name": "operations"
+      }
+    ]
+  },
+  "linkedin": {
+    "text": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator\n\nWhy 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.\n\nThree takeaways from our production teardown:\n1. Create your 1-page voice.md and icp.md: Grab the unlocked templates inside our free Context Kit so every workflow sounds like your company, not generic AI slop.\n\nFull owner playbook and copy-paste templates: https://agenticarchitect.ai/blog/ai-back-office",
+    "firstComment": "Full step-by-step guide: https://agenticarchitect.ai/blog/ai-back-office (plus free live 60-min Masterclass seats at https://agenticarchitect.ai/masterclass)"
+  },
+  "bluesky": {
+    "text": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator\n\nWhy 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.\n\nhttps://agenticarchitect.ai/blog/ai-back-office",
+    "embed": {
+      "title": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+      "description": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.",
+      "uri": "https://agenticarchitect.ai/blog/ai-back-office"
+    }
+  },
+  "x": {
+    "text": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator\n\nhttps://agenticarchitect.ai/blog/ai-back-office"
+  },
+  "manualSafePack": {
+    "mediumImportUrl": "https://medium.com/p/import (paste https://agenticarchitect.ai/blog/ai-back-office so Medium sets rel=\"canonical\" automatically)",
+    "substackDraft": {
+      "draft_title": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+      "draft_subtitle": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.",
+      "note": "Stage via residential browser session or paste into Substack editor; never push via datacenter cookie scrapers."
+    },
+    "redditNativePost": {
+      "subreddits": [
+        "r/Entrepreneur",
+        "r/smallbusiness",
+        "r/AI_Agents"
+      ],
+      "title": "Breakdown: The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator (measured numbers + what broke)",
+      "body": "Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run.\n\nKey takeaways:\n1. Create your 1-page voice.md and icp.md: Grab the unlocked templates inside our free Context Kit so every workflow sounds like your company, not generic AI slop.\n\nHappy to share the full markdown config or answer setup questions in the comments.",
+      "antiBanNote": "Zero external links in body. Post natively from residential browser; share link in comments only when asked."
+    },
+    "hackerNews": {
+      "factualTitle": "The 6-Workflow AI Back Office: What to Automate Before Hiring a $65,000 Coordinator",
+      "url": "https://agenticarchitect.ai/blog/ai-back-office",
+      "firstComment": "Author here. Why 90% of businesses need clean, owned back-office automations instead of fragile autonomous bots: 6 workflows any non-technical founder or ops lead can run. Key findings: Create your 1-page voice.md and icp.md: Grab the unlocked templates inside our free Context Kit so every workflow sounds like your company, not generic AI slop.. Feedback and critiques welcome.",
+      "antiBanNote": "Submit manually Tue-Thu 7:00-9:00 AM ET while maintaining a 9:1 genuine comment ratio."
+    }
+  }
+}

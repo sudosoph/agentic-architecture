@@ -8,9 +8,9 @@ import { LdReimbursementCard } from '@/components/site/ld-reimbursement-card'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: '8-Week Executive AI Operating System Cohort · Agentic Architect',
+  title: '6-System AI Back-Office Implementation Cohort · Agentic Architect',
   description:
-    'Install 6 production AI workflows inside your business in 8 weeks (includes a FREE seat for your EA, COO, or Ops Manager + our 14-Day Live-System Guarantee).',
+    'Guided implementation cohort for non-technical business owners and their EA or Ops Lead: install 6 durable AI workflows inside your own accounts without agency lock-in.',
   alternates: { canonical: '/accelerator' },
 }
 
@@ -18,87 +18,71 @@ const SIX_SYSTEMS = [
   {
     num: '01',
     title: 'Company Context & Voice Vault (voice.md + icp.md)',
-    body: 'Codify your positioning, executive tone, pricing rules, and client objections into portable files every AI workflow reads automatically.',
+    body: 'Codify your positioning, tone, pricing boundaries, and common buyer questions into plain-English files every workflow reads automatically.',
   },
   {
     num: '02',
-    title: 'AI Chief of Staff & Commitment Tracker',
+    title: 'AI Chief of Staff & Commitment Loop',
     body: 'Prep every calendar meeting 30 minutes ahead, extract call decisions, and track open team and client commitments automatically.',
   },
   {
     num: '03',
     title: 'Inbound Lead Research & Pre-Call Dossiers',
-    body: 'Every new booking triggers a background prospect brief, deal-fit check, and tailored call agenda in your inbox.',
+    body: 'Every new booking triggers a clean prospect brief, bottleneck check, and tailored call agenda in your inbox.',
   },
   {
     num: '04',
-    title: 'Draft-First Inbox & 5-Day Follow-Up Engine',
-    body: 'Triage repetitive email, stage replies in Gmail Drafts in your exact voice, and queue Day-2 / Day-5 deal follow-ups for 1-click sign-off.',
+    title: 'Draft-First Inbox & 5-Day Follow-Up Pipeline',
+    body: 'Triage repetitive email, stage replies in Gmail Drafts in your exact voice, and queue Day-2 and Day-5 follow-ups for 10-second human approval.',
   },
   {
     num: '05',
-    title: 'Client Delivery, Proposal & SOP Extractor',
-    body: 'Turn call recordings and messy documents into scoped proposals, client deliverables, and reusable staff checklists.',
+    title: 'Proposal, Onboarding & SOP Extractor',
+    body: 'Turn call transcripts and recurring deliverables into scoped proposals, onboarding packets, and reusable staff checklists.',
   },
   {
     num: '06',
-    title: 'Private Data Guardrails & SaaS Cost Watchdog',
-    body: 'Lock down OAuth scopes so confidential deals and client records never train public models, while cutting overlapping software bills.',
-  },
-]
-
-const VALUE_STACK = [
-  { item: '8-Week Live Implementation Installing All 6 Back-Office AI Roles', val: '$8,997 Value' },
-  {
-    item: 'BONUS 1: FREE Right-Hand Operator Seat (Bring Your EA, Chief of Staff, or Ops Manager Free)',
-    val: '$2,500 Value',
-  },
-  {
-    item: 'BONUS 2: Private Company Context & Data-Security Setup Vault',
-    val: '$2,000 Value',
-  },
-  {
-    item: 'BONUS 3: Plug-and-Play Pre-Call Dossier, Draft-First Inbox & Follow-Up Templates',
-    val: '$1,500 Value',
+    title: 'Data Privacy Guardrails & Software Spend Watchdog',
+    body: 'Keep confidential client files off public training pipelines with least-privilege permissions while cutting overlapping SaaS bills.',
   },
 ]
 
 const COMPARISON = [
   {
     option: 'Junior Ops or Marketing Hire',
-    cost: '$65,000/yr + taxes',
+    cost: '$65,000/yr + payroll tax',
     timeline: '3 to 4 months to recruit & ramp',
-    ownership: 'Walks out the door if they quit',
+    ownership: 'Knowledge walks out the door when they leave',
     highlight: false,
   },
   {
     option: 'Black-Box Automation Agency',
-    cost: '$20,000+ retainer',
+    cost: '$15,000+ retainer',
     timeline: '6 to 12 weeks of scoping calls',
-    ownership: 'Fragile zaps nobody in-house can edit',
+    ownership: 'Undocumented zaps your staff cannot edit',
     highlight: false,
   },
   {
-    option: 'Executive AI Operating System Cohort',
-    cost: '$5,997 Founding ($8,997 Standard)',
-    timeline: '2 live workflows by Day 14 (Guaranteed)',
-    ownership: '100% owned by you + your FREE Operator seat',
+    option: '6-System Back-Office Cohort',
+    cost: 'From $1,497 (Includes EA / Ops Seat)',
+    timeline: 'First working automation in Week 1',
+    ownership: '100% inside your own accounts + full SOPs',
     highlight: true,
   },
 ]
 
 const ACCELERATOR_FAQS = [
   {
-    q: 'I am a non-technical business owner with very little free time. How much effort does this take?',
-    a: 'Under 60 minutes a week for the owner. That is why we include a FREE Right-Hand Operator Seat ($2,500 value) for your Executive Assistant, COO, or Ops Manager: you attend Week 1 org-chart strategy, and we train your operator to wire and run all 6 workflows for you.',
+    q: 'I am a non-technical business owner. How much weekly time does this require?',
+    a: 'About 60 to 90 minutes a week, and you can bring your Executive Assistant, Chief of Staff, or Ops Manager at no extra seat cost so they wire and maintain the workflows alongside you.',
   },
   {
-    q: 'How does the 14-Day Live-System Guarantee work?',
-    a: 'Attend Week 1 and Week 2 with your operator. If you do not have at least 2 back-office AI workflows live and saving 8+ hours/week inside your business by Day 14 (and all 6 by Week 8), Sophia continues coaching your operator free until they are running.',
+    q: 'Why do I book a 20-minute Fit Call instead of checking out blindly on a calendar?',
+    a: 'Multi-week programs only work when your business actually has repeatable workflow volume ready to automate. In 20 minutes on Cal.com we look at your #1 bottleneck and tell you candidly whether the $297 self-paced Academy, this live Cohort, or a custom Done-For-You Sprint fits best.',
   },
   {
-    q: 'What if I want Sophia to just custom-build everything for my company instead?',
-    a: 'If you prefer a white-glove Done-For-You build, book our 30-Day Bespoke AI Automation Sprint ($12,500 to $25,000) or start with a $1,500 48-Hour Custom AI Blueprint (100% credited) on /work-with-me.',
+    q: 'What if I want Sophia to build one critical automation for us Done-For-You instead?',
+    a: 'Visit /work-with-me to commission a focused Bottleneck Automation Sprint (custom-scoped from $2,500) or start with a single-session $750 Workflow & Cost Roadmap (credited in full if we build together).',
   },
 ]
 
@@ -109,33 +93,23 @@ export default function AcceleratorPage() {
       {
         '@type': 'Course',
         '@id': `${SITE_CONFIG.siteUrl}/accelerator#course`,
-        name: 'The Executive AI Operating System Cohort (8-Week Implementation + Free Operator Seat)',
+        name: 'The 6-System AI Back-Office Implementation Cohort',
         description:
-          '8-week implementation program for $1M to $50M business owners and principals installing 6 AI workflows alongside their EA, Chief of Staff, or Ops Manager (operator seat included free).',
+          'Guided implementation program for non-technical business owners and operators installing 6 owned back-office AI workflows with a free teammate seat included.',
         provider: {
           '@type': 'Organization',
           '@id': `${SITE_CONFIG.siteUrl}/#organization`,
           name: SITE_CONFIG.siteName,
           url: SITE_CONFIG.siteUrl,
         },
-        offers: [
-          {
-            '@type': 'Offer',
-            name: 'Founding Cohort Tuition (Includes Free Operator Seat)',
-            price: '5997',
-            priceCurrency: 'USD',
-            availability: 'https://schema.org/InStock',
-            url: SITE_CONFIG.cal.acceleratorFounding,
-          },
-          {
-            '@type': 'Offer',
-            name: 'Standard Cohort Tuition',
-            price: '8997',
-            priceCurrency: 'USD',
-            availability: 'https://schema.org/InStock',
-            url: SITE_CONFIG.cal.accelerator,
-          },
-        ],
+        offers: {
+          '@type': 'Offer',
+          name: 'Guided Cohort Enrollment (Includes Operator Seat)',
+          price: '1497',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: SITE_CONFIG.cal.scoping,
+        },
       },
       {
         '@type': 'FAQPage',
@@ -160,30 +134,30 @@ export default function AcceleratorPage() {
         {/* Hero */}
         <section className="space-y-5">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="online">8-Week Cohort · EA / Ops Manager Seat Included FREE</Badge>
-            <Badge variant="rig">14-Day Live-System Guarantee</Badge>
+            <Badge variant="online">Guided Implementation Cohort · Free EA / Ops Seat Included</Badge>
+            <Badge variant="rig">Zero Coding · Zero Agency Lock-In</Badge>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg leading-tight max-w-4xl">
-            Install 6 Back-Office AI Workflows in 8 Weeks (Without Doing the Wiring Yourself)
+            Install 6 Owned Back-Office Automations With Your Team (Before Hiring Headcount)
           </h1>
 
           <p className="text-base sm:text-lg text-muted leading-relaxed max-w-3xl">
-            Built for non-technical $1M to $50M business owners, firm principals, and executives who
-            want the output of a $65,000/yr operations hire without adding headcount. Bring your EA,
-            Chief of Staff, or Ops Lead at <strong className="text-fg">$0 extra tuition</strong> so
-            we train them to run every workflow for you.
+            Built for non-technical founders, service business owners, and operators who want the
+            throughput of a $65,000/yr coordinator without fragile black-box agency retainers. Bring
+            your EA, Chief of Staff, or Ops Lead at <strong className="text-fg">$0 extra seat cost</strong>{' '}
+            and wire every workflow directly inside your own workspace.
           </p>
 
           <div className="flex flex-wrap gap-3 pt-1">
-            <Button variant="primary" size="lg" href={SITE_CONFIG.cal.acceleratorFounding}>
-              Claim Founding Seat + Free Operator Pass ($5,997) →
+            <Button variant="primary" size="lg" href={SITE_CONFIG.cal.scoping}>
+              Book Free 20-Min Cohort Fit Call →
             </Button>
-            <Button variant="outline" size="lg" href={SITE_CONFIG.cal.scoping}>
-              Book a 15-Min Executive Fit Call
+            <Button variant="outline" size="lg" href="/courses">
+              Prefer Self-Paced? See $297 Academy
             </Button>
             <Button variant="ghost" size="lg" href="/masterclass">
-              Watch the Free 60-Min Briefing First
+              Join Free 60-Min Live Build First
             </Button>
           </div>
         </section>
@@ -192,8 +166,8 @@ export default function AcceleratorPage() {
         <section className="space-y-5">
           <PageHeader
             meta="Unit Economics"
-            title="Why Owners Install Systems Before Adding Payroll"
-            description="Compare the first-year cost and lock-in risk of hiring headcount or an outside agency against owning all 6 systems in-house."
+            title="Why Owners Automate Bottlenecks Before Adding Payroll"
+            description="Compare the first-year cost and maintenance risk of hiring headcount or a black-box contractor against building durable systems your team owns."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -205,7 +179,7 @@ export default function AcceleratorPage() {
                 }`}
               >
                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                  {row.highlight ? 'Grand Slam Cohort' : 'Traditional Alternative'}
+                  {row.highlight ? 'Owned In-House Option' : 'Traditional Alternative'}
                 </p>
                 <h2 className="text-lg font-bold text-fg">{row.option}</h2>
                 <p className="text-2xl font-extrabold text-fg">{row.cost}</p>
@@ -221,9 +195,9 @@ export default function AcceleratorPage() {
         {/* 6 Systems Grid */}
         <section className="space-y-5">
           <PageHeader
-            meta="8-Week Curriculum & Vault"
-            title="The 6 Back-Office AI Roles You &amp; Your Operator Leave Running"
-            description="Zero software engineering required. Each week pairs concise setup walkthroughs, copy-paste workflow templates, and live 90-minute implementation coaching."
+            meta="Curriculum & Workflow Vault"
+            title="The 6 Back-Office Workflows You &amp; Your Operator Leave Running"
+            description="Each module pairs step-by-step walkthroughs, copy-paste configurations, and live troubleshooting office hours."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -241,43 +215,33 @@ export default function AcceleratorPage() {
           </div>
         </section>
 
-        {/* Hormozi Value Stack + Bespoke Option */}
+        {/* Clean Enrollment + Custom Build Bridge */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <Card className="lg:col-span-7 p-6 md:p-8 space-y-5 border-accent">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <Badge variant="online">$14,997 Total Value Stack</Badge>
-              <span className="font-mono text-xs text-muted">Capped group for direct troubleshooting</span>
+              <Badge variant="online">Cohort Enrollment · From $1,497</Badge>
+              <span className="font-mono text-xs text-muted">Small group for hands-on review</span>
             </div>
 
             <ul className="space-y-2.5 text-sm text-fg border-b border-border pb-4">
-              {VALUE_STACK.map(v => (
-                <li key={v.item} className="flex items-start justify-between gap-4">
-                  <span>✓ {v.item}</span>
-                  <span className="font-mono text-xs font-semibold text-accent shrink-0">
-                    {v.val}
-                  </span>
-                </li>
-              ))}
+              <li>✓ Live weekly implementation sessions + full recorded library</li>
+              <li>✓ Free second seat included for your EA, Chief of Staff, or Ops Lead</li>
+              <li>✓ Portable voice.md, pre-call dossier, draft-first inbox &amp; SOP templates</li>
+              <li>✓ Built 100% inside your own workspace accounts with human approval gates</li>
             </ul>
 
-            <div className="flex flex-wrap items-baseline gap-3">
-              <span className="text-4xl font-extrabold text-fg">$5,997</span>
-              <span className="text-sm text-muted line-through">$8,997 Standard Tuition</span>
-            </div>
-
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-3.5 text-xs text-fg leading-relaxed">
-              <strong className="text-online">14-Day Live-System Guarantee:</strong> Have at least 2
-              AI workflows live and saving 8+ hrs/week inside your business by Day 14, or we keep
-              coaching your operator free until they run. (Starting with a $1,500 48-Hour AI
-              Blueprint? 100% of that $1,500 credits directly toward enrollment.)
-            </div>
+            <p className="text-xs text-muted leading-relaxed">
+              We never auto-enroll multi-week cohorts off a blind checkout link. Book a quick
+              20-minute fit call so we can inspect your current stack and confirm the cohort is the
+              highest-return path (or credit a $750 Roadmap session directly toward tuition).
+            </p>
 
             <div className="flex flex-wrap gap-3 pt-1">
-              <Button variant="primary" size="lg" href={SITE_CONFIG.cal.acceleratorFounding}>
-                Enroll Now + Claim Free Operator Seat ($5,997) →
+              <Button variant="primary" size="lg" href={SITE_CONFIG.cal.scoping}>
+                Book 20-Min Cohort Fit Call →
               </Button>
-              <Button variant="outline" size="lg" href={SITE_CONFIG.cal.scoping}>
-                Book a 15-Min Fit Call
+              <Button variant="outline" size="lg" href="/courses">
+                Compare $297 Self-Paced Academy
               </Button>
             </div>
           </Card>
@@ -285,21 +249,23 @@ export default function AcceleratorPage() {
           <Card className="lg:col-span-5 p-6 md:p-8 bg-surface flex flex-col justify-between space-y-5">
             <div className="space-y-3">
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Want Us to Just Build It For You Instead?
+                Prefer Done-For-You or Corporate Training?
               </p>
-              <h2 className="text-xl font-bold text-fg">30-Day Bespoke AI Automation Build</h2>
+              <h2 className="text-xl font-bold text-fg">
+                Commission a Single Bottleneck Sprint or Team Workshop
+              </h2>
               <p className="text-sm text-muted leading-relaxed">
-                If you would rather skip classes altogether and have Sophia custom-engineer 3 to 6
-                AI workflows directly inside your company ($12,500 to $25,000) or run a private
-                on-site day for 10 to 100+ staff, explore our Bespoke Builds.
+                Short on bandwidth? Have Sophia scope and ship one high-ROI automation sprint for
+                your business (custom-scoped from $2,500) or lead a private workshop for your
+                department. Exploring <Link href="/work-with-me" className="text-accent hover:underline">/work-with-me</Link> takes 60 seconds.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" size="md" href="/work-with-me">
-                See Bespoke Builds ($12.5K+) →
+                See Custom Sprints &amp; Workshops →
               </Button>
               <Button variant="outline" size="md" href={SITE_CONFIG.cal.speaking}>
-                Scope a Private Team Day
+                Corporate Workshop Inquiry
               </Button>
             </div>
           </Card>
@@ -308,7 +274,7 @@ export default function AcceleratorPage() {
         <LdReimbursementCard />
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-fg">Program &amp; Guarantee FAQ</h2>
+          <h2 className="text-2xl font-bold text-fg">Cohort &amp; Fit FAQ</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {ACCELERATOR_FAQS.map(faq => (
               <Card key={faq.q} className="p-6 space-y-2">

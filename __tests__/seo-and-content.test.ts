@@ -41,7 +41,7 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     const topFourSlugs = new Set(posts.slice(0, 4).map(p => p.slug))
     expect(topFourSlugs).toEqual(
       new Set([
-        'ai-org-chart',
+        'ai-back-office',
         'ai-chief-of-staff',
         'hire-ai-agency-vs-in-house',
         'loop-engineering',

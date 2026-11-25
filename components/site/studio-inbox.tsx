@@ -31,30 +31,30 @@ type RadarItem = {
   linkedinHook: string
 }
 
-const CALLAN_BUYER_FUNNEL_PACKS = [
+const OWNER_BUYER_FUNNEL_PACKS = [
   {
-    id: 'callan-li-ig-orgchart',
-    channel: 'LinkedIn + Instagram Reel/Carousel -> /masterclass ($5,997-$8,997 Funnel)',
+    id: 'owner-li-bottleneck',
+    channel: 'LinkedIn Post -> Free 60-Min Live Build & $297 Academy',
     url: 'https://agenticarchitect.ai/masterclass',
-    hookTitle: 'Stop asking "What can AI do?" Draw an AI Org Chart first.',
+    hookTitle: '90% of businesses do not need an autonomous AI agent. They need 1 clean automation.',
     copyBody:
-      'Most business owners open a blank chat window on Monday, try two prompts, and go right back to answering every email and prepping every call themselves.\n\nBefore hiring your next $65,000 ops or marketing coordinator, split your company org chart in two:\n- Front end (Humans): sales calls, pricing judgment, client trust, final sign-off.\n- Back end (AI workflows): voice.md drafting, 30-min pre-call dossiers, draft-first inbox triage, and 5-day follow-up tracking.\n\nI am walking through all 6 roles live on screen in our free 60-minute AI Org Chart Masterclass.\n\nComment MASTERCLASS (or grab a seat at https://agenticarchitect.ai/masterclass) and I will send you the workbook.',
+      'Everyone is chasing complex autonomous agents right now. Here is what actually happens inside most businesses:\n\nFragile autonomous bots hallucinate on edge cases, need constant babysitting, and get turned off by week three.\n\nClean, owned back-office automations run every single day at 10x lower cost:\n- Pre-call prospect dossiers landing 30 mins before Zoom\n- Draft-first inbox triage (staged in Gmail Drafts, never blind auto-sends)\n- 5-day proposal follow-up tracking\n- Meeting transcripts extracted straight into scoped proposals\n\nI am wiring a live Prompt-to-System workflow on screen (every click shown, zero coding) in our free 60-minute workshop.\n\nGrab a free seat + our unlocked voice.md workbook at https://agenticarchitect.ai/masterclass',
   },
   {
-    id: 'callan-podcast-pitch',
-    channel: 'Podcast Guest Tour Pitch (Callan’s #1 Warm Buyer Shortcut)',
-    url: 'https://agenticarchitect.ai/blog/ai-org-chart',
-    hookTitle: 'Subject: Guest idea: Building an AI Org Chart before your next $65K hire',
+    id: 'owner-podcast-pitch',
+    channel: 'Podcast & Guest Workshop Pitch (Warm Owner & Operator Inbound)',
+    url: 'https://agenticarchitect.ai/blog/ai-back-office',
+    hookTitle: 'Subject: Guest idea: Why 90% of businesses need clean automations, not fragile AI agents',
     copyBody:
-      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on keeping operations lean. Most AI guests either stay at surface-level ChatGPT tips or drown founders in developer jargon.\n\nMy background bridges both: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners love a 35-minute tactical walkthrough on "Humans on the Front End, AI on the Back End: The 6-Role AI Org Chart That Saves a $65K Hire"? Happy to give your audience our unlocked Company Context Vault (voice.md) workbook free at agenticarchitect.ai/masterclass.\n\nWarmly,\nSophia Stein',
+      'Hi [Host Name],\n\nLoved your recent episode with [Guest] on scaling lean operations. Most AI guests either stay at surface-level ChatGPT tips or drown business owners in developer jargon.\n\nMy background bridges both rooms: Columbia CS, ex-McKinsey ($70M SaaS cost reduction + 250+ healthcare leaders trained), and 300+ founders taught live at Boulder Startup Week (speaking in my personal capacity).\n\nWould your listeners enjoy a 35-minute tactical walkthrough on "From Chat-Box Toy to Owned Back Office: 6 Workflows to Automate Before Hiring a $65K Coordinator"? Happy to share our unlocked Company Context Vault (voice.md) free at agenticarchitect.ai/starter-kit.\n\nWarmly,\nSophia Stein',
   },
   {
-    id: 'callan-corporate-coo',
-    channel: 'LinkedIn / Outbound Note -> $7,500-$15,000 Corporate Labs & $1,500 Audits',
-    url: 'https://agenticarchitect.ai/blog/ai-chief-of-staff',
-    hookTitle: 'Why 70% of $20K AI agency builds get switched off inside 90 days',
+    id: 'corporate-demo-to-prod',
+    channel: 'LinkedIn / Outbound Note -> Corporate Workshops & Custom Sprints',
+    url: 'https://agenticarchitect.ai/blog/hire-ai-agency-vs-in-house',
+    hookTitle: 'Why 70% of black-box AI agency builds get switched off inside 90 days',
     copyBody:
-      'Watched three leadership teams run into the same wall this quarter: they paid an outside agency $20K+ for undocumented webhook automations, a CRM field changed six weeks later, and nobody in-house knew how to edit it.\n\nDurable AI adoption looks boring: portable markdown context files (voice.md, icp.md), draft-only inbox scopes so nothing embarrassing auto-sends, and training your own Ops Lead or Chief of Staff to own the loop.\n\nPublished our full 2026 AI Chief of Staff & Corporate Workshop buyer guide today (link in first comment).',
+      'Watched three teams hit the exact same wall this quarter: past the initial ChatGPT demo, stuck before real production. Two paid outside contractors $20K+ for undocumented webhook spaghetti; a CRM field changed six weeks later and nobody in-house knew how to edit it.\n\nDurable adoption looks calm and boring: plain-English context files (voice.md, icp.md), draft-only inbox scopes so nothing reckless auto-sends, and building directly inside your own accounts so your team owns the keys.\n\nPublished our full 2026 buyer & workshop breakdown today (link in first comment).',
   },
 ]
 
@@ -119,7 +119,7 @@ export function StudioInbox({
   const [publishing, setPublishing] = useState(false)
   const [publishResult, setPublishResult] = useState<string | null>(null)
   const [dispatchStatus, setDispatchStatus] = useState<string | null>(null)
-  const [crosspostSlug, setCrosspostSlug] = useState('ai-org-chart')
+  const [crosspostSlug, setCrosspostSlug] = useState('ai-back-office')
   const [crosspostLive, setCrosspostLive] = useState(false)
 
   function buildAuthHeaders(): Record<string, string> {
@@ -406,7 +406,7 @@ export function StudioInbox({
             value={crosspostSlug}
             onChange={e => setCrosspostSlug(e.target.value)}
             aria-label="Post slug for official API cross-post"
-            placeholder="ai-org-chart"
+            placeholder="ai-back-office"
             className="w-36 rounded-lg border border-border bg-white px-2.5 py-1.5 font-mono text-xs text-fg"
           />
           <label className="inline-flex items-center gap-1 text-[11px] font-mono text-muted cursor-pointer">
@@ -724,22 +724,22 @@ export function StudioInbox({
         </div>
       </section>
 
-      {/* 3. Callan-Style High-Ticket Buyer Funnel Packs (70% Revenue Focus) */}
+      {/* 3. Non-Technical Owner & Corporate Buyer Attraction Packs */}
       <section className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              3. Callan-Style Buyer Attraction (70% Revenue Engine)
+              3. Owner Bottleneck &amp; Corporate Buyer Attraction
             </p>
             <h2 className="text-xl font-bold text-fg">
-              Ready-to-Send Masterclass Hooks, Podcast Pitches &amp; Corporate Buyer Posts
+              Ready-to-Send Workshop Hooks, Podcast Pitches &amp; Corporate Posts
             </h2>
           </div>
-          <Badge variant="online">Drives $5,997 Cohort + $15K Corporate Labs</Badge>
+          <Badge variant="online">Courses · Custom Sprints · Corporate Labs</Badge>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          {CALLAN_BUYER_FUNNEL_PACKS.map(pack => (
+          {OWNER_BUYER_FUNNEL_PACKS.map(pack => (
             <Card key={pack.id} className="p-6 space-y-3 border-blue-200">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-mono text-xs text-accent font-semibold">{pack.channel}</span>
@@ -759,10 +759,10 @@ export function StudioInbox({
               <div className="flex flex-wrap gap-2.5">
                 <button
                   type="button"
-                  onClick={() => copyText(`callan-${pack.id}`, pack.copyBody)}
+                  onClick={() => copyText(`owner-${pack.id}`, pack.copyBody)}
                   className="rounded-lg bg-accent px-3.5 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
                 >
-                  {copiedId === `callan-${pack.id}` ? 'Copied Buyer Script!' : 'Copy Full Script / Pitch'}
+                  {copiedId === `owner-${pack.id}` ? 'Copied Buyer Script!' : 'Copy Full Script / Pitch'}
                 </button>
               </div>
             </Card>

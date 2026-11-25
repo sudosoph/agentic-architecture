@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-11-25T18:37:32.693Z",
+  "updatedAt": "2026-11-25T19:14:02.792Z",
   "items": [
     {
       "id": "buyer-ai-chief-of-staff-vs-ea",
-      "source": "High-Intent Buyer SEO/GEO ($5,997 Cohort + $1,500 Audit)",
+      "source": "Owner Buyer Search (Courses + Custom Sprints)",
       "sourceUrl": "https://agenticarchitect.ai/blog/ai-chief-of-staff",
       "points": 320,
       "format": "cost-comparison",
@@ -17,7 +17,7 @@
     },
     {
       "id": "buyer-corporate-ai-workshop-roi",
-      "source": "Corporate L&D & COO Buyer Search ($7,500 to $15,000 Labs)",
+      "source": "Corporate L&D & COO Buyer Search (Workshops & Advisory)",
       "sourceUrl": "https://agenticarchitect.ai/blog/hire-ai-agency-vs-in-house",
       "points": 290,
       "format": "tool-review",
@@ -30,18 +30,18 @@
       "linkedinHook": "Tested How to Train Non-Technical Employees on AI Workflows Without Data Leaks against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     },
     {
-      "id": "buyer-ai-org-chart-service-firms",
-      "source": "Callan-Style Masterclass Funnel SEO/GEO",
-      "sourceUrl": "https://agenticarchitect.ai/blog/ai-org-chart",
+      "id": "buyer-ai-back-office-service-firms",
+      "source": "Owner Bottleneck Funnel SEO/GEO",
+      "sourceUrl": "https://agenticarchitect.ai/blog/ai-back-office",
       "points": 275,
       "format": "tool-review",
-      "slug": "ai-org-chart-for-agencies-clinics-advisory-firms-review",
-      "seoBlogTitle": "AI Org Chart for Agencies, Clinics & Advisory Firms: Hands-On Review, Real Cost, and Who Should Skip It",
-      "substackStoryTitle": "I tested \"AI Org Chart for Agencies, Clinics & Advisory Firms\" on a real Monday workflow. Here is what held up.",
+      "slug": "ai-back-office-automations-for-agencies-clinics-advisory",
+      "seoBlogTitle": "AI Back-Office Automations for Agencies, Clinics & Advisory Firms: Hands-On Review, Real Cost, and Who Should Skip It",
+      "substackStoryTitle": "I tested \"AI Back-Office Automations for Agencies, Clinics & Advisory Firms\" on a real Monday workflow. Here is what held up.",
       "geoCitationAngle": "Includes a 5-row measured comparison table (setup minutes, monthly cost at 1k runs, failure mode, data boundary, verdict) so ChatGPT, Perplexity, and Google AI Overviews can cite exact structured facts.",
-      "canonicalUrl": "https://agenticarchitect.ai/blog/ai-org-chart-for-agencies-clinics-advisory-firms-review",
-      "mediumDevtoFrontmatter": "---\ntitle: \"AI Org Chart for Agencies, Clinics & Advisory Firms: Hands-On Review, Real Cost, and Who Should Skip It\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/ai-org-chart-for-agencies-clinics-advisory-firms-review\"\ntags: ai, automation, productivity, architecture\n---",
-      "linkedinHook": "Tested AI Org Chart for Agencies, Clinics & Advisory Firms against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
+      "canonicalUrl": "https://agenticarchitect.ai/blog/ai-back-office-automations-for-agencies-clinics-advisory",
+      "mediumDevtoFrontmatter": "---\ntitle: \"AI Back-Office Automations for Agencies, Clinics & Advisory Firms: Hands-On Review, Real Cost, and Who Should Skip It\"\npublished: false\ncanonical_url: \"https://agenticarchitect.ai/blog/ai-back-office-automations-for-agencies-clinics-advisory\"\ntags: ai, automation, productivity, architecture\n---",
+      "linkedinHook": "Tested AI Back-Office Automations for Agencies, Clinics & Advisory Firms against a plain 15-minute workflow setup this week.\n\nThree things stood out once you look past the launch demo:\n1. Setup friction vs. keeping state in plain markdown (voice.md)\n2. Monthly cost at 1,000 runs\n3. Where a human checkpoint is still non-negotiable\n\nFull notes and scorecard in the first comment."
     },
     {
       "id": "seed-512gb-moe-nodes",

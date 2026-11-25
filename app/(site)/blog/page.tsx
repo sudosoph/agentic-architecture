@@ -6,9 +6,9 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'Owner Playbooks & AI Frameworks',
+  title: 'Owner Playbooks & AI Workflow Guides',
   description:
-    'Plain-English AI Org Charts, AI Chief of Staff setups, security reviews, and ROI frameworks for business owners and principals by Sophia Stein.',
+    'Plain-English AI workflow blueprints, AI Chief of Staff setups, security reviews, and ROI calculators for business owners and operators by Sophia Stein.',
   alternates: {
     canonical: '/blog',
   },
@@ -189,19 +189,19 @@ export default async function BlogPage({
   return (
     <div className="space-y-10">
       <PageHeader
-        meta="Executive Frameworks · AI Org Charts · ROI & Tool Audits"
+        meta="Practical Workflows · Bottleneck Audits · Cost & Security Guides"
         title="Business Owner Playbooks"
-        description="Plain-English playbooks for $1M to $50M founders, firm principals, and COOs automating back-office work without writing code. (Looking for our engineering & hardware papers? Visit Research & Teaching.)"
+        description="Plain-English playbooks for founders, firm principals, and operators automating repetitive back-office work without writing code. (Looking for our engineering & hardware papers? Visit Research & Teaching.)"
       />
 
       {/* Owner Conversion Strip */}
       <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Two Ways to Put These Frameworks Into Your Business
+            Where Are You Right Now?
           </p>
           <p className="text-sm font-bold text-fg">
-            Train your team in our 8-week Cohort (EA seat included free) or have Sophia build your workflows custom.
+            Learn step-by-step in our free live workshop &amp; $297 Academy, or book a free 20-min call to scope a custom sprint.
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5 shrink-0">
@@ -209,13 +209,13 @@ export default async function BlogPage({
             href="/masterclass"
             className="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
           >
-            Free 60-Min Live Briefing →
+            Free 60-Min Live Build →
           </Link>
           <Link
             href="/work-with-me"
             className="inline-flex items-center rounded-lg border border-border bg-white px-4 py-2 text-xs font-semibold text-fg hover:border-accent transition-colors"
           >
-            Bespoke AI Builds
+            Free 20-Min Bottleneck Call
           </Link>
         </div>
       </div>
