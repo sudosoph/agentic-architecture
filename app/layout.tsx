@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
+import { Analytics } from '@/components/site/analytics'
 import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | Agentic Architecture',
   },
   description:
-    'AI Architect. Local-first LLM infrastructure, benchmarks, and OSS tools. Boulder, CO.',
+    'Agentic Architecture, by Sophia Stein. AI Architect, sovereign-compute consultancy, and the publisher of Local-First AI. Boulder, CO.',
   metadataBase: new URL('https://agenticarchitect.ai'),
   openGraph: {
     siteName: 'Agentic Architecture',
@@ -43,6 +44,7 @@ export default function RootLayout({
       className={`${jetbrainsMono.variable} ${GeistSans.variable}`}
     >
       <body className="bg-bg text-text font-sans antialiased">
+        <Analytics />
         {children}
       </body>
     </html>

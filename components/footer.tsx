@@ -9,7 +9,6 @@ const CONTENT_LINKS = [
 
 const WORK_LINKS = [
   { href: '/work-with-me', label: 'work with me' },
-  { href: '/book', label: 'book a call' },
   { href: '/library', label: 'library' },
   { href: '/courses', label: 'courses' },
   { href: '/sponsor', label: 'sponsor' },
@@ -17,9 +16,7 @@ const WORK_LINKS = [
 
 const CONNECT_LINKS = [
   { href: 'https://github.com/sudosoph', label: 'GitHub ↗', accent: false },
-  { href: 'https://x.com/sophiastein', label: 'X ↗', accent: false },
-  { href: 'https://agenticarchitect.substack.com', label: 'Substack ↗', accent: false },
-  { href: '/contact', label: 'contact', accent: false },
+  { href: 'https://x.com/agenticarchitect', label: 'X ↗', accent: false },
   { href: '/rss.xml', label: 'RSS ↗', accent: true },
 ]
 

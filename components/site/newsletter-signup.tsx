@@ -1,74 +1,41 @@
-'use client'
-
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-
-type Status = 'idle' | 'sending' | 'success' | 'error'
-
 type Props = {
-  /** Origin of the signup (homepage / bsw / library / blog) for tracking. */
+  /** Origin of the signup (homepage / bsw / library / blog) — informational only. */
   source?: string
   /** Optional headline override. */
   headline?: string
   /** Optional sub-line override. */
   sub?: string
-  /** Optional surface variant. */
+  /** Optional surface variant. Inline = compact, no surrounding card. */
   variant?: 'card' | 'inline'
 }
 
+// Substack's official iframe embed. The earlier AJAX path returned 200 from
+// Substack but didn't reliably trigger the confirmation email when the email
+// was already associated with a Substack account (returns didSignup: false +
+// prompt_to_login: true). The iframe widget always sends the email because
+// it's user interaction inside Substack's domain. The white background of
+// the embed is unfortunate but unavoidable without losing the confirmation flow.
+const SUBSTACK_EMBED_URL = 'https://localfirstai.substack.com/embed'
+
 export function NewsletterSignup({
-  source = 'unknown',
-  headline = "The Architect's Notebook",
+  source: _source,
+  headline = 'Local-First AI',
   sub,
   variant = 'card',
 }: Props) {
-  const [status, setStatus] = useState<Status>('idle')
-  const [error, setError] = useState('')
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setStatus('sending')
-    setError('')
-    const form = e.currentTarget
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source }),
-      })
-      if (res.ok) {
-        setStatus('success')
-        form.reset()
-      } else {
-        const json = await res.json().catch(() => ({}))
-        setError((json as { error?: string }).error ?? 'Could not subscribe.')
-        setStatus('error')
-      }
-    } catch {
-      setError('Network error. Try again.')
-      setStatus('error')
-    }
-  }
-
   if (variant === 'inline') {
     return (
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 max-w-md">
-        <input
-          name="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          aria-label="Email address"
-          className="flex-1 bg-surface border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-mono focus:outline-none focus:border-accent"
+      <div className="max-w-md">
+        <iframe
+          src={SUBSTACK_EMBED_URL}
+          title="Subscribe to Local-First AI"
+          width="100%"
+          height="160"
+          style={{ border: '1px solid var(--color-border)', background: 'transparent' }}
+          scrolling="no"
+          loading="lazy"
         />
-        <Button type="submit" variant="primary" size="md" disabled={status === 'sending'}>
-          {status === 'sending' ? 'sending…' : status === 'success' ? 'subscribed ✓' : 'subscribe ›'}
-        </Button>
-        {status === 'error' && (
-          <p className="font-mono text-xs text-pressure mt-1 sm:mt-0 sm:ml-2 self-center">{error}</p>
-        )}
-      </form>
+      </div>
     )
   }
 
@@ -81,36 +48,23 @@ export function NewsletterSignup({
         <p className="font-mono text-sm text-fg leading-relaxed mb-1">{sub}</p>
       ) : (
         <p className="font-mono text-sm text-fg leading-relaxed mb-1">
-          One email a week on agentic architecture and local AI for lean
-          founders.
+          One email a week on local-first AI, agentic architecture, and what
+          is actually working in 2026.
         </p>
       )}
       <p className="font-mono text-xs text-muted leading-relaxed mb-4">
         n8n templates, cost teardowns, and what is actually working in 2026.
         No drip sequences, no upsells. Reply to opt out.
       </p>
-      {status === 'success' ? (
-        <p className="font-mono text-sm text-online">
-          Subscribed. The next issue lands in your inbox.
-        </p>
-      ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="you@example.com"
-            aria-label="Email address"
-            className="flex-1 bg-bg border border-border px-3 py-2 text-sm text-fg placeholder:text-muted font-mono focus:outline-none focus:border-accent"
-          />
-          <Button type="submit" variant="primary" size="md" disabled={status === 'sending'}>
-            {status === 'sending' ? 'sending…' : 'subscribe ›'}
-          </Button>
-        </form>
-      )}
-      {status === 'error' && (
-        <p className="font-mono text-xs text-pressure mt-2">{error}</p>
-      )}
+      <iframe
+        src={SUBSTACK_EMBED_URL}
+        title="Subscribe to Local-First AI"
+        width="100%"
+        height="160"
+        style={{ border: 0, background: 'transparent' }}
+        scrolling="no"
+        loading="lazy"
+      />
     </section>
   )
 }

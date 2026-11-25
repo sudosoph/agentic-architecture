@@ -1,0 +1,121 @@
+---
+title: "Cost-Quality Pareto for Coding Agents (May 2026)"
+slug: cost-quality-pareto-coding-agents
+publishedDate: "2026-05-07"
+description: "Paying $5 per task no longer gets you the frontier. Qwen3.6-27B running locally hits 77.2% SWE-bench Verified at ~$0.04/task, within 10pp of Opus 4.7 for ~130x less money."
+tags: ["coding-agents", "benchmarks", "cost", "swe-bench", "claude-code", "qwen", "deepseek"]
+kind: deep-dive
+draft: false
+---
+
+**TL;DR.** Paying $5 per task no longer gets you the frontier. Paying nothing comes within 11 points of the leader. The cost-quality landscape for coding agents in May 2026 has bifurcated into a five-step Pareto frontier with a dead middle. Qwen3.6-27B Dense runs locally on a Framework laptop and hits 77.2% on [SWE-bench Verified](https://www.swebench.com/) at roughly $0.04 per task, electricity included. Anthropic's Mythos Preview hits 93.9% at $8.50 per task. Almost everything in the gap between those two endpoints is dominated by a cheaper option at the same quality, or a smarter option at a similar price. If you're not running on Opus 4.7, Mythos, GPT-5.5 via Codex, Kimi K2.6, DeepSeek V4-Pro, or local Qwen3.6-27B, you are paying for someone else's brand.
+
+Three things broke at once to produce this chart. Anthropic shipped [Mythos Preview](https://platform.claude.com/docs/en/about-claude/pricing) at 93.9% Verified but kept Opus 4.7 the practical ceiling at 87.6%. DeepSeek V4-Pro and Kimi K2.6 hit roughly 80% Verified at 7 to 15x lower API cost than Anthropic's flagship. And Qwen3.6-27B Dense made 77.2% Verified runnable on a laptop with 18GB of VRAM, [Apache 2.0 licensed](https://www.aimadetools.com/blog/qwen-3-6-27b-complete-guide/), with no API key in the loop. Each of those three would be the story of the month on its own. They all landed inside six weeks. The middle of the chart, where proprietary models priced like frontier-tier scored Sonnet-tier, evaporated.
+
+Two caveats up front, because Hacker News will eat anyone alive who plots point estimates without uncertainty. SWE-bench Verified scores carry a published run-to-run variance of roughly two percentage points. Cost-per-task estimates carry roughly ±25% uncertainty from scaffold variance and prompt-cache hit-rate. And the elephant in the room: OpenAI [quietly stopped reporting Verified](https://epoch.ai/benchmarks/swe-bench-verified) after acknowledging training-data contamination across the frontier. Verified scores above 85% should be read as "saturated, possibly memorized," not "the model is that smart." [SWE-bench Pro](https://labs.scale.com/leaderboard/swe_bench_pro_public) is the honest signal post-contamination. I report both.
+
+## The Pareto chart
+
+X = USD per SWE-bench Verified task on a log scale. Y = SWE-bench Verified percentage, single-shot, no best-of-N unless noted. Bars = ±2pp on score, ±25% on cost.
+
+| # | Agent + Model | SWE-V % | SWE-Pro % | $/task | Open weights? | Notes |
+|---|---|---|---|---|---|---|
+| 1 | Claude Code + Mythos Preview | **93.9** | 77.8 | ~$8.50 | No | Adaptive scaffold; preview API only |
+| 2 | Claude Code + Opus 4.7 (Adaptive) | **87.6** | 64.3 | ~$5.20 | No | $5/$25 MTok; with caching ~$3.10 |
+| 3 | Codex CLI + GPT-5.5 | **88.7** | 58.6 | ~$2.40 | No | 72% fewer output tokens vs GPT-5.4 |
+| 4 | Codex CLI + GPT-5.3-Codex | 85.0 | 55.6 | ~$1.90 | No | Older but cheaper |
+| 5 | Cursor Composer 2 (Kimi K2.5 base) | ~80* | ~52 | ~$0.45 | No | Subscription-pegged; multi-lang 73.7 |
+| 6 | Claude Code + Sonnet 4.6 | 79.6 | ~57 | ~$0.95 | No | Anthropic price/perf sweet spot |
+| 7 | Cline + Sonnet 4.6 (autonomous) | ~76 | n/a | ~$1.10 | OSS scaffold | Scaffold adds ~16pp vs SWE-agent v1 |
+| 8 | Goose + Opus 4.7 | ~80 | n/a | ~$5.00 | OSS scaffold | Mirrors Claude Code on same model |
+| 9 | DeepSeek V4-Pro (raw via Codex CLI) | **80.6** | ~55 | **~$0.35** | Open weights | $0.14/$0.28 launch promo; $1.74/$3.48 Fireworks |
+| 10 | Kimi K2.6 (Codex CLI) | **80.2** | 58.6 | **~$0.40** | Open weights | $0.60/$2.50; 300-subagent swarm |
+| 11 | Kimi K2.5 (Cline) | 76.8 | n/a | ~$0.30 | Open weights | $0.60/$3.00 |
+| 12 | DeepSeek V4-Flash | 79.0 | n/a | ~$0.18 | Open weights | The "free path" winner |
+| 13 | **Qwen3.6-27B Dense (local, Codex CLI)** | **77.2** | 53.5 | **~$0.04** | Open weights | Apache 2.0; runs on 18GB |
+| 14 | Qwen3.6-35B-A3B MoE (Together) | 73.4 | ~50 | ~$0.22 | Open weights | $0.29/$1.65; 3B active |
+| 15 | Qwen3-Coder-Next | 70.6 | n/a | ~$0.15 | Open weights | 3B active, top efficiency |
+| 16 | Qwen3-Coder-480B | 69.6 | n/a | ~$0.55 | Open weights | Pre-3.6 generation |
+| 17 | mini-SWE-agent (~100 LOC) + Opus 4.5 | 76.8 | n/a | ~$3.20 | OSS | Bash-only; reproducibility champion |
+| 18 | mini-SWE-agent + Haiku 4.5 (Moatless) | 35.9 | n/a | ~$0.08 | OSS | $/% champion of the cheap tier |
+| 19 | SWE-agent v1 + Sonnet 4.5 | 43.2 | n/a | ~$0.65 | OSS | Princeton baseline; scaffold-bottlenecked |
+| 21 | Devin 2.0 (Cognition) | 45.8 | ~30 | **~$9.00/hr** | No | $2.25/ACU; flagship-priced, mid-tier output |
+| 22 | Llama 4 Maverick + Moatless | 14.7 | n/a | ~$0.20 | Open weights | Best fully-self-hosted option, but weak |
+
+\*Cursor Composer 2's standalone SWE-V is approximate; Cursor primarily reports Multilingual (73.7) and CursorBench (61.3).
+
+The Pareto frontier, the set of points where you cannot improve cost-per-task without losing quality, is short. It contains exactly five inflection points: Qwen3.6-27B local at ~$0.04/77.2%; DeepSeek V4-Flash at ~$0.18/79.0%; DeepSeek V4-Pro at ~$0.35/80.6% or Kimi K2.6 at ~$0.40/80.2% (effectively tied); GPT-5.5 via Codex at ~$2.40/88.7%; and Opus 4.7 or Mythos Preview at ~$5.20-$8.50 for 87.6-93.9%. Everything else on the chart is dominated by one of those five points.
+
+The dominated middle is the interesting story. Sonnet 4.6 at $0.95/task is more expensive *and* lower-scoring than Kimi K2.6 at $0.40. Cursor Composer 2's bundled experience trades raw SWE-V for ergonomics, which is a real tradeoff but not a Pareto-optimal one. Devin 2.0 at $9/hr scoring 45.8% is, plainly, a worse deal than Codex CLI plus DeepSeek V4-Flash at sub-dollar per task. The middle of the chart is where 2025-vintage product strategies went to die.
+
+## Frontier-only, when it's worth it
+
+There are exactly four honest reasons to pay $5 or more per task in May 2026.
+
+**The bug is in your hot path and downtime exceeds $500/hr.** Opus 4.7's seven-to-twelve-percentage-point lead over Kimi K2.6 on SWE-bench Pro is the strongest case for frontier spend. One avoided P0 incident pays for thousands of frontier tasks. If you're debugging a payment processor at 2am, you call Opus.
+
+**You're working in a language Kimi, DeepSeek, or Qwen weren't trained heavy on.** The numbers tell the story: Opus 4.7 hits 64.3% on SWE-bench Pro versus Kimi K2.6 at 58.6%. The gap is small in aggregate and widens on Go and TypeScript repos in the Pro set. If your codebase is Python or Rust, the open-weights options are within striking distance. If it's a niche embedded toolchain or an obscure functional language, the gap matters.
+
+**You ship code into regulated industries or to IP-paranoid clients.** Some contracts forbid code that touched an open-weight model. Some compliance regimes require attestation that data passed through audited inference paths only. This is the only honest argument for Devin's $9/hr flagship pricing. It's expensive insurance, not capability.
+
+**You're at the contamination ceiling and need the honest signal.** OpenAI quietly stopped reporting Verified after acknowledging training-data contamination across all frontier models. Read Verified scores above 85% as saturated. SWE-bench Pro is the leaderboard that still moves. Mythos Preview's 77.8% on Pro is more meaningful than its 93.9% on Verified.
+
+If none of those four apply, frontier API spend is nostalgia. The default coding-agent loop in 2026 is not Opus.
+
+## Local-only, what's actually possible
+
+Three real configurations, all shipping today, all running open-weight models.
+
+**Tier-A laptop:** Qwen3.6-27B Dense at FP8 on a [Framework 16 with Radeon RX 7700S and 96GB unified memory](/blog/96gb-ram-thesis) runs at 12 to 18 tokens per second on coding workloads, drawing roughly 45W under load. At $0.13/kWh and 60 seconds of wall time per task, marginal cost is about $0.001 per task. Amortizing the $1,800 chassis over three years gives roughly $0.04 per task. The quality ceiling is 77.2% SWE-V and 53.5% SWE-Pro. That is within 10 percentage points of Opus 4.7 on Verified for roughly 130x less money. This is the one number that travels.
+
+**Tier-B workstation:** Qwen3.6-27B at BF16 on an RTX 5090 hits 158 tokens per second per published [devnen benchmarks](https://www.aimadetools.com/blog/qwen-3-6-27b-complete-guide/), the same quality ceiling at 8 to 10x the throughput. Marginal cost is about $0.005 per task. The wall-clock penalty drops to negligible.
+
+**Tier-C homelab:** DeepSeek V4-Pro is a 1.6T-parameter MoE that demands roughly $15K of GPU hardware to host yourself. At that price point you are operating a hosting company with one customer, which is bad economics. Stick with [Fireworks at $0.35 per task](https://www.nxcode.io/resources/news/deepseek-v4-release-specs-benchmarks-2026) and put the hardware budget into more laptops.
+
+The honest constraint with local-only: inference eats agent loops alive on long-horizon tasks. SWE-bench Verified instances often need 30 to 100 LM calls per problem. At 12 tokens per second on a laptop you are waiting four to seven minutes per task versus thirty seconds on a frontier API. The 130x cost win is real. The wall-clock penalty is also real, and for interactive coding sessions where the developer is sitting waiting on the agent, the latency tax often dominates the dollar tax. This is the unavoidable [hybrid argument](/blog/local-vs-cloud-inference): local for the 80 to 95% of agent turns that route, summarize, draft, and critique; frontier API for the 5 to 20% that need the smartest model in the world or the lowest-latency response.
+
+## The hybrid sweet spots
+
+Five working configurations on the Pareto frontier. These are the deployments that dominate everything else on cost-quality.
+
+**(a) The free-tier path.** Cline plus DeepSeek V4-Flash via Fireworks: 79.0% Verified, ~$0.18 per task, BYOK with $0 fixed cost. This is the best on-ramp for evaluating coding agents in 2026. New to the space? Start here. The total bill for a week of evaluation is under $20.
+
+**(b) The open-weights workhorse.** Codex CLI plus Kimi K2.6 or DeepSeek V4-Pro: 80.2 to 80.6% Verified at $0.35 to $0.40 per task. Within seven percentage points of Opus 4.7 at one-fifteenth the price. Appropriate for roughly 90% of real bug-fix tickets. If you are running a small team and your monthly Anthropic bill is over $500, [the math says move here yesterday](/blog/local-vs-cloud-inference).
+
+**(c) The Anthropic hybrid.** Sonnet 4.6 for routine tasks, Opus 4.7 for the hard tail. Route by issue complexity: lines changed, files touched, test count. Sonnet at 79.6%/$0.95 handles roughly 70% of tickets; Opus picks up the long tail. Blended cost is around $2 per task at an effective ~85% resolution rate. The right move for teams that need to stay on a single vendor for procurement reasons.
+
+**(d) The subscription arbitrage.** [Cursor Ultra at $200/mo](https://cursor.com/pricing) or [Claude Code Max 20x at $200/mo](https://www.verdent.ai/guides/claude-code-pricing-2026) breaks even versus metered API at roughly 10 to 15 frontier-model tasks per day. For a full-time IC who is actually using the agent, both subscriptions are a 3 to 5x cost win over per-token billing. [Simon Willison's coverage of the Claude Code pricing confusion](https://simonwillison.net/2026/apr/22/claude-code-confusion/) is the cleanest reference for what's actually included.
+
+**(e) The local-first, frontier-fallback.** Qwen3.6-27B running locally for the fast loop (autocomplete, scaffolding, doc generation, lint-pass review) plus Opus 4.7 over API for actual SWE-bench-style issue resolution. This is the only configuration that's both cheap and fast for interactive work. The local model handles the dozens of tiny calls per minute. The frontier model handles the one or two genuinely hard turns per session. [The infrastructure pattern this implies](/blog/coding-agent-infrastructure) is what teams that ship are converging on.
+
+## Six predictions for the next six months
+
+Each of these is falsifiable. Pin this post and check back in November 2026.
+
+**1. The 80% line moves to ~$0.10/task by November 2026.** Signal: a Qwen3.7 or DeepSeek V5 dense model under 30B parameters hitting 80% or better on SWE-bench Verified. The trajectory is unambiguous; the only question is calendar.
+
+**2. SWE-bench Verified scores above 90% will be discounted as contaminated.** Pro becomes the de facto leaderboard. Watch for Anthropic and OpenAI to stop reporting Verified entirely. OpenAI already has, partially. Anthropic is next.
+
+**3. Cursor's Composer line forks.** Either Cursor goes fully proprietary (their RL'd Kimi descendant becomes the only option in the IDE) or capitulates to Anthropic-hosted defaults and competes on UX alone. The middle position is unstable.
+
+**4. Devin drops pricing 50% or pivots to enterprise-only.** $9/hr against $0.40/task on Kimi K2.6 is not survivable on the open market. The pivot is to managed-service contracts where the price is bundled with SLAs.
+
+**5. Local inference closes the latency gap.** AMD's NPU stack on Ryzen AI Max+ is converging on 80 to 120 tokens per second for 27B-class models on laptop power envelopes. By Q4 2026 the wall-clock penalty for local-only will be roughly 2x not 10x. That single change collapses the strongest argument for cloud.
+
+**6. A fully-open agent stack hits 80% Verified for under $0.05/task.** Scaffold plus weights plus harness, all open-source, all reproducible. Mini-SWE-agent plus Qwen3.7 plus a Framework laptop is the most likely path. When this ships, the [death-of-the-junior-dev](/blog/death-of-the-junior-dev) argument completes its arc.
+
+## Methodology
+
+SWE-bench Verified numbers come from [swebench.com](https://www.swebench.com/), [vals.ai](https://www.vals.ai/), [llm-stats.com](https://llm-stats.com/benchmarks/aider-polyglot), and [BenchLM](https://benchlm.ai/benchmarks/sweVerified) as of 2026-05-07. Where multiple scaffold variants exist, I picked the highest published score with a named scaffold. SWE-bench Pro numbers come from the [Scale leaderboard](https://labs.scale.com/leaderboard/swe_bench_pro_public) and [Morph aggregations](https://www.morphllm.com/swe-bench-pro). Pro is the honest signal post-contamination; treat Verified scores at or above 85% with skepticism.
+
+Cost per task is computed as `(input_tokens × input_price + output_tokens × output_price) / 1M`, with input = 80K tokens and output = 12K tokens as the SWE-V median across [Princeton HAL telemetry](https://hal.cs.princeton.edu/swebench_verified_mini) and [mini-SWE-agent](https://github.com/SWE-agent/mini-swe-agent) reports. Claude assumes 65% prompt-cache hit-rate (cached reads at 0.1x base price). Open-weights costs use Fireworks and Together public per-token pricing.
+
+Local inference cost uses marginal electricity at $0.13/kWh, 45 to 60W draw on a Framework 16 with RX 7700S, hardware amortized over three years assuming a $1,800 chassis. [The full hardware spec is on the stack page](/stack).
+
+Subscription costs (Cursor Ultra at $200/mo with $400 credit pool at API rates; Claude Code Max 20x at $200/mo with ~220K tokens per 5-hour window) are excluded from the Pareto plot because they are billed per month, not per task. They show up in the hybrid section as their own line item.
+
+Uncertainty: ±2 percentage points on benchmark scores reflects published run-to-run variance on SWE-V. ±25% on dollar-per-task reflects scaffold variance and prompt-cache variance. The contamination caveat is qualitative and applies to Verified scores above 85% across all vendors.
+
+## Closer
+
+The chart is the point. The middle of the chart is empty. Five points dominate everything; everything else is paying for someone else's brand or someone else's UI. The honest defaults in May 2026 are: open-weights for the workhorse loop, frontier for the genuinely hard tail, local for everything that doesn't need the network. If your team's monthly coding-agent bill looks nothing like that distribution, you have a procurement problem, not an engineering one. Check back in six months and see which of the six predictions held.

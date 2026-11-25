@@ -1,0 +1,198 @@
+---
+title: "Stop Replying to Scheduling Emails: Build a Booking Agent in an Afternoon"
+slug: booking-agent
+publishedDate: "2026-05-06"
+description: "A copy-paste tutorial for non-coders. Paste a scheduling email, get a draft reply with your Cal.com link in plain English, hit send. No SaaS, no monthly subscription, ~$0 to run. Includes a forkable GitHub repo."
+tags: ["beginner", "booking", "automation", "cal-com", "guides"]
+difficulty: "beginner"
+estimatedTime: "45 minutes"
+repoUrl: "https://github.com/sudosoph/booking-agent"
+draft: false
+---
+
+**Who this is for.** You're not a developer. You spend more time replying to "what time works for you?" emails than you'd care to admit. You have a Cal.com page (or any scheduling link) but people still email you instead of using it. You'd love an assistant that drafts those replies for you, on your behalf, that you just confirm or decline.
+
+**What you'll have at the end.** A small web page on your laptop where you paste in a scheduling email, click a button, and get back a polite, on-brand draft reply that includes your Cal.com link with a sentence of context (why you're suggesting it, what the recipient should do). You copy it, paste it into your email client, send.
+
+**What it costs.** Effectively zero. The Anthropic API charges per use (around $0.005 per drafted reply with Claude Haiku, less than a penny). Cal.com has a free tier. No monthly subscription.
+
+**What it doesn't do (yet).** It doesn't read your inbox automatically — that's the next guide. This first version is a copy-paste tool. We start here on purpose: you stay in control, you see every draft before it goes out, and you build trust in the agent before handing it the keys.
+
+## What you'll need
+
+- A computer (Mac, Windows, or Linux — any of them work).
+- A free [Anthropic account](https://console.anthropic.com) for the API key. New accounts get $5 in free credit, which is enough for ~1,000 drafted replies.
+- A free [Cal.com account](https://cal.com) (or any scheduling link — Calendly works too, just swap the URL).
+- About 45 minutes. The first 15 are setup, the rest is using it and tweaking the tone.
+
+You do not need to know how to code. You'll copy and paste a few commands. If you've ever opened the Terminal app to run something a guide told you to, you have all the skills required.
+
+## The plan
+
+We're going to:
+
+1. Get an API key from Anthropic.
+2. Clone a small GitHub repo (one command).
+3. Add your API key and your Cal.com link to a file.
+4. Run the app on your laptop.
+5. Use it: paste an email, get a draft, send it.
+6. Customize the tone so it sounds like you.
+
+## Step 1. Get your Anthropic API key
+
+Go to [console.anthropic.com](https://console.anthropic.com) and sign up. Once you're in:
+
+1. Click **Settings** → **API keys** in the sidebar.
+2. Click **Create Key**, give it a name like "booking-agent", and copy the key.
+3. Save it somewhere safe (a password manager is ideal). You won't be able to see it again after you close the page.
+
+The key looks like `sk-ant-api03-XXXXX...`. Treat it like a password.
+
+## Step 2. Get your Cal.com link
+
+If you don't already have one, sign up at [cal.com](https://cal.com) and create your first event type. The free tier covers everything we need.
+
+Your link will look like `https://cal.com/your-name/30min`. Copy it.
+
+## Step 3. Clone the repo
+
+Open the Terminal app (on Mac: Cmd+Space, type "Terminal"; on Windows: open PowerShell). Paste this and press Enter:
+
+```bash
+git clone https://github.com/sudosoph/booking-agent.git
+cd booking-agent
+npm install
+```
+
+The first command downloads the code. The second moves you into the folder. The third installs the libraries the app needs (it'll print a lot of text — that's normal, wait for it to finish).
+
+If you get an error like "command not found: npm", you need to install Node.js first. Go to [nodejs.org](https://nodejs.org), download the LTS version, install it, then run the three commands above again.
+
+## Step 4. Add your secrets
+
+In the booking-agent folder, you'll see a file called `.env.example`. Make a copy of it called `.env` (just `.env`, no `example` part). Open `.env` in any text editor (TextEdit on Mac, Notepad on Windows, or VS Code if you have it). It looks like this:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-api03-paste-your-key-here
+CAL_LINK=https://cal.com/your-name/30min
+YOUR_NAME=Sophia
+YOUR_TIMEZONE=America/Denver
+```
+
+Replace each value with yours. Save the file. That's it for setup.
+
+## Step 5. Run it
+
+Back in the Terminal:
+
+```bash
+npm run dev
+```
+
+You'll see a line that says something like `Local: http://localhost:3000`. Open that URL in your browser. You'll see a simple form with a big text box.
+
+## Step 6. Use it
+
+Find a scheduling email in your inbox — the kind that says "Hey, free for a quick call next week?" Copy the entire email body (subject + body if you want, but the body is what matters). Paste it into the text box. Click **Draft reply**.
+
+In a few seconds, you'll see a draft reply below the form. It will:
+
+- Address the sender by name.
+- Match the level of formality of their email.
+- Include your Cal.com link with one or two sentences of context.
+- Suggest an alternative if they asked for a specific time you might want to honor.
+- Sign off in your voice.
+
+Read it. If it's good, click **Copy**, paste it into your email reply, hit send. If the tone is off, edit it before copying, or tweak the prompt (next step).
+
+## Step 7. Make it sound like you
+
+The whole personality of the agent lives in one file: `src/voice.md`. Open it. It looks something like this:
+
+```markdown
+# How to write replies for me
+
+I'm Sophia, an AI engineer based in Boulder, Colorado. My emails are:
+
+- Direct, but warm. I don't use "circle back" or "touch base."
+- Short. Two or three sentences in the body.
+- Honest about what I can and can't do.
+
+When suggesting my Cal.com link:
+
+- Frame it as "the easiest way to find a slot that works for both of us."
+- Don't apologize for using a scheduling tool.
+- If they suggested a specific time, acknowledge it before offering the link.
+
+When declining:
+
+- Be honest about why if it's relevant.
+- Always thank them for thinking of me.
+
+Sign off with: "Sophia"
+```
+
+This is your agent's brand voice. Edit it freely. Run a few drafts and watch the agent adapt — the changes take effect on the next draft, no restart needed.
+
+The voice file is the most important customization, and the most fun. Add your own tics, your own preferred phrases, the things you say a lot, the things you'd never say. The agent reads this on every request and uses it to shape every reply. This is the same pattern professional writers use to keep AI on-brand at scale.
+
+## What's actually happening under the hood
+
+For the curious: when you click **Draft reply**, the app sends three things to the Anthropic API:
+
+1. Your `voice.md` file (your brand instructions).
+2. Your Cal.com link, your name, your timezone (basic context).
+3. The pasted email body.
+
+It uses Claude Haiku (the fastest, cheapest Claude model) and asks for a reply in a specific JSON shape: `{ subject, body }`. The app shows you the body. That's the whole pipeline, about 80 lines of code.
+
+If you're curious what the prompt looks like, open `src/prompt.ts`. It's plain English, not magic. Tweak it and you'll feel exactly how prompt engineering works.
+
+## What it costs to run
+
+Each drafted reply uses around 800 input tokens and 200 output tokens. On Claude Haiku that's about half a cent per draft. If you draft 100 replies a month, you'll spend less than a dollar. The $5 free credit gets you to ~1,000 drafts.
+
+If you want to upgrade to Claude Sonnet (smarter, better at picking up tone), open `src/draft.ts` and change `model: 'claude-haiku-4-5'` to `model: 'claude-sonnet-4-6'`. Cost goes up to about 2 cents per draft.
+
+## What V1 doesn't do (and why)
+
+This guide builds the simplest possible version on purpose. Things it intentionally does *not* do yet:
+
+- **Read your Gmail inbox automatically.** You still copy-paste each email. V1 is about you trusting the drafts before automating the read path.
+- **Send replies for you.** Drafts only. You hit send.
+- **Connect to Google Calendar to suggest specific times.** It always offers the Cal.com link instead, because suggesting times that turn out to conflict is the most common failure mode of full-automation booking bots.
+- **Use MCP** (Model Context Protocol) for Google Workspace. MCP is the right pattern for V2 — it lets the agent read Gmail, write drafts to Gmail's drafts folder, and query Calendar — but the setup is significantly more involved than this beginner guide.
+
+If you want any of these, that's V2 territory. The next guide in this series adds Gmail-via-MCP automation: agent watches your inbox, classifies scheduling emails, drafts replies, lands them in your Gmail drafts folder for review. Same pattern as this guide (paste-and-trust first, then automate), one layer up.
+
+## V2 preview: Gmail + Google Calendar via MCP
+
+The natural next step, in three pieces:
+
+1. **MCP server for Gmail** — there's a community-maintained one (`gmail-mcp-server`) that exposes inbox, search, and drafts as tools. The agent gets `read_inbox`, `search_messages`, `create_draft` capabilities.
+2. **MCP server for Calendar** — same pattern. `list_events`, `find_free_slots`. The agent can answer "is Tuesday at 2 actually open?" before suggesting it.
+3. **A small loop** that runs every 15 minutes: list new messages → classify scheduling vs other → for scheduling messages, draft reply → save to Gmail drafts. You review and send when you're ready.
+
+V1 (this guide) is the foundation. You learn the prompt-engineering layer and build trust in the drafts. V2 adds the read/write automation on top of the same skill.
+
+If you want a heads-up when V2 lands, subscribe to Local-First AI at the bottom of this page or at [localfirstai.substack.com](https://localfirstai.substack.com). One email a week, no upsells.
+
+## When this beginner guide isn't enough
+
+If you're a developer reading this and thinking "I just want the full Gmail integration now" — fair. The Boulder Startup Week 2026 workshop ([/bsw](/bsw)) covers the full agentic pattern (research, draft, HITL, audit) with n8n + Gmail + an MCP-shaped tool layer. The slides, n8n template JSON, and the 17-step tutorial are open at the link above. That's the closest thing to "the full thing" the site has today.
+
+## Troubleshooting
+
+**The Terminal says "command not found: git" or "npm".** You need to install Git and Node.js. Git: [git-scm.com](https://git-scm.com). Node: [nodejs.org](https://nodejs.org) (pick LTS).
+
+**The browser says "this site can't be reached".** Make sure `npm run dev` is still running in the Terminal. If you closed the Terminal, open it again, `cd booking-agent`, and run `npm run dev` again.
+
+**The draft is in a weird tone or makes things up.** Two fixes: (1) make `voice.md` more specific (add example replies you've sent before — show, don't tell), and (2) try Claude Sonnet instead of Haiku (see "What it costs" above). The smarter model picks up subtle tone shifts faster.
+
+**It mentioned a meeting time the sender didn't ask for.** Open `src/prompt.ts` and look for the line that says "Do not invent times". Make it more explicit, e.g., "Never propose a specific time. Always offer the Cal.com link instead."
+
+**I want it to send the reply for me, not just draft it.** Don't, yet. Building trust in the drafts is the load-bearing first step. Once you've sent 50 drafts and you're confident in the agent's judgment, then we wire it up to your inbox. That's the guide after the next one.
+
+## Where to ask for help
+
+Stuck on a step? [Email me](/contact). Include the step number you're on and what the Terminal said when it broke. I read every message and I'm building this guide series in public — the questions you ask shape the next version.

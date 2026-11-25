@@ -31,51 +31,51 @@ type Material = {
   cta: string
 }
 
-// Order is intentional. The deck is what most attendees want first.
-// External GitHub links are clearly labeled so readers know they are
-// leaving the site for the source repo.
+// Order is intentional. The deck and the build-along are what most
+// attendees want first. Everything is a native page on this site;
+// the GitHub repo is one click away as the source of truth.
 const MATERIALS: Material[] = [
   {
     label: 'Slide deck',
-    body: 'The 50-slide deck from the workshop. Open in Chrome, press F for fullscreen, arrow keys to navigate.',
+    body: 'The full deck from the workshop. Opens in a new tab. Press F for fullscreen, arrow keys to navigate.',
     href: SLIDES_URL,
-    external: false,
-    cta: 'open the deck →',
-  },
-  {
-    label: 'Demo repo (everything in one place)',
-    body: 'The full source for the workshop, MIT-licensed. Clone, fork, copy whatever helps. README walks through the free path (Groq + Jina + n8n.cloud trial, $0 for 14 days).',
-    href: REPO_URL,
     external: true,
-    cta: 'open the repo on github ↗',
+    cta: 'open the deck ↗',
   },
   {
     label: 'Tutorial · build your first agent in 90 minutes',
     body: 'Step-by-step. Copy-pasteable. The exact build we walk through live, written so you can finish it on your own afterward.',
-    href: `${REPO_URL}/blob/main/TUTORIAL.md`,
-    external: true,
-    cta: 'open the tutorial ↗',
+    href: '/bsw/tutorial',
+    external: false,
+    cta: 'read the tutorial →',
+  },
+  {
+    label: 'Setup guide · swap any provider',
+    body: 'How to swap providers without rewriting the workflow. Groq, Jina, Ollama, Gemini, OpenRouter. Pick whichever is cheapest or fastest for your case.',
+    href: '/bsw/setup',
+    external: false,
+    cta: 'read the setup guide →',
   },
   {
     label: 'n8n workflow templates',
-    body: 'Importable JSONs for inbox triage, competitive monitoring, and the Growth Agent we build live. Import directly into your n8n instance.',
-    href: `${REPO_URL}/tree/main/n8n`,
-    external: true,
-    cta: 'open the templates ↗',
-  },
-  {
-    label: 'Setup guide · provider swap-ins',
-    body: 'How to swap providers without rewriting the workflow: Groq, Jina, Ollama, Gemini, OpenRouter. Use whichever is cheapest or fastest for your use case.',
-    href: `${REPO_URL}/blob/main/CONFIGURATION.md`,
-    external: true,
-    cta: 'open the setup guide ↗',
+    body: 'Two ready-to-import workflows: the lite version on free providers, and the full version on Anthropic + Firecrawl. Direct download.',
+    href: '/bsw/templates',
+    external: false,
+    cta: 'download the templates →',
   },
   {
     label: 'Handouts · printable references',
-    body: 'Brand voice template, ICP template, agent JSON output schemas, the OSS growth playbook (13 case studies), the 20-80 worksheet. All forkable.',
-    href: `${REPO_URL}/tree/main/handouts`,
+    body: 'Brand voice template, ICP template, agent JSON schemas, the OSS growth playbook (13 case studies), the 20/80 worksheet. All forkable.',
+    href: '/bsw/handouts',
+    external: false,
+    cta: 'open the handouts →',
+  },
+  {
+    label: 'Source repo',
+    body: 'The whole workshop as code, MIT-licensed. Clone or fork if you want the raw markdown, JSONs, and slide source.',
+    href: REPO_URL,
     external: true,
-    cta: 'open the handouts ↗',
+    cta: 'open the repo on github ↗',
   },
 ]
 
@@ -96,7 +96,7 @@ const TAKEAWAYS = [
 
 export default function BswPage() {
   return (
-    <div className="space-y-10 max-w-2xl">
+    <div className="space-y-10">
       <section className="pt-2">
         <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
           Boulder Startup Week 2026
@@ -144,24 +144,36 @@ export default function BswPage() {
           Workshop materials
         </h2>
         <div className="divide-y divide-border">
-          {MATERIALS.map(({ label, body, href, external, cta }) => (
-            <Link
-              key={label}
-              href={href}
-              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="block group py-5 first:pt-0 last:pb-0"
-            >
-              <div className="flex items-baseline justify-between gap-4 mb-1">
-                <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
-                  {label}
-                </h3>
-              </div>
-              <p className="text-sm text-muted leading-relaxed mb-2">{body}</p>
-              <p className="font-mono text-xs text-accent group-hover:underline">
-                {cta}
-              </p>
-            </Link>
-          ))}
+          {MATERIALS.map(({ label, body, href, external, cta }) => {
+            const inner = (
+              <>
+                <div className="flex items-baseline justify-between gap-4 mb-1">
+                  <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
+                    {label}
+                  </h3>
+                </div>
+                <p className="text-sm text-muted leading-relaxed mb-2">{body}</p>
+                <p className="font-mono text-xs text-accent group-hover:underline">{cta}</p>
+              </>
+            )
+            // Plain <a> for external destinations and static .html assets
+            // (slide deck) so we bypass Next router prefetch on non-RSC URLs.
+            return external ? (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group py-5 first:pt-0 last:pb-0"
+              >
+                {inner}
+              </a>
+            ) : (
+              <Link key={label} href={href} className="block group py-5 first:pt-0 last:pb-0">
+                {inner}
+              </Link>
+            )
+          })}
         </div>
       </section>
 
@@ -217,7 +229,7 @@ export default function BswPage() {
         </h2>
         <ul className="space-y-2 text-sm">
           <li>
-            <Link href="/blog/the-agentic-audit" className="text-accent hover:underline">
+            <Link href="/blog/agent-ready-tasks" className="text-accent hover:underline">
               Find Your Agent-Ready Tasks in 90 Minutes
             </Link>
             <span className="text-muted">, the framework behind the workshop</span>

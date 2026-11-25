@@ -13,25 +13,25 @@ const HARDWARE = [
     name: 'Framework 16 (AMD)',
     spec: 'Ryzen AI 9 HX 370 · Strix Point · Zen 5 + RDNA 3.5 + XDNA 2',
     note: 'Repairable, upgradeable, the only laptop I trust to still be running this stack in 2030.',
-    href: 'https://frame.work/products/laptop16-diy-amd-aimax300',
+    href: 'https://frame.work/products/laptop16-diy-amd-ai300/configuration/new',
   },
   {
     name: 'Radeon RX 7700S',
     spec: '8GB GDDR6 · 100W TGP · Navi 33',
     note: 'Discrete GPU module for cold starts and bursty image / video workloads.',
-    href: 'https://frame.work/products/rx-7700s-graphics-module',
+    href: 'https://frame.work/products/laptop16-diy-amd-ai300/configuration/new',
   },
   {
     name: 'Memory',
     spec: '96GB DDR5-5600 (2 × 48GB SO-DIMM)',
     note: 'The number that matters. 90GB carved as GART feeds the iGPU directly out of system RAM.',
-    href: 'https://frame.work/products/memory-ddr5-5600',
+    href: 'https://frame.work/products/laptop16-diy-amd-ai300/configuration/new',
   },
   {
     name: 'Storage',
     spec: '4TB primary + 2TB secondary (NVMe Gen 4)',
     note: 'Models, datasets, vector indexes, and the inevitable swap when you push the loop too hard.',
-    href: 'https://frame.work/products/wd_black-sn850x-nvme-m-2-2280',
+    href: 'https://frame.work/products/laptop16-diy-amd-ai300/configuration/new',
   },
   {
     name: 'Audio',
@@ -113,11 +113,12 @@ const WEB_STACK = [
 ]
 
 const COMMS = [
-  { name: 'Cloudflare Email Routing', note: 'Today\'s forwarder. sophia@agenticarchitecture.ai routes through Cloudflare, lands in Gmail, sends as the custom domain. Free, zero infra. Migration target is Stalwart on Hetzner once the agent loop needs an inbox it can write to as well as read.', href: 'https://developers.cloudflare.com/email-routing' },
+  { name: 'Cloudflare Email Routing', note: 'Today\'s forwarder. sophia@agenticarchitect.ai routes through Cloudflare, lands in Gmail, sends as the custom domain. Free, zero infra. Migration target is Stalwart on Hetzner once the agent loop needs an inbox it can write to as well as read.', href: 'https://developers.cloudflare.com/email-routing' },
   { name: 'Stalwart Mail (self-hosted, Q3 2026)', note: 'Open-source mail server. The Fastmail / Google Workspace replacement when you want to own the inbox the agent reads. Migration begins after BSW.', href: 'https://stalw.art' },
   { name: 'Plunk (self-hosted)', note: 'Open-source transactional email, MIT-licensed. The Resend alternative when you want to own deliverability. Resend is the managed fallback.', href: 'https://www.useplunk.com' },
   { name: 'Listmonk (self-hosted)', note: 'Newsletter platform. Sends The Architect\'s Notebook. Replaces Buttondown / Substack at near-zero marginal cost.', href: 'https://listmonk.app' },
   { name: 'Chatwoot (self-hosted)', note: 'Customer service plus live chat widget. Inbound conversations route through the triage agent before reaching me.', href: 'https://www.chatwoot.com' },
+  { name: 'ntfy (self-hosted)', note: 'Push notifications for the human-in-the-loop. When an agent needs me to confirm or look at something, ntfy delivers the ping to my phone. Pairs with HITL flows in n8n. Apache 2.0.', href: 'https://ntfy.sh' },
 ]
 
 const BIZOPS = [
@@ -140,6 +141,7 @@ const BIZOPS = [
       { name: 'Outline (self-hosted)', note: 'Team knowledge base. Notion alternative. Stores skills, runbooks, and the docs the coding agents read alongside the codebase.', href: 'https://www.getoutline.com' },
       { name: 'Vaultwarden (self-hosted)', note: 'Password manager. Bitwarden-compatible server, Rust rewrite. Where every API key the agent needs to rotate actually lives.', href: 'https://github.com/dani-garcia/vaultwarden' },
       { name: 'Hetzner Cloud', note: 'The $5/mo VPS that hosts the self-hosted half of this stack. EU-based, frugal, predictable.', href: 'https://www.hetzner.com/cloud' },
+      { name: 'Uptime Kuma (self-hosted)', note: 'Open-source uptime monitoring. The Pingdom / Better Uptime alternative. Watches every self-hosted service in this stack, pings ntfy when something goes down. MIT-licensed.', href: 'https://github.com/louislam/uptime-kuma' },
     ],
   },
 ]
@@ -250,11 +252,11 @@ export default function StackPage() {
         </ul>
       </details>
 
-      {/* Affiliate disclosure */}
+      {/* Note */}
       <section className="mt-6 border border-border bg-surface px-4 py-3">
         <p className="font-mono text-xs text-muted leading-relaxed">
-          <span className="text-bench uppercase tracking-widest mr-2">disclosure</span>
-          Every link goes to the official product page. I only list things I actually use. As I sign up for referral programs, those will replace the direct links. The disclosure stays here either way.
+          <span className="text-bench uppercase tracking-widest mr-2">note</span>
+          Every link goes to the official product page. I only list things I actually use.
         </p>
       </section>
 

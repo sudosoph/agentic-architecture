@@ -1,9 +1,9 @@
 import { getAllPosts } from '@/lib/mdx'
 
-const SITE_URL = 'https://agenticarchitecture.ai'
-const FEED_TITLE = 'Agentic Architecture'
+const SITE_URL = 'https://agenticarchitect.ai'
+const FEED_TITLE = 'Local-First AI'
 const FEED_DESC =
-  'Field notes on agentic architecture, local-first AI, and what is actually working in 2026. Sophia Stein, Boulder CO.'
+  'Field notes on local-first AI, agentic architecture, and what is actually working in 2026. By Sophia Stein, Boulder CO.'
 
 function escapeXml(s: string): string {
   return s

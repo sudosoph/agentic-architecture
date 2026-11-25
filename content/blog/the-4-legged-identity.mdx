@@ -125,7 +125,7 @@ This is what shipping looks like in production. It is a quarter of work. It is a
 
 Honest list of when not to bother.
 
-**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/personal-ai-agents-on-amd).
+**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/personal-ai-agent-weekend).
 
 **Single-user dev tools.** A coding agent that only ever runs as you, on your machine, against your own GitHub PAT, does not need token exchange. Your token is fine.
 
@@ -140,13 +140,13 @@ The categories that force RFC 8693 implementation:
 - **Multi-tenant SaaS where customers' agents call each other's data.** No way to do this with shared credentials.
 - **Regulated industries (healthcare, finance, legal).** Audit requirements force per-user identity preservation.
 - **Cross-organization agentic workflows.** When agent A from company X calls agent B from company Y, federation is required.
-- **EU AI Act compliance.** [The August 2 2026 deadline](/blog/ethical-autonomy) requires immutable audit lineage. Shared credentials cannot produce that.
+- **EU AI Act compliance.** [The August 2 2026 deadline](/blog/eu-ai-act-deadline) requires immutable audit lineage. Shared credentials cannot produce that.
 
 If any of these describe your product, plan for token exchange. Pick an IdP that supports it natively. Budget the engineering time.
 
 ## What this connects to
 
-This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/below-the-waterline), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/ethical-autonomy) and the shadow-testing pattern in [Shadow Testing](/blog/shadow-testing).
+This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/below-the-waterline), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/eu-ai-act-deadline) and the shadow-testing pattern in [Shadow Testing](/blog/shadow-testing).
 
 ## The takeaway
 

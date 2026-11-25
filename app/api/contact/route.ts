@@ -1,12 +1,23 @@
-export const runtime = 'edge'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 
-const TO = 'sophia@agenticarchitecture.ai'
-const FROM = 'hello@agenticarchitecture.ai'
+const TO = 'sophia@agenticarchitect.ai'
+const FROM = 'hello@agenticarchitect.ai'
 
 export async function POST(request: Request) {
-  const key = process.env.RESEND_API_KEY
+  // Cloudflare secrets are exposed via getCloudflareContext().env, not
+  // process.env. Falls back to process.env for local dev where the secret
+  // is set in .env.local.
+  const env = getCloudflareContext().env as { RESEND_API_KEY?: string } | undefined
+  const key = env?.RESEND_API_KEY ?? process.env.RESEND_API_KEY
   if (!key) {
-    return Response.json({ error: 'Email service not configured' }, { status: 503 })
+    return Response.json(
+      {
+        error:
+          'Contact form is being set up. Email Sophia directly at sophia@agenticarchitect.ai — your message is included below for easy copy-paste.',
+        unconfigured: true,
+      },
+      { status: 503 },
+    )
   }
 
   let body: unknown

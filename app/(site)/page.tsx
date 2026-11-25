@@ -8,12 +8,12 @@ const PROFESSIONAL_SERVICE_LD = {
   '@type': 'ProfessionalService',
   name: 'Agentic Architecture',
   description: 'Local-first LLM infrastructure, agentic systems, and open-source tools for lean teams.',
-  url: 'https://agenticarchitecture.ai',
+  url: 'https://agenticarchitect.ai',
   founder: {
     '@type': 'Person',
     name: 'Sophia Stein',
     jobTitle: 'AI Architect',
-    url: 'https://agenticarchitecture.ai/about',
+    url: 'https://agenticarchitect.ai/about',
   },
   address: {
     '@type': 'PostalAddress',
@@ -25,8 +25,19 @@ const PROFESSIONAL_SERVICE_LD = {
   serviceType: 'AI Architecture',
 }
 
+// Three evergreen posts that establish the thesis. New visitors land here first.
+const FEATURED_SLUGS = [
+  '96gb-ram-thesis',
+  'the-40k-token-wall',
+  'local-vs-cloud-inference',
+]
+
 export default function HomePage() {
-  const posts = getAllPosts().slice(0, 4)
+  const allPosts = getAllPosts()
+  const featured = FEATURED_SLUGS.map(slug => allPosts.find(p => p.slug === slug)).filter(
+    (p): p is NonNullable<typeof p> => p !== undefined,
+  )
+  const posts = allPosts.slice(0, 5)
 
   return (
     <>
@@ -74,14 +85,37 @@ export default function HomePage() {
             read the blog →
           </Link>
           <span className="font-mono text-muted">·</span>
-          <Link href="/library" className="font-mono text-accent hover:underline">
-            free guides →
+          <Link href="/guides" className="font-mono text-accent hover:underline">
+            beginner guides →
           </Link>
           <span className="font-mono text-muted">·</span>
           <Link href="/work-with-me" className="font-mono text-accent hover:underline">
             work with me →
           </Link>
         </section>
+
+        {/* Featured posts — 3 evergreen entry points for new readers */}
+        {featured.length > 0 && (
+          <section>
+            <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-6">
+              Start here
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {featured.map(post => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="block group border border-border bg-surface p-5 hover:border-accent transition-colors"
+                >
+                  <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors mb-2 leading-snug">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-muted leading-relaxed">{post.description}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* BSW talk callout · expires Thu May 7 */}
         <section className="border border-border bg-surface p-5">
@@ -113,6 +147,29 @@ export default function HomePage() {
                 rsvp ↗
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* Flagship e-book pre-order callout */}
+        <section className="border border-border bg-surface p-6">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-5">
+            <div className="flex-1 min-w-0">
+              <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
+                Pre-order · The Sovereign Stack
+              </p>
+              <p className="font-mono text-sm text-fg leading-relaxed mb-2">
+                An interactive e-book on production agents on hardware you own — built to update for free as the local-AI stack changes.
+              </p>
+              <p className="font-mono text-xs text-muted leading-relaxed">
+                Hardware selection, ROCm + Metal setup, model picks across Qwen / Gemma / Kimi / DeepSeek with the benchmark numbers I actually ran, agent harness design with paste-able eval harnesses, n8n + MCP orchestration patterns from production. PDF + EPUB + browsable web version. ~220 pages, ships fall 2026. Pre-order locks in lifetime free updates.
+              </p>
+            </div>
+            <Link
+              href="/library#ebooks"
+              className="font-mono text-xs px-4 py-2 border border-accent text-accent hover:bg-bg transition-colors shrink-0 self-start whitespace-nowrap"
+            >
+              see the table of contents →
+            </Link>
           </div>
         </section>
 
@@ -176,12 +233,12 @@ export default function HomePage() {
                   <Link
                     key={post.slug}
                     href={`/blog/${post.slug}`}
-                    className="block group py-4 first:pt-0 last:pb-0"
+                    className="block group py-5 first:pt-0 last:pb-0"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <span className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
+                    <div className="flex items-start justify-between gap-4 mb-1.5">
+                      <h3 className="font-mono text-sm text-fg group-hover:text-accent transition-colors">
                         {post.title}
-                      </span>
+                      </h3>
                       <time
                         dateTime={post.publishedDate}
                         className="font-mono text-xs text-muted shrink-0"
@@ -189,9 +246,10 @@ export default function HomePage() {
                         {date}
                       </time>
                     </div>
+                    <p className="text-sm text-muted leading-relaxed mb-2">{post.description}</p>
                     {post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1.5">
-                        {post.tags.map(tag => (
+                      <div className="flex flex-wrap gap-1">
+                        {post.tags.slice(0, 4).map(tag => (
                           <Badge key={tag} variant="tag">
                             {tag}
                           </Badge>

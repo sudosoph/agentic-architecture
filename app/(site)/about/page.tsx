@@ -18,7 +18,7 @@ const NOW: NowItem[] = [
   {
     label: 'Writing',
     body: 'A 90-minute audit for finding agent-ready tasks',
-    href: '/blog/the-agentic-audit',
+    href: '/blog/agent-ready-tasks',
   },
   {
     label: 'Speaking',
@@ -50,7 +50,7 @@ const NOW: NowItem[] = [
 
 export default function AboutPage() {
   return (
-    <div className="space-y-10 max-w-2xl">
+    <div className="space-y-10">
       <section className="pt-2">
         <h1 className="font-mono text-2xl text-fg mb-2">about</h1>
         <p className="font-mono text-xs text-muted">Boulder, CO</p>
@@ -130,10 +130,10 @@ export default function AboutPage() {
           <div>
             <span className="text-muted w-16 inline-block">email</span>
             <Link
-              href="mailto:sophia@agenticarchitecture.ai"
+              href="mailto:sophia@agenticarchitect.ai"
               className="text-accent hover:underline"
             >
-              sophia@agenticarchitecture.ai
+              sophia@agenticarchitect.ai
             </Link>
           </div>
           <div>

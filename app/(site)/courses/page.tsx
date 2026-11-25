@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { PageHeader } from '@/components/ui/page-header'
 import { Button } from '@/components/ui/button'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 export const metadata: Metadata = {
   title: 'Courses',
@@ -25,7 +25,7 @@ const TRACKS = [
     audience: 'Solo founders, small teams',
   },
   {
-    name: 'Build your AI Architect practice',
+    name: 'Build Your AI Consultancy',
     outcome: 'Position, price, and deliver agentic-AI projects that compound. From first audit to retainer.',
     audience: 'Engineers going independent',
   },
@@ -33,7 +33,7 @@ const TRACKS = [
 
 export default function CoursesPage() {
   return (
-    <div className="space-y-10 max-w-2xl">
+    <div className="space-y-10">
       <section className="pt-2">
         <h1 className="font-mono text-2xl text-fg mb-2">courses</h1>
         <p className="text-sm text-muted leading-relaxed">
@@ -43,28 +43,14 @@ export default function CoursesPage() {
         </p>
       </section>
 
-      {/* Waitlist */}
-      <section className="border border-border bg-surface p-6">
-        <p className="font-mono text-xs text-bench uppercase tracking-widest mb-2">
-          Waitlist
-        </p>
-        <p className="font-mono text-sm text-fg mb-1">
-          One email when enrollment opens. No drip sequence, no upsells.
-        </p>
-        <p className="font-mono text-xs text-muted leading-relaxed mb-4">
-          Reply to the welcome email with the track you are most interested
-          in. That is the only way I prioritize what gets built first.
-        </p>
-        <Button
-          variant="primary"
-          size="md"
-          href="/contact?subject=Courses%20waitlist&message=Add%20me%20to%20the%20courses%20waitlist.%20I%27m%20most%20interested%20in%3A%20"
-        >
-          join the waitlist ›
-        </Button>
-      </section>
+      {/* Waitlist — uses the real newsletter signup, sourced as courses-waitlist */}
+      <NewsletterSignup
+        source="courses-waitlist"
+        headline="Courses waitlist"
+        sub="One email when enrollment opens. Reply to the welcome email with the track you're most interested in — that's how I prioritize what gets built first."
+      />
 
-      {/* Tracks in development */}
+      {/* Tracks in development — with the suggest-a-track CTA pinned at the bottom of the same section */}
       <section>
         <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
           Tracks in development
@@ -81,25 +67,25 @@ export default function CoursesPage() {
             </div>
           ))}
         </div>
-      </section>
 
-      {/* Request a track */}
-      <section className="border border-border bg-surface p-6">
-        <p className="font-mono text-sm text-fg mb-1">
-          Don&apos;t see your track? Suggest one.
-        </p>
-        <p className="font-mono text-xs text-muted leading-relaxed mb-4">
-          The next cohort gets shaped by what people actually request. If you
-          are running into a problem you wish someone would teach a course
-          for, tell me about it. The best ones become the next track.
-        </p>
-        <Button
-          variant="outline"
-          size="md"
-          href="/contact?subject=Course%20track%20request&message=I%27d%20like%20to%20see%20a%20course%20on%3A%20%0A%0AHere%27s%20what%20I%27m%20trying%20to%20learn%2Fbuild%3A%20%0A%0AHere%27s%20what%20I%27ve%20already%20tried%3A%20"
-        >
-          request a track ›
-        </Button>
+        {/* Pinned CTA at the bottom of the tracks list */}
+        <div className="mt-6 border border-border bg-surface p-6">
+          <p className="font-mono text-sm text-fg mb-1">
+            Don&apos;t see your track? Suggest one.
+          </p>
+          <p className="font-mono text-xs text-muted leading-relaxed mb-4">
+            The next cohort gets shaped by what people actually request. If you
+            are running into a problem you wish someone would teach a course
+            for, tell me about it. The best ones become the next track.
+          </p>
+          <Button
+            variant="outline"
+            size="md"
+            href="/contact?subject=Course%20track%20request&message=I%27d%20like%20to%20see%20a%20course%20on%3A%20%0A%0AHere%27s%20what%20I%27m%20trying%20to%20learn%2Fbuild%3A%20%0A%0AHere%27s%20what%20I%27ve%20already%20tried%3A%20"
+          >
+            suggest a track ›
+          </Button>
+        </div>
       </section>
 
       {/* For teams */}

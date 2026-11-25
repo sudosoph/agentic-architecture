@@ -5,8 +5,8 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Field notes on agentic architecture, local-first AI, and what is actually working in 2026. Patterns, tradeoffs, and the quiet engineering work behind the systems that ship.',
+  title: 'Blog · Local-First AI',
+  description: 'Local-First AI: field notes and deep dives on agentic architecture, local inference, and what is actually working in 2026, with primary sources and benchmarks. By Sophia Stein in Boulder, CO.',
 }
 
 // Themes are curated collections that group related tags into reader-friendly buckets.
@@ -90,11 +90,15 @@ export default async function BlogPage({
     return true
   })
 
+  const deepDiveCount = posts.filter(p => p.kind === 'deep-dive').length
+  const fieldNoteCount = posts.length - deepDiveCount
+
   return (
     <div>
       <PageHeader
-        title="blog"
-        description="Field notes on agentic architecture, local-first AI, and what is actually working in 2026. Patterns, tradeoffs, and the quiet engineering work behind the systems that ship."
+        title="Local-First AI"
+        meta="blog"
+        description="Deep dives and field notes on local-first AI, agentic architecture, and what is actually working in 2026, with primary sources and reproducible benchmarks."
       />
 
       {/* Theme filter chips */}
@@ -135,52 +139,116 @@ export default async function BlogPage({
         </p>
       )}
 
-      {/* Post list */}
-      <div className="mt-8 divide-y divide-border">
-        {posts.length === 0 ? (
-          <p className="font-mono text-sm text-muted py-8">No posts match this filter yet.</p>
-        ) : (
-          posts.map(post => {
-            const date = new Date(post.publishedDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })
-            return (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="block group py-6 first:pt-0 last:pb-0"
-              >
-                <article>
-                  <div className="flex items-start justify-between gap-4">
-                    <h2 className="font-mono text-base text-fg group-hover:text-accent transition-colors flex items-baseline gap-2">
-                      <span className="text-bench shrink-0" aria-hidden="true">›</span>
-                      <span>{post.title}</span>
-                    </h2>
-                    <time
-                      dateTime={post.publishedDate}
-                      className="font-mono text-xs text-muted shrink-0 mt-0.5"
-                    >
-                      {date}
-                    </time>
-                  </div>
-                  <p className="mt-2 text-sm text-muted leading-relaxed">{post.description}</p>
-                  {post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {post.tags.map(t => (
-                        <Badge key={t} variant="tag">
-                          {t}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              </Link>
-            )
-          })
-        )}
-      </div>
+      {/* Section jump-nav · skip to Deep dives or Field notes */}
+      {deepDiveCount > 0 && fieldNoteCount > 0 && (
+        <nav
+          aria-label="Jump to section"
+          className="mt-4 flex flex-wrap gap-1.5 font-mono text-xs"
+        >
+          <span className="text-muted uppercase tracking-widest pr-1 self-center">jump to:</span>
+          <a
+            href="#deep-dives"
+            className="px-3 py-1.5 border border-border text-muted hover:text-fg hover:border-fg transition-colors"
+          >
+            Deep dives ({deepDiveCount})
+          </a>
+          <a
+            href="#field-notes"
+            className="px-3 py-1.5 border border-border text-muted hover:text-fg hover:border-fg transition-colors"
+          >
+            Field notes ({fieldNoteCount})
+          </a>
+        </nav>
+      )}
+
+      {/* Post list — split deep dives (top) from field notes (below) */}
+      {posts.length === 0 ? (
+        <p className="font-mono text-sm text-muted py-8 mt-8">No posts match this filter yet.</p>
+      ) : (
+        <PostSections posts={posts} />
+      )}
     </div>
+  )
+}
+
+function PostSections({ posts }: { posts: ReturnType<typeof getAllPosts> }) {
+  const deepDives = posts.filter(p => p.kind === 'deep-dive')
+  const regular = posts.filter(p => p.kind !== 'deep-dive')
+
+  return (
+    <>
+      {deepDives.length > 0 && (
+        <section id="deep-dives" className="mt-10 scroll-mt-24">
+          <h2 className="font-mono text-xs text-bench uppercase tracking-widest mb-1">
+            Deep dives
+          </h2>
+          <p className="font-mono text-xs text-muted mb-4">
+            Long-form research articles with primary sources, benchmarks, and reference tables.
+          </p>
+          <div className="divide-y divide-border">
+            {deepDives.map(post => (
+              <PostRow key={post.slug} post={post} highlight />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section id="field-notes" className="mt-12 scroll-mt-24">
+        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
+          {deepDives.length > 0 ? 'Field notes' : 'All posts'}
+        </h2>
+        <div className="divide-y divide-border">
+          {regular.map(post => (
+            <PostRow key={post.slug} post={post} />
+          ))}
+        </div>
+      </section>
+    </>
+  )
+}
+
+function PostRow({
+  post,
+  highlight = false,
+}: {
+  post: ReturnType<typeof getAllPosts>[number]
+  highlight?: boolean
+}) {
+  const date = new Date(post.publishedDate).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="block group py-6 first:pt-0 last:pb-0"
+    >
+      <article>
+        <div className="flex items-start justify-between gap-4">
+          <h3 className={`font-mono text-fg group-hover:text-accent transition-colors flex items-baseline gap-2 ${highlight ? 'text-base md:text-lg' : 'text-base'}`}>
+            <span className="text-bench shrink-0" aria-hidden="true">›</span>
+            <span>{post.title}</span>
+          </h3>
+          <time
+            dateTime={post.publishedDate}
+            className="font-mono text-xs text-muted shrink-0 mt-0.5"
+          >
+            {date}
+          </time>
+        </div>
+        <p className="mt-2 text-sm text-muted leading-relaxed">{post.description}</p>
+        {post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {highlight && <Badge variant="tag">Deep dive</Badge>}
+            {post.tags.map(t => (
+              <Badge key={t} variant="tag">
+                {t}
+              </Badge>
+            ))}
+          </div>
+        )}
+      </article>
+    </Link>
   )
 }

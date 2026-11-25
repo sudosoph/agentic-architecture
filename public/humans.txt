@@ -1,0 +1,24 @@
+# humanstxt.org — the humans behind agenticarchitect.ai
+
+/* TEAM */
+
+Founder · AI Architect · Writer: Sophia Stein
+Site: https://agenticarchitect.ai
+Email: sophia@agenticarchitect.ai
+GitHub: @sudosoph
+Location: Boulder, Colorado
+
+/* THANKS */
+
+Boulder Startup Week — for the platform.
+The HN community — for keeping the bar honest.
+Every reader who sent feedback on the early posts.
+The Hetzner folks for $5 VPSes that make sovereign compute economical.
+The OSS maintainers behind Listmonk, Cal.com, n8n, llama.cpp, ROCm, Next.js, Cloudflare Workers, and OpenNext.
+
+/* SITE */
+
+Last update: 2026-05-06
+Built with: Next.js 16, Tailwind 4, MDX, Cloudflare Workers (via OpenNext)
+Hardware (where this is written): Framework 16 · AMD Ryzen AI 9 HX 370 · 96GB DDR5 · ROCm 7.3
+Standards: HTML5, modern CSS, IndieWeb-ish

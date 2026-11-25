@@ -1,0 +1,139 @@
+---
+title: "MCP Server Audit: Which Ones Actually Work in 2026"
+slug: mcp-server-audit-2026
+publishedDate: "2026-05-07"
+description: "Of the ~14,000 MCP servers in PulseMCP's hand-curated index, fewer than 30 are demonstrably production-ready. Here is the list, the criteria, and the failure modes."
+tags: ["mcp", "agents", "security", "production", "oauth", "review"]
+kind: deep-dive
+draft: false
+---
+
+**TL;DR.** PulseMCP hand-curates ~14,000 Model Context Protocol servers. Glama indexes 21,586. The [official registry](https://registry.modelcontextprotocol.io/) crossed 9,400 in mid-April. Of all of them, fewer than thirty pass a real production bar: company-backed, OAuth 2.1 with the discovery-trifecta RFCs, 2026 release cadence, published security disclosure path, license that survives an enterprise procurement review. The rest is vapor wrapped around a JSON-RPC handshake. This post is the audit, the failure modes, and the short list.
+
+## The numbers
+
+[Anthropic donated MCP](https://modelcontextprotocol.io/) to the Linux Foundation's Agentic AI Foundation (AAIF) in December 2025, alongside Block and OpenAI. Stewardship is now multi-vendor. The current spec is `2025-11-25`, with [MCP Apps (SEP-1865)](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/1865) formalized in early 2026 and a stateless HTTP transport plus async Tasks primitive in review.
+
+In the same window the security side moved in the opposite direction. Between January and February 2026, researchers filed [30+ CVEs against MCP servers and infrastructure](https://dev.to/ecap0/the-state-of-mcp-server-security-in-2026-118-findings-across-68-packages-4fkd), including a CVSS 9.6 RCE in a package with roughly 500K downloads. 43 percent of disclosed vulnerabilities involved exec or shell injection. A separate research effort successfully poisoned 9 of 11 MCP registries with a test payload and confirmed code execution on six production platforms with paying customers. [The Register's April 16 piece](https://www.theregister.com/2026/04/16/anthropic_mcp_design_flaw/) put it bluntly: 200,000 MCP servers ship with the same design flaw.
+
+Two facts to hold side by side. The protocol is stewarded by the Linux Foundation. The implementations, in aggregate, are a security disaster. Both are true. The 30 servers below are the ones I trust enough to wire into a host I care about. Everything else gets a Docker container with no host network or stays out of the config file. If you have not read [MCP, Honestly](/blog/mcp-101), start there for the wire format and the handshake. This post assumes you know what `tools/list` returns and why `listChanged` matters. We are going one floor down, into who maintains what and which servers will still be alive in six months.
+
+The shape of the article: spec governance and the May 29 2025 archival, the Trusted 30 table, the five servers I actually reach for, the five gotchas that break production, the four-legged identity problem (with a pointer to [the deep version](/blog/the-4-legged-identity)), and a short shipping recipe.
+
+## The MCP landscape map
+
+The protocol has a clear governance story now. The [`modelcontextprotocol/specification`](https://github.com/modelcontextprotocol/specification) repo is TypeScript-schema-first, AAIF-stewarded, multi-vendor signed off. 2026 spec adds: MCP Apps (formalized in Q1), stateless HTTP transport (replacing SSE-only flows), async Tasks (long-running tool calls without holding a connection), and OAuth 2.1 with mandatory RFC 9728, 8414, 7591, and 8707 support for remote servers. The spec is the most mature part of the ecosystem.
+
+The reference servers are the next tier and they are the under-told story.
+
+The [`modelcontextprotocol/servers`](https://github.com/modelcontextprotocol/servers) repo (85.2k stars, Apache-2.0, last release January 27 2026) now contains exactly seven servers: Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, Time. The README states, in plain English, that these "are intended as reference implementations and are NOT production-ready." That was not always the list.
+
+On May 29 2025, Anthropic moved fourteen reference servers to [`modelcontextprotocol/servers-archived`](https://github.com/modelcontextprotocol/servers-archived) with a header that reads "NO SECURITY GUARANTEES ARE PROVIDED FOR THESE ARCHIVED SERVERS." The archived list: AWS KB Retrieval, Brave Search, EverArt, Git, GitHub, GitLab, Google Drive, Google Maps, PostgreSQL, Puppeteer, Redis, Sentry, Slack, SQLite. Anthropic walked away from fourteen of its own reference implementations and pointed at vendor-official replacements. That is the moment the ecosystem grew up, and it is the load-bearing fact for any tutorial-driven setup. Thousands of "getting started" posts still link the archived versions. Anything pointing at `@modelcontextprotocol/server-postgres` or `@modelcontextprotocol/server-github` is shipping unmaintained code with no security guarantees. Replace, do not patch.
+
+The host layer is healthier. Claude Desktop and Cursor share an `mcpServers` config shape. [Cline](https://github.com/cline/cline), the VS Code extension, has crossed 61.2k stars and 5M+ installs, with a built-in MCP marketplace that is meaningfully more curated than the public registry. Continue.dev has 31k stars and pivoted to a CLI-first PR-check posture in 2026. Zed exposes the same primitives under a `context_servers` key. GitHub Copilot has shipped native MCP since late 2025 via VS Code settings. Windsurf is in the host club but had the rough year: [CVE-2026-30615](https://nvd.nist.gov/vuln/detail/CVE-2026-30615) was a zero-click prompt injection that required a forced upgrade past 1.9544.26.
+
+Directories are the messiest layer. The official [`registry.modelcontextprotocol.io`](https://registry.modelcontextprotocol.io/) sits at roughly 9,400 servers. [PulseMCP's](https://www.pulsemcp.com/statistics) hand-reviewed index is the 14,000 figure I anchor on; its rejection rate is the only reason it is the right denominator. [Smithery](https://smithery.ai) is a CLI-publish gateway. [Glama](https://glama.ai/mcp/servers) indexes 21,586 servers and proxies 2,223 of them through a managed gateway with OAuth and per-tool ACLs, which is closer to a useful production answer than a directory. mcp.so, [wong2's awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers), and the Apify Store fill in long-tail niches.
+
+The lesson of the landscape: governance is solid, the spec is mature, the hosts are healthy, the directories are noisy, and the reference servers were intentionally narrowed in 2025 because Anthropic did not want to be on the hook for fourteen security surfaces. Build accordingly.
+
+## The Trusted 30
+
+The criteria, again, before the table: company-backed or unambiguously community-trusted, OAuth 2.1 (or local-only with a credible threat model) where remote, 2026 release cadence with no obvious decay, license that survives procurement, published security disclosure path. I did not include servers I could not verify against a release in the last 90 days. I did include a few servers with caveats (postgres-mcp's slowing cadence, Slack's RFC 7591 incompatibility, Atlassian's June 30 endpoint deprecation) because the alternatives are worse.
+
+| # | Server | Maintainer | Stars | Auth | License | Production signal |
+|---|---|---|---|---|---|---|
+| 1 | **modelcontextprotocol/servers** (Filesystem, Fetch, Git, Memory, Sequential Thinking, Time, Everything) | Anthropic / AAIF | 85.2k | local | Apache-2.0/MIT | Reference quality, NOT prod-ready by their own README |
+| 2 | **github/github-mcp-server** | GitHub (Microsoft) | 29.6k | OAuth + PAT | MIT | v1.0.3 (Apr 24 '26), 23+ toolsets, lockdown/read-only modes, Go |
+| 3 | **microsoft/playwright-mcp** | Microsoft | 32.1k | local | Apache-2.0 | v0.0.74, accessibility-snapshot driven, GH Actions CI, Docker |
+| 4 | **microsoft/mcp** (Azure, AKS, MSSQL, Foundry, Dev Box, M365, Fabric, Sentinel, Clarity) | Microsoft | 3.1k | OAuth (Entra ID) | MIT | ~20 first-party Microsoft servers |
+| 5 | **awslabs/mcp** (AWS API, Bedrock AgentCore, Core, etc.) | AWS Labs | (large) | IAM / OAuth via AgentCore | Apache-2.0 | Official AWS catalog; AgentCore Gateway 2-leg + 3-leg OAuth |
+| 6 | **cloudflare/mcp** (single binary, 2,500+ Cloudflare API endpoints) | Cloudflare | 432 | OAuth 2.1 | Apache-2.0 | "Code Mode" reduces 244k → ~1k tokens; OAuth Provider Library |
+| 7 | **atlassian/atlassian-mcp-server** (Jira/Confluence/Compass) | Atlassian | (remote-hosted) | OAuth 2.1 | proprietary remote | GA Feb 2026; per-user ACL. Old `/v1/sse` endpoint deprecated June 30 2026 |
+| 8 | **Linear MCP** (`mcp.linear.app/mcp`) | Linear | (remote-hosted) | OAuth | proprietary remote | First-party authenticated remote spec |
+| 9 | **makenotion/notion-mcp-server** | Notion | (official) | OAuth | MIT | v2.0.0 migrated to Notion API 2025-09-03 with "data sources" abstraction |
+| 10 | **Slack official remote MCP** | Salesforce/Slack | (remote-hosted) | OAuth | proprietary remote | Warning: doesn't work with Claude Code or GH Copilot due to OAuth/DCR (RFC 7591) incompat |
+| 11 | **getsentry/sentry-mcp** | Sentry | 677 | OAuth | OS | Deployed at `mcp.sentry.dev` |
+| 12 | **datadog-labs/mcp-server** | Datadog | (official) | OAuth | proprietary remote | GA March 10 2026; 16+ core tools + APM/Errors/FF/DBM/Security/LLM-Obs toolsets |
+| 13 | **crystaldba/postgres-mcp** | Crystal DBA | 2,000+ | local (DB creds) | OS | Last commit Jan 2026, 25 open issues from Apr 2025, slowing |
+| 14 | **exa-labs/exa-mcp-server** | Exa | 4.4k | API key | MIT | `mcp.exa.ai/mcp`; semantic search + Exa Deep (revamped Mar 2026) |
+| 15 | **Brave Search MCP** | Brave | (official) | API key | MIT | 6 tools (web/image/video/news/local) |
+| 16 | **Tavily MCP** | Tavily | (official) | API key | OS | Multi-step research-mode |
+| 17 | **Perplexity MCP** | Perplexity | (official) | API key | OS | Cited synthesized answers |
+| 18 | **Mem0 mem0-mcp-server** | Mem0 | (official, PyPI v0.2.1) | API key | Apache-2.0 | 9 MCP tools + lifecycle hooks; managed cloud + Mem0g (graph) |
+| 19 | **Letta** (memory-OS, Letta Code) | Letta | (open-core) | API key | Apache-2.0 | Letta Code Mar 2026; core/archival/recall memory tiers |
+| 20 | **HubSpot MCP** | HubSpot | (official) | OAuth | proprietary remote | First-party CRM, GA late 2025 |
+| 21 | **Stripe MCP** | Stripe | (official) | restricted key | MIT | Read-only mode default |
+| 22 | **Square / Block Goose MCP** | Block | (official) | OAuth | OS | Block is AAIF founder |
+| 23 | **Replicate MCP** | Replicate | (official) | API key | MIT | Run models; predictable rate limits |
+| 24 | **Fly.io MCP** | Fly | (official) | API token | OS | App management |
+| 25 | **Vercel MCP** | Vercel | (official) | OAuth | proprietary remote | Project ops, env management |
+| 26 | **Supabase MCP** | Supabase | (official) | service-role | Apache-2.0 | DB + auth + storage; warn on service-role exposure |
+| 27 | **Neon MCP** | Neon | (official) | OAuth | OS | Branch-aware Postgres ops |
+| 28 | **modelcontextprotocol/everything** (test/demo) | AAIF | (in main repo) | local | Apache-2.0 | MCP host conformance test target |
+| 29 | **spences10/mcp-omnisearch** | community | community | per-provider keys | MIT | Single interface across Tavily/Brave/Kagi/Exa/Firecrawl |
+| 30 | **microsoft/mcp-gateway** (Kubernetes reverse proxy + Entra ID) | Microsoft | (official) | OAuth | MIT | The "in-front-of-everything-else" enterprise piece |
+
+A few notes on what is conspicuously missing. There is no general-purpose web-scraping server here that I trust. Most of the ones with traction are exec-injection time bombs. There is no email or calendar server I would wire into a production agent without a full audit; the Gmail and Outlook servers in the wild range from "fine" to "exfiltrates contacts on tool list." There is no PDF or document-ingestion server I have verified to my standard, though [`mcp-omnisearch`](https://github.com/spences10/mcp-omnisearch) plus a Firecrawl key gets you most of the way.
+
+## Top 5 picks for HN-flavored devs
+
+In the order I actually reach for them:
+
+**1. `github/github-mcp-server`.** Go, 29.6k stars, dual auth (OAuth or PAT), 23+ toolsets. The least-privilege story is the rare case of an MCP server engineered by people who have read a Snyk report. The `read-only` and `lockdown` modes are real, not flags hiding identity-mapped tools. You can subset toolsets via `--toolsets` and cut your context cost meaningfully; GitHub's own server exposes 80+ tools when fully loaded, which is the wrong default for almost any real workflow. Pin to v1.0.3 or later (April 24 2026 release). Run it remote where you can; the OAuth flow is correct.
+
+**2. `microsoft/playwright-mcp`.** 32.1k stars, Apache-2.0, accessibility-snapshot architecture rather than screenshot-based DOM round-trips. Token-efficient by design: the snapshot is a structured tree, not a 1MB image base64-encoded into your context. Headless Chromium in a Docker container with no host network is the right deployment shape. Beats every other browser MCP I have benchmarked, and there are now nine.
+
+**3. `crystaldba/postgres-mcp` (Postgres MCP Pro).** Index tuning, EXPLAIN-plan analysis, query rewriting hints. 2,000+ stars. The cadence is slowing (last commit January 2026, 25 open issues from April 2025) which is why I am noting it in the top five with a caveat: pin a version, run against a read replica, do not point it at production credentials. When it works, it does what it says. If a successor emerges with active maintenance, it dethrones this one immediately.
+
+**4. `cloudflare/mcp` "Code Mode."** This is the HN-bait pick and it deserves the paragraph. Cloudflare's API surface is roughly 2,500 endpoints. The naive way to expose that as MCP is to register 2,500 tools, which costs 244k tokens of context just to declare the tool list. Cloudflare's [Code Mode](https://blog.cloudflare.com/code-mode-mcp/) registers two tools, `search` and `execute`, and lets the model navigate the OpenAPI spec at runtime. Same coverage. Roughly 1k tokens of context. A 244-to-1 reduction. Read the source. The pattern generalizes: any API with a structured spec can be exposed this way, and most of the maximalist tool catalogs in the registry should be rewritten in this shape. The [Cloudflare Agents authorization docs](https://developers.cloudflare.com/agents/model-context-protocol/authorization/) carry their OAuth Provider Library, which is a separate gift to the ecosystem.
+
+**5. `exa-labs/exa-mcp-server`.** 4.4k stars, MIT, hosted at `mcp.exa.ai/mcp`. Semantic search with structured deep-research output (Exa Deep was revamped March 2026). Pair with Brave Search MCP for keyword fallback. This is the search stack I run in [my own agent loop](/stack); skip Tavily and Perplexity unless you specifically need their synthesis modes, because their token costs are higher and the underlying signal is similar.
+
+Honorable mention: `microsoft/mcp-gateway`. If you are running an MCP host across a team, a Kubernetes reverse proxy with Entra ID in front of everything is the only sane deployment. It is not glamorous. It is correct.
+
+## The five biggest gotchas
+
+**1. Tool poisoning and rug pulls.** [Invariant Labs](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) published proofs of concept that exfiltrate SSH keys via malicious tool descriptions. The pattern: server returns clean tool defs on first connect (user approves), then mutates them on later sessions to include hidden instructions the model reads as commands. Mitigation is the [ETDI proposal (arXiv 2506.01333)](https://arxiv.org/html/2506.01333v1), which pins tool definition hashes via OAuth-enhanced tool definitions. Until ETDI ships in major hosts, your defense is reviewing tool descriptions like you review CSP headers and pinning server versions by hash, not by tag.
+
+**2. Exec and shell injection.** 43 percent of MCP CVEs disclosed in early 2026 were shell injection: arguments piped into `bash -c` or `child_process.exec()` without escaping. If a server's source contains `subprocess.run(..., shell=True)`, walk away. This is the single most common failure mode in the long tail and the one that turned 9 of 11 registries into a code-execution surface. There is no clever fix; the answer is "do not call the shell." Servers that need to invoke binaries should use `subprocess.run(args_list)` with explicit argument arrays.
+
+**3. Marketplace poisoning.** Researchers poisoned 9 of 11 MCP registries with a test payload in early 2026. The attack does not require compromising the registry; it requires understanding the registry's review process and naming conventions well enough to publish a typosquat. Pin server packages by exact version and content hash. Do not auto-update from a registry. If your host supports it, run servers from a private mirror that pulls from upstream on a schedule with manual review, not on every install.
+
+**4. OAuth and DCR incompatibility, the "7591 problem."** Slack's official remote MCP requires a registered app and admin approval. It does not work with Claude Code or GitHub Copilot because those hosts do not yet implement [RFC 7591 Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) the way Slack expects. Many enterprise IdPs (Okta legacy, on-prem ADFS, parts of Entra) do not support 7591 either. The moment a host tries to connect to an enterprise MCP server through the IdP, registration fails. This is the single most common production blocker I see when teams move from local stdio servers to remote OAuth-authenticated ones. The fix is on the IdP side, and the OSS IdPs are leading. [Stack Overflow's January 2026 piece](https://stackoverflow.blog/2026/01/21/is-that-allowed-authentication-and-authorization-in-model-context-protocol/) is the cleanest writeup if you need to send it to your security team.
+
+**5. Archived "official" servers still in tutorials.** The fourteen `servers-archived` repos are linked from thousands of stale getting-started posts. They are unmaintained. They have no security guarantees. They include the GitHub, Postgres, Slack, Sentry, and Brave Search reference implementations that almost every "MCP in 30 minutes" blog post still recommends. If your config has a path that includes `@modelcontextprotocol/server-postgres`, replace it with `crystaldba/postgres-mcp`. If it points at the archived GitHub server, replace it with `github/github-mcp-server`. Do this audit before you do any other audit.
+
+## The four-legged identity problem
+
+Classical OAuth is three-legged: user, client, resource server, with the authorization server as broker. MCP introduces a fourth principal: the agent sitting between the user and the MCP server, which itself sits between the agent and the underlying API. The chain is **User → Agent (LLM) → MCP Server → Downstream API.** The downstream API sees the MCP server's credential and has no protocol-level way to know which user, much less which agent, originated the call. I covered the full version of this argument in [OAuth Was Built for Three Actors. Agents Are the Fourth.](/blog/the-4-legged-identity); this section is the MCP-specific status report.
+
+**What has been solved by May 2026.**
+
+The discovery trifecta is now mandatory in the MCP spec for remote servers: [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) (Protected Resource Metadata, April 2025), [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) (Authorization Server Metadata), and [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591) (Dynamic Client Registration). [RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707) (Resource Indicators) is required to bind a token to a specific MCP server, which closes a confused-deputy class. [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) (Token Exchange) is the gateway pattern: user token in, scoped delegation token out. It is implemented by Cloudflare's OAuth Provider Library, AWS AgentCore Gateway, [Stacklok's ToolHive](https://github.com/stacklok/toolhive), MintMCP, and Composio. [Anthropic's Managed Agents Vault](https://platform.claude.com/docs/en/managed-agents/vaults) puts credentials in the Anthropic dev console with per-session credential injection via a proxy, which is the cleanest first-party answer. The [Maverics writeup](https://www.maverics.ai/blog/agentic-identity/your-mcp-server-is-a-resource-server-now-act-like-it/) is the right framing: your MCP server is a resource server now; act like it.
+
+**What has not been solved.**
+
+Cross-server delegation is the open hole. When MCP server A's tool description tells the agent "ask MCP server B for X," there is no protocol-level way to bind A's intent to B's authorization. This is the heart of the rug-pull and cross-prompt-injection class of attacks. Agent identity attestation is the next hole: there is no production-grade scheme for "this is Claude Sonnet 4.6 running in this specific runtime." The token-exchange UX is the third: RFC 8693 works, but consent UX for "agent X is requesting a delegation token scoped to tool Y on your behalf" is essentially nonexistent in MCP hosts. Most flows show the user a single OAuth consent and never re-prompt when the agent escalates. Self-hosted vault parity is the fourth: Anthropic's vault is good; self-hosted equivalents (Infisical Agent Vault, HashiCorp Vault plus glue, Stacklok ToolHive) require a quarter of integration work.
+
+The "7591 problem" deserves its own callout because it is the single most common production blocker. Many enterprise IdPs (Okta legacy, on-prem ADFS, parts of Entra) do not support Dynamic Client Registration. The moment Claude Desktop or Cursor tries to connect to an enterprise MCP server through the IdP, registration fails. The workaround is pre-registering clients out of band, which defeats half the value of remote MCP. The fix is on the IdP roadmap, not the MCP roadmap. If you are choosing an IdP in 2026 and you care about agentic identity, Keycloak or ZITADEL is the right call; the big-vendor IdPs are catching up.
+
+## If you're shipping today
+
+The pragmatic recommended stack for a new agentic deployment in May 2026:
+
+- **Host:** Claude Desktop or Cursor for individuals; Cline for VS Code teams (5M+ installs is a meaningful curation signal).
+- **Local-only foundation:** the official seven from `modelcontextprotocol/servers` (Filesystem, Fetch, Git, Memory, Sequential Thinking, Time, Everything). Sandboxed, no network.
+- **GitHub:** `github/github-mcp-server` in `read-only` by default; promote to write only when the workflow demands it.
+- **Browser:** `microsoft/playwright-mcp` in a Docker container with no host network.
+- **Database:** `crystaldba/postgres-mcp` against a read replica, version pinned.
+- **Search:** Brave (keyword) plus Exa (semantic). Skip Tavily and Perplexity unless you need their synthesis.
+- **Observability:** Sentry MCP if you use Sentry; Datadog MCP if you use Datadog.
+- **Issues and docs:** Linear (remote OAuth) > Atlassian (watch the June 30 endpoint deprecation) > Notion (watch the v2.0 data-sources migration).
+- **Cloud:** Cloudflare's single MCP if on Workers; the AWS Labs catalog on AWS; `microsoft/mcp` on Azure.
+- **Gateway in front of everything:** Glama (managed), Cloudflare's OAuth Provider Library, `microsoft/mcp-gateway`, or Stacklok ToolHive. Pick one. Audit logs, per-user scopes, rate limits, and one place to revoke.
+
+What not to run in production: anything below 100 stars without company backing; anything in `servers-archived`; any Slack server paired with a host that does not support RFC 7591; any server whose README has no security disclosure section. The single biggest production win in 2026 is moving from local stdio servers to remote OAuth-authenticated servers behind a gateway. It is also the single biggest source of OAuth/DCR pain. Both are true.
+
+## Closer
+
+The Model Context Protocol is the right shape. The implementations, in aggregate, are not the right quality, and the gap between the spec and the median server is the largest delivery risk in agentic software in 2026. The thirty servers above are the ones I trust to wire into a host I care about. The other 13,970 are a pool to draw from with caution, version pinning, sandboxing, and a gateway in front. If you are building agentic systems on top of MCP, the question that matters is not "does this server exist." It is "who is on the hook when it breaks, and is their security disclosure path real." For thirty servers in this ecosystem, the answer is yes. For everything else, you are the on-call. Plan accordingly. If you have not yet read the [4-legged identity deep dive](/blog/the-4-legged-identity), [the waterline post](/blog/below-the-waterline) on the foundations of production-ready agentic systems, or the [stack page](/stack) for the running set of tools I actually use, those are the next three stops.

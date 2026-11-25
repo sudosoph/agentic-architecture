@@ -42,12 +42,12 @@ export default async function BlogPostPage({ params }: Props) {
     author: {
       '@type': 'Person',
       name: 'Sophia Stein',
-      url: 'https://agenticarchitecture.ai/about',
+      url: 'https://agenticarchitect.ai/about',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Agentic Architecture',
-      url: 'https://agenticarchitecture.ai',
+      url: 'https://agenticarchitect.ai',
     },
   }
 
@@ -68,8 +68,11 @@ export default async function BlogPostPage({ params }: Props) {
             meta={dateFormatted}
             description={post.frontmatter.description}
           />
-          {post.frontmatter.tags.length > 0 && (
+          {(post.frontmatter.kind === 'deep-dive' || post.frontmatter.tags.length > 0) && (
             <div className="flex flex-wrap gap-1.5 mt-4">
+              {post.frontmatter.kind === 'deep-dive' && (
+                <Badge variant="tag">Deep dive</Badge>
+              )}
               {post.frontmatter.tags.map(tag => (
                 <Badge key={tag} variant="tag">
                   {tag}

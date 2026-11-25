@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 const NAV_LEFT = [
   { href: '/about', label: 'about' },
+  { href: '/now', label: 'now' },
   { href: '/blog', label: 'blog' },
   { href: '/guides', label: 'guides' },
   { href: '/library', label: 'library' },
@@ -15,7 +16,6 @@ const NAV_LEFT = [
 ]
 
 const NAV_RIGHT = [
-  { href: '/book', label: 'book' },
   { href: '/contact', label: 'contact' },
 ]
 

@@ -9,45 +9,109 @@ draft: false
 
 **TL;DR.** AI Agent Conference NYC ran May 4-5 at the NY Hilton Midtown. The room was production agent teams, CIOs, and the vendors selling them. Below are the 10 takeaways I would tell a CTO who could not attend, ranked by how much they will change what you ship next quarter. Every item links the deeper post on this site.
 
-## 1. Tim Sanders (G2) and Raghu Malpani (UiPath): the trust paradox is the framing that lets you ship.
+## 1. Tim Sanders (G2) + Raghu Malpani (UiPath): the trust paradox is the framing that lets you ship.
 
-The most quotable session of the conference. G2's latest survey shows two findings that contradict each other: the majority of buyers say agents required more human oversight than the vendors promised, and nine of ten would radically increase autonomy next year. Both are rational. The framing that resolves it: do not sell agents on cost savings, because every down-line manager will blame an AI hallucination to save their job. Sell on capacity and agency. Same agent, same model, opposite outcomes. [Notes on human-in-the-loop](/blog/the-hitl-standard).
+The most quotable session of the conference. G2's latest survey shows two findings that contradict each other on the surface:
 
-## 2. Joe Moura (CrewAI): 42% of CrewAI's code last week was AI-authored, and Project Iris altered half of their PRs.
+- A majority of buyers say agents required more human oversight than vendors promised.
+- Nine of ten said they would radically increase autonomy next year.
 
-Not aspirational. Last week. The founder of one of the major multi-agent frameworks runs a team where almost half the code is written by agents and reviewed by humans. The Google number for the same period is 75% (Paige Bailey, AI Dev SF). Moura's other framing landed: agentic systems are bifurcating into ad-hoc workflows (disposable, output matters) and embedded workflows (recurring, governed, the business runs on them). The lines are blurring as both expect to call each other. Reusable building blocks, agent repositories, and skills repositories are the flywheels that compound. CrewAI open-sourced their skills library at `skills.crewai.com`. [Death of the junior dev is overstated](/blog/death-of-the-junior-dev).
+Both are rational. The resolution that lets teams ship: do not sell agents on cost savings, because every down-line manager will blame an AI hallucination to save their job. Sell on capacity and agency instead. The framing changes who sponsors the project and how failures get interpreted internally. [Notes on human-in-the-loop](/blog/the-hitl-standard).
 
-## 3. Codex (Derrick Choi) + Linear (Tom Moor) + Graphite/Cursor (Tomas Reimers): the agent is no longer the bottleneck. Review is.
+## 2. Joe Moura (CrewAI): 42% of CrewAI's code last week was AI-authored.
 
-The shared takeaway from the coding-agent panel: shipping coding agents at scale is not about the agent. It is about the infrastructure that makes the agent's output reviewable, mergeable, and trustworthy. Concrete patterns the panel surfaced: ten skills for new-hire agent onboarding (a markdown cheatsheet Codex scaffolds for v1), automation that runs daily and finds one improvement to PR and merge, longer-running tasks that only surface to humans when they break. Code review is becoming, simply, review. The reviewer's job is filtering what humans should look at, not reading every diff. [Coding agent infrastructure in production](/blog/coding-agent-infrastructure).
+The founder of one of the major multi-agent frameworks runs a team where almost half the code is written by agents and reviewed by humans. Their internal coding agent (Project Iris) altered half of the company's PRs in the same week. The Google number for the same period is 75% (Paige Bailey, AI Dev SF).
+
+Moura's other framing landed: agentic systems are bifurcating into two shapes that increasingly call each other.
+
+- **Ad-hoc workflows** — disposable, output is what matters. Examples: OpenClaw, Claude Code, Cowork.
+- **Embedded workflows** — recurring, governed, the business runs on them. CrewAI's home turf.
+
+Reusable building blocks, agent repositories, and skills repositories are the flywheels that compound. CrewAI open-sourced their skills library at `skills.crewai.com`. [Death of the junior dev is overstated](/blog/death-of-the-junior-dev).
+
+## 3. Codex (Derrick Choi) + Linear (Tom Moor) + Graphite/Cursor (Tomas Reimers): review is the bottleneck, not the agent.
+
+Shipping coding agents at scale is no longer about the agent itself. It is about the infrastructure that makes the agent's output reviewable, mergeable, and trustworthy. Concrete patterns the panel surfaced:
+
+- A markdown cheatsheet of ~10 skills for new-hire agent onboarding (Codex scaffolds v1).
+- Automation that runs daily, finds one improvement, opens a PR, and merges itself.
+- Long-running tasks that only surface to humans when something breaks.
+
+Code review is becoming, simply, review. The reviewer's job shifts from reading every diff to filtering what humans should look at at all. [Coding agent infrastructure in production](/blog/coding-agent-infrastructure).
 
 ## 4. Venky Veeraraghavan (DataRobot): below the waterline is where ROI is decided.
 
-Demo day is 65% complete. Production demands 95%. The agent (model + framework + prompt) is the visible 20%. The 80% beneath is developer experience for enterprise hooks, agent identity and auth, and token-factory economics. Static API keys are not an identity model: most teams ship agents with broadly-scoped, long-lived shared credentials and no auditable chain of custody. Token-factory economics: route calls to the cheapest viable model, decouple user contracts from backend execution, treat inference capacity (not GPUs) as the resource you allocate. Premium and spot tiers, deterministic admission control, no throttling surprises. [Below the waterline](/blog/below-the-waterline) walks the architecture.
+Demo day is 65% complete. Production demands 95%. The agent (model + framework + prompt) is the visible 20%. The 80% beneath the waterline:
+
+- **Developer experience** for enterprise hooks (CI/CD, observability, governance, A/B testing).
+- **Agent identity and auth.** Static API keys are not an identity model. Most teams ship agents with broadly-scoped, long-lived shared credentials and no auditable chain of custody.
+- **Token-factory economics.** Route calls to the cheapest viable model, decouple user contracts from backend execution, treat inference capacity (not GPUs) as the resource you allocate. Premium and spot tiers, deterministic admission control, no throttling surprises.
+
+[Below the waterline](/blog/below-the-waterline) walks the architecture.
 
 ## 5. Sean Roberts (Netlify): AX is the new UX.
 
-A meaningful share of traffic to your product is not human. Coding agents read your docs, browser agents fill your forms, research agents scrape your pricing page. Agent Experience (AX) is becoming as load-bearing as UX, and it is the new relevance signal for AI search and discovery. Roberts gave a four-step audit: identify the agents your customers use, identify use cases your customers want to delegate, verify the experience yourself, then improve and repeat. Netlify open-sourced AXIS (`netlify/axis`) as a scoring framework for AX automation. [Agent Experience: the four-step audit](/blog/agent-experience).
+A meaningful share of traffic to your product is no longer human. Coding agents read your docs, browser agents fill your forms, research agents scrape your pricing page. Agent Experience (AX) is becoming as load-bearing as UX, and it is the new relevance signal for AI search and discovery.
 
-## 6. Chang She (LanceDB): vector DB alone is not enough for agentic retrieval.
+Roberts gave a four-step audit:
 
-Production agents turn retrieval from a single lookup into parallel, multimodal, stateful search across docs, code, logs, JSON, and raw artifacts. The unit of context is no longer just text. LanceDB's argument: store inline (under 64KB), packed (64KB-4MB), dedicated (over 4MB), or external (URI/range to existing object storage), with a single read API. Snapshot isolation and time travel matter for evaluation reproducibility, because the only way an eval is meaningful is if you can replay the exact context state used during the run. Versioned context with branch and rollback semantics is now a system requirement, not a research nicety.
+1. Identify the agents your customers use (logs, network data, asking customers, asking the agents themselves).
+2. Identify use cases your customers want to delegate.
+3. Verify the experience yourself; can the agents actually accomplish goals?
+4. Improve and repeat.
+
+Netlify open-sourced **AXIS** (`netlify/axis`) as a scoring framework for AX automation. [Agent Experience: the four-step audit](/blog/agent-experience).
+
+## 6. Chang She (LanceDB): a vector DB alone is not enough for agentic retrieval.
+
+Production agents turn retrieval from a single lookup into parallel, multimodal, stateful search across docs, code, logs, JSON, and raw artifacts. The unit of context is no longer just text.
+
+LanceDB's storage tiering for the artifact problem, all behind one read API:
+
+- **Inline** (under 64KB) — in the main data file.
+- **Packed** (64KB-4MB) — shared blob sidecar.
+- **Dedicated** (over 4MB) — one blob per asset.
+- **External** (URI/range) — point at existing object storage, no copy.
+
+Snapshot isolation and time travel matter for evaluation reproducibility. The only way an eval is meaningful is if you can replay the exact context state used during the run. Versioned context with branch and rollback semantics is now a system requirement, not a research nicety.
 
 ## 7. Ameet Talwalkar (Datadog): observability is the verification layer for coding, and specialized models beat frontier models for vertical AI.
 
-Observability shifted from dashboards to systems that automatically reason and act on signals. Datadog released Toto v1, the first time-series foundation model trained on over a trillion data points (750 of them unique to Datadog), top of the BOOM and GIFT-Eval benchmarks at release, open-weight on Hugging Face. Toto v2 in April 2026 added multi-modal signals (time series plus text). The argument that matters: frontier models are too expensive and too slow for SRE-style continuous workloads. Post-trained specialized models with simulated SRE environments and distributed RL hit cost-and-latency targets that frontier models cannot. This is the playbook for vertical AI in 2026. [Self-healing CI/CD patterns](/blog/self-healing-cicd) is the related post.
+Observability shifted from dashboards to systems that automatically reason and act on signals. Datadog released **Toto v1**, the first time-series foundation model trained on over a trillion data points (750 of them unique to Datadog), top of the BOOM and GIFT-Eval benchmarks at release, open-weight on Hugging Face. **Toto v2** in April 2026 added multi-modal signals (time series plus text).
+
+The argument that matters: frontier models are too expensive and too slow for SRE-style continuous workloads. Post-trained specialized models, built on simulated SRE environments and distributed RL, hit cost-and-latency targets that frontier models cannot. This is the playbook for vertical AI in 2026. [Self-healing CI/CD patterns](/blog/self-healing-cicd) is the related post.
 
 ## 8. Vrushali Paunikar (Carta): build effective agents, do not over-build agents.
 
-Carta's framework for tech-agent-enabled services is the cleanest playbook the conference produced for SaaS that has to evolve into AI: start service business, transform with differentiated value plus AI-scaled service, use leverage to transform the market, expand. The architectural advice: deterministic scripts, then LLM-driven workflows, then deterministic workflows, then agents in that order. Over-using agents on problems that are not ambiguous is a known failure mode. Anthropic's "Building Effective Agents" essay is required reading and Carta said so on stage. The fastest-growing customer interface for Carta? Email. Not a dashboard, not chat. Email.
+Carta's framework for tech-agent-enabled services is the cleanest playbook the conference produced for SaaS that has to evolve into AI: start as a service business, transform with differentiated value plus AI-scaled service, use leverage to transform the market, and expand from there.
+
+The architectural advice, in this exact order:
+
+1. Deterministic scripts.
+2. LLM-driven workflows.
+3. Deterministic workflows.
+4. Agents.
+
+Over-using agents on problems that are not ambiguous is a known failure mode, and Anthropic's "Building Effective Agents" essay is the canonical reference (Carta said so on stage). One useful detail: the fastest-growing customer-facing interface for Carta is email, not a dashboard or a chat product. Meet customers where they already are.
 
 ## 9. Aabhas Sharma (Hebbia) + Sirisha Kadamalakalva (Citi): agentic banking is real, and the moats are talent, data, and trust.
 
-VDR (virtual data room) deep diligence over thousands of documents went from weeks to hours. The bankers who shipped first kept the relationship work and the final-judgment work. The mechanical work (modeling, comparison, double-checking) is now done by agents under human review. Pattern that works: build horizontal, sit between foundational labs and Palantir-scale forward-deployment, give bankers the AI primitive they need to set up their own workflows. Pattern that fails: buy a single provider and try to one-shot the use case. The moats for finance: talent, data, trust. None of them are the model.
+Virtual data room deep-diligence over thousands of documents went from weeks to hours. The bankers who shipped first kept the relationship work and the final-judgment calls; the mechanical work (modeling, comparison, double-checking) is now done by agents under human review.
 
-## 10. CircleCI + OpenAI + Databricks panel data: throughput jumped 59%, and almost all of it went to top orgs.
+What works: build horizontal, sit between foundational labs and Palantir-scale forward-deployment, and give bankers the AI primitive they need to set up their own workflows. What fails: buy a single provider and try to one-shot the use case.
 
-The hardest data point of the conference. Average software-shipping throughput rose 59% with AI assistance, distributed as a power law. The bottleneck migrated from code generation to code validation, with a side effect: roles outside engineering (PM, design, communicating product requirements) are now the rate limiter for the same reason Andrew Ng described at SF the week before. The interior loop (build, debug, push) is dominated by AI-generated code; the outer loop (queue, manual review, compliance, security, deploy) is dominated by slow feedback and noisy signals. Multi-agent self-review (one agent proposes, four others critique until consensus) buys back confidence at the cost of compute, and the panel argued the trade is worth it.
+The moats for finance are talent, data, and trust. None of them are the model.
+
+## 10. CircleCI + OpenAI + Databricks panel: throughput jumped 59%, and almost all of it went to top orgs.
+
+The hardest data point of the conference. Average software-shipping throughput rose 59% with AI assistance, distributed as a power law, with the gain concentrated in the top decile of organizations.
+
+The bottleneck migrated from code generation to code validation, with a side effect: roles outside engineering (PM, design, communicating product requirements) are now the rate limiter for the same reason Andrew Ng described at SF the week before.
+
+- **Inner loop** (build, debug, push) — dominated by AI-generated code.
+- **Outer loop** (queue, manual review, compliance, security, deploy) — dominated by slow feedback and noisy signals.
+
+Multi-agent self-review (one agent proposes, four others critique until consensus) buys back confidence at the cost of compute. The panel argued the trade is worth it.
 
 ## What was not said
 
@@ -55,4 +119,4 @@ Three things missing from every panel: (a) honest dollar amounts on token spend 
 
 ## The one thing to take to the team
 
-Pick one workflow currently owned by a brittle script. Replace the script, not the human. The trust paradox is the framing that lets you ship: capacity, not cost. The teams in the room that internalized that framing were the ones with production agents in 2026. The teams that did not will be back next year explaining why their pilot died.
+Pick one workflow currently owned by a brittle script. Replace the script, not the human. The trust paradox is the framing that lets you ship: sell capacity, not cost savings. The teams in the room with production agents in 2026 had internalized that framing. The teams that had not will be back next year explaining why their pilot died.

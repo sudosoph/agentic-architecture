@@ -68,7 +68,7 @@ const NUMBERS = [
 
 export default function SponsorPage() {
   return (
-    <div className="space-y-12 max-w-2xl">
+    <div className="space-y-12">
       <section className="pt-2">
         <h1 className="font-mono text-2xl text-fg mb-2">sponsor</h1>
         <p className="text-sm text-muted leading-relaxed mb-3">

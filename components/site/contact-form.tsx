@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
-type Status = 'idle' | 'sending' | 'success' | 'error'
+type Status = 'idle' | 'sending' | 'success' | 'error' | 'fallback'
 
 export function ContactForm() {
   const params = useSearchParams()
@@ -12,6 +12,7 @@ export function ContactForm() {
   const [errorMsg, setErrorMsg] = useState('')
   const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
+  const [mailtoHref, setMailtoHref] = useState('')
 
   useEffect(() => {
     const s = params.get('subject')
@@ -43,9 +44,24 @@ export function ContactForm() {
         setStatus('success')
         form.reset()
       } else {
-        const json = await res.json().catch(() => ({}))
-        setErrorMsg((json as { error?: string }).error ?? 'Something went wrong.')
-        setStatus('error')
+        const json = (await res.json().catch(() => ({}))) as {
+          error?: string
+          unconfigured?: boolean
+        }
+        if (res.status === 503 && json.unconfigured) {
+          // Email service isn't wired up yet — give them a mailto fallback
+          // pre-filled with the message so nothing's lost.
+          const subjectPart = data.subject?.trim() || `Note from ${data.name.trim()}`
+          const bodyPart = `From: ${data.name.trim()} <${data.email.trim()}>\n\n${data.message.trim()}`
+          const href = `mailto:sophia@agenticarchitect.ai?subject=${encodeURIComponent(
+            subjectPart,
+          )}&body=${encodeURIComponent(bodyPart)}`
+          setMailtoHref(href)
+          setStatus('fallback')
+        } else {
+          setErrorMsg(json.error ?? 'Something went wrong.')
+          setStatus('error')
+        }
       }
     } catch {
       setErrorMsg('Network error. Please try again.')
@@ -61,8 +77,38 @@ export function ContactForm() {
     )
   }
 
+  if (status === 'fallback') {
+    return (
+      <div className="border border-border bg-surface px-6 py-8 space-y-4">
+        <p className="font-mono text-sm text-fg leading-relaxed">
+          The contact form is being wired up this week. In the meantime, your
+          message has been packaged into an email to Sophia — one click below
+          opens it in your default mail client.
+        </p>
+        <a
+          href={mailtoHref}
+          className="inline-block bg-fg text-bg px-4 py-2 font-mono text-sm hover:bg-accent transition-colors"
+        >
+          open mail client →
+        </a>
+        <p className="font-mono text-xs text-muted leading-relaxed">
+          Or copy this address directly:{' '}
+          <a href="mailto:sophia@agenticarchitect.ai" className="text-accent hover:underline">
+            sophia@agenticarchitect.ai
+          </a>
+        </p>
+      </div>
+    )
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 max-w-xl">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5 max-w-xl border border-border bg-surface p-6 md:p-8"
+    >
+      <p className="font-mono text-xs text-bench uppercase tracking-widest">
+        Send a message
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Field label="Name" name="name" type="text" required placeholder="Your name" />
         <Field label="Email" name="email" type="email" required placeholder="you@example.com" />

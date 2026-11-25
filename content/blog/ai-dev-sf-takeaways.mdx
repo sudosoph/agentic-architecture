@@ -11,43 +11,109 @@ draft: false
 
 ## 1. Marc Brooker (AWS): the limit on agentic AI is the defect rate, not capability.
 
-The clearest framing of the conference. Capability exploded over the last 18 months. So did the defect rate. The opportunity now compounds faster from improvements in defects than from frontier moves. Brooker's working model: agents are interesting because they are a feedback loop, so we need benchmarks that capture failure severity, not just density. AWS open-sourced Trusted Remote Execution the same week, with Cedar as the policy language and autoformalization to translate natural-language SOPs into mathematically precise specs. Take the worst days as seriously as the best. [Defects, not capability, is the wall](/blog/death-of-the-junior-dev).
+The clearest framing of the conference. Capability has exploded over the last 18 months and so has the defect rate, which means improvements in defects now compound faster than frontier moves. Brooker's working model: agents are interesting because they are a feedback loop, so we need benchmarks that capture failure severity rather than just density.
+
+What AWS shipped the same week:
+
+- **Trusted Remote Execution** (open-sourced) — auto-formalized policies written in Cedar, executed against agent-built scripts in the cloud.
+- **Cedar** — a policy language with deep roots in automated reasoning.
+- **Bedrock Guardrails** — converts natural-language SOPs into mathematically precise specs (autoformalization).
+
+The cultural argument: take the worst days as seriously as the best. [Defects, not capability, is the wall](/blog/death-of-the-junior-dev).
 
 ## 2. Andrew Ng: PM is the new bottleneck.
 
-When the SWE feedback loop speeds up 10x, every adjacent function becomes the limiting reagent. The PM-engineer ratio is trending toward 1:1 in fast teams; the fastest teams collapse the two roles into the same person. Slowest teams add PM headcount to "manage" the agent and lose. Ng also previewed Context Hub (`andrewyng/context-hub`), a way to keep coding agents from hallucinating deprecated APIs by serving the latest, canonical building-block docs. Free for the open ones, npm-installable. [The death of the junior dev is overstated](/blog/death-of-the-junior-dev).
+When the SWE feedback loop speeds up 10x, every adjacent function becomes the limiting reagent. The PM-engineer ratio is trending toward 1:1 in fast teams, and the fastest teams collapse the two roles into the same person. Slower teams add PM headcount to "manage" the agent and fall further behind.
+
+Ng also previewed **Context Hub** (`andrewyng/context-hub`), an installable index that keeps coding agents from hallucinating deprecated APIs by serving the latest, canonical building-block docs. Free, open, npm-installable. [The death of the junior dev is overstated](/blog/death-of-the-junior-dev).
 
 ## 3. Paige Bailey (Google DeepMind): 75% of code at Google is AI-authored.
 
-Last week, not aspirational. The number is meaningless without the rest of the talk. Gemini 3 ships natively multimodal (audio output, screen share, video input). Gemma 4 ships in four sizes including a 26B MoE and a 31B multimodal Dense. Genie 3 generates playable worlds from a prompt with no physics engine, dynamically. Robotics in the Mountain View campus runs Gemini directly. The frontier is shifting from "what can the model do" to "what can the model do on a Raspberry Pi running a Pucker robot."
+That's the headline number, and it's only meaningful in context. The rest of the talk:
+
+- **Gemini 3** ships natively multimodal: audio output, screen share, video input.
+- **Gemma 4** ships in four sizes including a 26B mixture-of-experts model and a 31B multimodal dense model.
+- **Genie 3** generates playable worlds from a prompt, dynamically, with no physics engine.
+- **Robotics** in the Mountain View campus runs Gemini directly. The Stanford Pucker family of robots is fully 3D-printable, runs on a Raspberry Pi, and uses Gemini for vision and action.
+
+The frontier is shifting from "what can the model do" to "what can the model do on a Raspberry Pi running a Pucker robot."
 
 ## 4. Anush Elangovan (AMD): K-shaped future of software, ROCm as the unified layer.
 
-System thinking, judgment, and stakeholder alignment are rising. Syntax memorization, boilerplate production, and isolated coding speed are falling. AMD's contribution to the upper arm: HotSwap (a "Rosetta for GPUs" that retargets ISA at runtime so old hardware runs new kernels), a native HIP backend for llama.cpp with zero ROCm-library dependencies, and the IREE Tokenizer aimed at the actual bottleneck for production agentic chat. The agent-as-cron-job era is over; agents are now contiguous systems that monitor, file PRs, validate tests, and merge with little review. The pipeline that supports them needs to be just as continuous. [Why I bet on a Framework laptop in 2026](/blog/framework-for-builders) is the consumer-side version of this argument.
+System thinking, judgment, and stakeholder alignment are rising. Syntax memorization, boilerplate production, and isolated coding speed are falling. AMD's contributions to the upper arm of the K:
+
+- **HotSwap** — intercepts GPU kernel loads and retargets ISA at runtime. A "Rosetta for GPUs" so older hardware runs new kernels at native speed.
+- **Native HIP backend for llama.cpp** — ~100 custom kernels, zero ROCm-library dependencies, no CUDA, no Vulkan.
+- **IREE Tokenizer** — purpose-built for the actual bottleneck in production agentic chat: tokenization throughput.
+
+The agent-as-cron-job era is over. Agents are now contiguous systems that monitor for issues, file PRs, validate tests, and merge with little human review. The pipeline supporting them needs to be just as continuous. [Why I bet on a Framework laptop in 2026](/blog/framework-laptop-thesis) is the consumer-side version of this argument.
 
 ## 5. Jeff Huber (Chroma): context rot is the failure mode nobody is naming.
 
-Language models are not invariant to their context length. Practitioners tuned to evals do not trust past 40K tokens. This single observation kills "stuff a million-token window with the whole repo" as a strategy. The cure is context engineering plus agentic search: a search agent (Chroma's Context-1, 20B parameters running on Cerebras at 3,000 tok/s) that decides what to retrieve, plus sub-agents that encapsulate context for specialist tasks. Pareto-frontier numbers Huber compared: Opus-class at 40 tok/s and 250ms search at $25/M output tokens, vs. Context-1 at 3,000 tok/s and 30ms search at $1/M. [Long-term memory for agents](/blog/long-term-memory-for-agents) walks the architectural patterns.
+Language models are not invariant to context length. Practitioners tuned to evals do not trust past 40K tokens, regardless of whether the advertised window is 1M or 10M. That single observation kills "stuff a million-token window with the whole repo" as a strategy.
 
-## 6. Bain (Sanjin Bicanic + Xun Yang): the 8-subgraph LangGraph payroll system at 98% accuracy on 3,000 live emails per day.
+The cure is context engineering plus agentic search: a search agent that decides what to retrieve, plus sub-agents that encapsulate context for specialist tasks. Pareto-frontier comparison Huber showed:
 
-Single most useful production reference of the conference. Bain decomposed an HR-services payroll workflow (handles 1-in-10 private US payrolls) into eight LangGraph subgraphs, each with scoped tools and its own eval harness. Shadow testing was the highest-leverage decision they made: emails duplicated once for human, once for AI, AI on read-only, every action recorded for offline auto-eval. Accuracy went 70% → 98% over four weeks of shadow only after offline evals had said "ready." Edge cases (not demos) decide whether agentic systems survive production. The agent is 20% of the work; the 80% is the durable scaffolding around it. [Swarm vs monolith](/blog/swarm-vs-monolith) walks the architecture.
+- Opus-class general model: 40 tok/s, 250ms search, $25/M output tokens.
+- Chroma's Context-1 (20B params on Cerebras): 3,000 tok/s, 30ms search, $1/M.
+
+[Long-term memory for agents](/blog/long-term-memory-for-agents) walks the architectural patterns.
+
+## 6. Bain (Sanjin Bicanic + Xun Yang): an 8-subgraph LangGraph payroll system at 98% accuracy.
+
+The single most useful production reference of the conference. Bain decomposed an HR-services payroll workflow (1-in-10 private US payrolls, millions of emails per year) into eight LangGraph subgraphs, each with scoped tools and its own eval harness.
+
+What they learned, in order of impact:
+
+- **Shadow testing was the highest-leverage decision.** Emails duplicated once for human, once for AI, AI on read-only, every action recorded for offline auto-eval.
+- Accuracy went from 70% to 98% over four weeks of shadow, only after offline evals had said "ready."
+- Edge cases (not demos) decide whether agentic systems survive production.
+- The agent itself is 20% of the work. The other 80% is the durable scaffolding: control tower, validators, routing, multi-stage eval, CI/CD, kill switches.
+
+[Swarm vs monolith](/blog/swarm-vs-monolith) walks the architecture.
 
 ## 7. Matthew Xu (Agentic Fabriq): OAuth was built for three actors. Agents make four.
 
-The four-legged identity problem is now the default, not the edge case. User → Agent → MCP → API breaks the OAuth assumption that the entity making the call is the one holding the access token. Token exchange (RFC 8693) is the cleanest fix; combined with RFCs 9728 (resource metadata), 8414 (auth-server discovery), and 7591 (dynamic client registration), it completes the OAuth story for agents. Build a broker layer that handles exchange, scope narrowing, and audit. Skipping this ships agents with shared God-mode credentials and no chain of custody. [The 4-legged identity, long version](/blog/the-4-legged-identity).
+The four-legged identity problem (User → Agent → MCP → API) is now the default, not the edge case. It breaks the OAuth assumption that the entity making the call is the one holding the access token.
+
+The four RFCs that complete the OAuth story for agents:
+
+- **RFC 9728** — resource metadata; tells the agent which auth server to use.
+- **RFC 8414** — auth-server discovery; tells the agent how to interact.
+- **RFC 7591** — dynamic client registration; lets agents register themselves.
+- **RFC 8693** — token exchange; preserves user identity across audience changes downstream.
+
+Build a broker layer that handles exchange, scope narrowing, and audit. Skipping this ships agents with shared God-mode credentials and no chain of custody. [The 4-legged identity, long version](/blog/the-4-legged-identity).
 
 ## 8. Tushar Jain (Docker): per-agent MicroVMs are the security baseline.
 
-Docker showed `docker/cagent` as the OSS reference: hard security boundary per agent, FS and network control by default, scoped credentials. Curl to pastebin.com is blocked unless you add it to policy. The blast radius of a compromised agent becomes the sandbox, not the host. Jain's framing: sandboxes are blast walls, not steering wheels. Pair with scoped credentials. As subagent orchestration scales, every subagent needs its own sandbox; your laptop will not hold hundreds, the cloud will. [Ethical autonomy](/blog/ethical-autonomy) covers the patterns.
+Docker's framing: sandboxes are blast walls, not steering wheels. Pair them with scoped credentials, because the model alone will not enforce its own safety reliably.
 
-## 9. Adit Abraham (Reducto) + Jerry Liu (LlamaIndex): doc OCR in 2026 is hybrid CV plus VLM, with agentic verification between every step.
+What `docker/cagent` ships as the OSS reference:
 
-Roughly 90% of enterprise data lives in PDFs, scans, and screenshots that were not designed for machines to read. Pure-VLM pipelines hallucinate; pure-CV pipelines miss the long tail. The 2026 winning shape is deterministic computer vision for layout and tables, vision-language models for handwriting and charts, agent-in-the-loop verification, with classification and document splitting before parsing. Liu released LiteParse (`run-llama/liteparse`, MIT-licensed, CLI-native), and the team launched ParseBench (`parsebench.ai`) as the new enterprise OCR benchmark with 2K human-verified pages. [Document OCR for agentic workflows](/blog/document-ocr-for-agents).
+- Hard security boundary per agent (MicroVM layer).
+- Filesystem and network control by default; `curl pastebin.com` is blocked unless explicitly allowed by policy.
+- Scoped credentials per sandbox; no secrets inside the VM.
+- Fast spin-up for one sandbox per agent, including subagents.
 
-## 10. Andi Partovi (Veris AI): every agent that takes real-world action lives in a POMDP and needs a simulation sandbox.
+As subagent orchestration scales, every subagent needs its own sandbox. Your laptop will not hold hundreds of them. The cloud will. [Ethical autonomy](/blog/eu-ai-act-deadline) covers the patterns.
 
-Agents that move money, send emails, or edit databases cannot be tested with golden datasets. They live in a Partially Observable Markov Decision Process, not an MDP, which means the right answer is post-hoc, computed against state changes, not pre-labeled. Real users are unpredictable; tools are flaky; labels are dynamic. The teams shipping autonomous agents into regulated enterprises built simulation environments that look like production but are not real. The teams that did not are explaining to their customers why their bot invented a usage policy. [Why every agent needs a simulation sandbox](/blog/why-every-agent-needs-a-simulation-sandbox).
+## 9. Adit Abraham (Reducto) + Jerry Liu (LlamaIndex): doc OCR in 2026 is hybrid CV plus VLM.
+
+Roughly 90% of enterprise data lives in PDFs, scans, and screenshots that were not designed for machines to read. Pure-VLM pipelines hallucinate. Pure-CV pipelines miss the long tail. The 2026 winning shape combines both:
+
+- Deterministic computer vision for layout, tables, and reading order.
+- Vision-language models for handwriting, charts, and visual reasoning.
+- Agent-in-the-loop verification between every pipeline stage.
+- Classification and document splitting *before* parsing, not after.
+
+Liu released **LiteParse** (`run-llama/liteparse`, MIT-licensed, CLI-native) and the team launched **ParseBench** (`parsebench.ai`) — 2K human-verified pages, the new enterprise OCR benchmark for AI agents. [Document OCR for agentic workflows](/blog/document-ocr-for-agents).
+
+## 10. Andi Partovi (Veris AI): every action-taking agent lives in a POMDP and needs a simulation sandbox.
+
+Agents that move money, send emails, or edit databases cannot be tested with golden datasets. They live in a Partially Observable Markov Decision Process: the right answer is post-hoc, computed against state changes, not pre-labeled. Real users are unpredictable, tools are flaky, and labels are dynamic.
+
+The teams shipping autonomous agents into regulated enterprises built simulation environments that look like production but are not real. The teams that did not are explaining to their customers why their bot invented a usage policy. [Why every agent needs a simulation sandbox](/blog/why-every-agent-needs-a-simulation-sandbox).
 
 ## What did not get enough airtime
 
@@ -55,4 +121,4 @@ Two things missing from the program: (a) honest dollar amounts on inference at p
 
 ## The one thing to take to the team
 
-Build the eval harness this quarter. Not the orchestrator, not the agent, not the prompt library. The harness. Every other architectural decision compounds on top of measurement, and the teams that have measurement are visibly pulling ahead.
+Build the eval harness this quarter, before the orchestrator, before the agent library, before the prompt collection. Every other architectural decision compounds on top of measurement, and the teams that have measurement are visibly pulling ahead.

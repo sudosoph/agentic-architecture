@@ -1,0 +1,58 @@
+# Triggered remotely from the sudosoph/bsw26-agentic-workflows repo whenever
+# its main branch updates. Pulls the bsw repo fresh, copies content via
+# scripts/sync-bsw.mjs, builds the site, and deploys to Cloudflare Workers.
+#
+# Setup required (one-time):
+#   1. In sudosoph/agentic-architecture repo settings → Secrets and variables → Actions:
+#        - CLOUDFLARE_API_TOKEN (Worker:Edit, Account:Read scopes)
+#        - CLOUDFLARE_ACCOUNT_ID
+#   2. In sudosoph/bsw26-agentic-workflows repo: add the dispatch workflow
+#      shown in `.github/workflows/dispatch-site-redeploy.yml` (committed to
+#      that repo separately).
+#   3. Generate a fine-grained PAT (Personal Access Token) with `repo` scope
+#      on sudosoph/agentic-architecture, store it in bsw repo's secrets as
+#      DISPATCH_TOKEN — that's how the cross-repo trigger authenticates.
+
+name: Redeploy on BSW update
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+  # Cross-repo trigger from bsw26-agentic-workflows on push
+  repository_dispatch:
+    types: [bsw-content-updated]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@v5
+
+      - name: Checkout bsw content into bsw-content/
+        uses: actions/checkout@v5
+        with:
+          repository: sudosoph/bsw26-agentic-workflows
+          path: bsw-content
+          ref: main
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (sync-bsw + manifests + next + opennext)
+        run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy

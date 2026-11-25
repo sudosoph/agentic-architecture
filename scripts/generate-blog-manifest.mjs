@@ -52,7 +52,13 @@ const processor = unified()
 async function mdxToHtml(content) {
   const stripped = content.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
   const file = await processor.process(stripped)
-  return String(file)
+  let html = String(file)
+  // Wrap every <table> in a horizontally-scrollable container so wide tables
+  // (the MCP audit's 7-column "Trusted 30" is the canary) don't bleed past
+  // the article column into the sticky TOC sidebar on desktop.
+  html = html.replace(/<table>/g, '<div class="table-scroll"><table>')
+             .replace(/<\/table>/g, '</table></div>')
+  return html
 }
 
 function extractToc(html) {
