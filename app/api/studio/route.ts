@@ -7,6 +7,18 @@ import { loadReplyQueue, updateReplyStatus } from '@/scripts/comment-copilot.mjs
 import pendingRepliesData from '@/content/queue/pending-replies.json'
 import radarLatestData from '@/content/queue/radar-latest.json'
 
+const PRIVATE_HEADERS = {
+  'Cache-Control': 'no-store, private, max-age=0',
+  'X-Robots-Tag': 'noindex, nofollow',
+}
+
+function isAllowedOrigin(request: Request) {
+  if (process.env.NODE_ENV !== 'production') return true
+  const origin = request.headers.get('origin')
+  if (!origin) return true
+  return origin === 'https://agenticarchitect.ai'
+}
+
 const GITHUB_REPO = 'sudosoph/agentic-architecture'
 const GITHUB_API = `https://api.github.com/repos/${GITHUB_REPO}`
 
@@ -129,8 +141,8 @@ export async function GET(request: Request) {
   const auth = await resolveAuth(request)
   if (!auth.authorized) {
     return NextResponse.json(
-      { error: 'Sign in with your Studio token or GitHub repo token first.' },
-      { status: 401 },
+      { error: 'Unauthorized: repository owner credentials required.' },
+      { status: 401, headers: PRIVATE_HEADERS },
     )
   }
 
@@ -140,35 +152,50 @@ export async function GET(request: Request) {
       ? JSON.parse(fs.readFileSync(radarPath, 'utf8'))
       : radarLatestData
     const replies = loadReplyQueue()
-    return NextResponse.json({ ok: true, mode: auth.mode, radar, replies })
+    return NextResponse.json({ ok: true, mode: auth.mode, radar, replies }, { headers: PRIVATE_HEADERS })
   }
 
-  return NextResponse.json({
-    ok: true,
-    mode: auth.mode,
-    hasGitHubWrite: Boolean(auth.githubPat),
-    radar: radarLatestData,
-    replies: pendingRepliesData,
-  })
+  return NextResponse.json(
+    {
+      ok: true,
+      mode: auth.mode,
+      hasGitHubWrite: Boolean(auth.githubPat),
+      radar: radarLatestData,
+      replies: pendingRepliesData,
+    },
+    { headers: PRIVATE_HEADERS },
+  )
 }
 
 export async function POST(request: Request) {
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json(
+      { error: 'Forbidden origin.' },
+      { status: 403, headers: PRIVATE_HEADERS },
+    )
+  }
+
   const auth = await resolveAuth(request)
   if (!auth.authorized) {
     return NextResponse.json(
-      { error: 'Sign in with your Studio token or GitHub repo token first.' },
-      { status: 401 },
+      { error: 'Unauthorized: repository owner credentials required.' },
+      { status: 401, headers: PRIVATE_HEADERS },
     )
   }
 
   const body = await request.json()
 
   if (body.action === 'verify-auth') {
-    return NextResponse.json({
-      ok: true,
-      mode: auth.mode,
-      hasGitHubWrite: Boolean(auth.githubPat),
-    })
+    return NextResponse.json(
+      {
+        ok: true,
+        mode: auth.mode,
+        hasGitHubWrite: Boolean(auth.githubPat),
+        radar: radarLatestData,
+        replies: pendingRepliesData,
+      },
+      { headers: PRIVATE_HEADERS },
+    )
   }
 
   if (body.action === 'refresh-radar') {

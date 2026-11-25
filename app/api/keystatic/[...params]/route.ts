@@ -11,33 +11,30 @@ function hasKeystaticOAuthEnv() {
   )
 }
 
-function renderMissingEnvGuide() {
+function renderLockedCmsNotice() {
+  const isProd = process.env.NODE_ENV === 'production'
+  const details = isProd
+    ? '<p style="font-size:14px;color:#475569;">Keystatic GitHub OAuth is currently disabled on this edge worker. Authenticate as the repository owner via <a href="/studio">/studio</a>.</p>'
+    : '<p style="font-size:14px;">Local setup note: configure <code>KEYSTATIC_GITHUB_CLIENT_ID</code>, <code>KEYSTATIC_GITHUB_CLIENT_SECRET</code>, and <code>KEYSTATIC_SECRET</code> to test GitHub OAuth, or use <a href="/studio">/studio</a>.</p>'
+
   const html = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Keystatic OAuth Setup · Agentic Architect</title>
+  <title>Restricted CMS · Agentic Architect</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; max-width: 680px; margin: 48px auto; padding: 0 20px; color: #0f172a; line-height: 1.6; }
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 560px; margin: 64px auto; padding: 0 20px; color: #0f172a; line-height: 1.6; }
     .card { border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px; background: #f8fafc; }
-    code { background: #e2e8f0; padding: 2px 6px; border-radius: 5px; font-size: 0.9em; }
-    a.btn { display: inline-block; margin-top: 12px; background: #1d4ed8; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    a.btn { display: inline-block; margin-top: 10px; background: #1d4ed8; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1 style="margin-top:0;font-size:20px;">Use Browser Studio Now, or Connect Keystatic GitHub OAuth</h1>
-    <p><strong>Fastest option (zero OAuth app needed):</strong> Open your browser-based Operator Studio to publish MDX posts, open 1-click GitHub PRs, pull live trend briefs, and approve reader replies immediately:</p>
-    <p><a class="btn" href="/studio">Open Cloud Operator Studio (/studio) →</a></p>
-    <hr style="border:0;border-top:1px solid #cbd5e1;margin:20px 0;" />
-    <p style="font-size:14px;margin-bottom:8px;"><strong>Optional Keystatic Visual Editor setup:</strong> Create a GitHub OAuth App with callback URL <code>https://agenticarchitect.ai/api/keystatic/github/oauth/callback</code> and add three Worker secrets in Cloudflare:</p>
-    <ul style="font-size:14px;">
-      <li><code>KEYSTATIC_GITHUB_CLIENT_ID</code></li>
-      <li><code>KEYSTATIC_GITHUB_CLIENT_SECRET</code></li>
-      <li><code>KEYSTATIC_SECRET</code> (any 32+ char random string)</li>
-    </ul>
+    <h1 style="margin-top:0;font-size:18px;">Restricted Owner CMS</h1>
+    ${details}
+    <p><a class="btn" href="/studio">Owner Sign-In (/studio) →</a></p>
   </div>
 </body>
 </html>`
@@ -45,6 +42,7 @@ function renderMissingEnvGuide() {
     status: 503,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store, private, max-age=0',
       'X-Robots-Tag': 'noindex, nofollow',
     },
   })
@@ -65,14 +63,14 @@ function toResponse({ body, ...init }: KeystaticResp) {
 
 export async function GET(req: Request) {
   if (!hasKeystaticOAuthEnv()) {
-    return renderMissingEnvGuide()
+    return renderLockedCmsNotice()
   }
   return toResponse(await getHandler()(req as Parameters<ReturnType<typeof getHandler>>[0]))
 }
 
 export async function POST(req: Request) {
   if (!hasKeystaticOAuthEnv()) {
-    return renderMissingEnvGuide()
+    return renderLockedCmsNotice()
   }
   return toResponse(await getHandler()(req as Parameters<ReturnType<typeof getHandler>>[0]))
 }

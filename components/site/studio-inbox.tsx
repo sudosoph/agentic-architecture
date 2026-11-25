@@ -142,6 +142,8 @@ export function StudioInbox({
         setAuthError(data.error || 'Could not verify credentials.')
         return
       }
+      if (Array.isArray(data.replies)) setReplies(data.replies)
+      if (Array.isArray(data.radar?.items)) setRadar(data.radar.items)
       setUnlocked(true)
     } catch {
       setAuthError('Network error verifying credentials.')

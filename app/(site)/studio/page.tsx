@@ -5,7 +5,7 @@ import pendingRepliesData from '@/content/queue/pending-replies.json'
 import radarLatestData from '@/content/queue/radar-latest.json'
 
 export const metadata: Metadata = {
-  title: 'Cloud CMS, Approvals & Automation Studio',
+  title: 'Owner Studio · Restricted Access',
   robots: {
     index: false,
     follow: false,
@@ -14,19 +14,20 @@ export const metadata: Metadata = {
 
 export default function StudioPage() {
   const isLocal = process.env.NODE_ENV !== 'production'
-  const initialReplies = Array.isArray(pendingRepliesData) ? pendingRepliesData : []
-  const initialRadar = Array.isArray(radarLatestData?.items) ? radarLatestData.items : []
+  // Never serialize queue or radar data into unauthenticated production HTML
+  const initialReplies = isLocal && Array.isArray(pendingRepliesData) ? pendingRepliesData : []
+  const initialRadar = isLocal && Array.isArray(radarLatestData?.items) ? radarLatestData.items : []
 
   return (
     <div className="space-y-10">
       <PageHeader
         meta={
           isLocal
-            ? 'Browser Operator Workbench · Local Dev Unlocked'
-            : 'Zero-NPM Cloud Workbench · https://agenticarchitect.ai/studio'
+            ? 'Owner Workbench · Local Dev Mode'
+            : 'Restricted Owner Access · sudosoph/agentic-architecture'
         }
-        title="Cloud CMS, Reply Approvals & Trend Automation"
-        description="Publish or schedule MDX posts to GitHub without npm, approve Substack replies, trigger cloud trend sweeps, and grab non-cannibalizing cross-post packs from any browser."
+        title="Agentic Architect Owner Studio"
+        description="Restricted to the repository owner. Authenticate with a write-scoped GitHub token to load queues, approve replies, or open draft PRs."
       />
       <StudioInbox
         initialReplies={initialReplies}
