@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-11-25T20:20:35.167Z",
+  "picks": {
+    "non-technical-owners": [
+      {
+        "publication": "Big Deal Small Business",
+        "author": "Kaustubh Deo",
+        "audience": "non-technical-owners",
+        "readerProfile": "$1M to $10M SMB acquirers and owner-operators focused on EBITDA and staff leverage",
+        "latestTitle": "Treading Water",
+        "latestUrl": "https://bigdealsmallbusiness.substack.com/p/treading-water",
+        "pubDate": "Thu, 19 Nov 2026 18:11:36 GMT",
+        "practitionerAngle": "Connect post-acquisition or owner-operator margin bottlenecks to draft-first back-office workflows before adding $65K admin headcount."
+      },
+      {
+        "publication": "The Business Inquirer",
+        "author": "Roman Beylin",
+        "audience": "non-technical-owners",
+        "readerProfile": "Lower-middle-market SMB owners, searchers, and deal operators",
+        "latestTitle": "Buyers asked one seller to finance $15M of a $25M deal",
+        "latestUrl": "https://thebusinessinquirer.substack.com/p/buyers-asked-one-seller-to-finance",
+        "pubDate": "Fri, 20 Nov 2026 17:38:36 GMT",
+        "practitionerAngle": "Highlight how documenting plain-English operating and qualification rules reduces owner-dependence and de-risks handoffs."
+      },
+      {
+        "publication": "Ask a Chief of Staff",
+        "author": "Clara Ma",
+        "audience": "non-technical-owners",
+        "readerProfile": "Chiefs of Staff, EAs, and VPs of Operations supporting founders and CEOs",
+        "latestTitle": "Issue 109: 5️⃣ Things to Know Before You Go Fractional",
+        "latestUrl": "https://askachiefofstaff.substack.com/p/issue-109-5-things-to-know-before",
+        "pubDate": "Tue, 24 Nov 2026 15:02:32 GMT",
+        "practitionerAngle": "Share practical Rung-2 patterns (pre-call dossiers 30m ahead + commitment tracking in Drafts) that make a CoS 3x faster."
+      }
+    ],
+    "fractional-caio-cto": [
+      {
+        "publication": "The Pragmatic Engineer",
+        "author": "Gergely Orosz",
+        "audience": "fractional-caio-cto",
+        "readerProfile": "CTOs, VPs of Engineering, and Staff+ Engineers",
+        "latestTitle": "How Anthropic builds software in 2026 with Katelyn Lesse",
+        "latestUrl": "https://newsletter.pragmaticengineer.com/p/how-anthropic-builds-software-in",
+        "pubDate": "Wed, 25 Nov 2026 17:31:32 GMT",
+        "practitionerAngle": "Add production verification perspective: deterministic eval gates, least-privilege OAuth/MCP scopes, and 60 to 85% tiered routing savings."
+      },
+      {
+        "publication": "Refactoring",
+        "author": "Luca Rossi",
+        "audience": "fractional-caio-cto",
+        "readerProfile": "VPs of Engineering and startup/mid-market CTOs",
+        "latestTitle": "Durable execution for AI agents",
+        "latestUrl": "https://refactoring.fm/p/durable-execution-for-agents",
+        "pubDate": "Wed, 25 Nov 2026 11:04:04 GMT",
+        "practitionerAngle": "Bridge engineering architecture with commercial OpEx discipline when moving teams past AI demos into governed production."
+      },
+      {
+        "publication": "One Useful Thing",
+        "author": "Ethan Mollick",
+        "audience": "fractional-caio-cto",
+        "readerProfile": "Enterprise executives, L&D directors, university leaders, and board members",
+        "latestTitle": "Fable 5.2 and Jagged AGI",
+        "latestUrl": "https://www.oneusefulthing.org/p/fable-52-and-jagged-agi",
+        "pubDate": "Mon, 09 Nov 2026 19:04:26 GMT",
+        "practitionerAngle": "Share field data from training 250+ healthcare/enterprise leaders and 300+ founders: why department SOP labs beat generic prompt trainings."
+      }
+    ]
+  }
+}

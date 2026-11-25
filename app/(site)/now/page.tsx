@@ -23,9 +23,11 @@ export default function NowPage() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <Card className="p-6 space-y-2">
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Flagship Cohort &amp; Live Masterclass
+            Courses, Sprints &amp; Fractional Leadership
           </p>
-          <h2 className="text-lg font-bold text-fg">The Agentic Business Accelerator</h2>
+          <h2 className="text-lg font-bold text-fg">
+            Business Automation Courses &amp; Fractional CAIO / AI CTO
+          </h2>
           <p className="text-sm text-muted leading-relaxed">
             Teaching non-technical business owners and operations leads how to automate repetitive
             bottlenecks through our{' '}
@@ -34,9 +36,9 @@ export default function NowPage() {
             </Link>{' '}
             and{' '}
             <Link href="/academy" className="text-accent font-medium hover:underline">
-              Practical AI Workflow Academy
+              $297 Practical AI Workflow Academy
             </Link>
-            , alongside Fractional CAIO / AI CTO partnerships on{' '}
+            , alongside executive Fractional CAIO / AI CTO partnerships on{' '}
             <Link href="/fractional-ai-cto" className="text-accent font-medium hover:underline">
               /fractional-ai-cto
             </Link>

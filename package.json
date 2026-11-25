@@ -13,6 +13,7 @@
     "outreach:pack": "node scripts/outreach-engine.mjs",
     "seo:ping": "node scripts/ping-search-engines.mjs",
     "radar": "node scripts/brand-radar.mjs",
+    "radar:substack": "node scripts/substack-buyer-radar.mjs",
     "comments": "node scripts/comment-copilot.mjs",
     "book:build": "node scripts/compile-book-and-freebies.mjs",
     "deploy": "opennextjs-cloudflare deploy",

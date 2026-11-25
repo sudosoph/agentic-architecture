@@ -56,7 +56,7 @@ const MASTERCLASS_FAQS = [
   },
   {
     q: 'What if I already have a specific bottleneck I want scoped right away?',
-    a: 'Skip the wait: open the unlocked Context Kit immediately, book a free 20-minute 1-Bottleneck Discovery Call, or schedule a 90-minute Workflow & Cost Roadmap session (from $750, credited toward any custom build).',
+    a: 'Skip the wait: open the unlocked Bottleneck & SOP Kit immediately, book a free 20-minute 1-Bottleneck Discovery Call, or schedule a 90-minute Workflow & Cost Roadmap session (from $750, credited toward any custom build).',
   },
 ]
 

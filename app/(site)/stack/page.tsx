@@ -31,7 +31,7 @@ export default function StackPage() {
           <p className="text-sm text-muted leading-relaxed">
             Grab the unlocked{' '}
             <Link href="/starter-kit" className="text-accent font-medium hover:underline">
-              Brand Voice &amp; Workflow Starter Kit
+              20/80 Bottleneck &amp; SOP Starter Kit
             </Link>{' '}
             for the 15-minute stack, browse technical deep dives on{' '}
             <Link href="/blog?track=models-rigs" className="text-accent font-medium hover:underline">
