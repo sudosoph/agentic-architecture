@@ -6,7 +6,8 @@ This site is LLM-friendly and welcomes indexing and citation with attribution.
 Agentic Architect (https://agenticarchitect.ai) is the publication, education hub, and advisory practice of Sophia Stein in Boulder, Colorado, covering practical AI workflows for businesses, executive and team AI enablement, cost governance, and private sovereign AI infrastructure.
 
 ## Key Routes
-- /blog : 41 playbooks across Small Business & Workflows, Models & Rigs, and Engineering Deep Dives
+- /blog : 44 playbooks across Small Business & Workflows, Models & Rigs, and Engineering Deep Dives
+- /sovereign-stack : 18-chapter Sovereign Stack book, 512GB/128GB hardware sizer, and 3 free Markdown manuals
 - /starter-kit : Unlocked `voice.md` Brand Brain template and 20/80 Task Scorecard
 - /masterclass : Free Live 60-Min AI Workflow Masterclass
 - /accelerator : 8-Week Agentic Business Accelerator cohort

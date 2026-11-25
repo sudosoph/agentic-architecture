@@ -23,9 +23,9 @@ const PROFILES: Record<
   }
 > = {
   'saas-collapse': {
-    label: '1. Solo / Lean Business SaaS Collapse',
-    subtitle: 'Newsletter, bookings, analytics, uptime, and webhook automations',
-    ossStack: 'Caddy 2 + Postgres 16 + Listmonk + Cal.com Docker + Umami + Uptime Kuma + n8n',
+    label: '1. Lean Ops & Creator SaaS Collapse',
+    subtitle: 'Newsletter, bookings, analytics, uptime, and draft-first inbox/agent webhooks',
+    ossStack: 'Caddy 2 + Postgres 16 + Listmonk + Cal.com Docker + Umami + Uptime Kuma + n8n / OpenInstinct',
     hardwareSpec: '4 GB RAM Linux VPS (Hetzner CX22) + daily Restic backup box',
     typicalSaasMonthly: 125,
     sovereignMonthly: 9,
@@ -35,28 +35,28 @@ const PROFILES: Record<
     freebieLabel: 'Download 84% Cost-Cut Manual ↓',
   },
   'local-workhorse': {
-    label: '2. Three-Tier Model Routing + 27B Local Node',
-    subtitle: 'Coding agents, JSON extraction, and support triage at ~100M tokens/mo',
-    ossStack: 'llama.cpp (native HIP/CUDA) or vLLM + 4B Router + 27B/35B Open-Weight + Tailscale',
-    hardwareSpec: '24 GB VRAM GPU or 48 GB Unified Memory + zero-port Tailscale Serve',
-    typicalSaasMonthly: 680,
-    sovereignMonthly: 115,
-    chapterHref: '/blog/mixing-and-matching-open-weight-models',
-    chapterTitle: 'Chapter 10: Three-Tier Open-Weight Routing',
+    label: '2. 128GB Team Node + 3-Tier Loop Routing',
+    subtitle: 'Worktree CI loops, Qwen 3.8-27B / DeepSeek V4.1 routing, ~150M tokens/mo',
+    ossStack: 'llama.cpp (HIP/CUDA/MLX) + Qwen 3.8-27B + Frontier Escalation + Tailscale Serve',
+    hardwareSpec: '128 GB M5 Max Studio, HP Z2 Mini G1a / GMKtec EVO-X2 (Ryzen AI Halo), or 96GB Linux Rig',
+    typicalSaasMonthly: 890,
+    sovereignMonthly: 135,
+    chapterHref: '/blog/loop-engineering-production-guide-2026',
+    chapterTitle: 'Chapter 16: Loop Engineering & Token Circuit Breakers',
     freebieHref: '/downloads/private-hardware-and-tailscale-rig-guide.md',
-    freebieLabel: 'Download Hardware & Tailscale Guide ↓',
+    freebieLabel: 'Download Nov 2026 Hardware Guide ↓',
   },
   'heavy-rig': {
-    label: '3. 96GB Unified Memory Private Workstation',
-    subtitle: 'Regulated data, concurrent 70B / vision / long-context agents, mobile mesh access',
-    ossStack: 'Ubuntu + llama-server + Tailscale Mesh + 6-Layer pytest/DeepEval Regression Net',
-    hardwareSpec: 'Framework Laptop 16 or 96 GB DDR5 / Strix Halo Desk Node (~$2,100 amortized)',
-    typicalSaasMonthly: 1150,
-    sovereignMonthly: 165,
-    chapterHref: '/blog/96gb-ram-thesis',
-    chapterTitle: 'Chapter 8: Why 96GB Unified Memory Changes Everything',
+    label: '3. 512GB Unified Memory Sparse-MoE Desk Node',
+    subtitle: 'Regulated orgs, 500B sparse MoE (MiniMax M3.1 / Nemotron 3) + multi-agent KV caches',
+    ossStack: 'MLX / vLLM / llama-server + Tailscale Mesh + Deterministic Pytest/Vitest Verifier Harness',
+    hardwareSpec: 'Apple M5 Ultra Mac Studio (512GB @ 1.2 TB/s) or Dual-Node NVIDIA DGX Spark (~$350/mo amortized)',
+    typicalSaasMonthly: 2450,
+    sovereignMonthly: 350,
+    chapterHref: '/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
+    chapterTitle: 'Chapter 8: 512GB M5 Ultra vs. DGX Spark vs. Ryzen Halo',
     freebieHref: '/downloads/trusted-mcp-and-eval-checklist.md',
-    freebieLabel: 'Download MCP & Eval Checklist ↓',
+    freebieLabel: 'Download MCP & Loop Verifier Checklist ↓',
   },
 }
 
@@ -73,10 +73,10 @@ export function OssHardwareSizer() {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Interactive Stack &amp; Hardware Sizer
+            Interactive Stack &amp; Hardware Sizer (Nov 2026 Specs)
           </p>
           <h2 className="text-xl md:text-2xl font-bold text-fg mt-1">
-            Pick Your Workload: Get the Exact OSS Build &amp; Savings Math
+            Pick Your Workload: Vendor-Neutral Hardware Physics &amp; Margin Math
           </h2>
         </div>
         <Badge variant="online">Saves {pctSaved}% ({`$${annualSavings.toLocaleString('en-US')}/yr`})</Badge>
@@ -116,7 +116,7 @@ export function OssHardwareSizer() {
           </div>
           <div>
             <p className="font-mono text-[11px] font-semibold uppercase text-muted">
-              Hardware / Compute Footprint
+              Vendor-Neutral Compute Footprint
             </p>
             <p className="text-sm text-fg mt-0.5">{profile.hardwareSpec}</p>
           </div>
@@ -140,11 +140,11 @@ export function OssHardwareSizer() {
               Monthly Run-Rate Delta
             </p>
             <div className="flex items-baseline justify-between text-xs text-muted">
-              <span>Typical Cloud / SaaS:</span>
+              <span>Unrouted Cloud / VPC GPU:</span>
               <span className="line-through font-mono">${profile.typicalSaasMonthly}/mo</span>
             </div>
             <div className="flex items-baseline justify-between text-sm font-bold text-fg">
-              <span>Sovereign OSS Setup:</span>
+              <span>Sovereign Hybrid Setup:</span>
               <span className="font-mono text-online">${profile.sovereignMonthly}/mo</span>
             </div>
           </div>

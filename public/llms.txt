@@ -15,26 +15,26 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background s
 
 - / : Overview, interactive workflow blueprints, and featured playbooks
 - /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
-- /sovereign-stack : Full 5-part, 15-chapter Sovereign Stack book hub, interactive OSS/hardware sizer, and 3 downloadable Markdown field manuals
+- /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, vendor-neutral 512GB/128GB hardware sizer, and 3 downloadable Markdown field manuals
 - /masterclass : Free Live 60-Min AI Workflow & Brand Brain Masterclass
 - /accelerator : Flagship 8-week Done-With-You Agentic Business Accelerator ($5,997 Founding / $8,997 Standard)
 - /starter-kit : Free unlocked 20-Minute Brand Brain (`voice.md`) & 20/80 Task Readiness Scorecard
 - /courses : 3-step learning ladder plus serialized book (*The Sovereign Stack*)
 - /work-with-me : Interactive Hiring-vs-AI ROI calculator, $1,500 VIP 90-Min Audit, $500 1:1 Strategy Session, Corporate Workshops, and Executive Advisory
 - /teaching : Keynotes, corporate L&D workshops, and CU Boulder course syllabi
-- /stack : 15-Minute Small Business Stack and Private & Sovereign AI Rig reference
-- /blog : 41 playbooks organized into Small Business & Workflows, Models & Rigs, and Engineering Deep Dives
+- /stack : 15-Minute Team & Loop Stack and Private & Sovereign AI Rig reference
+- /blog : 44 playbooks organized into Small Business & Workflows, Models & Rigs, and Engineering Deep Dives
 - /bsw : Open-source Boulder Startup Week 2026 workshop archive (slides, 17-step n8n tutorial, handouts)
 - /guides : Beginner step-by-step workflow tutorials
-- /about : Full biography and credentials
+- /about : Full biography, two-layer ICP, and credentials
 - /rss.xml : Atom feed of all playbooks
 
 ## Start-Here Playbooks
 
-- /blog/easy-ai-brand-and-workflow-setup : Afternoon guide to setting up a `voice.md` Brand Brain and 3 business workflows
-- /blog/agent-ready-tasks : The 90-minute 4-axis scorecard to identify the 20% of work AI should handle
-- /blog/the-hitl-standard : The 5 levels of AI autonomy and human-in-the-loop governance
-- /blog/google-latest-models-vs-deepseek-4-1-business-guide : Workload routing across multimodal cloud models and open weights
+- /blog/loop-engineering-production-guide-2026 : Isolated git worktrees, deterministic verifiers, token circuit breakers, and Nov 2026 loop economics
+- /blog/512gb-unified-memory-mini-pcs-local-llm-2026 : Vendor-neutral physics & ROI comparing 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, and Ryzen AI Halo mini-PCs
+- /blog/personal-agents-tab-instinct-openinstinct-review : Security & OAuth audit of Instinct, Tab, and Dots vs self-hosted MIT OpenInstinct & OpenClaw
+- /blog/google-latest-models-vs-deepseek-4-1-business-guide : November 2026 routing cascade across Gemini 4 Neon/Carbon/Hydrogen, DeepSeek V4.1 Flash, Kimi K3.1 Pro, and Qwen 3.8
 - /blog/autonomous-ai-rig-tailscale-guide : Connecting securely to a private AI rig anywhere with zero exposed ports
 
 ## Newsletter & Contact

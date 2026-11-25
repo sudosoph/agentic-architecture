@@ -40,7 +40,7 @@ describe('Blog query compatibility, ContactForm 503 fallback, and WCAG AA tokens
       searchParams: Promise.resolve({ track: 'small-business' }),
     })
     const { container: c3, unmount: u3 } = render(trackView)
-    expect(c3.querySelectorAll('a[href^="/blog/"]').length).toBe(14)
+    expect(c3.querySelectorAll('a[href^="/blog/"]').length).toBe(15)
     u3()
   })
 

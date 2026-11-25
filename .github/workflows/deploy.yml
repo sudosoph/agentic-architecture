@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Compile Sovereign Stack book & field manuals
+        run: npm run book:build
+
       - name: Build
         run: npm run build
 
@@ -35,3 +38,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           OPEN_NEXT_DEPLOY: 'true'
+
+      - name: Ping IndexNow with canonical URLs
+        run: npm run seo:ping
+        continue-on-error: true

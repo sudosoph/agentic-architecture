@@ -1,12 +1,12 @@
-# The Sovereign Stack: OSS Workflows, Private Hardware Rigs, and AI Unit Economics
+# The Sovereign Stack: Loop Engineering, 512GB Desk Nodes, and AI Unit Economics
 
 By Sophia Stein (https://agenticarchitect.ai)
 
-> Compiled working manuscript generated from field-tested OSS builds, hardware benchmarks, and production architecture playbooks. Convertible to EPUB or PDF with `pandoc content/book/the-sovereign-stack-manuscript.md -o sovereign-stack.epub`.
+> Compiled November 2026 working manuscript generated from field-tested OSS builds, vendor-neutral hardware benchmarks, and deterministic loop-engineering playbooks. Convertible to EPUB or PDF with `pandoc content/book/the-sovereign-stack-manuscript.md -o sovereign-stack.epub`.
 
 ## Part I · Portable Context & Human-in-the-Loop Design
 
-Separating organizational memory (voice.md, icp.md) from models and enforcing explicit autonomy gates.
+Separating organizational memory (AGENTS.md, voice.md, icp.md) from models and enforcing explicit autonomy gates.
 
 ### Chapter 1: Portable Context Files Over Prompt Silos
 
@@ -339,9 +339,9 @@ The autonomy ladder has five rungs. Most production tasks belong on rung 2 or 3.
 
 ---
 
-## Part II · The $9/Month Self-Hosted OSS Business Stack
+## Part II · Self-Hosted OSS Business Stack & Sovereign Personal Agents
 
-Collapsing $120+/mo of creator and consulting SaaS onto a single Linux VPS with Docker, Caddy, and Postgres.
+Collapsing $125+/mo of SaaS onto a $9/mo Linux VPS and auditing personal texting/browser agents (OpenInstinct vs Instinct & Tab).
 
 ### Chapter 4: Self-Hosting Listmonk, Cal.com, Umami, and Uptime Kuma on Hetzner
 
@@ -651,7 +651,57 @@ The CX22 pays for itself in the first 24 hours of every month. Everything after 
 
 ---
 
-### Chapter 5: Draft-First Inbox Triage Without Handing Over Send Keys
+### Chapter 5: Personal Texting & Browser Agents Audited: Instinct, Tab, and MIT OpenInstinct
+
+*Canonical web edition: https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review*
+
+Two completely different product categories are sharing the exact same names in founder group chats right now, so let us disambiguate them in thirty seconds before looking at the security math:
+
+1. **Consumer texting, voice & browser agents (`Instinct`, `Tab`, `Dots`, `Opera Neon`):** Always-on assistants living in iMessage, WhatsApp, phone calls, and cloud browsers that book travel, triage email, wait on hold, and click through web forms.
+2. **IDE next-edit `Tab` models (Continue `Instinct` & `Sweep 1.5B`):** Fast open-weight coding models trained specifically to predict your next multi-line edit trajectory inside VS Code or JetBrains, running locally in milliseconds. *(If you write code, running Continue `Instinct` locally is an easy yes.)*
+
+The consumer texting and browser agents, on the other hand, carry **serious OAuth scope, payment, and training-data trade-offs** that every founder, executive, and security lead should inspect before connecting a company Google Workspace account.
+
+## Five-way security & architecture scorecard (November 2026)
+
+| Agent / Stack | License & Backing | Primary Interface | Credential & OAuth Posture | Trains on Your Data? | Founder / CTO Verdict |
+|---|---|---|---|---|---|
+| **Instinct** *(Spear Street Tech)* | Proprietary (`$10B` valuation, Sep 2026) | iMessage, WhatsApp, Voice (`8.3` Assistant Bench) | **High Risk for Work Accounts:** Requires all-or-nothing full read/write Gmail, Calendar & Drive scopes (no read-only option) | **Yes by default** unless manually opted out in settings | Keep strictly off corporate Workspace and client deal rooms |
+| **Tab** *(Terrasoft)* | Proprietary (`$300M` launch, Oct 2026) | iMessage, WhatsApp, Live Phone Calls | Cards isolated in encrypted vault with explicit per-charge human approval; narrower task scope | **No** (explicit non-training policy) | Practical for personal hold-time phone calls and restaurant/errand logistics |
+| **OpenAI Dots** | Proprietary (DevDay 2026 consumer swarm) | Native app + web | Centralized cloud token store tied to consumer account | Plan-dependent | Convenient consumer UX, opaque enterprise auditability |
+| **Agentic Browsers** *(Opera Neon `$19.90/mo`, Comet, Dia)* | Proprietary SaaS *(Note: Opera Neon browser ≠ Google DeepMind's Gemini 4 Neon model)* | Live authenticated browser DOM | Agent shares active session cookies across open tabs | Varies by vendor | Vulnerable to indirect prompt injection on untrusted web pages |
+| **OpenInstinct + OpenClaw** | **MIT Open Source** (`Merit-Systems/OpenInstinct`, `mariagorskikh/open-instinct`, `OpenClaw` `394k`★) | Self-hosted WhatsApp / Telegram / Slack + isolated microVMs | **Zero-Trust Vault:** Credentials stay in encrypted vault / per-user microVM **outside** the LLM context window | **Never** (you own the logs, VPC, and weights) | **Recommended** for founders and teams wanting *"Instinct, but mine"* |
+
+## Why full-access Gmail + browser DOM agents trigger security alarms
+
+When you grant a closed texting agent full read/write access to Gmail and Google Drive with no read-only boundary, you collapse three security layers at once:
+
+1. **Untrusted inbound input meets privileged write tools:** Anyone on the internet can send an email to your inbox. If your personal agent automatically summarizes inbound threads while holding live `send_email`, `share_drive_file`, and browser cookie capabilities, a single indirect prompt injection hidden in an HTML email footer can attempt data exfiltration. (Even top frontier models with hardened injection defenses require [strict architectural privilege separation](/blog/the-4-legged-identity).)
+2. **Corporate confidentiality & discovery exposure:** Connecting a personal consumer assistant that defaults to model training onto an inbox containing board decks, M&A term sheets, patient data, or customer contracts violates almost every enterprise MSA and SOC2 control.
+3. **Zero trajectory auditability:** When a closed iMessage bot misfires, your engineering team has no execution trace, no versioned prompt file, and no deterministic rollback.
+
+## How the self-hosted MIT stack (`OpenInstinct` + `OpenClaw`) fixes credential isolation
+
+The open-source response that matured this fall solves the core architectural flaw rather than bolting on a terms-of-service promise:
+
+- **Credentials never enter LLM context (`Merit-Systems/OpenInstinct`):** Browser sessions run inside disposable cloud/local sandboxes while an encrypted credential broker injects session auth at the network/runtime boundary. Even if a webpage tricks the model, the model literally cannot read or leak raw OAuth refresh tokens or card numbers because it never sees them.
+- **One isolated microVM per operator (`mariagorskikh/open-instinct`):** Filesystem state, memory markdown files, and tool sockets live inside a dedicated microVM rather than a multi-tenant shared worker pool.
+- **Self-hosted messaging bridge (`OpenClaw` + [n8n Draft-First](/blog/the-zero-inbox-agent)):** Pair a self-hosted messaging gateway over [Tailscale](/blog/autonomous-ai-rig-tailscale-guide) with our standard **Read / Draft / Approve** split:
+  - **Read freely:** Calendar free/busy, public web research, CRM notes.
+  - **Stage as Draft:** Outbound emails land in Gmail Drafts; code edits land in isolated PRs; payments halt at an explicit SMS/Slack confirmation button ([Rung 2 HITL](/blog/the-hitl-standard)).
+  - **Never grant raw delete or auto-send on external channels.**
+
+## What to deploy on Monday morning
+
+1. **For your personal errands (restaurants, airline hold lines):** If you use a consumer agent like `Tab`, connect a dedicated alias email and a virtual card with a $250 cap, never your primary founder Workspace.
+2. **For your company inbox, calendar, and client prep:** Keep data inside your own boundary using portable `voice.md` + `icp.md` files ([free Starter Kit](/starter-kit)), draft-only Gmail scopes, or a self-hosted `OpenInstinct` / `OpenClaw` instance on a [$9/month Linux VPS](/blog/self-hosting-ai-stack-hetzner).
+3. **For your engineering IDE:** Run open-weight next-edit models (`Continue Instinct` or `Qwen 3.8`) locally so proprietary repository diffs stay on your machine at $0 marginal cost.
+
+Need an architectural review of which AI tools and browser agents are safe to approve across your company? Grab **Field Manual 03 (MCP Security & Eval Checklist)** on [/sovereign-stack](/sovereign-stack) or book a [90-Minute Workflow & Security Audit](/work-with-me).
+
+---
+
+### Chapter 6: Draft-First Inbox Triage Without Handing Over Send Keys
 
 *Canonical web edition: https://agenticarchitect.ai/blog/the-zero-inbox-agent*
 
@@ -817,7 +867,7 @@ A summarizer tells you what is in your inbox. A zero-inbox agent finishes the wo
 
 ---
 
-### Chapter 6: Scheduled OSS Research and Signal Pipelines
+### Chapter 7: Scheduled OSS Research and Signal Pipelines
 
 *Canonical web edition: https://agenticarchitect.ai/blog/automated-competitive-intelligence*
 
@@ -957,119 +1007,70 @@ Competitive intelligence in 2026 is a small agent reading the web on a schedule,
 
 ---
 
-## Part III · Private Hardware, Unified Memory & Mesh Networking
+## Part III · 512GB Desk Nodes, Unified Memory Physics & Mesh Networking
 
-Choosing sustainable local compute, sizing VRAM vs unified RAM, and reaching your home rig safely from anywhere.
+Vendor-neutral hardware benchmarks across 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, Ryzen AI Halo mini-PCs, and Tailscale.
 
-### Chapter 7: The Modular Hardware Thesis (Framework 16 & Repairable Compute)
+### Chapter 8: 512GB Mini Computers & Desk Nodes: M5 Ultra vs. DGX Spark vs. Ryzen AI Halo
 
-*Canonical web edition: https://agenticarchitect.ai/blog/framework-laptop-thesis*
+*Canonical web edition: https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026*
 
-I run a Framework 16 with the Ryzen AI 9 HX 370 (Strix Point) and 96GB DDR5. It is the most defensible laptop choice for engineers running local AI in 2026. Repairable, upgradeable, [first-class ROCm 7.3 support](/blog/96gb-ram-thesis), and unified memory bandwidth that comes within striking distance of an M3 Ultra. The newer Framework Desktop with Strix Halo (Ryzen AI Max+ 395) takes the same playbook to 128GB. This post is the case for both, the tradeoffs they each carry, and what to actually buy in May 2026.
+Earlier this year I wrote about running [96GB of DDR5 in a repairable Linux laptop](/blog/96gb-ram-thesis) as a portable daily driver. Since August 2026, however, the desk-side hardware conversation among founders and AI engineers has shifted dramatically: teams are buying **512 GB unified-memory mini computers**, stacking **128 GB desk nodes**, and asking which box actually makes financial sense versus cloud APIs.
 
-## Why this hardware
+Good hardware architecture is never a single-vendor fan club. Whether Apple Silicon, NVIDIA's compact Grace-Blackwell desk node, an AMD Ryzen AI Max mini-PC, or a $9/month Linux VPS wins depends entirely on two numbers: **memory bandwidth (GB/s)** and **active parameters per token**.
 
-Three things matter for a 2026 builder laptop. Most reviews evaluate one or two and miss the third.
+## The late-2026 desk node landscape compared
 
-**Unified memory at scale.** Discrete GPU VRAM stops being the constraint when the iGPU can address system RAM directly. The Strix Point platform on Framework 16 supports 96GB DDR5-5600. The Strix Halo platform on the [Framework Desktop](https://frame.work/desktop) supports up to 128GB LPDDR5X. Either configuration runs models that simply do not fit on consumer NVIDIA cards.
+Here are the real specifications, memory ceilings, and trade-offs across the four serious local-compute tiers shipping in November 2026:
 
-**Software support that is no longer a science project.** ROCm 7.3 (April 2026) is the first release where Strix Point + RDNA 3.5 is properly supported. Earlier releases crashed on `gfx1150` under load. [Phoronix tested the Strix Halo path against Intel Core Ultra 9 285K on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) and the results are competitive. AMD on Linux for AI is real now.
+| Hardware Node | Memory Ceiling | Memory Bandwidth | Typical Street Price | Where It Wins | Where It Loses |
+|---|---|---|---|---|---|
+| **Apple M5 Ultra Mac Studio** *(Aug 2026)* | Up to **512 GB** Unified | **~1.2 TB/s** (clusterable via TB5 RDMA) | `$5,499` base -> `$8,500–$9,500` @ 512 GB | Fastest quiet desk decode for huge **sparse MoE** models (`300GB+` weights + long KV cache) | macOS container/Linux kernel tooling friction; steep RAM upgrade tax |
+| **Apple M5 Max Studio / M5 Pro Mac mini** | `64 GB` to `128 GB` Unified | `307 GB/s` to `410+ GB/s` | `$1,599` to `$3,499` | Best watts-per-token office node for `27B` dense and `35B–120B` MoE models | Capped at 128 GB on single M5 Max |
+| **NVIDIA DGX Spark** | `128 GB` Unified (`64 GB` OEM SKUs) | **`273 GB/s`** | `$6,950` (`$4,999` 64 GB OEM) | First-class CUDA/vLLM/TensorRT stack, ~1,700 tok/s prompt prefill, ConnectX dual-node link | `4.4x` lower memory bandwidth than M5 Ultra slows single-stream token decode |
+| **AMD Ryzen AI Max+ / Halo Mini-PCs** *(HP Z2 Mini G1a, GMKtec EVO-X2, Framework Desktop)* | `128 GB` LPDDR5X (select `192 GB` configs) | **`~256 GB/s`** | `$1,899` to `$2,699` | Best price-per-GB on native Ubuntu + `llama.cpp` HIP/Vulkan; tiny footprint | Slower prompt prefill than CUDA; 128 GB ceiling requires 2-node split for 400B+ weights |
 
-**Repair and ownership.** The Framework 16 is the only mainstream laptop in 2026 where you can swap the GPU module, replace the keyboard, upgrade memory, and read your own service manual. That matters more in 2026 than it did in 2018 because the hardware you buy is going to be running AI workloads for five years and sustained inference is hard on components.
+*(If you need a battery and a repairable keyboard on airplanes, a 96 GB DDR5 Linux laptop like the [Framework 16](/blog/framework-laptop-thesis) or a 128 GB M5 Max MacBook Pro covers travel duty, while the desk nodes above stay wired to gigabit Ethernet at home or the office over [Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide).)*
 
-The combination is the load-bearing argument. Other laptops have one or two. Framework has all three.
+## The 512 GB physics trap: Dense models vs. Sparse MoE
 
-## The Strix Point spec, May 2026
+The most expensive mistake engineers make with a 512 GB Mac Studio is loading a giant **dense** 405B model and expecting snappy interactive coding loops.
 
-What I run, with the rationale:
+Autoregressive token generation is strictly memory-bandwidth bound: every single output token has to stream every active weight byte out of RAM. Divide `1,200 GB/s` theoretical bandwidth (~`850–950 GB/s` sustained in MLX / `llama.cpp`) by `230 GB` of active 4-bit dense weights and you land around **3.5 to 4 tokens per second**. Nobody keeps a 4 tok/s coding assistant in their inner loop.
 
-| Component | Choice                      | Why                                     |
-|-----------|-----------------------------|-----------------------------------------|
-| SoC       | Ryzen AI 9 HX 370           | RDNA 3.5 iGPU, XDNA 2 NPU, 12C/24T      |
-| dGPU      | Radeon RX 7700S (8GB)       | Module for bursty image / video         |
-| RAM       | 2 × 48GB DDR5-5600          | 96GB total, supported by ROCm 7.3       |
-| Storage   | 4TB Gen 4 + 2TB Gen 4       | Models, datasets, vector indexes        |
-| Display   | 16" 165Hz 2560×1600         | Default                                 |
-| OS        | Ubuntu 26.04 LTS            | AMDGPU support in GA tree               |
+Where **512 GB at 1.2 TB/s** becomes magic is **large sparse Mixture-of-Experts (MoE) models plus massive KV caches**:
 
-The spec produces 28.4 t/s sustained on GLM-4 9B Q8_0 with 90GB GART carved out for the iGPU. Full benchmark and config in [The 96GB RAM Thesis](/blog/96gb-ram-thesis).
+1. **Huge total capacity, tiny active footprint:** Late-2026 open-weight MoE releases keep total knowledge in hundreds of billions of parameters while activating only 20B to 55B parameters per token. For example, **`MiniMax M3.1 Flash`** (`501B` total / `23B` active) occupies roughly `301 GB` in 4-bit quantization yet streams only ~`14 GB` of active weights per token, delivering fast interactive speeds with zero cloud egress. NVIDIA's **`Nemotron 3 Ultra`** (`550B` total / `55B` active, ~`330 GB` in RAM) follows the exact same math.
+2. **Multi-model residency for agent loops:** Even if your primary local coder is **`Qwen 3.8-27B`** (`Apache 2.0`, ~`17 GB` at Q4_K_M) or a quantized **`DeepSeek V4.1 Flash`** variant, 128 GB to 512 GB lets you keep a coding model, a multimodal OCR/vision model, an embedding/reranker index, and 128k+ token KV caches pinned in memory simultaneously without model-swap stalls.
+3. **Thunderbolt 5 RDMA & ConnectX clustering:** macOS Thunderbolt 5 RDMA (up to 4 M5 Ultra studios) and DGX Spark's ConnectX interconnect finally allow low-latency tensor/pipeline splits across two desk boxes for multi-terabyte research weights like **`Kimi K3.1 Pro`** (`2.8T` total / `104B` active), though for most startups hosted open-weight APIs still win above 600B parameters.
 
-The dGPU module is optional. The iGPU handles sustained inference. The dGPU handles bursty workloads and the rare image-generation task. Buy it if you do video work; skip it if you do not.
+## Honest payback math for CTOs and founders (When NOT to buy)
 
-## The Strix Halo upgrade path
+Before expensing an $8,500 512 GB desk box, run the unit-economics check against [three-tier cloud routing](/blog/mixing-and-matching-open-weight-models):
 
-[Strix Halo](https://www.servethehome.com/framework-desktop-review-a-solid-amd-strix-halo/) is the bigger sibling. Same RDNA 3.5 architecture, but dramatically more memory bandwidth and capacity:
+| Team Scenario | Best Hardware / Cloud Move | Monthly Equivalent Cost | Verdict |
+|---|---|---|---|
+| **Solo founder or under 15M tokens/mo, non-regulated data** | Stay on cloud routing (`Neon` / `Hydrogen` / hosted `DeepSeek V4.1`) | `$30` to `$120/mo` | **Skip 512 GB hardware.** It would take 6+ years to break even. |
+| **Lean 3 to 10-engineer startup running CI/worktree loops + local dev** | Single **128 GB node** (`M5 Max Studio` or `HP Z2 Mini G1a` / `EVO-X2` running `Qwen 3.8-27B` + `llama-server` over Tailscale) | ~`$95/mo` amortized over 24 mos + electricity | **Sweet-spot ROI.** Clears payback in 4 to 7 months while keeping frontier APIs for the hardest 10% of plans. |
+| **Healthcare, legal, defense, or 10 to 40-person org running continuous 500B MoE & private doc pipelines** | **512 GB M5 Ultra Mac Studio** (inference decode) or **DGX Spark** (heavy CUDA prefill/fine-tuning) | ~`$350/mo` amortized over 24 mos | **Clear win.** Replaces `$2,000+/mo` in private-VPC GPU instances with zero third-party data retention. |
 
-| Spec               | Strix Point (laptop)  | Strix Halo (desktop)        |
-|--------------------|-----------------------|-----------------------------|
-| iGPU compute units | 16                    | 32 (Radeon 8060S)           |
-| Max memory         | 96GB DDR5             | 128GB LPDDR5X (96GB to GPU) |
-| Memory bandwidth   | ~89 GB/s              | ~256 GB/s                   |
-| TDP                | ~55W (laptop)         | ~120W (desktop)             |
-| Form factor        | Framework 16          | Framework Desktop, mini-PCs |
+## Zero-port Tailscale setup across any desk node
 
-The bandwidth jump is the headline. Strix Halo runs 70B-class models at usable speed because it can move tokens fast enough. Strix Point cannot. [Community LLM benchmarks on Level1Techs](https://forum.level1techs.com/t/strix-halo-ryzen-ai-max-395-llm-benchmark-results/233796) and [the Framework Community thread](https://community.frame.work/t/amd-strix-halo-ryzen-ai-max-395-gpu-llm-performance-tests/72521) confirm the practical numbers.
+Whichever vendor sits under your desk, the network rule never changes:
 
-## Which to buy in May 2026
+1. Bind `llama-server`, `vLLM`, or MLX server strictly to `127.0.0.1:8080`.
+2. Expose it solely to your authenticated team tailnet with `tailscale serve --bg 8080`.
+3. Point your IDE, CI runner, or [loop-engineering verifier](/blog/loop-engineering-production-guide-2026) at `https://desk-node.your-tailnet.ts.net/v1` while routing complex multi-repo planning turns to frontier cloud endpoints.
 
-Honest decision tree.
-
-**Framework 16 with Strix Point** if:
-- You need a laptop (travel, conferences, working from cafes).
-- Your model ceiling is 27B Dense at Q4-Q5 (Qwen 3.6, Gemma 4).
-- You want the cheapest path into the 96GB unified-memory regime.
-- Repair-and-upgrade matters to you. The Framework 16 is the only laptop you can fully service yourself.
-
-**Framework Desktop with Strix Halo** if:
-- You can run a desktop. Most of your actual work happens at one location.
-- You want headroom for 70B+ models, including DeepSeek V4 Flash at heavier quantization.
-- You will eventually want multi-machine local inference (fan out across two boxes).
-- Pricing: $1,999 base for 128GB, which is striking once you compare against [Mac Studio M3 Ultra at $4,800 for the same memory](https://www.apple.com/shop/buy-mac/mac-studio).
-
-**Both, eventually.** The pattern most engineers I know are converging on: laptop for travel and meetings, desktop for sustained workloads at home. Same OS, same models, same dotfiles. The local-first stack scales horizontally.
-
-## What other laptops cannot do
-
-Worth being specific about why this is a Framework recommendation, not a generic "buy AMD" recommendation.
-
-**Apple Silicon (M3/M4 Ultra).** Mac Studio is the closest analog: unified memory, strong inference, well-supported in MLX and llama.cpp. Two real disadvantages. Pricing is roughly 2.4× Framework Desktop for the same memory. And Apple's developer-tooling story (sandboxing, kernel extensions, low-level GPU access) is more constrained for the long-tail use cases.
-
-**NVIDIA discrete (RTX 5090, etc).** Faster per-token than any AMD setup. But VRAM ceilings (32GB on a 5090) cap your model size in a way unified memory does not. You also pay top dollar for the card and run hot under sustained AI load.
-
-**Intel Core Ultra (Lunar Lake, Arrow Lake).** Phoronix's testing of [Arrow Lake against Strix Halo on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) shows AMD ahead on the AI workloads that matter. Intel's Arc graphics drivers are still catching up on Linux.
-
-**Generic Windows laptops.** Repairability and Linux support are both worse than Framework. The sustainable-engineering argument loses its anchor.
-
-## Software setup notes
-
-A few things worth documenting once and forgetting about. Full installation lives in [The 96GB RAM Thesis](/blog/96gb-ram-thesis), but the highlights:
-
-- **Ubuntu 26.04 LTS, not 24.04.** AMDGPU support for Strix Point ships in the GA tree on 26.04. Skip the HWE stack juggling.
-- **GART config.** `amdgpu.gttsize=92160` in the kernel command line. Gives the iGPU 90GB to address.
-- **ROCm 7.3, not 7.2.** Earlier releases crashed on `gfx1150` under load.
-- **llama.cpp built from source.** Prebuilt binaries miss the `gfx1150` target. Build with `-DAMDGPU_TARGETS="gfx1150;gfx1102"` so the same binary handles both GPUs.
-- **Vulkan as fallback.** The cross-platform GPU runtime is now competitive on AMD. When ROCm misbehaves on a particular model or quant, switch backends.
-
-## What is coming next
-
-Two threads worth tracking:
-
-- **ROCm 8.0** is rumored Q3 2026 with first-class XDNA 2 NPU offload for the matmul-heavy parts of attention. If it ships on time, the iGPU stops being the bottleneck on long-context turns.
-- **Strix Halo successor (Gorgon Halo).** [UltrabookReview's roundup](https://www.ultrabookreview.com/70442-amd-strix-halo-laptops/) tracks the pipeline. Higher core counts, more cache, same unified-memory pattern. Late 2026 is the likely window.
-
-For now, what is shipping in May 2026 is enough. The Framework 16 with Strix Point handles the 90% of agentic-dev workloads I run daily. The Strix Halo desktop is the upgrade I would buy next for the 10% that need heavier models, not something I currently own.
-
-## The takeaway
-
-Buy the Framework 16 with Strix Point if you want one machine that travels and runs serious local AI. Buy the Framework Desktop with Strix Halo if you want a home base that can run 70B-class models at usable speed. Buy both if you can. The hardware is no longer the bottleneck. The bottleneck is the [agentic loop design](/blog/swarm-vs-monolith) running on top of it.
-
-For the full software setup, the [GART tuning, ROCm install, and llama.cpp HIP build](/blog/96gb-ram-thesis) live in a separate post. For the day-to-day [personal agent build](/blog/personal-ai-agent-weekend) on this hardware, see the OpenClaw + MCP bridge writeup.
+Run your own numbers in the interactive sizer on [/sovereign-stack](/sovereign-stack), grab the updated **Private Hardware & Tailscale Rig Cheatsheet** free download, or book a [90-Minute Infrastructure & Cost Audit](/work-with-me).
 
 ---
 
-### Chapter 8: Why 96GB of Unified Memory Changes What Runs at Your Desk
+### Chapter 9: 96GB Unified Memory on a Travel Rig: GART & Sustained Token Math
 
 *Canonical web edition: https://agenticarchitect.ai/blog/96gb-ram-thesis*
+
+> **November 2026 Update:** While 96 GB DDR5 remains my sweet spot in a travel laptop (now running `Qwen 3.8-27B` Q4_K_M alongside dev containers), stationary desk setups have jumped to **128 GB Ryzen AI Halo / DGX Spark** and **512 GB M5 Ultra Mac Studio (1.2 TB/s)** nodes capable of holding 500B sparse MoE models in RAM. See the updated physics and ROI comparison in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/512gb-unified-memory-mini-pcs-local-llm-2026).
 
 Framework 16 with Ryzen AI 9 HX 370, RX 7700S, and 96GB DDR5 runs GLM-4 9B at Q8_0 at **28.4 tokens/sec** under ROCm 7.3, with a 90GB GART carve-out feeding the iGPU directly out of system RAM. That number is not a benchmark trophy. It is the threshold where agentic loops stop being a budgeting problem.
 
@@ -1202,7 +1203,115 @@ The line between "local inference is a hobby" and "local inference is the produc
 
 ---
 
-### Chapter 9: Zero-Exposed-Port Private AI Rigs Over Tailscale
+### Chapter 10: Repairable Mobile Linux Compute vs. Stationary Desk Nodes
+
+*Canonical web edition: https://agenticarchitect.ai/blog/framework-laptop-thesis*
+
+> **November 2026 Hardware Update:** For fixed desk inference and team nodes, Apple's **512 GB M5 Ultra Mac Studio (1.2 TB/s)**, NVIDIA's **128 GB DGX Spark**, and **128 GB Ryzen AI Halo mini-PCs** (`HP Z2 Mini G1a`, `GMKtec EVO-X2`) now dominate stationary workloads for sparse MoE models and multi-agent loops. Read the full vendor-neutral benchmark in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/512gb-unified-memory-mini-pcs-local-llm-2026). Below are my original April 2026 notes on choosing a **repairable Linux travel laptop**.
+
+I run a Framework 16 with the Ryzen AI 9 HX 370 (Strix Point) and 96GB DDR5 as my Linux travel machine. It remains a strong repairable laptop choice for engineers who want modular mobile hardware in 2026. Repairable, upgradeable, [first-class ROCm 7.3 support](/blog/96gb-ram-thesis), and unified memory capacity that fits 27B dense models on battery. The desktop Strix Halo mini-PC class (Ryzen AI Max+ 395 across HP, GMKtec, and Framework) takes the x86 playbook to 128GB. This post covers the mobile repairability case and its tradeoffs.
+
+## Why this hardware
+
+Three things matter for a 2026 builder laptop. Most reviews evaluate one or two and miss the third.
+
+**Unified memory at scale.** Discrete GPU VRAM stops being the constraint when the iGPU can address system RAM directly. The Strix Point platform on Framework 16 supports 96GB DDR5-5600. The Strix Halo platform on the [Framework Desktop](https://frame.work/desktop) supports up to 128GB LPDDR5X. Either configuration runs models that simply do not fit on consumer NVIDIA cards.
+
+**Software support that is no longer a science project.** ROCm 7.3 (April 2026) is the first release where Strix Point + RDNA 3.5 is properly supported. Earlier releases crashed on `gfx1150` under load. [Phoronix tested the Strix Halo path against Intel Core Ultra 9 285K on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) and the results are competitive. AMD on Linux for AI is real now.
+
+**Repair and ownership.** The Framework 16 is the only mainstream laptop in 2026 where you can swap the GPU module, replace the keyboard, upgrade memory, and read your own service manual. That matters more in 2026 than it did in 2018 because the hardware you buy is going to be running AI workloads for five years and sustained inference is hard on components.
+
+The combination is the load-bearing argument. Other laptops have one or two. Framework has all three.
+
+## The Strix Point spec, May 2026
+
+What I run, with the rationale:
+
+| Component | Choice                      | Why                                     |
+|-----------|-----------------------------|-----------------------------------------|
+| SoC       | Ryzen AI 9 HX 370           | RDNA 3.5 iGPU, XDNA 2 NPU, 12C/24T      |
+| dGPU      | Radeon RX 7700S (8GB)       | Module for bursty image / video         |
+| RAM       | 2 × 48GB DDR5-5600          | 96GB total, supported by ROCm 7.3       |
+| Storage   | 4TB Gen 4 + 2TB Gen 4       | Models, datasets, vector indexes        |
+| Display   | 16" 165Hz 2560×1600         | Default                                 |
+| OS        | Ubuntu 26.04 LTS            | AMDGPU support in GA tree               |
+
+The spec produces 28.4 t/s sustained on GLM-4 9B Q8_0 with 90GB GART carved out for the iGPU. Full benchmark and config in [The 96GB RAM Thesis](/blog/96gb-ram-thesis).
+
+The dGPU module is optional. The iGPU handles sustained inference. The dGPU handles bursty workloads and the rare image-generation task. Buy it if you do video work; skip it if you do not.
+
+## The Strix Halo upgrade path
+
+[Strix Halo](https://www.servethehome.com/framework-desktop-review-a-solid-amd-strix-halo/) is the bigger sibling. Same RDNA 3.5 architecture, but dramatically more memory bandwidth and capacity:
+
+| Spec               | Strix Point (laptop)  | Strix Halo (desktop)        |
+|--------------------|-----------------------|-----------------------------|
+| iGPU compute units | 16                    | 32 (Radeon 8060S)           |
+| Max memory         | 96GB DDR5             | 128GB LPDDR5X (96GB to GPU) |
+| Memory bandwidth   | ~89 GB/s              | ~256 GB/s                   |
+| TDP                | ~55W (laptop)         | ~120W (desktop)             |
+| Form factor        | Framework 16          | Framework Desktop, mini-PCs |
+
+The bandwidth jump is the headline. Strix Halo runs 70B-class models at usable speed because it can move tokens fast enough. Strix Point cannot. [Community LLM benchmarks on Level1Techs](https://forum.level1techs.com/t/strix-halo-ryzen-ai-max-395-llm-benchmark-results/233796) and [the Framework Community thread](https://community.frame.work/t/amd-strix-halo-ryzen-ai-max-395-gpu-llm-performance-tests/72521) confirm the practical numbers.
+
+## Which to buy in May 2026
+
+Honest decision tree.
+
+**Framework 16 with Strix Point** if:
+- You need a laptop (travel, conferences, working from cafes).
+- Your model ceiling is 27B Dense at Q4-Q5 (Qwen 3.6, Gemma 4).
+- You want the cheapest path into the 96GB unified-memory regime.
+- Repair-and-upgrade matters to you. The Framework 16 is the only laptop you can fully service yourself.
+
+**Framework Desktop with Strix Halo** if:
+- You can run a desktop. Most of your actual work happens at one location.
+- You want headroom for 70B+ models, including DeepSeek V4 Flash at heavier quantization.
+- You will eventually want multi-machine local inference (fan out across two boxes).
+- Pricing: $1,999 base for 128GB, which is striking once you compare against [Mac Studio M3 Ultra at $4,800 for the same memory](https://www.apple.com/shop/buy-mac/mac-studio).
+
+**Both, eventually.** The pattern most engineers I know are converging on: laptop for travel and meetings, desktop for sustained workloads at home. Same OS, same models, same dotfiles. The local-first stack scales horizontally.
+
+## What other laptops cannot do
+
+Worth being specific about why this is a Framework recommendation, not a generic "buy AMD" recommendation.
+
+**Apple Silicon (M3/M4 Ultra).** Mac Studio is the closest analog: unified memory, strong inference, well-supported in MLX and llama.cpp. Two real disadvantages. Pricing is roughly 2.4× Framework Desktop for the same memory. And Apple's developer-tooling story (sandboxing, kernel extensions, low-level GPU access) is more constrained for the long-tail use cases.
+
+**NVIDIA discrete (RTX 5090, etc).** Faster per-token than any AMD setup. But VRAM ceilings (32GB on a 5090) cap your model size in a way unified memory does not. You also pay top dollar for the card and run hot under sustained AI load.
+
+**Intel Core Ultra (Lunar Lake, Arrow Lake).** Phoronix's testing of [Arrow Lake against Strix Halo on Linux](https://www.phoronix.com/review/amd-ryzen-ai-max-arrow-lake) shows AMD ahead on the AI workloads that matter. Intel's Arc graphics drivers are still catching up on Linux.
+
+**Generic Windows laptops.** Repairability and Linux support are both worse than Framework. The sustainable-engineering argument loses its anchor.
+
+## Software setup notes
+
+A few things worth documenting once and forgetting about. Full installation lives in [The 96GB RAM Thesis](/blog/96gb-ram-thesis), but the highlights:
+
+- **Ubuntu 26.04 LTS, not 24.04.** AMDGPU support for Strix Point ships in the GA tree on 26.04. Skip the HWE stack juggling.
+- **GART config.** `amdgpu.gttsize=92160` in the kernel command line. Gives the iGPU 90GB to address.
+- **ROCm 7.3, not 7.2.** Earlier releases crashed on `gfx1150` under load.
+- **llama.cpp built from source.** Prebuilt binaries miss the `gfx1150` target. Build with `-DAMDGPU_TARGETS="gfx1150;gfx1102"` so the same binary handles both GPUs.
+- **Vulkan as fallback.** The cross-platform GPU runtime is now competitive on AMD. When ROCm misbehaves on a particular model or quant, switch backends.
+
+## What is coming next
+
+Two threads worth tracking:
+
+- **ROCm 8.0** is rumored Q3 2026 with first-class XDNA 2 NPU offload for the matmul-heavy parts of attention. If it ships on time, the iGPU stops being the bottleneck on long-context turns.
+- **Strix Halo successor (Gorgon Halo).** [UltrabookReview's roundup](https://www.ultrabookreview.com/70442-amd-strix-halo-laptops/) tracks the pipeline. Higher core counts, more cache, same unified-memory pattern. Late 2026 is the likely window.
+
+For now, what is shipping in May 2026 is enough. The Framework 16 with Strix Point handles the 90% of agentic-dev workloads I run daily. The Strix Halo desktop is the upgrade I would buy next for the 10% that need heavier models, not something I currently own.
+
+## The takeaway
+
+Buy the Framework 16 with Strix Point if you want one machine that travels and runs serious local AI. Buy the Framework Desktop with Strix Halo if you want a home base that can run 70B-class models at usable speed. Buy both if you can. The hardware is no longer the bottleneck. The bottleneck is the [agentic loop design](/blog/swarm-vs-monolith) running on top of it.
+
+For the full software setup, the [GART tuning, ROCm install, and llama.cpp HIP build](/blog/96gb-ram-thesis) live in a separate post. For the day-to-day [personal agent build](/blog/personal-ai-agent-weekend) on this hardware, see the OpenClaw + MCP bridge writeup.
+
+---
+
+### Chapter 11: Zero-Exposed-Port Private AI Rigs Over Tailscale
 
 *Canonical web edition: https://agenticarchitect.ai/blog/autonomous-ai-rig-tailscale-guide*
 
@@ -1267,11 +1376,66 @@ Even inside a private mesh, apply least privilege:
 
 ---
 
-## Part IV · Three-Tier Model Routing & 84% Margin Protection
+## Part IV · Late-2026 Model Routing (Neon, Carbon, DeepSeek V4.1, Kimi K3.1, Qwen 3.8)
 
-Routing 85% of routine turns to fast open-weight workhorses while reserving frontier APIs for the hardest 10%.
+Routing 80% of routine turns to fast open-weight or subagent tiers while reserving deliberate frontier planners for the hardest 5%.
 
-### Chapter 10: The Three-Tier Open-Weight Routing Recipe Book
+### Chapter 12: Gemini 4 Neon & Carbon vs. DeepSeek V4.1, Kimi K3.1 Pro & Qwen 3.8
+
+*Canonical web edition: https://agenticarchitect.ai/blog/google-latest-models-vs-deepseek-4-1-business-guide*
+
+*Personal-capacity note: My day job is in applied AI at Google; everything in this article is written strictly in my personal capacity using publicly released documentation, open-weight model cards, and independent third-party benchmarks (such as Artificial Analysis). Views are entirely my own.*
+
+November 2026 delivered the sharpest model shake-up in two years: **Gemini 4 Carbon, Neon, and Hydrogen** arrived alongside major open-weight upgrades across **DeepSeek V4.1 Flash-1017**, **Kimi K3.1 Pro**, **Qwen 3.8**, and **MiniMax M3.1 Flash**. Every CTO and technical founder asks the same question: *What should actually sit in our production config this month?*
+
+The profitable answer remains structural: **never wire 100% of your company's traffic to a single flagship endpoint**. Teams cutting API bills by 70% to 84% while improving task reliability route turns across an explicit cascade, pairing multimodal frontier orchestrators with open-weight workhorses.
+
+## November 2026 public specs & where each family wins
+
+### 1. Frontier Multimodal & Agent Orchestration (`Gemini 4 Neon`, `Carbon` & `Hydrogen`)
+
+Based on published November 2026 specs (`1M` unified multimodal context across text, code, audio, image, and video):
+
+- **Gemini 4 Neon** *(Nov 18, 2026 · `$3/$15` per 1M, `$0.15` cached, ~100 tok/s)*: Tops the Artificial Analysis Coding Agent Index (`61` Intelligence Index), exposes tunable `low/medium/high/xhigh` thinking budgets, and hits an average multi-step coding session cost of **`$7.37`**, matching Carbon's accuracy at less than half the session spend while orchestrating **`Gemini 4 Hydrogen`** (`$1.50/$7.50`) subagents.
+- **Gemini 4 Carbon** *(Nov 10, 2026 · `$2/$10` intro through Nov 30 -> `$4/$20` Dec 1, ~55 tok/s)*: Built for deepest deliberate reasoning on ambiguous architectural and research synthesis (`$16.50` avg coding session), best reserved as an escalation tier rather than a high-volume background worker.
+
+### 2. Late-2026 Open-Weight Powerhouses (`DeepSeek V4.1`, `Kimi K3.1 Pro`, `Qwen 3.8`)
+
+- **DeepSeek V4.1 Flash-1017** *(MIT License · `763B` sparse MoE, multimodal text+image, `1M` context)* & **V4 Pro-0813** (`1.7T`, MIT): Permissive MIT licensing, strong deterministic JSON schema obedience, SQL/code diffs, and pennies-per-task batch economics in private VPCs.
+- **Kimi K3.1 Pro & Highspeed** *(Moonshot AI · Open weights Nov 6, 2026; `2.8T` total / `104B` active, `1M` context, `$2/$10` API)*: Engineered specifically for multi-hour tool-calling trajectories. Watch output token verbosity: pair with explicit `max_tokens` caps inside [verified agent loops](/blog/loop-engineering-production-guide-2026).
+- **Qwen 3.8 Family** *(`Qwen3.8-27B` dense vision-language under **Apache 2.0**, `17 GB` @ 4-bit; `Qwen3.8-Max` `2.4T-A95B` Gated DeltaNet; `Qwen3.8-Flash-Next` `125B/6B-active`)*: `Qwen3.8-27B` is the standout local workhorse for data visualization (`38/43` Plotly benchmark), document vision, and private on-desk coding with zero external data retention.
+
+## The 5-workload routing matrix
+
+| Production Workload | Primary Choice | Why It Wins | Margin & Governance Rule |
+|---|---|---|---|
+| **Multi-file coding loops & tool orchestration** | `Gemini 4 Neon` orchestrating `Hydrogen` or `DeepSeek V4.1` workers | Fast ~100 tok/s planning + cheap parallel subagent execution | Gate merges behind [deterministic worktree verifiers](/blog/loop-engineering-production-guide-2026) |
+| **45-min call video, slide deck & 100-page PDF synthesis** | `Gemini 4 Neon` or `Carbon` (`1M` multimodal ctx) | Native multimodal ingestion eliminates brittle chunking glue | Use cached context (`$0.15/1M`) for repeated corpus queries |
+| **High-volume CSV triage, classification & JSON extraction** | `DeepSeek V4.1 Flash` or `Hydrogen` / `Qwen 3.8-Flash` | Pennies per 1,000 runs with strict schema adherence | Validate against a deterministic JSON Schema before DB writes |
+| **Regulated contracts, medical, defense, or board docs** | Local `Qwen 3.8-27B` or `MiniMax M3.1 Flash` on [owned desk node](/blog/512gb-unified-memory-mini-pcs-local-llm-2026) | Zero third-party network egress or retention | Expose internally solely via [zero-port Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide) |
+| **Multi-hour autonomous research & competitive sweeps** | `Kimi K3.1 Pro` or `Neon` + scheduled pipeline | Long-horizon tool persistence across 50+ search/extract steps | Enforce a hard dollar circuit breaker per run |
+
+## The 80 / 15 / 5 cascade that protects gross margin
+
+As detailed in [Why AI Bills Spike Overnight](/blog/token-budgeting-for-startups), gross-margin compression happens when engineering teams point their priciest deliberate model at every cron job and webhook:
+
+- **80% of turns (Triage, classification, test scaffolding, JSON extraction):** Route to `Hydrogen`, `DeepSeek V4.1 Flash`, or self-hosted `Qwen 3.8-27B`.
+- **15% of turns (Orchestrated coding loops & multimodal synthesis):** Route to `Gemini 4 Neon` (medium/high thinking) or `Kimi K3.1 Pro` with aggressive prompt caching.
+- **5% of turns (Hardest architectural deadlocks & external executive prose):** Escalate to `Carbon` (or `Neon` `xhigh`) paired with your portable [`voice.md` context](/starter-kit) and a [Rung 2 human sign-off](/blog/the-hitl-standard).
+
+## Keep switching cost under 5 minutes
+
+Models will leapfrog again next quarter. Keep your stack decoupled:
+
+1. Store system instructions, domain constraints, and schemas in versioned repo files (`AGENTS.md`, `voice.md`, `icp.md`) instead of vendor UI sidebars.
+2. Centralize `ROUTER_MODEL`, `WORKER_MODEL`, and `ESCALATION_MODEL` in three environment variables behind a unified interface.
+3. Maintain a 25-case golden evaluation suite from your own production edge cases so every new release is judged on **pass rate per dollar** in ten minutes.
+
+Want a custom model-routing and unit-economics teardown for your engineering org? Test your workload in the [/sovereign-stack](/sovereign-stack) sizer or book a [90-Minute Architecture & Cost Audit](/work-with-me).
+
+---
+
+### Chapter 13: The Three-Tier Open-Weight Routing Recipe Book
 
 *Canonical web edition: https://agenticarchitect.ai/blog/mixing-and-matching-open-weight-models*
 
@@ -1452,7 +1616,7 @@ Pick the recipe that matches your workload shape. Wire up the router. Watch the 
 
 ---
 
-### Chapter 11: llama.cpp, vLLM, and Hosted Open-Weight Trade-Offs
+### Chapter 14: llama.cpp, MLX, vLLM, and Hosted Open-Weight Trade-Offs
 
 *Canonical web edition: https://agenticarchitect.ai/blog/three-ways-to-run-open-weight-models*
 
@@ -1582,7 +1746,7 @@ Pure local is a tax on optionality. Pure cloud is a tax on margin. Hybrid is wha
 
 ---
 
-### Chapter 12: The Cost-Quality Pareto Curve for Coding and Ops Agents
+### Chapter 15: The Cost-Quality Pareto Curve for Coding and Ops Agents
 
 *Canonical web edition: https://agenticarchitect.ai/blog/cost-quality-pareto-coding-agents*
 
@@ -1700,11 +1864,122 @@ The chart is the point. The middle of the chart is empty. Five points dominate e
 
 ---
 
-## Part V · Production Security, MCP Audits & Eval Harnesses
+## Part V · Loop Engineering, MCP Security & Deterministic Verifiers
 
-Preventing shell injection, tool rug-pulls, silent regressions, and context degradation in production.
+Isolated git worktrees, deterministic test/schema verifiers, token circuit breakers, and least-privilege MCP delegation.
 
-### Chapter 13: Auditing MCP Servers: Least Privilege and the Trusted Set
+### Chapter 16: Loop Engineering in Production: Worktrees, Deterministic Verifiers & Cost Ceilings
+
+*Canonical web edition: https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026*
+
+*Personal-capacity note: My day job is in applied AI at Google. Everything in this article is written independently in my personal capacity using strictly public model cards, open-weight releases, academic papers, and third-party benchmarks (such as Artificial Analysis). Views are my own.*
+
+Over the past eighteen months, engineering teams walked up four distinct rungs:
+
+1. **Prompt engineering (2023 to 2024):** Tuning phrasing inside a single chat turn.
+2. **Context engineering (2025):** Versioned project memory (`AGENTS.md`, `voice.md`, `icp.md`) and clean retrieval boundaries.
+3. **Harness engineering (early 2026):** Wrapping one agent run with tool schemas, retries, and structured state.
+4. **Loop engineering (late 2026):** Designing the full closed-loop feedback system across triggers, isolated sandboxes, independent verifiers, subagent routing, and hard cost ceilings so autonomous runs converge instead of compounding errors.
+
+An August 2026 empirical audit of **2,853 open-source repositories** (`arXiv:2608.21884`, Lulla et al.) exposed why so many agent rollouts stall after week two: plenty of teams committed instruction files, yet very few wired deterministic post-step verification or explicit stopping budgets. Without an external check, a faster model simply produces plausible regressions faster.
+
+Andrej Karpathy's formulation remains the cleanest physical law in software automation: **your delegation ceiling equals your verification reliability**. If you can verify an output deterministically in three seconds, you can safely let an agent iterate ten times in the background. If verification requires a tired human skimming 600 lines of prose or diff, autonomy collapses into rubber-stamping.
+
+## The 5 building blocks of a production agent loop
+
+Every reliable loop we ship or audit for Seed-to-Series B engineering and operations teams has five explicit parts:
+
+| Loop Component | Amateur Setup (Breaks at Scale) | Production Loop Standard |
+|---|---|---|
+| **1. Trigger** | Manual copy-paste into a chat sidebar | Webhook, CI failure event, scheduled cron, or scoped ticket label |
+| **2. Workspace Isolation** | Running directly against shared `main` or live prod records | Ephemeral `git worktree`, container, or per-task microVM |
+| **3. Tool & Context Surface** | 25 unvetted MCP tools dumped into one prompt | Scoped `AGENTS.md` + [audited least-privilege MCP set](/blog/mcp-server-audit-2026) |
+| **4. Independent Verifier** | Asking the same LLM *"Did you do a good job?"* | Deterministic `tsc` + `vitest`/`pytest` + JSON Schema + [calibrated binary rubric](/blog/eval-harness-catches-regressions) |
+| **5. Stopping & Cost Ceiling** | Open-ended retries until context window overflows | Max 3 repair iterations + hard dollar/token circuit breaker -> human escalation |
+
+Never let a generator grade its own homework inside the same context window. Even a cheap deterministic check (`exit code 0` on typecheck, unit tests, link validation, and schema compliance) beats an uncalibrated self-critique prompt every day of the week.
+
+## Nested loops: Inner, middle, and outer
+
+Borrowing from control systems (and echoed in Andrew Ng's late-2026 writing on agentic development), high-output teams separate loops by timescale:
+
+- **Inner loop (seconds to minutes):** Propose edit -> run typecheck and targeted unit tests inside an isolated `git worktree` -> inspect stderr -> patch until green or hit the 3-retry cap.
+- **Middle loop (hours / async PR queue):** Parallel background workers handle bounded chores (dependency upgrades, test coverage gaps, competitive signal pulls, changelog validation) and open draft Pull Requests with full verifier logs attached for a two-minute human review.
+- **Outer loop (weekly architecture hygiene):** Audit failure traces from the week's rejected PRs, add one rule to `AGENTS.md` or one new golden test case, and tighten model routing so the system stops repeating last week's mistake.
+
+## Late-November 2026 model economics inside multi-step loops
+
+Loop cost is **not** determined by per-million-token sticker price alone. Total cost per converged task equals `(tokens per turn x turns to pass verifier x cache hit ratio)`. Verbose models that spin for twelve turns cost more than sharper models that converge in three.
+
+Here is how current public frontier and open-weight options stack up for multi-step coding and operational loops as of **November 2026** (compiled from public vendor pricing and Artificial Analysis Coding Agent benchmarks):
+
+| Model Tier (Nov 2026 Public Specs) | License / Access | Public List Price (Input / Output per 1M) | Strength Inside a Closed Loop | Loop Failure Mode to Watch |
+|---|---|---|---|---|
+| **Gemini 4 Neon** *(Nov 18, 2026)* | Cloud API (`1M` ctx) | `$3.00` / `$15.00` (`$0.15` cached) | `#1` AA Coding Agent Index (`61`), ~100 tok/s, tunable `low/medium/high/xhigh` thinking, `$7.37` avg session cost; delegates parallel sub-tasks cleanly to **Hydrogen** (`$1.50/$7.50`) | Over-allocating `xhigh` thinking on trivial lint fixes wastes output tokens |
+| **Gemini 4 Carbon** *(Nov 10, 2026)* | Cloud API (`1M` ctx) | `$2/$10` intro -> `$4.00` / `$20.00` (Dec 1) | Deepest deliberate synthesis on ambiguous multi-file architecture (~55 tok/s) | `$16.50` avg coding session makes it overkill as a default inner-loop worker |
+| **Kimi K3.1 Pro** *(Nov 6 open weights)* | Open Weights (`2.8T` / `104B` active) & `$2/$10` API | `$2.00` / `$10.00` API (or self-hosted cluster) | Built specifically for multi-hour tool-use trajectories (`1M` context) | High output verbosity inflates per-task token count without strict `max_tokens` caps |
+| **DeepSeek V4.1 Flash-1017** | **MIT** Open Weights (`763B` sparse MoE, multimodal) | Pennies via API or private VPC | Exceptional cost-to-reasoning ratio for batch code diffs, SQL, and JSON extraction | Pair with strict schema/test verifiers on ambiguous UI specs |
+| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/512gb-unified-memory-mini-pcs-local-llm-2026) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
+
+The clear architectural pattern in November 2026 is **orchestrator-subagent routing**: run an orchestrator (`Gemini 4 Neon` at medium/high thinking, or your primary frontier planner) to decompose the spec and own final verification, while fanning routine file reads, test scaffolds, and classification turns out to cheaper subagents (`Hydrogen`, `DeepSeek V4.1 Flash`, or a local `Qwen 3.8-27B` endpoint over Tailscale).
+
+## A minimal circuit-breaker wrapper you can ship today
+
+Before letting any background loop run unattended in CI or n8n, enforce three hard invariants in code:
+
+```typescript
+export interface LoopBudget {
+  maxIterations: number      // e.g. 3 repair passes max
+  maxCostUsd: number         // e.g. $1.50 per ticket ceiling
+  timeoutMs: number          // e.g. 180_000 (3 minutes)
+}
+
+export async function runVerifiedLoop<T>(
+  propose: (attempt: number, lastVerifierFeedback: string) => Promise<{ output: T; costUsd: number }>,
+  verifyDeterministic: (output: T) => Promise<{ passed: boolean; diagnostics: string }>,
+  budget: LoopBudget,
+) {
+  let spentUsd = 0
+  let feedback = ''
+  const startedAt = Date.now()
+
+  for (let attempt = 1; attempt <= budget.maxIterations; attempt++) {
+    if (Date.now() - startedAt > budget.timeoutMs) {
+      return { status: 'escalate_human' as const, reason: 'timeout_exceeded', spentUsd, feedback }
+    }
+
+    const step = await propose(attempt, feedback)
+    spentUsd += step.costUsd
+
+    const check = await verifyDeterministic(step.output)
+    if (check.passed) {
+      return { status: 'converged' as const, output: step.output, attempt, spentUsd }
+    }
+
+    feedback = check.diagnostics
+    if (spentUsd >= budget.maxCostUsd) {
+      return { status: 'escalate_human' as const, reason: 'cost_ceiling_hit', spentUsd, feedback }
+    }
+  }
+
+  return { status: 'escalate_human' as const, reason: 'max_iterations_exhausted', spentUsd, feedback }
+}
+```
+
+Notice what happens when `maxIterations` or `maxCostUsd` trips: the loop does not silently commit broken code or spin up $90 of retry tokens overnight (see [Why AI Bills Spike Overnight](/blog/token-budgeting-for-startups)). It packages the exact deterministic diagnostics and escalates to a [Rung 2 human checkpoint](/blog/the-hitl-standard).
+
+## Checklist for CTOs and engineering leads this week
+
+1. **Pick one narrow task with an existing binary verifier:** Failing unit test triage, OpenAPI schema sync, broken-link cleanup, or SQL migration lint.
+2. **Isolate execution:** Run every agent attempt inside a disposable `git worktree` or container rather than mutating a shared checkout.
+3. **Separate planner cost from worker cost:** Use [three-tier routing](/blog/mixing-and-matching-open-weight-models) so 80% of inner-loop checks run on Flash-class or local open-weight models.
+4. **Log convergence rate, not just demo wins:** Track `first-pass pass rate`, `3-try convergence rate`, and `cost per merged PR`.
+
+Want a second set of eyes on your team's verification harness and inference spend? Explore the full 18-chapter architecture map on [/sovereign-stack](/sovereign-stack) or book a [90-Minute Architecture & Cost Audit](/work-with-me).
+
+---
+
+### Chapter 17: Auditing MCP Servers: Least Privilege and the Trusted Set
 
 *Canonical web edition: https://agenticarchitect.ai/blog/mcp-server-audit-2026*
 
@@ -1840,158 +2115,7 @@ The Model Context Protocol is the right shape. The implementations, in aggregate
 
 ---
 
-### Chapter 14: Scoped OAuth and 4-Legged Agent Delegation
-
-*Canonical web edition: https://agenticarchitect.ai/blog/the-4-legged-identity*
-
-OAuth's three-legged flow (user, app, identity provider) was correct for a decade. Agentic systems break it because they introduce a fourth actor: the agent acting on the user's behalf. The downstream API sees the agent's credential, not the user's identity. [RFC 8693 (OAuth 2.0 Token Exchange)](https://datatracker.ietf.org/doc/html/rfc8693) is the standard fix. Most production agentic deployments in 2026 are not implementing it. This post is what breaks, what the right answer looks like, and why the OSS ecosystem is finally catching up.
-
-## The triangle that worked
-
-Classical OAuth, the version that has shipped for ten years:
-
-```
-   ┌──────┐         ┌─────┐         ┌─────┐
-   │ User │ ─auth─→ │ App │ ─call─→ │ API │
-   └──────┘         └─────┘         └─────┘
-                       │
-                       ↓
-                   ┌──────┐
-                   │ IdP  │
-                   └──────┘
-```
-
-The user authorizes the app. The IdP issues a token representing the user. The app calls the API with that token. The API sees who is acting (the user) and what app is acting on their behalf. Audit trails are clean. Authorization is straightforward.
-
-Three actors. Three legs. Solved problem.
-
-## The square that breaks it
-
-Add an agent and an MCP server to the triangle and you get a square:
-
-```
-   ┌──────┐    ┌───────┐    ┌─────┐    ┌─────┐
-   │ User │ → │ Agent │ → │ MCP │ → │ API │
-   └──────┘    └───────┘    └─────┘    └─────┘
-```
-
-Suddenly the API has no idea who triggered the request. The MCP server is calling on behalf of an agent calling on behalf of a user. The auth header at the API only sees the MCP server's credentials. **Identity is lost mid-chain.**
-
-Matthew Xu from Agentic Fabriq presented this exact framing at AI Dev SF on April 29. The problems multiply:
-
-- **Over-permissioning.** The MCP server has to hold credentials broad enough for any agent's user. So everyone's permissions effectively become the union of everyone's permissions.
-- **Data leakage.** A bug in one user's session can leak data because the credential is shared.
-- **No audit trail.** "Who did this?" has no answer at the API. The MCP did. Acting on behalf of an agent. Acting on behalf of a user. Three layers removed.
-- **Federation explosion.** Multiple IdPs, agent-to-agent calls, multiple MCP servers. The chain becomes a graph.
-
-## Patterns that are shipping (and most are bad)
-
-Four patterns in production. Three are compromises. One is correct.
-
-**1. Non-delegating client credentials.** App scraps user intent, MCP uses its own credentials. Works. User identity hidden from downstream APIs. Most common pattern in 2026 production. Wrong.
-
-**2. Pre-injected tokens.** Agent fetches every downstream token upfront. Requires knowing all downstream APIs in advance. Impossible for agents that decide tools at runtime. Used when the target IdP does not support token exchange.
-
-**3. Out-of-band login.** User authorizes every tool at every step. Extra browser tabs, session coordination, UX disaster. Used in some interactive flows. Not scalable.
-
-**4. Token exchange (RFC 8693).** The conceptually correct answer. Exchange the user's inbound token for an upstream-scoped token at every hop. Downstream API sees user identity preserved across the chain.
-
-The right answer is universally understood. The implementation gap is what is keeping most teams on pattern 1.
-
-## How RFC 8693 actually works
-
-[RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) defines token exchange. Two key claims:
-
-**Subject token.** The mandatory input token representing the identity of the party on whose behalf the request is being made. The user's token, in the agentic case.
-
-**Actor token.** An optional input token representing the identity of the acting party. The agent's token, or the MCP server's token. Used to embed the "who is doing this" alongside the "for whom."
-
-The exchange flow:
-
-```
-Inbound request:
-  {user_token: <bearer>, request: <action>}
-       ↓
-Token exchange call to IdP:
-  POST /token
-  grant_type=urn:ietf:params:oauth:grant-type:token-exchange
-  subject_token=<user_token>          ← who this is for
-  actor_token=<mcp_credential>        ← who is acting
-  audience=<downstream_api>           ← scope to this API
-       ↓
-Response:
-  Audience-scoped token preserving user identity + actor "act" claim
-       ↓
-Downstream call to API:
-  Authorization: Bearer <new_token>
-  → API sees: user X, acting via MCP Y
-```
-
-The downstream API now has the full picture. Audit logs are correct. Authorization decisions can be conditional on both user and acting agent.
-
-## IdP support, May 2026
-
-The painful part. Token exchange is a 2020 RFC and adoption is uneven.
-
-| IdP                  | RFC 8693 support       | Notes                                  |
-|----------------------|------------------------|----------------------------------------|
-| Keycloak             | First-class            | Documented, supported, works.          |
-| Authentik            | Yes                    | Supported in 2026.x releases.          |
-| ZITADEL              | First-class            | [Documented at zitadel.com](https://zitadel.com/docs/guides/integrate/token-exchange). |
-| IdentityServer       | Via TokenExchange package | [Open-source plugin](https://github.com/RockSolidKnowledge/TokenExchange). |
-| Okta                 | Via custom claims      | Workaround, not native.                |
-| Microsoft Entra      | Limited / proprietary  | On-Behalf-Of flow exists; token exchange does not.|
-| Auth0                | Custom rules required  | Possible, not native.                  |
-| AWS Cognito          | No                     | Not supported.                         |
-
-The OSS IdPs lead. The big-vendor IdPs lag. If you are starting fresh in 2026 and care about agentic identity, Keycloak or ZITADEL is the right call.
-
-## The MCP angle
-
-The MCP spec authors are aware of this problem. [GitHub issue 214](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/214) tracks on-behalf-of token exchange for agent-to-agent communication. [IBM's MCP Context Forge](https://github.com/IBM/mcp-context-forge/issues/3385) is shipping the user-delegation pattern using RFC 8693. [PrefectHQ's FastMCP](https://github.com/PrefectHQ/fastmcp/issues/1985) is being asked to add native support.
-
-The pattern that is converging:
-- MCP host issues user-scoped tokens to the MCP client
-- MCP server receives and exchanges them for downstream-scoped tokens
-- Each downstream API call carries the chain
-- A broker layer handles the exchange, caches tokens, integrates with secrets management
-
-This is what shipping looks like in production. It is a quarter of work. It is also the difference between an agent that can ship to a regulated customer and one that cannot.
-
-## When the simple version is OK
-
-Honest list of when not to bother.
-
-**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/personal-ai-agent-weekend).
-
-**Single-user dev tools.** A coding agent that only ever runs as you, on your machine, against your own GitHub PAT, does not need token exchange. Your token is fine.
-
-**Internal-only tooling.** A team-scoped agent that only operates inside your org with internal-IdP-issued tokens may not need the full exchange flow if your IdP can issue narrowly-scoped tokens directly.
-
-**Greenfield prototypes.** Get the agent working first. Wire up identity correctly when you start handling real user data.
-
-## When you have to ship the real thing
-
-The categories that force RFC 8693 implementation:
-
-- **Multi-tenant SaaS where customers' agents call each other's data.** No way to do this with shared credentials.
-- **Regulated industries (healthcare, finance, legal).** Audit requirements force per-user identity preservation.
-- **Cross-organization agentic workflows.** When agent A from company X calls agent B from company Y, federation is required.
-- **EU AI Act compliance.** [The August 2 2026 deadline](/blog/eu-ai-act-deadline) requires immutable audit lineage. Shared credentials cannot produce that.
-
-If any of these describe your product, plan for token exchange. Pick an IdP that supports it natively. Budget the engineering time.
-
-## What this connects to
-
-This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/below-the-waterline), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/eu-ai-act-deadline) and the shadow-testing pattern in [Shadow Testing](/blog/shadow-testing).
-
-## The takeaway
-
-OAuth was designed for three actors. Agentic systems have four. RFC 8693 token exchange is the right answer. Most teams are still on shared credentials because the OSS IdP support gap was real until recently. It is closing. If you are designing identity for an agentic system in 2026 and you skip the exchange pattern, you are designing a system that cannot ship to regulated customers and cannot pass an EU audit. Do it once correctly. Reuse it everywhere.
-
----
-
-### Chapter 15: The 6-Layer Eval Harness That Catches Silent Regressions
+### Chapter 18: The 6-Layer Eval Harness & Scoped OAuth Delegation
 
 *Canonical web edition: https://agenticarchitect.ai/blog/eval-harness-catches-regressions*
 

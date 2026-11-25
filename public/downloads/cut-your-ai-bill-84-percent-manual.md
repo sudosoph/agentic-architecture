@@ -1,10 +1,10 @@
-# Field Manual 01: Cut Your AI & SaaS Bill by 84%
+# Field Manual 01: Cut Your AI & SaaS Bill by 84% (Late-2026 Edition)
 
 By Sophia Stein · Agentic Architect (https://agenticarchitect.ai/sovereign-stack)
 
-## 1. The $9/Month OSS Creator & Consultant VPS Stack
+## 1. The $9/Month OSS Business & Agent VPS Stack
 
-Instead of paying $100 to $150/month across separate newsletter, scheduling, analytics, and uptime SaaS subscriptions, a single 4GB Linux VPS (such as a Hetzner CX22) comfortably runs five open-source services behind Caddy 2 automatic TLS:
+Instead of paying $125+/month across fragmented newsletter, scheduling, analytics, and uptime SaaS subscriptions, a single 4GB Linux VPS (Hetzner CX22) runs five open-source services behind Caddy 2 automatic TLS:
 
 | Layer | Open-Source Tool | Approximate RAM | SaaS Replaced |
 |---|---|---|---|
@@ -15,17 +15,14 @@ Instead of paying $100 to $150/month across separate newsletter, scheduling, ana
 | Uptime & Alerts | Uptime Kuma | ~80 MB | $9 to $20/mo monitors |
 | Shared Database & Backups | Postgres 16 + daily Restic to Storage Box | ~400 MB | Managed DB markups |
 
-Total RAM footprint sits near 1.5 GB out of 4 GB, leaving ~2.5 GB of headroom.
+## 2. The November 2026 Three-Tier Model Routing Cascade (70% to 84% API Savings)
 
-## 2. The Three-Tier Model Routing Pattern (84% to 97% API Savings)
+Never route 100% of background classification, test scaffolding, or extraction turns to your priciest deliberate model:
 
-Never send 100% of routine classification, extraction, or first-pass drafting to your most expensive frontier API:
+1. **Tier 0 · Fast Router / Subagent (<100ms, ~80% of volume):** Route triage, JSON extraction, and file scans to `Gemini 4 Hydrogen` (`$1.50/$7.50`), `DeepSeek V4.1 Flash-1017` (MIT), or local `Qwen 3.8-27B` (Apache 2.0, `17 GB` @ 4-bit).
+2. **Tier 1 · Loop Orchestrator (~15% of volume):** Use `Gemini 4 Neon` (`$3/$15`, `$0.15` cached, ~100 tok/s) or `Kimi K3.1 Pro` (`$2/$10`, capped max output tokens) for multi-step coding and multimodal synthesis.
+3. **Tier 2 · Deliberate Escalation (~5% of volume):** Reserve `Gemini 4 Carbon` or `Neon` `xhigh` strictly for ambiguous cross-repo deadlocks and final executive prose paired with `voice.md`.
 
-1. **Tier 0 · Router & Classifier (<50ms):** A compact 1.7B to 4B classifier scores complexity, intent, and PII sensitivity for fractions of a cent.
-2. **Tier 1 · Open-Weight Workhorse (80% to 90% of volume):** Mid-sized 27B to 35B open-weight models handle structured JSON extraction, routine code edits, and draft generation via an OpenAI-compatible `/v1/chat/completions` endpoint.
-3. **Tier 2 · Frontier Escalation (5% to 15% of volume):** Reserved strictly for ambiguous multi-step synthesis, high-stakes customer disputes, or second-attempt schema recovery.
-
-## 3. When NOT to Self-Host or Route
-
-- Under 1M tokens/day or when your team has zero appetite for Linux patching: stay on free-tier cloud connectors first and self-host only once monthly bills cross $75 to $100.
-- Full benchmarks and Docker configs: https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner and https://agenticarchitect.ai/blog/mixing-and-matching-open-weight-models
+Full benchmarks:
+- https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner
+- https://agenticarchitect.ai/blog/google-latest-models-vs-deepseek-4-1-business-guide

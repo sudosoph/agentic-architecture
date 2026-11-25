@@ -33,53 +33,103 @@ type RadarItem = {
 
 const HN_REDDIT_LAUNCH_PACKS = [
   {
-    id: 'hn-hetzner-oss',
-    target: 'Hacker News (Tue/Thu 7:00 AM ET) + r/SelfHosted',
-    url: 'https://agenticarchitect.ai/blog/self-hosting-ai-stack-hetzner',
+    id: 'hn-loop-eng-2026',
+    target: 'Hacker News (Tue/Thu 7:00 AM ET) + r/ExperiencedDevs',
+    url: 'https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026',
     hnTitle:
-      'Replacing $125/mo of creator SaaS with Caddy, Listmonk, Cal.com, and Umami on a 4GB VPS',
+      'Loop Engineering in Production: Isolated git worktrees, deterministic verifiers, and cost circuit breakers',
     hnFirstComment:
-      'Author here. I wanted to see if a single 4GB Linux box (Hetzner CX22) could comfortably run newsletter delivery (Listmonk + Resend SMTP), scheduling (Cal.com Docker), analytics (Umami), and status checks (Uptime Kuma) on one shared Postgres 16 instance with daily Restic backups. Total idle RAM sits around 1.5 GB; Plane and self-hosted PostHog did not fit in 4 GB, so I documented exact memory footprints, Caddyfile TLS snippets, and where self-hosting is not worth the trouble.',
+      'Author here. After auditing why so many coding and ops agent loops stall after week two (echoing the arXiv:2608.21884 survey of 2,853 repos), I wrote down the five invariants we enforce in production: isolated worktrees, external deterministic verifiers instead of self-critique prompts, nested inner/middle/outer loops, orchestrator-subagent routing (Neon/Hydrogen vs Kimi K3.1 Pro / DeepSeek V4.1 / local Qwen 3.8-27B), and a 35-line TypeScript dollar circuit breaker.',
   },
   {
-    id: 'hn-mcp-audit',
-    target: 'Hacker News + r/LocalLLaMA + r/programming',
-    url: 'https://agenticarchitect.ai/blog/mcp-server-audit-2026',
-    hnTitle:
-      'Auditing MCP servers in 2026: archived repos, shell injection, and the ~30 worth trusting',
-    hnFirstComment:
-      'Author here. While reviewing MCP configs across real developer setups, I kept running into links pointing at the 14 unmaintained servers-archived packages and wrappers piping unvalidated tool args into shell exec. Put together a plain engineering audit of the 4-legged OAuth delegation gap (RFC 9728/8414/7591/8707), five concrete failure modes, and the subset of company-backed or least-privilege servers that survive scrutiny.',
-  },
-  {
-    id: 'hn-96gb-tailscale',
+    id: 'hn-512gb-nodes',
     target: 'r/LocalLLaMA + Hacker News',
-    url: 'https://agenticarchitect.ai/blog/96gb-ram-thesis',
+    url: 'https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
     hnTitle:
-      'Why 96GB of unified memory and a zero-port Tailscale mesh changed what I run locally',
+      '512GB desk nodes in late 2026: M5 Ultra Mac Studio (1.2 TB/s) vs. DGX Spark (273 GB/s) vs. Ryzen AI Halo',
     hnFirstComment:
-      'Sharing notes and memory math from running 27B dense and 35B MoE open-weight workhorses locally on modular hardware (Framework 16 / high-RAM Linux node) exposed solely over Tailscale Serve with zero router port-forwarding, plus where cloud frontier APIs still win.',
+      'Put together a vendor-neutral bandwidth and amortization breakdown across M5 Ultra (512GB @ 1.2 TB/s), NVIDIA DGX Spark (128GB @ 273 GB/s), and 128GB Ryzen AI Max+ mini-PCs (HP Z2 Mini G1a, EVO-X2). Main takeaway: 512GB is a trap for dense 405B models (~4 tok/s), where it actually shines is keeping 300GB+ sparse MoE weights (MiniMax M3.1 Flash 501B/23B-active, Nemotron 3 Ultra) + huge KV caches pinned over Tailscale.',
+  },
+  {
+    id: 'hn-openinstinct-audit',
+    target: 'Hacker News + r/SelfHosted + r/netsec',
+    url: 'https://agenticarchitect.ai/blog/personal-agents-tab-instinct-openinstinct-review',
+    hnTitle:
+      'Auditing texting and browser agents: Instinct and Tab vs. self-hosted MIT OpenInstinct',
+    hnFirstComment:
+      'Compared the OAuth scope, payment vault, and default training policies across consumer texting/browser agents (Instinct, Tab, Dots, Opera Neon) against the MIT-licensed OpenInstinct + OpenClaw stack. Keeping encrypted OAuth credentials and cookies completely outside the LLM context window inside per-user microVMs solves the core Gmail/Drive exfiltration risk.',
   },
 ]
 
 export function StudioInbox({
   initialReplies,
   initialRadar,
+  requireAuth = false,
 }: {
   initialReplies: ReplyItem[]
   initialRadar: RadarItem[]
+  requireAuth?: boolean
 }) {
+  const [unlocked, setUnlocked] = useState(!requireAuth)
+  const [studioToken, setStudioToken] = useState('')
+  const [githubPat, setGithubPat] = useState('')
+  const [authError, setAuthError] = useState<string | null>(null)
+  const [verifying, setVerifying] = useState(false)
+
   const [replies, setReplies] = useState<ReplyItem[]>(initialReplies)
   const [radar, setRadar] = useState<RadarItem[]>(initialRadar)
   const [refreshing, setRefreshing] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+
+  // Browser MDX Publisher state (zero local npm)
+  const [postTitle, setPostTitle] = useState('')
+  const [postDesc, setPostDesc] = useState('')
+  const [postTrack, setPostTrack] = useState<'engineering' | 'models-rigs' | 'small-business'>(
+    'engineering',
+  )
+  const [postBody, setPostBody] = useState('')
+  const [publishMode, setPublishMode] = useState<'pr' | 'main'>('pr')
+  const [publishing, setPublishing] = useState(false)
+  const [publishResult, setPublishResult] = useState<string | null>(null)
+  const [dispatchStatus, setDispatchStatus] = useState<string | null>(null)
+
+  function buildAuthHeaders(): Record<string, string> {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (studioToken.trim()) headers['x-studio-token'] = studioToken.trim()
+    if (githubPat.trim()) headers['x-github-pat'] = githubPat.trim()
+    return headers
+  }
+
+  async function handleUnlock(e: React.FormEvent) {
+    e.preventDefault()
+    setVerifying(true)
+    setAuthError(null)
+    try {
+      const res = await fetch('/api/studio', {
+        method: 'POST',
+        headers: buildAuthHeaders(),
+        body: JSON.stringify({ action: 'verify-auth' }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setAuthError(data.error || 'Could not verify credentials.')
+        return
+      }
+      setUnlocked(true)
+    } catch {
+      setAuthError('Network error verifying credentials.')
+    } finally {
+      setVerifying(false)
+    }
+  }
 
   async function handleRefreshRadar() {
     setRefreshing(true)
     try {
       const res = await fetch('/api/studio', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'refresh-radar' }),
+        headers: buildAuthHeaders(),
+        body: JSON.stringify({ action: 'refresh-radar', commitToGitHub: Boolean(githubPat.trim()) }),
       })
       const data = await res.json()
       if (data.radar?.items) setRadar(data.radar.items)
@@ -97,7 +147,7 @@ export function StudioInbox({
     }
     const res = await fetch('/api/studio', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: buildAuthHeaders(),
       body: JSON.stringify({
         action: 'update-reply',
         id: item.id,
@@ -107,6 +157,71 @@ export function StudioInbox({
     })
     const data = await res.json()
     if (data.replies) setReplies(data.replies)
+  }
+
+  async function handlePublishPost(e: React.FormEvent) {
+    e.preventDefault()
+    setPublishing(true)
+    setPublishResult(null)
+    try {
+      const res = await fetch('/api/studio', {
+        method: 'POST',
+        headers: buildAuthHeaders(),
+        body: JSON.stringify({
+          action: 'publish-mdx',
+          title: postTitle,
+          description: postDesc,
+          track: postTrack,
+          content: postBody,
+          publishMode,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setPublishResult(`Error: ${data.error || 'Failed to publish'}`)
+        return
+      }
+      if (data.prUrl) {
+        setPublishResult(`Opened 1-Click GitHub PR: ${data.prUrl}`)
+      } else if (data.liveUrl) {
+        setPublishResult(`Committed straight to main! Deploying live: ${data.liveUrl}`)
+      } else if (data.savedLocal) {
+        setPublishResult(`Saved ${data.savedLocal} locally.`)
+      }
+      setPostTitle('')
+      setPostDesc('')
+      setPostBody('')
+    } finally {
+      setPublishing(false)
+    }
+  }
+
+  async function handleTriggerCloudRadar(topicTitle?: string) {
+    setDispatchStatus('Triggering GitHub Actions workflow...')
+    try {
+      const res = await fetch('/api/studio', {
+        method: 'POST',
+        headers: buildAuthHeaders(),
+        body: JSON.stringify({ action: 'trigger-weekly-workflow', topicTitle }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setDispatchStatus(data.error || 'Open GitHub Actions tab to click Run Workflow.')
+        return
+      }
+      setDispatchStatus(`Triggered cloud workflow! View PR/run at ${data.actionsUrl}`)
+    } catch {
+      setDispatchStatus('Could not reach GitHub API.')
+    }
+  }
+
+  function prefillComposerFromRadar(item: RadarItem) {
+    setPostTitle(item.seoBlogTitle)
+    setPostDesc(item.geoCitationAngle)
+    setPostBody(
+      `## Context & What We Tested\n\nWrite your measured notes on **${item.seoBlogTitle}** here.\n\n| Dimension | Measured Result | Notes |\n|---|---|---|\n| Setup Time | 15 mins | Plain markdown + scoped config |\n| Monthly Run-Rate | $0 to $20/mo | Compared at 1,000 runs |\n| Security / Data Boundary | Scoped | Zero raw credentials in prompt |\n| Verdict | Production-ready | Gate behind deterministic verifier |\n`,
+    )
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function updateDraftText(id: string, value: string) {
@@ -123,8 +238,240 @@ export function StudioInbox({
     }
   }
 
+  if (!unlocked) {
+    return (
+      <Card className="max-w-xl p-6 md:p-8 space-y-5 bg-surface">
+        <div className="space-y-1.5">
+          <Badge variant="online">Zero-NPM Browser Access</Badge>
+          <h2 className="text-xl font-bold text-fg pt-1">Unlock Cloud Operator Studio</h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Sign in from any laptop or phone using either a Fine-Grained GitHub Personal Access
+            Token scoped to <code className="font-mono text-fg">sudosoph/agentic-architecture</code>{' '}
+            (Contents + Pull Requests + Actions) or your <code className="font-mono text-fg">STUDIO_ACCESS_TOKEN</code>.
+          </p>
+        </div>
+
+        <form onSubmit={handleUnlock} className="space-y-4">
+          <div className="space-y-1">
+            <label className="font-mono text-xs font-semibold text-fg block">
+              GitHub Fine-Grained Token (Recommended: enables 1-click browser commits &amp; PRs)
+            </label>
+            <input
+              type="password"
+              value={githubPat}
+              onChange={e => setGithubPat(e.target.value)}
+              placeholder="github_pat_..."
+              className="w-full rounded-lg border border-border bg-white px-3.5 py-2.5 text-sm text-fg focus:border-accent focus:outline-none"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="font-mono text-xs font-semibold text-muted block">
+              Or Cloudflare Studio Passcode (STUDIO_ACCESS_TOKEN, optional)
+            </label>
+            <input
+              type="password"
+              value={studioToken}
+              onChange={e => setStudioToken(e.target.value)}
+              placeholder="Optional passcode..."
+              className="w-full rounded-lg border border-border bg-white px-3.5 py-2.5 text-sm text-fg focus:border-accent focus:outline-none"
+            />
+          </div>
+
+          {authError && <p className="text-xs font-semibold text-red-600">{authError}</p>}
+
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              type="submit"
+              disabled={verifying}
+              className="rounded-lg bg-accent px-4 py-2.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+            >
+              {verifying ? 'Verifying Repo Access...' : 'Unlock Cloud Studio →'}
+            </button>
+            <a
+              href="https://github.com/sudosoph/agentic-architecture/pulls"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-accent hover:underline"
+            >
+              Open GitHub PR Queue Directly ↗
+            </a>
+          </div>
+        </form>
+      </Card>
+    )
+  }
+
   return (
     <div className="space-y-12">
+      {/* Quick Cloud Links Bar */}
+      <Card className="p-4 bg-surface flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold">
+          <a
+            href="https://github.com/sudosoph/agentic-architecture/pulls"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            1-Click Draft PRs on GitHub ↗
+          </a>
+          <a
+            href="https://github.com/sudosoph/agentic-architecture/actions/workflows/weekly-radar.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Scheduled Weekly Radar Action ↗
+          </a>
+          <a href="/keystatic" className="text-accent hover:underline">
+            Keystatic Visual Editor (/keystatic) →
+          </a>
+          <a
+            href="https://agenticarchitectai.substack.com/publish/posts"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Substack Queue ↗
+          </a>
+        </div>
+        <button
+          type="button"
+          onClick={() => handleTriggerCloudRadar()}
+          className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-fg hover:border-accent cursor-pointer"
+        >
+          Run Cloud Weekly Radar PR Now ↻
+        </button>
+      </Card>
+
+      {dispatchStatus && (
+        <p className="text-xs font-mono text-online bg-surface border border-border rounded-lg p-3">
+          {dispatchStatus}
+        </p>
+      )}
+
+      {/* 0. Browser MDX Post & PR Publisher (Zero NPM) */}
+      <section className="space-y-4">
+        <div>
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            0. Zero-NPM Browser CMS
+          </p>
+          <h2 className="text-xl font-bold text-fg">
+            Write &amp; Publish Playbooks Straight From Your Browser
+          </h2>
+          <p className="text-xs text-muted mt-0.5">
+            Opens a 1-click-mergeable GitHub Pull Request (or commits straight to main),
+            automatically building manifests, recompiling The Sovereign Stack, deploying to
+            Cloudflare Workers, and pinging IndexNow.
+          </p>
+        </div>
+
+        <Card className="p-6">
+          <form onSubmit={handlePublishPost} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-2 space-y-1">
+                <label className="font-mono text-xs font-semibold text-fg block">
+                  Article Title
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={postTitle}
+                  onChange={e => setPostTitle(e.target.value)}
+                  placeholder="e.g., Benchmarking Qwen 3.8-27B vs. Neon on 50 Real PR Reviews"
+                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-fg focus:border-accent focus:outline-none"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="font-mono text-xs font-semibold text-fg block">Track</label>
+                <select
+                  value={postTrack}
+                  onChange={e =>
+                    setPostTrack(
+                      e.target.value as 'engineering' | 'models-rigs' | 'small-business',
+                    )
+                  }
+                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-fg focus:border-accent focus:outline-none"
+                >
+                  <option value="engineering">Engineering Deep Dives</option>
+                  <option value="models-rigs">Models, Tailscale &amp; Rigs</option>
+                  <option value="small-business">Small Business &amp; Workflows</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-mono text-xs font-semibold text-fg block">
+                1-Sentence SEO / GEO Description
+              </label>
+              <input
+                type="text"
+                required
+                value={postDesc}
+                onChange={e => setPostDesc(e.target.value)}
+                placeholder="Concise summary with measured benchmarks and unit economics..."
+                className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-fg focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-mono text-xs font-semibold text-fg block">
+                Markdown / MDX Body
+              </label>
+              <textarea
+                rows={7}
+                required
+                value={postBody}
+                onChange={e => setPostBody(e.target.value)}
+                placeholder="Write plain Markdown with tables, code blocks, and links..."
+                className="w-full rounded-lg border border-border bg-white p-3 font-mono text-xs text-fg focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-4 text-xs">
+                <label className="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="publishMode"
+                    checked={publishMode === 'pr'}
+                    onChange={() => setPublishMode('pr')}
+                  />
+                  <span>Open 1-Click GitHub PR (Review First)</span>
+                </label>
+                <label className="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="publishMode"
+                    checked={publishMode === 'main'}
+                    onChange={() => setPublishMode('main')}
+                  />
+                  <span>Publish Straight to Live Site (main)</span>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={publishing}
+                className="rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+              >
+                {publishing
+                  ? 'Committing to GitHub...'
+                  : publishMode === 'pr'
+                    ? 'Create 1-Click Draft PR →'
+                    : 'Publish Live Now →'}
+              </button>
+            </div>
+
+            {publishResult && (
+              <p className="text-xs font-mono text-online bg-surface border border-border rounded-lg p-3">
+                {publishResult}
+              </p>
+            )}
+          </form>
+        </Card>
+      </section>
+
       {/* 1. Comment & Inbound Approval Queue */}
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-3">
@@ -158,9 +505,7 @@ export function StudioInbox({
               </div>
 
               <div className="rounded-lg bg-surface border border-border p-3.5 text-sm text-fg">
-                <p className="font-mono text-[11px] text-muted mb-1">
-                  On: {item.postTitle}
-                </p>
+                <p className="font-mono text-[11px] text-muted mb-1">On: {item.postTitle}</p>
                 &ldquo;{item.commentBody}&rdquo;
               </div>
 
@@ -206,7 +551,7 @@ export function StudioInbox({
               2. Anti-Cannibalization Content Engine
             </p>
             <h2 className="text-xl font-bold text-fg">
-              Weekly Trend, Tool Review &amp; SEO/GEO Briefs
+              Weekly Trend, Hardware &amp; Loop Engineering Briefs
             </h2>
           </div>
           <button
@@ -252,7 +597,7 @@ export function StudioInbox({
 
               <div className="rounded-lg border border-border bg-white p-3.5 space-y-1.5">
                 <p className="font-mono text-[11px] font-semibold text-muted uppercase">
-                  3. Crisp Human LinkedIn Post Draft
+                  3. Plain-Spoken LinkedIn Post Draft
                 </p>
                 <p className="text-xs text-fg whitespace-pre-line leading-relaxed">
                   {item.linkedinHook}
@@ -260,6 +605,13 @@ export function StudioInbox({
               </div>
 
               <div className="flex flex-wrap gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => prefillComposerFromRadar(item)}
+                  className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+                >
+                  Load Into Browser Editor ↑
+                </button>
                 <button
                   type="button"
                   onClick={() => copyText(`li-${item.id}`, item.linkedinHook)}
@@ -276,15 +628,6 @@ export function StudioInbox({
                     ? 'Copied Canonical Header!'
                     : 'Copy Medium/Dev.to Canonical Header'}
                 </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    copyText(`cmd-${item.id}`, `npm run new:pack -- "${item.seoBlogTitle}"`)
-                  }
-                  className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
-                >
-                  {copiedId === `cmd-${item.id}` ? 'Copied Command!' : 'Copy 1-Command Pack Generator'}
-                </button>
               </div>
             </Card>
           ))}
@@ -296,13 +639,13 @@ export function StudioInbox({
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-              3. OSS, Hardware &amp; Show HN Distribution
+              3. OSS, 512GB Hardware &amp; Loop Engineering Distribution
             </p>
             <h2 className="text-xl font-bold text-fg">
               Ready-to-Post Hacker News &amp; r/LocalLLaMA Launch Packs
             </h2>
           </div>
-          <Badge variant="rig">Feeds /sovereign-stack Book &amp; Freebies</Badge>
+          <Badge variant="rig">Feeds /sovereign-stack Book &amp; Inbound Audits</Badge>
         </div>
 
         <div className="grid grid-cols-1 gap-4">

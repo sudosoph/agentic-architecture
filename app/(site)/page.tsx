@@ -73,31 +73,31 @@ const HOME_ENTITY_GRAPH_LD = {
 
 const PATH_CARDS = [
   {
-    eyebrow: 'For Founders & Lean Teams',
-    title: 'Small Business Setups & Cohort',
-    body: 'Install your Brand Brain and 6 core business AI workflows without hiring or writing code. Start with the free 60-minute live Masterclass.',
-    cta: 'Explore Programs & Kits',
-    href: '/courses',
-    badge: 'Free Kit + Live Class',
-    badgeColor: 'green' as const,
+    eyebrow: 'For CTOs, Technical Founders & VPs',
+    title: 'Architecture Audits & Cost Governance',
+    body: '90-minute teardown of your agent loop reliability, three-tier model routing, MCP permissions, and API/SaaS unit economics.',
+    cta: 'Book Audit or Advisory',
+    href: '/work-with-me',
+    badge: 'High-ROI Teardown',
+    badgeColor: 'amber' as const,
   },
   {
-    eyebrow: 'For Corporate & Universities',
-    title: 'Workshops, Speaking & Teaching',
-    body: 'Hands-on AI enablement intensives for executive and non-technical teams, conference keynotes, and university guest lectures.',
-    cta: 'View Speaking & Syllabi',
-    href: '/teaching',
-    badge: '300+ Trained Live',
+    eyebrow: 'For AI Engineers & Systems Builders',
+    title: 'The Sovereign Stack & Hardware Sizer',
+    body: 'Vendor-neutral benchmarks on 512GB unified-memory nodes, sparse MoE routing, Tailscale meshes, and deterministic loop verifiers.',
+    cta: 'Open Sizer & 18-Ch. Book',
+    href: '/sovereign-stack',
+    badge: 'Free Book + 3 Manuals',
     badgeColor: 'blue' as const,
   },
   {
-    eyebrow: 'For Leaders & Builders',
-    title: '1:1 Audits & Private AI Stack',
-    body: 'Book a 90-minute workflow and cost teardown, or explore reference blueprints for private AI infrastructure you control.',
-    cta: 'Work With Sophia',
-    href: '/work-with-me',
-    badge: 'Advisory & Audits',
-    badgeColor: 'amber' as const,
+    eyebrow: 'For Operating Teams & Classrooms',
+    title: 'Live Enablement Labs & Cohorts',
+    body: 'Install portable context files (voice.md, icp.md) and human-gated workflows across 10 to 250-person teams without fragile glue.',
+    cta: 'View Labs & Masterclass',
+    href: '/courses',
+    badge: '300+ Trained Live',
+    badgeColor: 'green' as const,
   },
 ]
 
@@ -137,14 +137,14 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fg leading-[1.12]">
-              Hook up AI workflows, build your brand, and{' '}
-              <span className="text-accent">own your stack.</span>
+              Reliable agent loops, sharp unit economics, and{' '}
+              <span className="text-accent">infrastructure you own.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
-              Agentic Architect helps business owners, leadership teams, and builders ship
-              practical AI systems, live workshops, and private infrastructure with measurable ROI
-              instead of hype.
+              Agentic Architect is Sophia Stein’s field guide and advisory practice for Seed-to-Series B
+              founders, engineering leaders, and builders shipping verified AI systems without burning
+              gross margin.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">

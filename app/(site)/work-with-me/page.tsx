@@ -64,7 +64,7 @@ export default function WorkWithMePage() {
       <PageHeader
         meta="Boulder, CO & Worldwide · Direct Calendar Booking"
         title="Work With Sophia"
-        description="Practical AI workflow implementation, executive audits, and live corporate enablement built to return real hours and protect your data."
+        description="Architecture & inference-cost audits, deterministic loop-engineering design, and live team enablement for Seed-to-Series B founders, CTOs, and operating leaders."
       />
 
       {/* Interactive ROI Calculator */}

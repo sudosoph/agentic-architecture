@@ -1,24 +1,24 @@
-# Field Manual 02: The Private AI Hardware & Tailscale Rig Cheatsheet
+# Field Manual 02: 512GB & 128GB Private AI Hardware + Tailscale Cheatsheet (Nov 2026)
 
 By Sophia Stein · Agentic Architect (https://agenticarchitect.ai/sovereign-stack)
 
-## 1. Quick Memory Sizing Rule of Thumb (Q4_K_M Quantization)
+## 1. Vendor-Neutral Memory Bandwidth & Capacity Matrix
 
-Memory capacity and memory bandwidth dictate what you can actually run locally without painful token-per-second stalls:
+Autoregressive token decode is governed by **memory bandwidth divided by active parameters per token**. Do not buy 512 GB for giant dense models (3 to 4 tok/s); buy 512 GB for **sparse MoE weights + huge KV caches**:
 
-| Workload Tier | Target Model Class | Minimum VRAM / Unified RAM | Practical Hardware Pick |
+| Node Class | Memory & Bandwidth | Best Model Fit | Hardware Options |
 |---|---|---|---|
-| Fast Router + 8B-14B Drafts | 4B to 14B Q4_K_M | 12 GB to 16 GB | Existing laptop or entry desktop GPU |
-| Daily Coding & 27B-35B Workhorse | 27B Dense or 35B-A3B MoE | 24 GB VRAM or 48 GB Unified | Single 24GB GPU or modular workstation |
-| Heavy Multi-Agent + Long Context | 70B Q4 or multi-model concurrent | 64 GB to 96 GB Unified RAM | Framework 16 / Strix Halo / 96GB DDR5 rig |
+| **Entry Local / IDE Tab** | 16 GB to 32 GB | Continue `Instinct` / `Sweep 1.5B` + `8B–14B` Q4 | Existing developer laptop or desktop GPU |
+| **64GB–128GB Team Workhorse** | 64 GB to 128 GB (`256–410+ GB/s`) | `Qwen 3.8-27B` (Apache 2.0) + vision + embeddings | M5 Max Studio, M5 Pro Mac mini, HP Z2 Mini G1a, GMKtec EVO-X2, or 96GB Linux laptop |
+| **128GB CUDA Prefill Node** | 128 GB (`273 GB/s`) | Heavy CUDA prompt prefill (~1,700 tok/s), TensorRT, ConnectX pair | NVIDIA DGX Spark (`$6,950` / `$4,999` 64GB OEM) |
+| **512GB Sparse-MoE Desk Cluster** | **512 GB (`1.2 TB/s`)** + TB5 RDMA | `MiniMax M3.1 Flash` (501B/23B active, ~301 GB) & `Nemotron 3 Ultra` (550B/55B active) | Apple M5 Ultra Mac Studio (`$5,499` base -> ~`$8,500+` @ 512 GB) |
 
-## 2. Clean Software Stack (Zero Dependency Hell)
+## 2. Zero-Port Tailscale Mesh Standard
 
-1. **Inference Server:** Use `llama-server` (from `llama.cpp`, including the lightweight native HIP backend on AMD GPUs without multi-gigabyte toolkit bloat) or `vLLM` exposing `http://127.0.0.1:8080/v1`.
-2. **Bind Strictly to Localhost / Tailscale Interface:** Never port-forward `8080` or `11434` on your home router.
-3. **Encrypted Mesh Access Everywhere:** Install Tailscale on both your home rig and your travel laptop or phone. Enable Tailscale Serve so your coding editor, n8n instance, or mobile client reaches `https://my-rig.tailnet-name.ts.net/v1` over WireGuard from coffee shops or hotels with zero public ports open.
+1. Serve models via `llama-server` (CUDA / native AMD HIP / Vulkan), Apple `MLX`, or `vLLM` bound strictly to `127.0.0.1:8080`.
+2. Never port-forward `8080` or `11434` on your router.
+3. Run `tailscale serve --bg 8080` so authenticated laptops, phones, and CI runners reach `https://desk-node.tailnet.ts.net/v1` over WireGuard.
 
-Full setup walkthroughs:
-- https://agenticarchitect.ai/blog/96gb-ram-thesis
-- https://agenticarchitect.ai/blog/framework-laptop-thesis
+Full teardowns:
+- https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026
 - https://agenticarchitect.ai/blog/autonomous-ai-rig-tailscale-guide

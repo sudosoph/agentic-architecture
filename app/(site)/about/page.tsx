@@ -8,36 +8,51 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 export const metadata: Metadata = {
   title: 'About Sophia Stein',
   description:
-    'Builder, writer, and angel investor in Boulder, CO. Columbia CS, ex-McKinsey, AI work at Google (personal capacity, views my own), and Women Who Code speaker.',
+    'Software engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO. Columbia CS, applied AI at Google (personal capacity, views my own), and Women Who Code speaker.',
   alternates: {
     canonical: '/about',
   },
 }
 
+const ICP_LAYERS = [
+  {
+    eyebrow: 'Primary Advisory & Audit Buyers',
+    title: 'Seed-to-Series B Technical Founders, CTOs & Operating Leaders',
+    detail:
+      '10 to 250-person organizations where agent loops are failing silently in production or API and SaaS spend is eating gross margin. We fix model-routing unit economics, build deterministic verification harnesses, and train engineering and ops teams.',
+  },
+  {
+    eyebrow: 'Technical Reader & Referral Flywheel',
+    title: 'Pragmatic AI Engineers & Systems Builders',
+    detail:
+      'Engineers benchmarking 512 GB unified-memory desk nodes against cloud APIs, auditing personal agent permissions and MCP servers, and designing isolated worktree and test-verifier loops.',
+  },
+]
+
 const SNAPSHOTS = [
   {
-    label: 'Day Job & Applied Research',
+    label: 'Applied AI Engineering',
     title: 'Google (Boulder, CO)',
     detail:
-      'Building internal AI investigation tools (cutting complex triage from 15 minutes to 2), co-inventing a patent-pending multimodal QA engine, and teaching internal workshops. Everything on this site is strictly in my personal capacity, views my own.',
+      'Build internal AI investigation tooling (cutting root-cause triage from 15 minutes to 2), co-invented a patent-pending multimodal QA engine, and run internal engineering workshops. Everything on this site is strictly in my personal capacity; views my own.',
   },
   {
-    label: 'Commercial Strategy & Rollouts',
+    label: 'Unit Economics & Enterprise Rollouts',
     title: 'McKinsey & Company',
     detail:
-      'Restructured enterprise SaaS contracts to save $70M in annual sales OpEx and led clinical software rollouts across 250+ healthcare leaders at a 79 NPS.',
+      'Restructured enterprise SaaS contracts to cut $70M in annual sales OpEx and led clinical workflow deployments across 250+ healthcare leaders (79 NPS).',
   },
   {
-    label: 'Early Engineering & Computer Science',
+    label: 'Systems & Performance Engineering',
     title: 'Columbia University, Section.io & Meta',
     detail:
-      'B.S. in Computer Science at Columbia (Dean’s List), performance engineering at Section.io ahead of its Webscale acquisition (+30% conversion lift, -40% support tickets), and Mobile Engineering Fellow at Meta.',
+      'B.S. in Computer Science at Columbia (Dean’s List), edge performance engineering at Section.io prior to its Webscale acquisition (+30% conversion lift, -40% support ticket load), and Mobile Engineering Fellow at Meta.',
   },
   {
-    label: 'Community & Frontier Investing',
-    title: 'Boulder Classrooms & 7x Angel Investor',
+    label: 'Investing & Technical Community',
+    title: '7x Angel Investor & Boulder Classrooms',
     detail:
-      'Taught 300+ founders live at Boulder Startup Week, spoke for Women Who Code, advise Seed biotech teams, and angel invest across quantum hardware, medtech, microgrids, and zero-waste supply chains.',
+      'Angel investor across seven quantum hardware, medtech, microgrid, and supply-chain startups. Trained 300+ founders and engineers live at Boulder Startup Week and spoke for Women Who Code.',
   },
 ]
 
@@ -45,30 +60,33 @@ export default function AboutPage() {
   return (
     <div className="space-y-12">
       <PageHeader
-        meta="Boulder, CO · Builder, Writer & Angel Investor"
-        title="Hi, I’m Sophia."
-        description="I build practical AI setups so founders and teams spend less time fighting software and more time doing actual work."
+        meta="Boulder, CO · Engineer, Operator & 7x Angel Investor"
+        title="Sophia Stein"
+        description="I work on agent loop reliability, inference unit economics, and private AI infrastructure for technical founders, engineering leaders, and lean operating teams."
       />
 
-      {/* Real-Person Narrative */}
+      {/* Plain, Understated Bio */}
       <section className="max-w-3xl space-y-4 text-base text-muted leading-relaxed">
         <p className="text-fg font-medium text-lg leading-relaxed">
-          I started <strong>Agentic Architect</strong> after watching smart people get stuck in the
-          same trap: either re-typing context into a blank chat window every morning, or paying
-          for complicated AI science projects that nobody uses two weeks later.
+          Most teams shipping AI hit one of two walls: unverified agent loops that quietly break
+          in production, or unrouted frontier API and SaaS bills that wreck gross margins as usage
+          scales.
         </p>
         <p>
-          My background sits halfway between code and messy human operations. I studied computer
-          science at Columbia, shipped production web and mobile software at Meta and Section.io,
-          spent two years at McKinsey fixing commercial math and clinical rollouts, and now build
-          applied AI tools in Boulder. Outside of software, I speak four languages fluently, back
-          early deep-tech and climate founders as an angel investor, and care deeply about owning
-          your own data and margins.
+          My work sits at the intersection of systems engineering and unit economics. I studied
+          computer science at Columbia, shipped production web and mobile code at Meta and
+          Section.io, spent two years at McKinsey restructuring enterprise software spend and
+          clinical rollouts, and now build applied AI and multimodal QA tooling in Boulder. Outside
+          of software, I speak four languages and angel invest in early hardware, biotech, and
+          energy companies.
         </p>
         <p>
-          My rule for every tool review, playbook, or live workshop here is simple: if a plain
-          markdown file (<code className="font-mono text-fg">voice.md</code>) and a 15-minute
-          workflow solve the problem at near-zero monthly cost, do not overcomplicate it.
+          <strong>Agentic Architect</strong> is my independent lab notebook and advisory practice.
+          Every benchmark, hardware teardown, and architecture playbook here follows one bias:
+          keep context in plain versioned files (<code className="font-mono text-fg">voice.md</code>
+          , <code className="font-mono text-fg">AGENTS.md</code>), gate autonomous loops behind
+          deterministic verifiers, and own the substrate once recurring cloud rent stops making
+          math sense.
         </p>
         <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3.5">
           Personal capacity note: My day job is at Google. Everything published, taught, or advised
@@ -77,9 +95,25 @@ export default function AboutPage() {
         </p>
       </section>
 
+      {/* Explicit ICP Section */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold tracking-tight text-fg">Who This Work Is Built For</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {ICP_LAYERS.map(layer => (
+            <Card key={layer.title} className="p-6 space-y-2 bg-surface">
+              <p className="font-mono text-xs font-semibold text-online uppercase tracking-wider">
+                {layer.eyebrow}
+              </p>
+              <h3 className="text-base font-bold text-fg">{layer.title}</h3>
+              <p className="text-sm text-muted leading-relaxed">{layer.detail}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       {/* Crisp 4-Card Track Record */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight text-fg">Where I Have Built</h2>
+        <h2 className="text-xl font-bold tracking-tight text-fg">Track Record</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {SNAPSHOTS.map(item => (
             <Card key={item.title} className="p-6 space-y-2">
@@ -93,18 +127,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Low-Key Next Step */}
+      {/* Direct Next Step */}
       <section className="rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-bold text-fg">Want to Build Together or Say Hello?</h2>
+          <h2 className="text-lg font-bold text-fg">Audits, Team Labs &amp; Field Manuals</h2>
           <p className="text-sm text-muted">
-            Grab the free <Link href="/starter-kit" className="text-accent font-medium hover:underline">20-Minute Starter Kit</Link>, join the next{' '}
-            <Link href="/masterclass" className="text-accent font-medium hover:underline">live class</Link>, or reach out directly.
+            Explore the{' '}
+            <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
+              Sovereign Stack book &amp; hardware sizer
+            </Link>
+            , download the{' '}
+            <Link href="/starter-kit" className="text-accent font-medium hover:underline">
+              portable context kit
+            </Link>
+            , or book an architecture teardown.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
           <Button variant="primary" size="sm" href="/work-with-me">
-            Ways to Work Together
+            Work With Sophia
           </Button>
           <Button variant="outline" size="sm" href="/contact">
             Send a Note

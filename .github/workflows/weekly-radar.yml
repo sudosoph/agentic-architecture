@@ -1,0 +1,73 @@
+name: Weekly Cloud Trend Radar & Book Sync
+
+on:
+  schedule:
+    # Runs every Monday at 14:00 UTC (7:00 AM Mountain Time)
+    - cron: '0 14 * * 1'
+  workflow_dispatch:
+    inputs:
+      topic_title:
+        description: 'Optional: Generate a full MDX + Substack + LinkedIn draft pack for this topic'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  radar-and-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pull fresh HN, model, hardware & loop-engineering signals
+        run: npm run radar
+
+      - name: Optional 1-click content pack scaffold
+        if: ${{ inputs.topic_title != '' }}
+        env:
+          TOPIC_TITLE: ${{ inputs.topic_title }}
+        run: npm run new:pack -- "$TOPIC_TITLE"
+
+      - name: Recompile Sovereign Stack manuscript & regenerate manifests
+        run: |
+          npm run book:build
+          node scripts/generate-blog-manifest.mjs
+          node scripts/generate-guides-manifest.mjs
+
+      - name: Open or update 1-click-mergeable Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOPIC_TITLE: ${{ inputs.topic_title }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No content queue or manuscript changes detected."
+            exit 0
+          fi
+          BRANCH="chore/cloud-radar-sync"
+          git config user.name "Agentic Architect Cloud Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add content/ public/downloads/ lib/
+          git commit -m "chore(studio): automated cloud trend radar & manuscript refresh"
+          git push --force origin "$BRANCH"
+
+          EXISTING_PR=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          if [ -z "$EXISTING_PR" ]; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "Weekly Cloud Radar & Draft Pack Refresh" \
+              --body "Automated cloud refresh generated with **zero local \`npm\`**.\n\n- Updated \`content/queue/radar-latest.json\` with fresh trend, model, and loop-engineering briefs\n- Recompiled \`content/book/the-sovereign-stack-manuscript.md\` and field manuals\n- Topic scaffold (if requested): \`${TOPIC_TITLE:-none}\`\n\nReview and tap **Merge pull request** from GitHub Web or Mobile to deploy live."
+          else
+            echo "Updated existing open PR #$EXISTING_PR"
+          fi

@@ -9,7 +9,7 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Hook up AI workflows, build your brand, and own your stack/i,
+        name: /Reliable agent loops, sharp unit economics, and infrastructure you own/i,
       }),
     ).toBeTruthy()
     expect(screen.getByText(/Columbia CS/i)).toBeTruthy()
@@ -29,7 +29,7 @@ describe('HomePage & AboutPage Crisp Operator V2', () => {
     const { container } = render(<AboutPage />)
     expect(screen.getAllByText(/Columbia University/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/McKinsey/i).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/personal capacity, views my own/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/personal capacity[,;] views my own/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/patent-pending/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/Women Who Code/i).length).toBeGreaterThan(0)
     expect(container.textContent).not.toContain('Lesbians Who Tech')

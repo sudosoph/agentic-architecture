@@ -12,9 +12,9 @@ import { SOVEREIGN_STACK_PARTS } from '@/scripts/compile-book-and-freebies.mjs'
 const CANONICAL_URL = `${SITE_CONFIG.siteUrl}/sovereign-stack`
 
 export const metadata: Metadata = {
-  title: 'The Sovereign Stack · Book, OSS Builds & Hardware Field Manuals',
+  title: 'The Sovereign Stack · 512GB Hardware Sizer, Loop Engineering & 18-Chapter Book',
   description:
-    'Read all 15 live chapters of The Sovereign Stack free online, size your local 96GB/Tailscale or $9/mo Hetzner OSS rig, and download 3 free technical manuals.',
+    'Read all 18 live chapters of The Sovereign Stack free online, size 512GB M5 Ultra vs DGX Spark vs Ryzen AI Halo rigs or $9/mo Hetzner stacks, and download 3 field manuals.',
   alternates: {
     canonical: CANONICAL_URL,
   },
@@ -24,22 +24,22 @@ const FREEBIE_MANUALS = [
   {
     num: 'Manual 01',
     title: 'Cut Your AI & SaaS Bill by 84%',
-    meta: 'Markdown Field Manual · Hetzner Docker + 3-Tier Routing',
-    desc: 'Single-VPS Caddy + Listmonk + Cal.com + Umami + Uptime Kuma blueprint plus the 3-tier open-weight routing table.',
+    meta: 'Markdown Manual · $9 Hetzner VPS + Neon/DeepSeek/Qwen Routing',
+    desc: 'Single-VPS Caddy + Listmonk + Cal.com + Umami + Uptime Kuma blueprint plus the November 2026 3-tier model cascade.',
     href: '/downloads/cut-your-ai-bill-84-percent-manual.md',
   },
   {
     num: 'Manual 02',
-    title: 'Private AI Hardware & Tailscale Rig Cheatsheet',
-    meta: 'Markdown Field Manual · 96GB RAM, Framework 16 & llama.cpp HIP',
-    desc: 'VRAM vs unified memory sizing math, lightweight AMD/NVIDIA serving, and zero-open-port Tailscale Serve setup.',
+    title: '512GB & 128GB Hardware + Tailscale Cheatsheet',
+    meta: 'Markdown Manual · M5 Ultra (1.2 TB/s) vs DGX Spark vs Ryzen Halo',
+    desc: 'Vendor-neutral bandwidth vs sparse-MoE sizing math (MiniMax M3.1, Qwen 3.8-27B) and zero-port Tailscale Serve setup.',
     href: '/downloads/private-hardware-and-tailscale-rig-guide.md',
   },
   {
     num: 'Manual 03',
-    title: 'Production MCP Security & 6-Layer Eval Checklist',
-    meta: 'Markdown Field Manual · Least Privilege & Regression Net',
-    desc: '5-point audit to block shell injection and archived MCP servers, paired with the 6-layer pytest/DeepEval harness.',
+    title: 'Loop Verifiers, OpenInstinct Vaults & MCP Audit',
+    meta: 'Markdown Manual · Git Worktrees, Circuit Breakers & Least Privilege',
+    desc: 'Closed-loop verifier checklist, personal agent OAuth hygiene (OpenInstinct vs Instinct/Tab), and 6-layer eval harness.',
     href: '/downloads/trusted-mcp-and-eval-checklist.md',
   },
 ]
@@ -76,11 +76,11 @@ export default function SovereignStackPage() {
 
       <div className="space-y-14">
         <div className="space-y-4">
-          <Badge variant="rig">15 Chapters Live Online · 3 Unlocked OSS &amp; Hardware Manuals</Badge>
+          <Badge variant="rig">18 Chapters Live Online · Nov 2026 Hardware &amp; Loop Benchmarks</Badge>
           <PageHeader
-            meta="Written in Public by Sophia Stein · Zero Vendor Lock-In"
+            meta="Written in Public by Sophia Stein · Vendor-Neutral Physics & Unit Economics"
             title="The Sovereign Stack"
-            description="A practical engineering and operator field guide to replacing bloated SaaS with a $9/month Linux box, sizing private 96GB hardware rigs over Tailscale, and cutting inference bills by 84%."
+            description="An engineering and founder field guide to deterministic loop engineering, sizing 512GB M5 Ultra vs. 128GB DGX Spark vs. Ryzen AI Halo nodes over Tailscale, auditing personal agents, and cutting SaaS and API bills by up to 84%."
           />
         </div>
 
@@ -131,7 +131,7 @@ export default function SovereignStackPage() {
               Read Free in Your Browser
             </p>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-fg mt-1">
-              Live 5-Part, 15-Chapter Manuscript Map
+              Live 5-Part, 18-Chapter Manuscript Map
             </h2>
             <p className="text-sm text-muted mt-1 max-w-2xl">
               Every chapter below is already live as a standalone deep dive with real configs,

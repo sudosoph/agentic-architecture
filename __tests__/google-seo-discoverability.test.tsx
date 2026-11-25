@@ -23,6 +23,9 @@ import WhatIsAgenticArchitectPage, {
 import { buildSeoGeoOpportunity } from '../scripts/brand-radar.mjs'
 import { draftHumanReply } from '../scripts/comment-copilot.mjs'
 import SovereignStackPage from '@/app/(site)/sovereign-stack/page'
+import AboutPage from '@/app/(site)/about/page'
+import StudioPage from '@/app/(site)/studio/page'
+import { GET as getKeystaticApi } from '@/app/api/keystatic/[...params]/route'
 import { SOVEREIGN_STACK_PARTS } from '../scripts/compile-book-and-freebies.mjs'
 import { getAllPosts } from '@/lib/mdx'
 
@@ -168,10 +171,10 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(reply).not.toContain('\u2014')
   })
 
-  it('compiles all 15 Sovereign Stack chapters and 3 OSS/hardware freebies cleanly and renders interactive sizer', () => {
+  it('compiles all 18 Sovereign Stack chapters and 3 OSS/hardware freebies cleanly and renders interactive 512GB sizer', () => {
     const validSlugs = new Set(getAllPosts().map(p => p.slug))
     const allChapters = SOVEREIGN_STACK_PARTS.flatMap(p => p.chapters)
-    expect(allChapters).toHaveLength(15)
+    expect(allChapters).toHaveLength(18)
     for (const ch of allChapters) {
       expect(validSlugs.has(ch.slug), `missing chapter post ${ch.slug}`).toBe(true)
     }
@@ -180,8 +183,8 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(container.textContent).not.toContain('\u2014')
     expect(screen.getByTestId('oss-annual-savings').textContent).toBe('$1,392/yr')
 
-    fireEvent.click(screen.getByRole('tab', { name: /96GB Unified Memory/i }))
-    expect(screen.getByTestId('oss-annual-savings').textContent).toBe('$11,820/yr')
+    fireEvent.click(screen.getByRole('tab', { name: /512GB Unified Memory/i }))
+    expect(screen.getByTestId('oss-annual-savings').textContent).toBe('$25,200/yr')
 
     for (const rel of [
       'content/book/the-sovereign-stack-manuscript.md',
@@ -195,5 +198,22 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
       expect(text.length).toBeGreaterThan(400)
       expect(text, `${rel} em-dash`).not.toContain('\u2014')
     }
+  })
+
+  it('renders crisp two-layer ICP on AboutPage with zero AI cliches and serves zero-npm Cloud Studio + Keystatic setup guard', async () => {
+    const { container: aboutContainer } = render(<AboutPage />)
+    expect(aboutContainer.textContent).toContain('Seed-to-Series B Technical Founders')
+    expect(aboutContainer.textContent).not.toContain('mornings back')
+    expect(aboutContainer.textContent).not.toContain('\u2014')
+
+    const { container: studioContainer } = render(<StudioPage />)
+    expect(studioContainer.textContent).toContain('Write & Publish Playbooks Straight From Your Browser')
+    expect(studioContainer.textContent).not.toContain('\u2014')
+
+    const ksRes = await getKeystaticApi(new Request('https://agenticarchitect.ai/api/keystatic/github/login'))
+    expect(ksRes.status).toBe(503)
+    const ksHtml = await ksRes.text()
+    expect(ksHtml).toContain('/studio')
+    expect(ksHtml).toContain('KEYSTATIC_GITHUB_CLIENT_ID')
   })
 })

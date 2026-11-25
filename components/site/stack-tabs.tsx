@@ -14,98 +14,97 @@ type ToolItem = {
 
 const BUSINESS_STACK: ToolItem[] = [
   {
-    category: 'Brand Brain & Daily Drafting',
-    name: 'Portable voice.md + ICP Docs',
-    cost: '$0 (Plain Markdown / Google Docs)',
+    category: 'Portable Repo & Org Context',
+    name: 'AGENTS.md + voice.md + icp.md',
+    cost: '$0 (Versioned Markdown)',
     summary:
-      'Store your voice rules, offer positioning, and 5 real writing samples in one clean file so any AI workspace writes like you immediately.',
+      'Keep engineering rules, buyer positioning, and calibration examples in plain Git-tracked files so switching models takes five minutes.',
   },
   {
-    category: 'Bookings & Paid Consults',
+    category: 'Bookings & Paid Audits',
     name: 'Cal.com + Stripe',
-    cost: '$0/mo fixed',
+    cost: '$0/mo fixed (or Docker self-hosted)',
     summary:
-      'Direct calendar links for free discovery calls and Stripe-backed paid workflow audits without back-and-forth emails.',
+      'Direct calendar routing for scoping calls and Stripe-backed architecture teardowns without scheduling ping-pong.',
     href: 'https://cal.com',
   },
   {
-    category: 'Workflow Automation Glue',
-    name: 'n8n (Open Source) or Zapier Free',
-    cost: '$0 self-hosted / free tier',
+    category: 'Workflow & Loop Orchestration',
+    name: 'n8n (Self-Hosted) + GitHub Actions',
+    cost: '$0 OSS / included CI minutes',
     summary:
-      'Connects inbound forms, calendar bookings, Gmail drafts, and spreadsheets with human-in-the-loop approval gates.',
+      'Event-driven pipelines with isolated git worktrees, deterministic verifier steps, and Rung 2 human approval gates.',
     href: 'https://n8n.io',
   },
   {
-    category: 'Newsletter & Owned Audience',
-    name: 'Substack',
+    category: 'Self-Hosted Personal & Browser Agents',
+    name: 'OpenInstinct + OpenClaw (MIT)',
+    cost: 'Open source (MIT)',
+    summary:
+      'Keep OAuth tokens and browser credentials locked inside an encrypted vault or per-user microVM outside the LLM context window.',
+    href: 'https://github.com/Merit-Systems/OpenInstinct',
+  },
+  {
+    category: 'Newsletter & Owned Distribution',
+    name: 'Canonical MDX Blog + Substack',
     cost: '$0/mo fixed',
     summary:
-      'Combined web archive and email newsletter with built-in discovery network and zero server maintenance.',
+      'Publish search-canonical benchmark tables on your own domain first, then syndicate distinct story headlines to Substack subscribers.',
     href: 'https://agenticarchitectai.substack.com',
   },
   {
-    category: 'Social Cross-Posting',
-    name: 'Buffer Free or Postiz (GitHub OSS)',
-    cost: '$0/mo',
+    category: 'Search & Telemetry',
+    name: 'Google Search Console + IndexNow',
+    cost: '$0',
     summary:
-      'Queue LinkedIn and X threads from one canonical weekly article without paying agency software fees.',
-    href: 'https://postiz.com',
-  },
-  {
-    category: 'Core Workspace & Search Analytics',
-    name: 'Google Workspace + Search Console',
-    cost: 'Existing workspace',
-    summary:
-      'Docs, Sheets, Calendar, Gmail Drafts, and Search Console query data wired directly into your weekly brief.',
+      'Instant canonical URL submission on deploy paired with query-level impression tracking and structured JSON-LD entities.',
   },
 ]
 
 const SOVEREIGN_STACK: ToolItem[] = [
   {
-    category: 'Encrypted Private Mesh',
-    name: 'Tailscale',
+    category: '512GB Sparse-MoE Desk Nodes',
+    name: 'M5 Ultra Mac Studio (512GB · 1.2 TB/s) or DGX Spark',
+    cost: '$5,499 to $9,500 capex',
+    summary:
+      'Vendor-neutral desk compute: M5 Ultra leads quiet token decode for 300GB+ sparse MoE weights (MiniMax M3.1 Flash, Nemotron 3 Ultra); NVIDIA DGX Spark (128GB) leads CUDA prompt prefill.',
+  },
+  {
+    category: '128GB x86 Halo Mini-PCs & 96GB Mobile Linux',
+    name: 'HP Z2 Mini G1a / EVO-X2 (128GB) & Framework 16 (96GB)',
+    cost: '$1,899 to $3,200 capex',
+    summary:
+      'Compact 128GB Ryzen AI Max+ (Strix Halo) mini-PCs for best price-per-GB Ubuntu serving at a desk, paired with a repairable 96GB Linux laptop or M5 Max on the road.',
+  },
+  {
+    category: 'Late-2026 Open-Weight Workhorses',
+    name: 'DeepSeek 4.1 Flash, Kimi K3.1 Pro & Qwen 3.8-27B',
+    cost: '$0 marginal token cost locally',
+    summary:
+      'Apache 2.0 Qwen 3.8-27B (17GB 4-bit) for fast local coding and vision; MIT DeepSeek V4.1 Flash and Kimi K3.1 Pro for long-context private VPC or cluster trajectories.',
+  },
+  {
+    category: 'Encrypted Zero-Port Mesh',
+    name: 'Tailscale Serve',
     cost: 'Free personal / small team tier',
     summary:
-      'Zero-port WireGuard mesh that lets your phone or travel laptop reach your home or office AI rig securely from anywhere.',
+      'WireGuard mesh exposing localhost llama-server or vLLM endpoints strictly to authenticated team devices with zero open router ports.',
     href: 'https://tailscale.com',
   },
   {
-    category: 'Open-Weight Local Models',
-    name: 'DeepSeek 4.1, Qwen 3.6 & Gemma 4',
-    cost: '$0 per token on your hardware',
-    summary:
-      'Run high-volume document extraction, structured classification, coding loops, and private client summarization locally with zero third-party retention.',
-  },
-  {
-    category: 'Daily Driver Workstation (Sophia’s Rig)',
-    name: 'Framework 16 (AMD Ryzen AI 9 HX 370 · 96GB DDR5)',
-    cost: 'Owned hardware · 90GB unified GART pool',
-    summary:
-      'Modular, repairable Linux workstation running Ubuntu LTS, ROCm / Vulkan, llama.cpp, and Dockerized n8n workflows.',
-    href: 'https://frame.work',
-  },
-  {
-    category: 'Practical Small-Office Nodes',
-    name: 'Mac Mini (Unified Memory) or Ryzen AI Mini-PC',
-    cost: 'One-time ~$800 to $2,000 hardware',
-    summary:
-      'Quiet, low-wattage always-on office nodes recommended for small teams wanting a shared private AI server over Tailscale.',
-  },
-  {
-    category: 'Local Inference & Tool Protocol',
-    name: 'llama.cpp + Ollama + MCP Servers',
+    category: 'Inference & IDE Next-Edit Runtime',
+    name: 'llama.cpp + MLX + Continue Instinct + Audited MCP',
     cost: 'Open source (MIT / Apache 2.0)',
     summary:
-      'Fast quantized model serving paired with Model Context Protocol bridges for local files, Postgres/pgvector, and browser tools.',
+      'Native CUDA, HIP, and Apple MLX model serving paired with local IDE Tab edit-trajectory models and pinned, least-privilege MCP servers.',
     href: 'https://github.com/ggml-org/llama.cpp',
   },
   {
-    category: 'Edge Web & Git-Backed Publishing',
-    name: 'Next.js 16 + Tailwind CSS + Cloudflare Workers',
+    category: 'Edge Web & Cloud Approval Pipeline',
+    name: 'Next.js 16 + Cloudflare Workers + GitHub PR CMS',
     cost: '$0 to $5/mo edge hosting',
     summary:
-      'Every playbook and guide lives as portable MDX in Git and deploys globally to Cloudflare Workers.',
+      'Browser-native editing via /studio and /keystatic committing straight to GitHub PRs with automatic Worker deploys.',
     href: 'https://workers.cloudflare.com',
   },
 ]
@@ -132,7 +131,7 @@ export function StackTabs() {
               : 'text-muted hover:text-fg'
           }`}
         >
-          15-Minute Small Business Stack
+          15-Minute Team &amp; Loop Stack
         </button>
         <button
           type="button"
@@ -153,16 +152,16 @@ export function StackTabs() {
         {activeTab === 'business' ? (
           <>
             <p className="text-sm text-fg font-medium">
-              Start here if you run a lean business and want reliable automations live this afternoon with $0 software bloat.
+              Portable markdown context, deterministic GitHub/n8n loops, and MIT credential isolation with zero SaaS bloat.
             </p>
-            <Badge variant="online">Zero-Cost / Free-Tier First</Badge>
+            <Badge variant="online">Open-Source &amp; Free-Tier First</Badge>
           </>
         ) : (
           <>
             <p className="text-sm text-fg font-medium">
-              Switch here when you want private local inference, zero per-token bills, and encrypted remote access over Tailscale.
+              Vendor-neutral November 2026 local compute across 512GB M5 Ultra, 128GB DGX Spark, Ryzen AI Halo mini-PCs, and Tailscale.
             </p>
-            <Badge variant="rig">Local Hardware + Mesh</Badge>
+            <Badge variant="rig">512GB / 128GB Nodes + Mesh</Badge>
           </>
         )}
       </div>

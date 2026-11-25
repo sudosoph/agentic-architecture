@@ -79,7 +79,7 @@ export function buildSeoGeoOpportunity(rawItem) {
 export async function fetchLiveRadarItems() {
   try {
     const url =
-      'https://hn.algolia.com/api/v1/search?query=MCP%20OR%20AI%20agent%20OR%20workflow%20automation&tags=story&numericFilters=points>30&hitsPerPage=6'
+      'https://hn.algolia.com/api/v1/search?query=%22loop%20engineering%22%20OR%20%22unified%20memory%22%20OR%20Qwen%20OR%20DeepSeek%20OR%20MCP&tags=story&numericFilters=points>30&hitsPerPage=6'
     const res = await fetch(url, { headers: { Accept: 'application/json' } })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
@@ -101,18 +101,18 @@ export async function fetchLiveRadarItems() {
 
   return [
     buildSeoGeoOpportunity({
-      id: 'seed-mcp-browser-agents',
-      source: 'Builder & Operator Trend Signal',
-      title: 'Browser Agents vs API Workflows for Small Business Ops',
-      url: 'https://agenticarchitect.ai/stack',
-      points: 184,
+      id: 'seed-loop-verifiers-2026',
+      source: 'Engineering Leader Signal',
+      title: 'Deterministic Loop Verifiers vs Self-Critique Prompts in CI',
+      url: 'https://agenticarchitect.ai/blog/loop-engineering-production-guide-2026',
+      points: 240,
     }),
     buildSeoGeoOpportunity({
-      id: 'seed-n8n-vs-zapier-2026',
-      source: 'Founder Cost Teardown Request',
-      title: 'n8n Self-Hosted vs Zapier in 2026',
-      url: 'https://agenticarchitect.ai/starter-kit',
-      points: 142,
+      id: 'seed-512gb-moe-nodes',
+      source: 'r/LocalLLaMA & CTO Capex Signal',
+      title: '512GB M5 Ultra vs DGX Spark vs 128GB Ryzen Halo for Sparse MoE',
+      url: 'https://agenticarchitect.ai/blog/512gb-unified-memory-mini-pcs-local-llm-2026',
+      points: 215,
     }),
   ]
 }

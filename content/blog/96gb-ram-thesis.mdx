@@ -8,6 +8,8 @@ tags: ["benchmarks", "amd", "rocm", "local-inference"]
 draft: false
 ---
 
+> **November 2026 Update:** While 96 GB DDR5 remains my sweet spot in a travel laptop (now running `Qwen 3.8-27B` Q4_K_M alongside dev containers), stationary desk setups have jumped to **128 GB Ryzen AI Halo / DGX Spark** and **512 GB M5 Ultra Mac Studio (1.2 TB/s)** nodes capable of holding 500B sparse MoE models in RAM. See the updated physics and ROI comparison in [512GB Mini Computers & Desk Nodes in Late 2026](/blog/512gb-unified-memory-mini-pcs-local-llm-2026).
+
 Framework 16 with Ryzen AI 9 HX 370, RX 7700S, and 96GB DDR5 runs GLM-4 9B at Q8_0 at **28.4 tokens/sec** under ROCm 7.3, with a 90GB GART carve-out feeding the iGPU directly out of system RAM. That number is not a benchmark trophy. It is the threshold where agentic loops stop being a budgeting problem.
 
 ## The thesis
