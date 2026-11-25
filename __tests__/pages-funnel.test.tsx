@@ -14,6 +14,7 @@ vi.mock('next/navigation', () => ({
 import MasterclassPage from '@/app/(site)/masterclass/page'
 import AcceleratorPage from '@/app/(site)/accelerator/page'
 import CoursesPage from '@/app/(site)/courses/page'
+import AcademyPage from '@/app/(site)/academy/page'
 import StarterKitPage from '@/app/(site)/starter-kit/page'
 import WorkWithMePage from '@/app/(site)/work-with-me/page'
 import TeachingPage from '@/app/(site)/teaching/page'
@@ -32,6 +33,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
       { name: 'MasterclassPage', Comp: MasterclassPage },
       { name: 'AcceleratorPage', Comp: AcceleratorPage },
       { name: 'CoursesPage', Comp: CoursesPage },
+      { name: 'AcademyPage', Comp: AcademyPage },
       { name: 'StarterKitPage', Comp: StarterKitPage },
       { name: 'WorkWithMePage', Comp: WorkWithMePage },
       { name: 'TeachingPage', Comp: TeachingPage },
@@ -64,6 +66,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
       MasterclassPage,
       AcceleratorPage,
       CoursesPage,
+      AcademyPage,
       StarterKitPage,
       WorkWithMePage,
       TeachingPage,
@@ -74,16 +77,44 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
       const text = container.textContent ?? ''
       expect(text).not.toMatch(/gemini/i)
       expect(text).not.toMatch(/deepseek/i)
+      expect(text.toLowerCase()).not.toContain('voice.md')
+      expect(text.toLowerCase()).not.toContain('brand brain')
       unmount()
     }
   })
 
-  it('renders MasterclassPage with 60-minute live agenda, voice.md workbook step, and Accelerator link', () => {
+  it('renders MasterclassPage with 60-minute live agenda, business bottleneck focus, and Accelerator link', () => {
     const { container } = render(<MasterclassPage />)
     expect(container.textContent).toMatch(/60-Min/i)
-    expect(container.textContent).toMatch(/voice\.md/i)
+    expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
     const links = Array.from(container.querySelectorAll('a')).map(a => a.getAttribute('href'))
     expect(links).toContain('/accelerator')
+  })
+
+  it('renders AcademyPage with 6 business modules, clamps team-seat calculator cleanly, and validates 5-day business email sequence free of voice.md', () => {
+    const { container } = render(<AcademyPage />)
+    expect(container.textContent).toMatch(/AI Chief of Staff/i)
+    expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
+    expect(screen.getByTestId('academy-total-price').textContent).toBe('$297')
+
+    const seatInput = screen.getByLabelText(/Additional team seats/i)
+    fireEvent.change(seatInput, { target: { value: '3' } })
+    expect(screen.getByTestId('academy-total-price').textContent).toBe('$588')
+
+    fireEvent.change(seatInput, { target: { value: '-5' } })
+    expect(screen.getByTestId('academy-total-price').textContent).toBe('$297')
+
+    fireEvent.change(seatInput, { target: { value: '999' } })
+    expect(screen.getByTestId('academy-total-price').textContent).toBe('$5,147')
+
+    const rawLessons = fs.readFileSync(
+      path.join(process.cwd(), 'content/courses/five-day-prompt-to-system.json'),
+      'utf8',
+    )
+    expect(rawLessons).not.toContain('\u2014')
+    expect(rawLessons.toLowerCase()).not.toContain('voice.md')
+    const lessons = JSON.parse(rawLessons)
+    expect(lessons).toHaveLength(5)
   })
 
   it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and Approach 2 accessible cohort floor', () => {

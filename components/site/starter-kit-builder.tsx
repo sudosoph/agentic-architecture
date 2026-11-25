@@ -4,38 +4,37 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-const VOICE_TEMPLATE = `# Brand Brain (voice.md)
+const SOP_TEMPLATE = `# Company Operating & Communication Rules
 
-## Who We Serve & What We Do
-- Company / Role: [One plain-English sentence]
-- Core Customer: [Who buys, what keeps them up at night]
-- Primary Offer: [How you solve it and what outcome they measure]
+## Who We Serve & Core Bottleneck Solved
+- Company / Practice: [One plain-English sentence]
+- Ideal Buyer & Deal Size: [Who buys and what triggers urgency]
+- Escalation Rule: [What always requires immediate human review]
 
-## Voice Rules (Always Follow)
-- Direct, warm, specific, and grounded in real numbers.
-- Short paragraphs (2 to 4 sentences max). Lead with the takeaway.
-- Never use em-dashes, corporate jargon, or filler openers.
-- Forbidden words: delve, unlock, game-changer, synergy, revolutionary.
+## Communication Standards
+- Direct, specific, and grounded in real numbers and timelines.
+- Short paragraphs (2 to 4 sentences max). Lead with the answer or next step.
+- Never auto-send external client or financial messages without human approval.
 
-## 3 Golden Examples Written By Me
-1. [Paste a real email you sent a client that got a great reply]
-2. [Paste a short post or memo that sounds unmistakably like you]
-3. [Paste how you explain pricing or scope pushback]`
+## 3 Approved Real Examples
+1. [Paste a real client intake or follow-up email that converted well]
+2. [Paste how your team scopes timelines or handles pushback]
+3. [Paste a clear internal handoff summary]`
 
 const DOWNLOADS = [
   {
-    title: 'Portable Brand Brain (voice.md)',
-    meta: 'Markdown Template · 10-Min Setup',
-    desc: 'Drop into any AI project or automation node so every draft sounds unmistakably like you.',
+    title: 'Company Operating & Communication Rules',
+    meta: 'SOP Template · 10-Min Setup',
+    desc: 'Standardizes company tone, escalation rules, and real examples across your team workflows.',
     href: '/downloads/voice-md-brand-brain-template.md',
-    cta: 'Download voice.md ↓',
+    cta: 'Download SOP Template ↓',
   },
   {
-    title: 'Ideal Customer & Offer Brain (icp.md)',
-    meta: 'Markdown Template · Positioning & Objections',
-    desc: 'Codifies buyer bottlenecks, green-flag signals, and plain-English objection answers.',
+    title: 'Buyer Qualification & Offer Criteria',
+    meta: 'Qualification Sheet · Sales & Intake',
+    desc: 'Codifies ideal client criteria, green-flag signals, and scope boundaries for intake triage.',
     href: '/downloads/icp-and-offer-positioning.md',
-    cta: 'Download icp.md ↓',
+    cta: 'Download Qualification Sheet ↓',
   },
   {
     title: '20/80 AI Task Readiness Scorecard',
@@ -99,7 +98,7 @@ export function StarterKitBuilder() {
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(VOICE_TEMPLATE)
+      await navigator.clipboard.writeText(SOP_TEMPLATE)
       setCopied(true)
       setTimeout(() => setCopied(false), 2500)
     } catch {
@@ -140,15 +139,16 @@ export function StarterKitBuilder() {
         </div>
       </section>
 
-      {/* Copy-Ready voice.md */}
+      {/* Copy-Ready Company Operating Rules */}
       <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-xl font-bold text-fg">
-              2. Copy-Paste Brand Brain (`voice.md`)
+              2. Copy-Paste Company Operating &amp; Communication Rules
             </h2>
             <p className="text-xs text-muted mt-0.5">
-              Save in Google Docs, Notion, or Markdown and attach to your AI workspace project.
+              Save in Google Docs, Notion, or your workspace project so every team workflow follows
+              the same standards.
             </p>
           </div>
           <button
@@ -156,11 +156,11 @@ export function StarterKitBuilder() {
             onClick={handleCopy}
             className="rounded-lg bg-accent text-white px-4 py-2 text-xs font-semibold hover:bg-blue-700 transition-colors cursor-pointer"
           >
-            {copied ? 'Copied voice.md ✓' : 'Copy voice.md Template'}
+            {copied ? 'Copied SOP Rules ✓' : 'Copy Operating Rules'}
           </button>
         </div>
         <pre className="rounded-xl border border-border bg-surface p-5 text-xs sm:text-sm font-mono text-fg overflow-x-auto leading-relaxed">
-          {VOICE_TEMPLATE}
+          {SOP_TEMPLATE}
         </pre>
       </section>
 

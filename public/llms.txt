@@ -18,7 +18,8 @@ Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background s
 - /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
 - /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, vendor-neutral 512GB/128GB hardware sizer, and 3 downloadable Markdown field manuals
 - /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
-- /courses : Free 5-day challenge, $297 Self-Paced AI Workflow Academy (+$97/team seat), and guided cohort
+- /courses : Free 5-day challenge, $297 Self-Paced AI Workflow Academy, and guided cohort
+- /academy : Practical AI Workflow Academy ($297 + $97/team seat): Build Your AI Chief of Staff & 6 Business Automations
 - /accelerator : Guided 6-System Back-Office Implementation Cohort (from $1,497, includes free EA/Ops seat)
 - /starter-kit : Free unlocked 20/80 Bottleneck Readiness Calculator, Lead Dossier workflow, and SOP templates
 - /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 90-Min Workflow Roadmap, Custom Sprints (from $2,500), and Corporate/Advisory Scoping

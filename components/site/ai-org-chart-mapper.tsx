@@ -24,8 +24,8 @@ const BACK_OFFICE_MODELS: Record<
     ],
     automations: [
       {
-        name: 'Company Context Drafter',
-        job: 'Turns 1 voice memo into newsletter, LinkedIn, and client notes using your voice.md',
+        name: 'Sales & Proposal Prep',
+        job: 'Turns discovery notes into scoped proposals, client updates, and follow-up drafts',
       },
       {
         name: 'Pre-Call Dossier Pipeline',

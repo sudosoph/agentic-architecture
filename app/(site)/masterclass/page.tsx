@@ -18,10 +18,10 @@ export const metadata: Metadata = {
 const AGENDA = [
   {
     window: 'Minutes 00 to 20',
-    title: 'From Chat-Box Toy to Owned Company Context (voice.md + icp.md)',
+    title: 'Bottleneck Triage: Picking the Right Process First',
     detail:
-      'Why blank-window prompting makes you the bottleneck, how to score repetitive work for ROI, and how to set up a 1-page Context Vault every workflow reads automatically.',
-    outcome: 'Copy-paste voice.md + 1-Bottleneck Scorecard',
+      'Why ad-hoc chat prompting makes you the bottleneck, how to score repetitive operations for ROI, and how to separate human judgment from automated prep.',
+    outcome: 'Interactive 20/80 Bottleneck Scorecard',
   },
   {
     window: 'Minutes 20 to 40',
@@ -48,7 +48,7 @@ const WHO_ITS_FOR = [
 const MASTERCLASS_FAQS = [
   {
     q: 'Do I need to know how to code to build the workflows shown in this session?',
-    a: 'No. Every build uses plain-English markdown files (voice.md and icp.md) and visual workspace connectors that non-technical owners, EAs, and Ops Managers can run and edit themselves.',
+    a: 'No. Every build uses plain-English SOP rules and visual workspace connectors that non-technical owners, EAs, and Ops Managers can run and edit themselves.',
   },
   {
     q: 'What happens after the free 60-minute workshop and 5-day challenge?',
@@ -134,7 +134,7 @@ export default function MasterclassPage() {
                 Save My Free Live Seat →
               </Button>
               <Button variant="outline" size="lg" href="/starter-kit">
-                Open Unlocked Context Kit (voice.md)
+                Score Your #1 Bottleneck Free
               </Button>
             </div>
 
@@ -177,7 +177,7 @@ export default function MasterclassPage() {
                 </span>
                 <div>
                   <p className="font-semibold text-fg">
-                    Unlocked Company Context Workbook (`voice.md` + 20/80 Scorecard)
+                    Unlocked 20/80 Bottleneck Scorecard &amp; Lead Dossier Blueprint
                   </p>
                   <p className="text-xs text-muted mt-0.5 leading-relaxed">
                     Score your single biggest operational bottleneck in 10 minutes before the live

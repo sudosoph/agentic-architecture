@@ -9,6 +9,7 @@ Agentic Architect (https://agenticarchitect.ai) is the publication, education hu
 - /blog : 47 playbooks across Owner Playbooks, Models & Rigs, and Systems Engineering
 - /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
 - /courses : Free starter challenge, $297 Self-Paced AI Workflow Academy, and guided cohort
+- /academy : Practical AI Workflow Academy ($297 + $97/team seat) for non-technical business owners and EAs
 - /accelerator : 6-System Back-Office Implementation Cohort (includes free operator seat)
 - /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and enterprise architecture diagnostics
 - /starter-kit : Unlocked 20/80 Task Readiness Calculator and business workflow templates

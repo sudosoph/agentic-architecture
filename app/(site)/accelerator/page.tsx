@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 const SIX_SYSTEMS = [
   {
     num: '01',
-    title: 'Company Context & Voice Vault (voice.md + icp.md)',
-    body: 'Codify your positioning, tone, pricing boundaries, and common buyer questions into plain-English files every workflow reads automatically.',
+    title: 'Company SOPs, Qualification & Escalation Rules',
+    body: 'Document your pricing floors, buyer qualification criteria, and communication standards once so every workflow follows your rules automatically.',
   },
   {
     num: '02',
@@ -226,7 +226,7 @@ export default function AcceleratorPage() {
             <ul className="space-y-2.5 text-sm text-fg border-b border-border pb-4">
               <li>✓ Live weekly implementation sessions + full recorded library</li>
               <li>✓ Free second seat included for your EA, Chief of Staff, or Ops Lead</li>
-              <li>✓ Portable voice.md, pre-call dossier, draft-first inbox &amp; SOP templates</li>
+              <li>✓ Pre-call dossier, draft-first inbox, proposal &amp; onboarding templates</li>
               <li>✓ Built 100% inside your own workspace accounts with human approval gates</li>
             </ul>
 

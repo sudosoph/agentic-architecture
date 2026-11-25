@@ -7,9 +7,9 @@ import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Free 20-Min Company Context Vault & AI Workflow Kit',
+  title: 'Free 20/80 Bottleneck Readiness Calculator & Workflow Starter Kit',
   description:
-    'Download the portable voice.md + icp.md Company Context Vault, 20/80 Task Scorecard CSV, and Pre-Call Lead Dossier workflow, plus score your team bottlenecks live.',
+    'Score your weekly operational bottlenecks live and download 4 ready-to-use business automation templates, including our Pre-Call Lead Dossier workflow and Task Audit CSV.',
   alternates: { canonical: '/starter-kit' },
 }
 
@@ -17,10 +17,10 @@ export default function StarterKitPage() {
   return (
     <div className="space-y-14">
       <div className="space-y-4">
-        <Badge variant="online">Instant Access · 4 Executive Templates + Live Bottleneck Scorer</Badge>
+        <Badge variant="online">Instant Access · 4 Business Templates + Live Bottleneck Scorer</Badge>
         <PageHeader
-          title="The 20-Minute Company Context Vault & Workflow Kit"
-          description="Download the portable voice.md and icp.md context files, importable Pre-Call Lead Dossier workflow, and 20/80 Task Readiness Scorecard."
+          title="The 20/80 Bottleneck Readiness Calculator &amp; Workflow Kit"
+          description="Score which repetitive process in your business to automate first, and download 4 ready-to-use SOP, qualification, scorecard, and pre-call dossier templates."
         />
       </div>
 
@@ -30,25 +30,27 @@ export default function StarterKitPage() {
       <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 space-y-5">
         <div className="space-y-1">
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Next Step: Build Live With Sophia
+            Next Step: Put Your #1 Workflow Live
           </p>
-          <h2 className="text-2xl font-bold text-fg">Turn Your Starter Kit Into 6 Live Workflows</h2>
+          <h2 className="text-2xl font-bold text-fg">
+            Build It Solo in the $297 Academy or Book a Free 20-Min Bottleneck Call
+          </h2>
           <p className="text-sm text-muted max-w-2xl leading-relaxed">
-            Bring your completed <code className="font-mono text-fg">voice.md</code> to the next free
-            60-minute live masterclass on Cal.com, or apply to install all 6 business systems inside
-            the 8-week Agentic Business Accelerator.
+            Bring your top-scoring bottleneck to our free 60-minute live build, unlock all 6
+            step-by-step modules in our self-paced Academy, or book a 20-minute discovery call to
+            have us scope a custom sprint.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Button variant="primary" size="md" href={SITE_CONFIG.cal.masterclass}>
-            Save Free 60-Min Masterclass Seat →
+          <Button variant="primary" size="md" href="/academy">
+            Explore $297 Workflow Academy →
           </Button>
-          <Button variant="outline" size="md" href="/accelerator">
-            Explore the 8-Week Accelerator
+          <Button variant="outline" size="md" href={SITE_CONFIG.cal.masterclass}>
+            Free 60-Min Live Build
           </Button>
-          <Button variant="ghost" size="md" href={SITE_CONFIG.cal.audit}>
-            Book a $1,500 VIP Audit
+          <Button variant="ghost" size="md" href={SITE_CONFIG.cal.scoping}>
+            Free 20-Min Bottleneck Call
           </Button>
         </div>
       </section>
