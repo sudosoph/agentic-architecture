@@ -46,6 +46,7 @@ describe('4-Curriculum Catalog & Module Manifest', () => {
     expect(openMod!.frontmatter.unlocked).toBe(true)
     expect(openMod!.html).toContain('<h2')
     expect(openMod!.html).toContain('Cowork')
+    expect(openMod!.html).toContain('<div class="table-scroll"><table>')
 
     const gatedMod = getPublicModuleView('1-2-privacy-shadow-ai-security')
     expect(gatedMod).not.toBeNull()

@@ -95,6 +95,8 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     const { container } = render(<AcademyPage />)
     expect(container.textContent).toMatch(/AI Chief of Staff/i)
     expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
+    expect(container.textContent).not.toContain('All 6 step-by-step')
+    expect(container.textContent).toContain('All 5 practitioner modules')
     expect(screen.getByTestId('academy-total-price').textContent).toBe('$297')
     const soloCheckoutLink = screen.getByRole('link', { name: /Enroll Now \(\$297\)/i })
     expect(soloCheckoutLink.getAttribute('href')).toBe('https://cal.com/sophia-stein/academy')
@@ -158,6 +160,11 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(container.textContent).toContain('$750')
     expect(container.textContent).toContain('$2,500')
     expect(container.textContent).toMatch(/Forward Deployed/i)
+    const scopingDownload = container.querySelector(
+      'a[href="/downloads/forward-deployed-ai-scoping-guide.md"]',
+    )
+    expect(scopingDownload).not.toBeNull()
+    expect(scopingDownload?.hasAttribute('download')).toBe(true)
     expect(container.textContent).not.toContain('$15,000 Savings Guarantee')
     expect(container.textContent?.toLowerCase()).not.toContain('ai org chart')
   })

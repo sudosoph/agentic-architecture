@@ -18,6 +18,9 @@ describe('Zero-Loom Linux Walkthrough Recorder, Reveal.js Decks & High-Ticket Ki
     expect(() =>
       buildFfmpegArgs({ framesDir: '/tmp/aa-frames', outputPath: '/tmp/bad;rm -rf.txt' }),
     ).toThrow()
+    expect(() =>
+      buildFfmpegArgs({ framesDir: '/tmp/aa-frames', outputPath: '-flag-injection.mp4' }),
+    ).toThrow()
 
     const parsed = parseRecorderCliArgs([
       '--url',
@@ -64,6 +67,9 @@ describe('Zero-Loom Linux Walkthrough Recorder, Reveal.js Decks & High-Ticket Ki
       expect(content, `${rel} double-hyphen`).not.toContain(' -- ')
       expect(content.toLowerCase(), `${rel} voice.md`).not.toContain('voice.md')
       expect(content.toLowerCase(), `${rel} ai org chart`).not.toContain('ai org chart')
+      if (rel.endsWith('.html')) {
+        expect(content, `${rel} Reveal grid display`).toContain("display: 'grid'")
+      }
     }
   })
 })

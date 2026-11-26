@@ -230,11 +230,21 @@ export default function WorkWithMePage() {
                   <Button variant="primary" size="md" href={offer.href}>
                     {offer.cta}
                   </Button>
-                  {'secondaryHref' in offer && offer.secondaryHref && (
-                    <Button variant="outline" size="md" href={offer.secondaryHref}>
-                      {offer.secondaryCta}
-                    </Button>
-                  )}
+                  {'secondaryHref' in offer &&
+                    offer.secondaryHref &&
+                    (offer.secondaryHref.startsWith('/downloads/') ? (
+                      <a
+                        href={offer.secondaryHref}
+                        download
+                        className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-4 py-2 text-sm font-semibold text-fg hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {offer.secondaryCta}
+                      </a>
+                    ) : (
+                      <Button variant="outline" size="md" href={offer.secondaryHref}>
+                        {offer.secondaryCta}
+                      </Button>
+                    ))}
                 </div>
               </Card>
             ))}

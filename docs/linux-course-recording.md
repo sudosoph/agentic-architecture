@@ -11,7 +11,7 @@ Preview the exact `ffmpeg` pipeline without launching a browser:
 ```bash
 node scripts/record-linux-walkthrough.mjs \
   --url http://localhost:3000/slides/masterclass-2026.html \
-  --slides 10 \
+  --slides 5 \
   --seconds 8 \
   --out /tmp/masterclass-2026.mp4 \
   --dry-run
@@ -22,7 +22,7 @@ Render a live `1080p` H.264 `.mp4` walkthrough while `npm run dev` is running (o
 ```bash
 node scripts/record-linux-walkthrough.mjs \
   --url http://localhost:3000/slides/curriculum-01-models-and-landscape.html \
-  --slides 8 \
+  --slides 3 \
   --seconds 10 \
   --audio /tmp/module-01-voiceover.wav \
   --out /tmp/module-01-walkthrough.mp4

@@ -23,6 +23,11 @@ describe('Public /courses/[slug] Reader & Unlisted /vault/[token] Portal', () =>
     const { container: openDom } = render(openJsx)
     expect(openDom.textContent).toContain('Unlocked Free Lesson')
     expect(openDom.querySelector('.prose')).not.toBeNull()
+    expect(openDom.querySelector('.lg\\:col-span-8.min-w-0')).not.toBeNull()
+    const slideAnchor = openDom.querySelector(
+      'a[href="/slides/curriculum-01-models-and-landscape.html"]',
+    )
+    expect(slideAnchor?.getAttribute('target')).toBe('_blank')
 
     const lockedJsx = await CourseModulePage({
       params: Promise.resolve({ slug: '1-2-privacy-shadow-ai-security' }),

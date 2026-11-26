@@ -99,7 +99,7 @@ export default async function CourseModulePage({ params }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Lesson or Syllabus Preview */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="lg:col-span-8 min-w-0 space-y-8">
             <Card className="p-6 bg-surface space-y-3">
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
                 What You Build &amp; Master in This Module
@@ -146,13 +146,14 @@ export default async function CourseModulePage({ params }: Props) {
                         Keyboard-navigable HTML slide deck built for executive briefings and team reviews.
                       </p>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <a
                       href="/slides/curriculum-01-models-and-landscape.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-3.5 py-2 text-xs font-semibold text-fg hover:border-accent hover:text-accent transition-colors shrink-0"
                     >
                       Open Slide Deck ↗
-                    </Button>
+                    </a>
                   </Card>
                 )}
 

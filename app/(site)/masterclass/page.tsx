@@ -133,9 +133,14 @@ export default function MasterclassPage() {
               <Button variant="primary" size="lg" href={SITE_CONFIG.cal.masterclass}>
                 Save My Free Live Seat →
               </Button>
-              <Button variant="outline" size="lg" href="/slides/masterclass-2026.html">
+              <a
+                href="/slides/masterclass-2026.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-5 py-3 text-sm font-semibold text-fg hover:border-accent hover:text-accent transition-colors"
+              >
                 Preview 2026 Briefing Deck ↗
-              </Button>
+              </a>
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">

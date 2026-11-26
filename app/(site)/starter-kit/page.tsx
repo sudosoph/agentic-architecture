@@ -36,9 +36,9 @@ export default function StarterKitPage() {
             Build It Solo in the $297 Academy or Book a Free 20-Min Bottleneck Call
           </h2>
           <p className="text-sm text-muted max-w-2xl leading-relaxed">
-            Bring your top-scoring bottleneck to our free 60-minute live build, unlock all 6
-            step-by-step modules in our self-paced Academy, or book a 20-minute discovery call to
-            have us scope a custom sprint.
+            Bring your top-scoring bottleneck to our free 60-minute live build, unlock all 5
+            practitioner modules in Curriculum 01 ($297), or book a 20-minute scoping call to
+            have us engineer a bespoke system.
           </p>
         </div>
 

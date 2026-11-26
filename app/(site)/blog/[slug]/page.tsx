@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: Props) {
               </h2>
               <p className="text-sm text-muted leading-relaxed">
                 {trackKey === 'small-business'
-                  ? 'Watch a live 60-minute non-coder build in our free workshop, unlock all 6 modules in our $297 Academy, or book a free 20-minute 1-Bottleneck Call to scope a custom sprint.'
+                  ? 'Watch a live 60-minute briefing, unlock all 5 practitioner modules in Curriculum 01 ($297) or all 4 curricula on /courses, or book a 20-minute call to scope a bespoke build.'
                   : 'Run your numbers in The Sovereign Stack 512GB/OSS sizer, explore our 29 systems benchmarks, or scope Fractional CAIO / AI CTO leadership and Corporate Labs.'}
               </p>
             </div>

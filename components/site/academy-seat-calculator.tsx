@@ -72,10 +72,10 @@ export function AcademySeatCalculator() {
       </div>
 
       <ul className="space-y-2 text-xs text-fg">
-        <li>✓ All 6 step-by-step non-coder business workflow modules (under 5 hours total)</li>
-        <li>✓ Importable workflow blueprints, SOP checklists &amp; prompt guardrails</li>
-        <li>✓ Founding invite when our Alumni Operator Community opens</li>
-        <li>✓ 100% of your $297 credited if you upgrade to a Guided Cohort or Custom Sprint</li>
+        <li>✓ All 5 practitioner modules in Curriculum 01 (under 4 hours total)</li>
+        <li>✓ Copy-paste SKILL.md interview harnesses, privacy matrices &amp; checklists</li>
+        <li>✓ L&amp;D stipend reimbursement template + alumni community invite</li>
+        <li>✓ 100% of your $297 credited within 60 days toward Cohorts, Corporate Labs, or Builds</li>
       </ul>
 
       <div className="flex flex-col gap-2.5 pt-1">

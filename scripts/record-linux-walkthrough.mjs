@@ -8,7 +8,14 @@ const FFMPEG_BIN = '/usr/bin/ffmpeg'
 const UNSAFE_PATH_RE = /[;&|$`\n\r\0]/
 
 function assertSafePath(p, label, allowedExts = null) {
-  if (!p || typeof p !== 'string' || UNSAFE_PATH_RE.test(p) || p.includes('..')) {
+  if (
+    !p ||
+    typeof p !== 'string' ||
+    UNSAFE_PATH_RE.test(p) ||
+    p.includes('..') ||
+    p.trim().startsWith('-') ||
+    path.basename(p).startsWith('-')
+  ) {
     throw new Error(`Unsafe or invalid ${label}: ${String(p)}`)
   }
   if (allowedExts) {
@@ -19,7 +26,7 @@ function assertSafePath(p, label, allowedExts = null) {
   }
 }
 
-export function buildFfmpegArgs({ framesDir, fps = 30, audioPath, outputPath }) {
+export function buildFfmpegArgs({ framesDir, fps = 30, audioPath = undefined, outputPath }) {
   assertSafePath(framesDir, 'framesDir')
   assertSafePath(outputPath, 'outputPath', ['.mp4', '.webm'])
   const numericFps = Number(fps)
@@ -46,7 +53,7 @@ export function buildFfmpegArgs({ framesDir, fps = 30, audioPath, outputPath }) 
 export function parseRecorderCliArgs(argv = []) {
   const opts = {
     url: 'http://localhost:3000/slides/masterclass-2026.html',
-    slides: 10,
+    slides: 5,
     secondsPerSlide: 6,
     outputPath: path.join(os.tmpdir(), 'agentic-architect-walkthrough.mp4'),
     audioPath: undefined,

@@ -61,6 +61,8 @@ async function mdxToHtml(content) {
   const stripped = content.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
   const file = await processor.process(stripped)
   return String(file)
+    .replace(/<table>/g, '<div class="table-scroll"><table>')
+    .replace(/<\/table>/g, '</table></div>')
 }
 
 function extractToc(html) {
