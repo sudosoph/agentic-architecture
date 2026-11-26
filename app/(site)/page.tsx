@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { HeroBlueprintSwitcher } from '@/components/site/hero-blueprint'
+import { ProductiveFrictionDemo } from '@/components/site/productive-friction-demo'
+import { BespokeStackSelector } from '@/components/site/bespoke-stack-selector'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
@@ -78,28 +80,28 @@ const HOME_ENTITY_GRAPH_LD = {
 
 const PATH_CARDS = [
   {
-    eyebrow: '1. Learn to Build It Yourself (Non-Coders)',
-    title: '5-Day Challenge, $297 Academy & Cohort',
-    body: 'Go from ChatGPT prompting to a working automation in our free 5-day challenge and 60-min live workshop, then master all 6 workflows in our self-paced Academy or guided cohort.',
-    cta: 'Start Free Workshop & Courses',
+    eyebrow: '1. 4-Curriculum AI Architecture Academy',
+    title: 'Models, Productive Friction, APIs & Rigs',
+    body: 'Four structured curricula spanning 2026 model routing and interview-first Skills ($297), department build-vs-buy ($397), bespoke API harnesses ($497), and private open-weight rigs ($497).',
+    cta: 'Explore All 4 Curricula & Free Modules',
     href: '/courses',
-    badge: 'Free Challenge + From $297',
+    badge: '4 Unlocked Lessons + From $297',
     badgeColor: 'green' as const,
   },
   {
-    eyebrow: '2. Have Us Automate 1 Bottleneck',
-    title: 'Custom Workflow Sprints (Done-For-You)',
-    body: 'Book a free 20-minute 1-Bottleneck Audit Call. We inspect one manual drain in your business, send a clear fixed-scope proposal (sprints from $2,500), and ship inside your own accounts.',
-    cta: 'Explore Custom Sprints',
+    eyebrow: '2. Forward Deployed Build-For-You',
+    title: 'Bespoke AI Harnesses & System Integration',
+    body: 'Skip bloated SaaS wrappers and slide-only agencies. Embed Forward Deployed AI engineering to connect best-of-breed APIs, multi-model routers, and codified department skills inside your stack.',
+    cta: 'Scope a Bespoke Build or Sprint',
     href: '/work-with-me',
-    badge: 'Free 20-Min Bottleneck Call',
+    badge: 'Pilot Sprints & Multi-Month Builds',
     badgeColor: 'amber' as const,
   },
   {
-    eyebrow: '3. Mid-Market & Engineering Leaders',
-    title: 'Fractional CAIO / AI CTO & Corporate Labs',
-    body: 'For companies past the demo and stuck before production: part-time Fractional Chief AI Officer or AI CTO leadership, department workshops, and 29 systems benchmarks.',
-    cta: 'Explore Fractional AI Roles',
+    eyebrow: '3. Corporate Training, Keynotes & Fractional',
+    title: 'Fractional CAIO / AI CTO & Department Labs',
+    body: 'Executive AI governance, 2-week architecture diagnostics, conference keynotes, and hands-on Marketing, Finance, Legal, and Ops labs led by Columbia CS + ex-McKinsey leadership.',
+    cta: 'Explore Fractional & Corporate Labs',
     href: '/fractional-ai-cto',
     badge: 'Columbia CS · Ex-McKinsey',
     badgeColor: 'blue' as const,
@@ -117,12 +119,12 @@ const CREDENTIAL_CHIPS = [
 export default function HomePage() {
   const allPosts = getAllPosts()
   const buyerSlugs = new Set([
+    'productive-friction-interview-ai',
+    'vertical-ai-vs-bespoke-api-harnesses',
+    'forward-deployed-ai-engineering',
     'ai-back-office',
-    'ai-chief-of-staff',
     'hire-ai-agency-vs-in-house',
     'loop-engineering',
-    'gemini-4-neon-vs-deepseek-v4',
-    'instinct-ai-vs-tab-review',
   ])
   const buyerFeatured = allPosts.filter(p => buyerSlugs.has(p.slug)).slice(0, 6)
   const recentPosts = buyerFeatured.length >= 6 ? buyerFeatured : allPosts.slice(0, 6)
@@ -156,18 +158,18 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
-              90% of businesses do not need fragile bots that hallucinate or another $65,000
-              coordinator hire. Learn to wire durable AI workflows in our non-coder courses,
-              commission a focused automation sprint, or engage Sophia for Fractional CAIO / AI CTO
-              leadership and corporate training.
+              Move past ad-hoc prompting and overpriced SaaS wrappers. Master our 4-curriculum AI
+              Architecture Academy (from non-coder Productive-Friction Skills to bespoke API
+              harnesses and private open-weight rigs), commission a Forward Deployed build, or
+              engage Sophia for Fractional CAIO / AI CTO leadership and corporate training.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Button variant="primary" size="lg" href="/masterclass">
-                Join the Free 60-Min Live Build
+              <Button variant="primary" size="lg" href="/courses">
+                Explore the 4-Curriculum Academy
               </Button>
               <Button variant="outline" size="lg" href="/work-with-me">
-                Automate a Bottleneck
+                Forward Deployed Builds &amp; Advisory
               </Button>
             </div>
 
@@ -245,6 +247,12 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+        </section>
+
+        {/* Live Methodological Proof: Productive Friction + Bespoke Stack Selector */}
+        <section className="space-y-8">
+          <ProductiveFrictionDemo />
+          <BespokeStackSelector />
         </section>
 
         {/* Executive & Enterprise Fractional Callout */}

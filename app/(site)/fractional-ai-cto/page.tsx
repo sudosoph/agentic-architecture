@@ -21,9 +21,9 @@ const FRACTIONAL_ROLES = [
     audience: 'For $3M to $50M+ CEOs, COOs, Healthcare Groups & Multi-Location Firms',
     body: '75% of organizations have bought AI chat seats, yet fewer than 5% have repeatable, governed workflows moving EBITDA. As your Fractional CAIO, I own the AI roadmap across Sales, Operations, Finance, and Client Delivery, cut overlapping SaaS spend, set compliance guardrails, and upskill internal champions without the $300K+ overhead of a full-time executive hire.',
     deliverables: [
-      'Company-wide workflow ROI prioritization & SaaS/vendor rationalization',
-      'Data privacy, HIPAA/SOC2-aligned usage policies & human sign-off gates',
-      'Department rollout oversight and board/leadership progress reporting',
+      'Department build-vs-buy & AI FinOps rationalization across Marketing, Finance, Legal & Ops',
+      'Data privacy (ZDR, 3P VPC, open-weight boundaries), HIPAA/SOC2 policies & L1-L5 approval gates',
+      'Training internal Forward Deployed AI champions and board-level throughput reporting',
     ],
     ctaLabel: 'Scope Fractional CAIO Fit →',
   },

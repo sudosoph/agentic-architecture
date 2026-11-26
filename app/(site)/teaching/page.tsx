@@ -15,22 +15,22 @@ export const metadata: Metadata = {
 
 const KEYNOTES = [
   {
-    audience: 'Founders, Leadership & Non-Technical Teams',
-    title: 'From Chatting to Systems: Practical AI Enablement for Non-Technical Teams',
+    audience: 'Conferences, Leadership & Cross-Functional Teams',
+    title: 'Productive Friction: Why Interview-First AI Harnesses Beat Ad-Hoc Prompting',
     takeaway:
-      'Moves organizations beyond ad-hoc prompting into standardized SOP rules, scored task roadmaps, and human-approved operational workflows.',
+      'Shows why sycophantic 1-line chat prompts manufacture hallucinations, and how Socratic SKILL.md interview loops extract unwritten company expertise and cut errors by design.',
   },
   {
-    audience: 'Executives, COOs & Engineering/Product Leads',
-    title: 'Choosing What Ships: AI Cost Control, Model Strategy, and Measurable ROI',
+    audience: 'Executives, COOs, CMOs, CFOs & General Counsel',
+    title: 'Vertical AI vs. Bespoke API Harnesses: Running Marketing, Finance, Legal & Ops on AI',
     takeaway:
-      'A plain-English unit-economics playbook for routing 90% of routine tasks to fast, low-cost setups while reserving frontier budgets for high-stakes reasoning.',
+      'A vendor-neutral build-vs-buy teardown separating mature vertical platforms worth buying from thin SaaS wrappers your team should replace with connected, low-cost primitives.',
   },
   {
-    audience: 'Regulated Organizations, Healthcare & Technical Teams',
-    title: 'Sovereign AI for Organizations: Private Infrastructure and Human-in-the-Loop Governance',
+    audience: 'CTOs, Regulated Healthcare/Legal Teams & Engineering Orgs',
+    title: 'Frontier vs. Open-Weights & The Forward Deployed AI Operating Model',
     takeaway:
-      'How modern teams protect customer data, design audit trails, and run private AI workloads without vendor lock-in.',
+      'How modern organizations combine Zero-Retention APIs, private open-weight nodes, 25-case Golden Evals, and internal Forward Deployed AI champions without vendor lock-in.',
   },
 ]
 

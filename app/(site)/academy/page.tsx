@@ -5,79 +5,44 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AcademySeatCalculator } from '@/components/site/academy-seat-calculator'
+import { ProductiveFrictionDemo } from '@/components/site/productive-friction-demo'
+import { getModulesByCurriculum } from '@/lib/curriculum'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Practical AI Workflow Academy ($297) · Build Your AI Chief of Staff Without Code',
+  title: 'Curriculum 01 ($297): Applied AI Foundations, Models & Productive-Friction Skills',
   description:
-    'Self-paced business automation course for non-technical founders, EAs, and ops managers: wire your AI Chief of Staff, pre-call dossiers, inbox triage, and client onboarding in under 5 hours.',
+    'Flagship foundations course for founders, executives, managers, and operators: master the 2026 model matrix, privacy tradeoffs, interview-first Skills, agentic workspaces without code, and org-wide upskilling.',
   alternates: { canonical: '/academy' },
 }
 
-const MODULES = [
-  {
-    num: 'Module 01',
-    title: 'Bottleneck Audit & Company Operating Rules',
-    duration: '35 mins',
-    body: 'Score your weekly bottlenecks so you never automate the wrong task, and document your pricing, qualification, and communication rules once.',
-  },
-  {
-    num: 'Module 02',
-    title: 'Your AI Chief of Staff & Calendar Prep Pipeline',
-    duration: '50 mins',
-    body: 'Connect calendar bookings and meeting notes so every external call triggers an account dossier 30 minutes ahead and logs open commitments afterward.',
-  },
-  {
-    num: 'Module 03',
-    title: 'Draft-First Inbox Triage & 5-Day Deal Follow-Ups',
-    duration: '50 mins',
-    body: 'Sort repetitive inquiries, stage accurate replies in Drafts, and automate polite Day-2 and Day-5 follow-ups with a 10-second human approval click.',
-  },
-  {
-    num: 'Module 04',
-    title: 'Discovery-to-Proposal & Client Onboarding Automation',
-    duration: '55 mins',
-    body: 'Turn call recordings and intake forms into scoped client proposals, welcome packets, and internal delivery checklists the same afternoon.',
-  },
-  {
-    num: 'Module 05',
-    title: 'No-Code Workspace Connectors & Internal SOP Search',
-    duration: '50 mins',
-    body: 'Every click shown across modern workspace connectors and automation workflows so staff can answer policy and SOP questions without pinging the owner.',
-  },
-  {
-    num: 'Module 06',
-    title: 'Client Data Privacy, Scoped Permissions & Cost Ceilings',
-    duration: '35 mins',
-    body: 'Lock down tool permissions, keep confidential client records off public model training, and eliminate overlapping monthly software subscriptions.',
-  },
-]
-
 const ACADEMY_FAQS = [
   {
-    q: 'Is this built for non-technical business owners and assistants?',
-    a: 'Yes. Zero Python or software engineering is required. Every lesson shares the screen click-by-click on everyday business tools so you, your Executive Assistant, or your Ops Manager can build and maintain each workflow confidently.',
+    q: 'Do non-technical founders, managers, and operators need coding experience?',
+    a: 'No. Curriculum 01 teaches rigorous architecture in plain English: choosing the right model class, setting Green/Amber/Red privacy boundaries, writing Socratic SKILL.md interview harnesses that stop hallucinations, and running modern folder-based workspaces (including AI Chief of Staff and operational workflows) without Python.',
   },
   {
-    q: 'What if I buy the $297 Academy and decide I want Sophia to build a workflow for us instead?',
-    a: 'Every dollar of your $297 Academy enrollment credits directly toward our Guided 6-System Cohort (from $1,497) or a Done-For-You Custom Bottleneck Sprint (from $2,500) whenever you want hands-on help.',
+    q: 'How does Curriculum 01 connect to your advanced API, Department, and Sovereign Rig courses?',
+    a: 'Curriculum 01 ($297) builds the core mental models and workspace habits. From there, functional VPs continue into Curriculum 02 (Department Build-vs-Buy, $397), builders advance into Curriculum 03 (Bespoke APIs & Forward Deployed Engineering, $497), and technical leads add Curriculum 04 (Sovereign Open-Weight Rigs, $497), or grab the $997 All-Access Pass on /courses.',
   },
   {
-    q: 'Are you looking for corporate department training or a Fractional Chief AI Officer instead?',
-    a: 'For organizations with 25 to 500+ staff or engineering teams seeking a Fractional CAIO, Fractional AI CTO, or private corporate workshop, visit our dedicated Enterprise & Fractional hub at /fractional-ai-cto.',
+    q: 'Can I credit my $297 enrollment toward a Cohort, Corporate Lab, or Bespoke Build?',
+    a: 'Yes. 100% of your $297 tuition credits within 60 days toward our Guided Implementation Cohort ($1,497), a Half-Day or Full-Day Corporate Department Training ($7,500+), or a Forward Deployed Build-For-You engagement on /work-with-me.',
   },
 ]
 
 export default function AcademyPage() {
+  const foundationsModules = getModulesByCurriculum('foundations')
+
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'Course',
         '@id': `${SITE_CONFIG.siteUrl}/academy#course`,
-        name: 'Practical AI Workflow Academy: Build Your AI Chief of Staff & 6 Business Automations',
+        name: 'Curriculum 01: Applied AI Foundations, Models, Productive Friction & Codified Skills',
         description:
-          'Self-paced 6-module business automation course for non-technical owners, EAs, and operations leads.',
+          '5-module foundations curriculum for leaders and non-technical operators covering the 2026 model matrix, privacy tradeoffs, Socratic interview Skills, agentic workspaces, and organizational upskilling.',
         provider: {
           '@type': 'Organization',
           '@id': `${SITE_CONFIG.siteUrl}/#organization`,
@@ -114,32 +79,61 @@ export default function AcademyPage() {
       <div className="space-y-14">
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <Badge variant="online">Non-Technical Business Owner Track · Self-Paced Course</Badge>
-            <Link href="/fractional-ai-cto" className="font-mono text-xs text-accent hover:underline">
-              Mid-market executive or CTO looking for Fractional AI Leadership? Go here →
+            <Badge variant="online">
+              Curriculum 01 of 4 · Foundations for Leaders, Managers &amp; Non-Coders
+            </Badge>
+            <Link href="/courses" className="font-mono text-xs text-accent hover:underline">
+              Looking for Department AI, Bespoke APIs, or Sovereign Rig Curricula? View all 4 →
             </Link>
           </div>
 
           <PageHeader
-            meta="6 Practical Modules · Under 5 Hours · Every Click Shown"
-            title="Build Your AI Chief of Staff &amp; First 6 Business Automations"
-            description="The practical, zero-coding implementation course for business owners, Executive Assistants, and Ops Leads who want dependable automations running this week without paying a $20,000 agency."
+            meta="5 Practitioner Modules · Module 1.1 Unlocked Free · L&D Stipend Eligible"
+            title="Applied AI Foundations: Models, Productive Friction &amp; Codified Skills"
+            description="Replace ad-hoc chat prompting with engineered interview harnesses, clear privacy boundaries, folder-based agentic workspaces (your real AI Chief of Staff), and a 90-day team upskilling charter."
           />
+
+          <div className="flex flex-wrap gap-3 pt-1">
+            <Button variant="primary" size="md" href="/courses/1-1-2026-ai-landscape-model-matrix">
+              Read Module 1.1 Free Now →
+            </Button>
+            <a
+              href="/downloads/ld-stipend-approval-letter.md"
+              download
+              className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-4 py-2 text-sm font-semibold text-fg hover:border-accent hover:text-accent transition-colors"
+            >
+              Download L&amp;D Stipend Letter ↓
+            </a>
+          </div>
         </div>
 
         {/* Split Curriculum + Interactive Team Seat Calculator */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-7 space-y-4">
-            <h2 className="text-xl font-bold text-fg">Inside the 6-Module Curriculum</h2>
+            <h2 className="text-xl font-bold text-fg">Inside Curriculum 01 (5 Modules)</h2>
             <div className="grid grid-cols-1 gap-4">
-              {MODULES.map(mod => (
-                <Card key={mod.num} className="p-5 space-y-1.5">
+              {foundationsModules.map(mod => (
+                <Card key={mod.slug} className="p-5 space-y-2">
                   <div className="flex items-center justify-between gap-2 font-mono text-xs">
-                    <span className="font-bold text-accent">{mod.num}</span>
-                    <span className="text-muted">{mod.duration}</span>
+                    <span className="font-bold text-accent">
+                      Module {mod.frontmatter.moduleCode} · {mod.frontmatter.durationMinutes} mins
+                    </span>
+                    <Link
+                      href={`/courses/${mod.slug}`}
+                      className={
+                        mod.frontmatter.unlocked
+                          ? 'text-online font-bold hover:underline'
+                          : 'text-accent hover:underline'
+                      }
+                    >
+                      {mod.frontmatter.unlocked ? 'Unlocked Free Lesson →' : 'Syllabus Preview →'}
+                    </Link>
                   </div>
-                  <h3 className="text-base font-bold text-fg">{mod.title}</h3>
-                  <p className="text-xs text-muted leading-relaxed">{mod.body}</p>
+                  <h3 className="text-base font-bold text-fg">{mod.frontmatter.title}</h3>
+                  <p className="text-xs text-muted leading-relaxed">{mod.frontmatter.summary}</p>
+                  <p className="font-mono text-[11px] text-muted pt-1 border-t border-border">
+                    Artifact: {mod.frontmatter.artifact}
+                  </p>
                 </Card>
               ))}
             </div>
@@ -150,33 +144,36 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        {/* Clean Upsell Bridge to Done-For-You Sprint */}
+        <ProductiveFrictionDemo />
+
+        {/* Clean Upsell Bridge to Forward Deployed Builds & Corporate Labs */}
         <Card className="p-6 md:p-8 bg-surface flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
           <div className="space-y-1 max-w-2xl">
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-rig">
-              Short on Time? Have Us Build 1 Bottleneck For You Instead
+              100% Tuition Credit Toward Live Trainings &amp; Bespoke Builds
             </p>
             <h2 className="text-xl font-bold text-fg">
-              Prefer a Done-For-You Automation Sprint Inside Your Accounts?
+              Want Corporate Department Training or a Forward Deployed System Built For You?
             </h2>
             <p className="text-sm text-muted leading-relaxed">
-              Book a free 20-minute 1-Bottleneck Discovery Call to scope a custom build (from
-              $2,500) or schedule a single-session $750 Workflow &amp; Cost Roadmap.
+              Bring this curriculum live to your company ($7,500 Half-Day / $15,000 Full-Day Lab)
+              or book a 20-minute scoping call to have us architect bespoke API harnesses across
+              your stack.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
             <Button variant="primary" size="md" href={SITE_CONFIG.cal.scoping}>
-              Free 20-Min Bottleneck Call →
+              Book 20-Min Scoping Call →
             </Button>
             <Button variant="outline" size="md" href="/work-with-me">
-              Compare Custom Sprints
+              Forward Deployed Builds
             </Button>
           </div>
         </Card>
 
         {/* FAQ */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-fg">Academy &amp; Team Seat FAQ</h2>
+          <h2 className="text-2xl font-bold text-fg">Curriculum 01 &amp; Team Seat FAQ</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {ACADEMY_FAQS.map(faq => (
               <Card key={faq.q} className="p-6 space-y-2">

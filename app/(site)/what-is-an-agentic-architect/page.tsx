@@ -69,9 +69,9 @@ const FOUR_LAYERS = [
     badgeVariant: 'tag' as const,
     summary:
       'Agents become useful when connected to calendars, inboxes, docs, and databases, and dangerous when given unrestricted write access. This layer enforces scoped OAuth tokens, Model Context Protocol (MCP) tool boundaries, and draft-only defaults for external actions.',
-    linkHref: '/blog/mcp-security-audit',
+    linkHref: '/blog/mcp-server-audit-2026',
     linkLabel: 'Read the MCP Security Audit →',
-    secondaryHref: '/blog/agent-oauth',
+    secondaryHref: '/blog/the-4-legged-identity',
     secondaryLabel: 'Scoped OAuth for Agents',
   },
   {
@@ -82,7 +82,7 @@ const FOUR_LAYERS = [
       'Not every bottleneck should be an autonomous loop. An Agentic Architect scores candidate workflows across volume, variability, error safety, and verification signal, then pairs deterministic steps with lightweight evaluation harnesses so regressions get caught before customers see them.',
     linkHref: '/blog/agent-ready-tasks',
     linkLabel: 'Run the 90-Min Task Readiness Scorecard →',
-    secondaryHref: '/blog/eval-harness',
+    secondaryHref: '/blog/eval-harness-catches-regressions',
     secondaryLabel: 'Build a Production Eval Harness',
   },
   {

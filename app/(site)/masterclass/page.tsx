@@ -18,24 +18,24 @@ export const metadata: Metadata = {
 const AGENDA = [
   {
     window: 'Minutes 00 to 20',
-    title: 'Bottleneck Triage: Picking the Right Process First',
+    title: '2026 Model Matrix & Productive Friction Over Ad-Hoc Chat',
     detail:
-      'Why ad-hoc chat prompting makes you the bottleneck, how to score repetitive operations for ROI, and how to separate human judgment from automated prep.',
-    outcome: 'Interactive 20/80 Bottleneck Scorecard',
+      'Where frontier and open-weight models actually stand today, why lazy 1-line prompts manufacture hallucinations, and how Socratic interview Skills extract tribal SOPs first.',
+    outcome: 'Unlocked Module 1.1 + Socratic SKILL.md Template',
   },
   {
     window: 'Minutes 20 to 40',
-    title: 'Live Build: Pre-Call Dossiers & Draft-First Inbox Triage',
+    title: 'Live Architecture Build: Bespoke Harnesses & Draft Gates',
     detail:
-      'Watch a real non-coder setup connecting calendar bookings, prospect research, and Gmail Drafts with a 10-second human sign-off so nothing reckless ever auto-sends.',
-    outcome: 'Reclaims 8 to 15 hrs/week of manual follow-up',
+      'Watch a live walkthrough connecting folder-based workspaces, best-of-breed Search/OCR/Calendar connectors, and Level-2 Draft-First approval gates without vendor lock-in.',
+    outcome: 'Working Blueprint + HTML Presentation Deck (/slides/masterclass-2026.html)',
   },
   {
     window: 'Minutes 40 to 60',
-    title: 'Data Privacy, Cost Ceilings & Your Next Workflow',
+    title: 'Department Build-vs-Buy, Privacy Tiers & Rollout Roadmap',
     detail:
-      'How to keep client files off public training pipelines, avoid $20,000 black-box agency lock-in, and decide whether to DIY in our courses or commission a sprint.',
-    outcome: '5-day Prompt-to-System challenge checklist + Q&A',
+      'Evaluating vertical AI vs. bespoke builds across Marketing, Finance, Legal, and Ops, setting Green/Amber/Red data boundaries, and Q&A on cohorts, corporate labs, and custom builds.',
+    outcome: '5-Day Applied AI Architecture Primer + Live Q&A',
   },
 ]
 
@@ -119,22 +119,22 @@ export default function MasterclassPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-fg leading-tight">
-              Prompt-to-System: Go From Ad-Hoc ChatGPT Prompts to 1 Running Business Automation in 60 Minutes
+              Beyond Ad-Hoc Prompting: Productive Friction, Bespoke AI Harnesses &amp; Running Your Org on AI (60-Min Live Briefing)
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed">
-              Most businesses do not need complex autonomous agents that break every Tuesday; they
-              need clean, owned workflows that handle intake, call prep, and follow-ups reliably.
-              Watch us wire a real back-office workflow live on screen and get our 5-day starter
-              challenge free.
+              Most teams buy AI chat seats and stall before measurable production ROI. In 60
+              minutes, learn our late-2026 model and privacy matrix, see how Interview-First Skills
+              eliminate hallucinations, and inspect when to buy vertical AI versus composing your
+              own bespoke stack.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-1">
               <Button variant="primary" size="lg" href={SITE_CONFIG.cal.masterclass}>
                 Save My Free Live Seat →
               </Button>
-              <Button variant="outline" size="lg" href="/starter-kit">
-                Score Your #1 Bottleneck Free
+              <Button variant="outline" size="lg" href="/slides/masterclass-2026.html">
+                Preview 2026 Briefing Deck ↗
               </Button>
             </div>
 

@@ -5,105 +5,157 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import { ProductiveFrictionDemo } from '@/components/site/productive-friction-demo'
+import { BespokeStackSelector } from '@/components/site/bespoke-stack-selector'
+import {
+  ALL_ACCESS_PASS,
+  CURRICULA,
+  getModulesByCurriculum,
+} from '@/lib/curriculum'
 import { SITE_CONFIG } from '@/lib/site-config'
 import fiveDayChallenge from '@/content/courses/five-day-prompt-to-system.json'
 
 export const metadata: Metadata = {
-  title: 'AI Automation Courses for Non-Technical Owners, Cohort & Custom Sprints',
+  title: 'AI Architecture Curricula: Models, Productive Friction, Bespoke APIs & Sovereign Rigs',
   description:
-    'Start free in our 5-Day Prompt-to-System Challenge and 60-Min Live Build, learn step-by-step in our $297 Self-Paced Academy, or train your operator in our guided cohort.',
+    'Four structured practitioner curricula (20 modules) spanning late-2026 models and interview-first Skills, department build-vs-buy playbooks, bespoke API harnesses, and private open-weight rigs.',
   alternates: { canonical: '/courses' },
 }
-
-const LADDER = [
-  {
-    step: 'Step 01 · Start Free',
-    badge: 'Every Click Shown',
-    badgeVariant: 'online' as const,
-    title: '5-Day Prompt-to-System Challenge & 60-Min Live Build',
-    price: '$0',
-    body: 'Score your #1 operational bottleneck with our 20/80 Readiness Calculator and watch a working lead-prep and inbox workflow built live without code.',
-    primaryHref: '/masterclass',
-    primaryCta: 'Join Free Live Workshop →',
-    secondaryHref: '/starter-kit',
-    secondaryCta: 'Run Free Bottleneck Scorer',
-  },
-  {
-    step: 'Step 02 · Self-Paced Course',
-    badge: '+$97 Per Team Seat',
-    badgeVariant: 'rig' as const,
-    title: 'Practical AI Workflow Academy (For Non-Coders)',
-    price: 'From $297 (Lifetime Access)',
-    body: 'Six concise modules showing non-technical founders, EAs, and ops leads how to wire an AI Chief of Staff, pre-call dossiers, draft-first inbox triage, and client onboarding.',
-    primaryHref: '/academy',
-    primaryCta: 'Explore $297 Academy →',
-    secondaryHref: '/guides',
-    secondaryCta: 'Preview Free Sample Build',
-  },
-  {
-    step: 'Step 03 · Guided Cohort or Custom',
-    badge: 'Includes Free Operator Seat',
-    badgeVariant: 'tag' as const,
-    title: '6-System Back-Office Cohort & Custom Sprints',
-    price: 'Cohort from $1,497 · Sprints from $2,500',
-    body: 'Want live feedback alongside your EA/Ops Manager over 6 weeks, or want Sophia to ship a custom bottleneck automation inside your workspace? Book a quick 20-minute fit call.',
-    primaryHref: '/accelerator',
-    primaryCta: 'Explore Guided Cohort →',
-    secondaryHref: SITE_CONFIG.cal.scoping,
-    secondaryCta: 'Free 20-Min Fit Call',
-  },
-]
 
 export default function CoursesPage() {
   return (
     <div className="space-y-14">
-      <PageHeader
-        meta="Free 5-Day Challenge · $297 Self-Paced Academy · Guided Cohort"
-        title="Where Are You With AI Right Now?"
-        description="Practical, zero-jargon automation training built for non-technical business owners and operators, backed by Columbia CS and ex-McKinsey engineering standards."
-      />
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Badge variant="online">
+            4 Practitioner Curricula · 20 Modules · Module x.1 Unlocked Free in Every Track
+          </Badge>
+          <a
+            href="/downloads/ld-stipend-approval-letter.md"
+            download
+            className="font-mono text-xs text-accent hover:underline"
+          >
+            Expensing via Corporate L&amp;D Stipend? Download Approval Letter ↓
+          </a>
+        </div>
 
-      {/* 3-Step Value Ladder */}
-      <section id="starter-kit" className="grid grid-cols-1 lg:grid-cols-3 gap-6 scroll-mt-20">
-        {LADDER.map(tier => (
-          <Card key={tier.title} className="p-6 flex flex-col justify-between space-y-5">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                  {tier.step}
-                </span>
-                <Badge variant={tier.badgeVariant}>{tier.badge}</Badge>
-              </div>
-              <h2 className="text-xl font-bold text-fg leading-snug">{tier.title}</h2>
-              <p className="text-lg font-extrabold text-fg">{tier.price}</p>
-              <p className="text-sm text-muted leading-relaxed">{tier.body}</p>
-            </div>
+        <PageHeader
+          meta="Columbia CS · Ex-McKinsey · Built for Leaders, Operators & Forward Deployed Builders"
+          title="The Applied AI Architecture Academy"
+          description="Start free inside Module x.1 of every curriculum. Master where models stand today, engineer Productive-Friction interview harnesses, evaluate Vertical AI vs. bespoke APIs across Marketing, Finance, Legal, and Ops, or size full private open-weight rigs."
+        />
+      </div>
 
-            <div className="flex flex-col gap-2.5 pt-3 border-t border-border">
-              <Button variant="primary" size="md" href={tier.primaryHref}>
-                {tier.primaryCta}
-              </Button>
-              <Button variant="outline" size="md" href={tier.secondaryHref}>
-                {tier.secondaryCta}
-              </Button>
-            </div>
-          </Card>
-        ))}
+      {/* All-Access Architect Pass Banner */}
+      <Card className="p-6 md:p-8 border-accent bg-blue-50/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div className="space-y-2 max-w-2xl">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="rig">Save $691 Across All 4 Tracks</Badge>
+            <span className="font-mono text-xs text-muted">
+              100% Tuition Credit Toward Cohorts, Corporate Labs &amp; Bespoke Builds
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-fg">{ALL_ACCESS_PASS.title}</h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Get instant access to all 20 modules, reusable <code className="font-mono">SKILL.md</code>{' '}
+            and schema libraries, best-of-breed API recipes, and our L&amp;D reimbursement kit for{' '}
+            <strong className="text-fg">${ALL_ACCESS_PASS.priceUsd}</strong>. Every dollar credits
+            within 60 days toward our $1,497 Guided Cohort, Corporate Trainings ($7,500+), or a
+            Forward Deployed Build-For-You engagement.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3 shrink-0">
+          <Button variant="primary" size="lg" href={ALL_ACCESS_PASS.checkoutHref}>
+            Get All-Access Pass (${ALL_ACCESS_PASS.priceUsd}) →
+          </Button>
+          <Button variant="outline" size="lg" href="/academy">
+            Start With Curriculum 01 ($297)
+          </Button>
+        </div>
+      </Card>
+
+      {/* 4-Curriculum Grid */}
+      <section id="starter-kit" className="space-y-6 scroll-mt-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {CURRICULA.map(curr => {
+            const modules = getModulesByCurriculum(curr.id)
+            const freeMod = modules[0]
+            return (
+              <Card key={curr.id} className="p-6 md:p-7 flex flex-col justify-between space-y-5">
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent">
+                      {curr.number} · ${curr.priceUsd}
+                    </span>
+                    <Badge variant="tag">{curr.audience}</Badge>
+                  </div>
+
+                  <div>
+                    <h2 className="text-xl font-bold text-fg leading-snug">{curr.title}</h2>
+                    <p className="text-sm text-muted leading-relaxed mt-1.5">{curr.subtitle}</p>
+                  </div>
+
+                  <ul className="divide-y divide-border border-t border-b border-border">
+                    {modules.map(m => (
+                      <li key={m.slug} className="py-2.5 flex items-center justify-between gap-3">
+                        <Link
+                          href={`/courses/${m.slug}`}
+                          className="text-xs font-medium text-fg hover:text-accent hover:underline"
+                        >
+                          <span className="font-mono text-accent font-semibold mr-2">
+                            {m.frontmatter.moduleCode}
+                          </span>
+                          {m.frontmatter.title}
+                        </Link>
+                        <Link
+                          href={`/courses/${m.slug}`}
+                          className={`font-mono text-[11px] shrink-0 hover:underline ${
+                            m.frontmatter.unlocked ? 'text-online font-bold' : 'text-muted'
+                          }`}
+                        >
+                          {m.frontmatter.unlocked ? 'Read Free →' : 'Syllabus →'}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5">
+                  {freeMod && (
+                    <Button variant="primary" size="sm" href={`/courses/${freeMod.slug}`}>
+                      Read Module {freeMod.frontmatter.moduleCode} Free →
+                    </Button>
+                  )}
+                  <Button variant="outline" size="sm" href={curr.checkoutHref}>
+                    Enroll (${curr.priceUsd})
+                  </Button>
+                  <Button variant="ghost" size="sm" href={curr.upsellHref}>
+                    Team / Live Option
+                  </Button>
+                </div>
+              </Card>
+            )
+          })}
+        </div>
       </section>
 
-      {/* 5-Day Prompt-to-System Free Business Challenge Preview */}
+      {/* Interactive Methodology Previews */}
+      <ProductiveFrictionDemo />
+      <BespokeStackSelector />
+
+      {/* 5-Day Prompt-to-System Free Starter Sequence */}
       <section className="rounded-2xl border border-border bg-white p-6 md:p-8 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div className="space-y-1">
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Step 01 Preview · 5 Daily Business Lessons
+              Free 5-Day Email Primer · Delivered Automatically on Signup
             </p>
             <h2 className="text-2xl font-bold text-fg">
-              Inside the Free 5-Day Prompt-to-System Challenge
+              Inside the Free 5-Day Applied AI Architecture Primer
             </h2>
           </div>
-          <Button variant="outline" size="sm" href="/starter-kit">
-            Start Day 1 Scorer Now →
+          <Button variant="outline" size="sm" href="/masterclass">
+            Join Free 60-Min Live Briefing →
           </Button>
         </div>
 
@@ -121,71 +173,50 @@ export default function CoursesPage() {
                 href={lesson.ctaUrl.replace('https://agenticarchitect.ai', '') || '/'}
                 className="font-mono text-xs font-semibold text-accent hover:underline"
               >
-                Open Day {lesson.day} Tool →
+                Open Day {lesson.day} Resource →
               </a>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Open-Source Workshop & Guides Strip */}
-      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="space-y-1.5 max-w-2xl">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-            Open-Source Lab Archives
-          </p>
+      {/* Corporate, Cohort & Sovereign Book Bridge */}
+      <section id="book" className="grid grid-cols-1 lg:grid-cols-2 gap-6 scroll-mt-20">
+        <Card className="p-6 md:p-8 space-y-4 bg-surface">
+          <Badge variant="online">Cohorts · Corporate Labs · Forward Deployed Builds</Badge>
           <h2 className="text-xl font-bold text-fg">
-            Prefer Self-Paced Technical Labs &amp; Forkable GitHub Workflows?
+            Bringing This Curriculum to Your Organization or Commissioning a Build?
           </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Explore the full 17-step Boulder Startup Week Discovery Engine lab at{' '}
-            <Link href="/bsw" className="text-accent font-medium hover:underline">
-              /bsw
-            </Link>{' '}
-            and beginner step-by-step builds at{' '}
-            <Link href="/guides" className="text-accent font-medium hover:underline">
-              /guides
-            </Link>
-            .
+            We run private Half-Day ($7,500) and Full-Day ($15,000) Corporate Labs with Marketing,
+            Finance, Legal, and Ops breakouts, small-group Guided Cohorts ($1,497), and multi-month
+            Forward Deployed bespoke system builds.
           </p>
-        </div>
-        <div className="flex flex-wrap gap-3 shrink-0">
-          <Button variant="outline" size="md" href="/bsw">
-            BSW Workshop Archive →
-          </Button>
-          <Button variant="ghost" size="md" href="/guides">
-            Step-by-Step Guides →
-          </Button>
-        </div>
-      </section>
-
-      {/* The Book Section (#book) */}
-      <section id="book" className="scroll-mt-20">
-        <Card className="p-6 md:p-8 space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="tag">Executive &amp; Builder Field Guide</Badge>
-            <span className="font-mono text-xs text-muted">
-              18 Live Chapters + 3 Free Downloadable Manuals
-            </span>
-          </div>
-          <h2 className="text-2xl font-bold text-fg">
-            The Sovereign Stack: Practical Workflows, Cost Strategy &amp; Private AI You Actually Own
-          </h2>
-          <p className="text-sm text-muted leading-relaxed max-w-3xl">
-            Our open field manual for founders, operators, and engineering leaders on designing
-            portable context vaults, scoring automation-ready tasks, keeping cloud spend
-            predictable, and owning your workflows and private infrastructure.
-          </p>
-          <div className="flex flex-wrap gap-3 pt-1">
-            <Button variant="primary" size="md" href="/sovereign-stack">
-              Read All 18 Live Chapters &amp; Download 3 OSS Manuals →
+          <div className="flex flex-wrap gap-3">
+            <Button variant="primary" size="md" href="/teaching">
+              Corporate Workshops &amp; Keynotes →
             </Button>
-            <Button
-              variant="outline"
-              size="md"
-              href="/contact?subject=Sovereign%20Stack%20Corporate%20Workshop%20Copies"
-            >
-              Request Team / Event Copies
+            <Button variant="outline" size="md" href="/work-with-me">
+              Forward Deployed Builds
+            </Button>
+          </div>
+        </Card>
+
+        <Card className="p-6 md:p-8 space-y-4">
+          <Badge variant="tag">Open 18-Chapter Engineering Manuscript</Badge>
+          <h2 className="text-xl font-bold text-fg">
+            The Sovereign Stack: Hardware Benchmarks, Loop Verifiers &amp; Field Manuals
+          </h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Read all 18 live engineering chapters free in your browser, run the 512GB vs. 128GB
+            hardware sizer, and download 3 copy-paste Markdown field manuals.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" size="md" href="/sovereign-stack">
+              Open 18-Chapter Book &amp; Sizer →
+            </Button>
+            <Button variant="ghost" size="md" href="/bsw">
+              BSW Open Lab Archive
             </Button>
           </div>
         </Card>

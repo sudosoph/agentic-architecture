@@ -124,6 +124,13 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     for (const lesson of lessons) {
       expect(coursesContainer.textContent).toContain(lesson.subject)
     }
+    const courseLinks = Array.from(coursesContainer.querySelectorAll('a')).map(a =>
+      a.getAttribute('href'),
+    )
+    expect(courseLinks).toContain('/courses/1-1-2026-ai-landscape-model-matrix')
+    expect(courseLinks).toContain('/courses/2-1-vertical-ai-build-vs-buy-framework')
+    expect(courseLinks).toContain('/courses/3-1-production-harnesses-multi-model-routing')
+    expect(courseLinks).toContain('/courses/4-1-open-weights-vs-frontier-economics')
   })
 
   it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and Approach 2 accessible cohort floor', () => {
@@ -150,6 +157,7 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     expect(links).not.toContain('https://cal.com/sophia-stein')
     expect(container.textContent).toContain('$750')
     expect(container.textContent).toContain('$2,500')
+    expect(container.textContent).toMatch(/Forward Deployed/i)
     expect(container.textContent).not.toContain('$15,000 Savings Guarantee')
     expect(container.textContent?.toLowerCase()).not.toContain('ai org chart')
   })

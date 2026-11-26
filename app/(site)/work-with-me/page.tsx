@@ -8,87 +8,89 @@ import { RoiCalculator } from '@/components/site/roi-calculator'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Work With Sophia · Custom Automation Sprints, Corporate Training & Advisory',
+  title: 'Work With Sophia · Forward Deployed AI Builds, Corporate Training & Advisory',
   description:
-    'Book a free 20-minute 1-Bottleneck Audit Call, schedule a $750 single-session Workflow Roadmap, or scope a corporate AI workshop or technical advisory engagement.',
+    'Commission a Forward Deployed Build-For-You AI system (bespoke API harnesses, multi-model routing, codified department skills), schedule a $750 Architecture Roadmap, or book corporate AI training.',
   alternates: { canonical: '/work-with-me' },
 }
 
 const PROCESS_STEPS = [
   {
-    step: '01 · Intake',
-    title: 'Share 1 Bottleneck',
-    body: 'Answer 3 short questions when booking so we know what manual task is slowing your team down before we meet.',
+    step: '01 · Shadow & Scope',
+    title: 'Inspect Real Workflows',
+    body: 'Answer 3 short questions on booking so we inspect your actual tools, data sensitivity, and integration bottlenecks.',
   },
   {
     step: '02 · Discovery (20 Mins)',
-    title: 'Free 1-Process Audit Call',
-    body: 'We inspect one workflow together on Zoom. You leave knowing candidly whether it is worth automating and what to build first.',
+    title: 'Architecture & Fit Call',
+    body: 'We evaluate Vertical AI vs. bespoke build economics live on Zoom and tell you candidly what to buy, skip, or engineer.',
   },
   {
-    step: '03 · Clear Proposal',
-    title: 'Fixed Scope & Timeline',
-    body: 'No open-ended hourly billing or surprise retainers. You receive a 1-page milestone scope tailored to your workflow or team size.',
+    step: '03 · Milestone Charter',
+    title: 'Fixed Scope or Multi-Week FDE',
+    body: 'Start with a focused pilot sprint (from $2,500) or scope a multi-week Forward Deployed build across Marketing, Finance, Legal, and Ops.',
   },
   {
-    step: '04 · Ship & Handoff',
-    title: 'Built Inside Your Accounts',
-    body: 'We ship cleanly inside your own workspace with recorded SOPs and live staff handoff so you own 100% of the system.',
+    step: '04 · Ship, Eval & Transfer',
+    title: '100% Owned Inside Your Stack',
+    body: 'Engineered inside your own cloud/accounts with 25-case binary Golden Evals, SKILL.md playbooks, and internal champion handoff.',
   },
 ]
 
 const PATH_CARDS = [
   {
-    badge: 'Single Session · 100% Credited Toward a Sprint',
+    badge: 'Single Session · 100% Credited Toward Any Build',
     badgeVariant: 'online' as const,
-    title: '90-Minute Workflow & Cost Roadmap',
-    price: 'From $750 (One-Time Session + 48-Hr Written Plan)',
+    title: '90-Minute Architecture, Model & Build-vs-Buy Roadmap',
+    price: 'From $750 (One-Time Session + 48-Hr Written Blueprint)',
     detail:
-      'Want a concrete architecture and ROI plan before committing to a build? In one 90-minute teardown we audit your repetitive workflows, cut overlapping SaaS spend, and hand you a step-by-step build blueprint within 48 hours.',
+      'Want a rigorous build-vs-buy, privacy boundary, and SaaS FinOps plan before committing to engineering? In 90 minutes we audit your stack, map Frontier vs. Open-Weights and best-of-breed APIs, and deliver a written 90-day charter within 48 hours.',
     standard:
-      'Scope Standard: Includes recorded session, written priority roadmap, and 100% fee credit if you commission a custom sprint within 30 days.',
+      'Scope Standard: Includes recorded teardown, written architecture roadmap, and 100% fee credit toward a Forward Deployed build or Corporate Lab within 30 days.',
     href: SITE_CONFIG.cal.audit,
     cta: 'Book 90-Min Roadmap ($750) →',
   },
   {
-    badge: 'Done-For-You · One Bottleneck First',
+    badge: 'Build-For-You · Pilot Sprint to Multi-Month Embedded Engineering',
     badgeVariant: 'rig' as const,
-    title: 'Custom Bottleneck Automation Sprint',
-    price: 'Custom-Scoped from $2,500 (After 20-Min Call)',
+    title: 'Forward Deployed AI Systems & Bespoke API Integration',
+    price: 'Pilot Sprints from $2,500 · Multi-System Department Builds Custom-Scoped',
     detail:
-      'Solve one high-friction bottleneck costing your team 5 to 20+ hours a week: client intake, pre-call dossiers, draft-first inbox triage, document extraction, or CRM follow-up. Engineered cleanly with human sign-off gates.',
+      'Embed Forward Deployed AI engineering directly alongside your team to wire bespoke multi-model harnesses, best-of-breed APIs (Search, OCR, Voice, Sandboxes, MCP), Productive-Friction interview Skills, and 25-case Golden Eval gates across your CRM, ERP, and workspace.',
     standard:
-      'Ownership Standard: Built inside your own accounts (zero contractor lock-in) with recorded walkthroughs and post-launch tuning.',
+      'Ownership Standard: Zero black-box agency lock-in. 100% of code, schemas, and SKILL.md repositories ship inside your own infrastructure.',
     href: SITE_CONFIG.cal.scoping,
-    cta: 'Book Free 20-Min Bottleneck Call →',
+    cta: 'Scope a Forward Deployed Build →',
+    secondaryHref: '/downloads/forward-deployed-ai-scoping-guide.md',
+    secondaryCta: 'Download Scoping Guide ↓',
   },
   {
     badge: 'Executive & Enterprise Track · Mid-Market & Funded Teams',
     badgeVariant: 'tag' as const,
-    title: 'Fractional CAIO, Fractional AI CTO & Corporate Training',
-    price: 'Custom-Scoped Monthly Cadence, 2-Wk Diagnostic, or Team Lab',
+    title: 'Fractional CAIO, Fractional AI CTO & Corporate Department Labs',
+    price: '2-Wk Diagnostic, Half/Full-Day Functional Labs ($7.5K to $15K+), or Monthly Cadence',
     detail:
-      'For organizations past the demo and stuck before production: part-time Fractional Chief AI Officer or Fractional AI CTO leadership (2 to 4 days/mo), plus hands-on department workshops in Boulder, Denver, and nationwide.',
+      'For organizations scaling beyond chat seats: part-time Fractional Chief AI Officer or Fractional AI CTO leadership, plus hands-on corporate trainings with tailored tracks for Marketing, Finance, Legal, Operations, and internal Forward Deployed champions.',
     standard:
-      'Quality Bar: Strategy and production architecture in one seat (Columbia CS + ex-McKinsey), tailored to HIPAA, SOC2, and enterprise security rules.',
+      'Quality Bar: Strategy and production architecture in one seat (Columbia CS + ex-McKinsey), aligned to ZDR, HIPAA, SOC2, and sovereign open-weight boundaries.',
     href: '/fractional-ai-cto',
     cta: 'Explore Fractional CAIO & AI CTO →',
     secondaryHref: SITE_CONFIG.cal.speaking,
-    secondaryCta: 'Book 20-Min Executive Call',
+    secondaryCta: 'Corporate Training & Speaking Call',
   },
   {
-    badge: 'DIY & Guided Learning · Not Ready for Custom Builds?',
+    badge: 'Self-Paced & Live Group Learning · L&D Stipend Eligible',
     badgeVariant: 'online' as const,
-    title: 'Courses & 6-System Implementation Cohort',
-    price: 'Free Challenge · $297 Academy · Cohort from $1,497',
+    title: '4-Curriculum AI Architecture Academy & Guided Cohort',
+    price: 'Curricula from $297 ($997 All-Access) · Guided Cohort from $1,497',
     detail:
-      'Prefer to learn the workflows yourself or train an in-house EA or Ops Manager? Start free in our 60-minute live workshop, grab our self-paced AI Workflow Academy ($297), or join our next small-group cohort.',
+      'Train yourself or upskill internal leads across our 20-module Academy (Foundations & Productive Friction, Department Build-vs-Buy, Bespoke APIs & FDEs, and Sovereign Open-Weight Rigs), with 100% tuition credit toward live builds.',
     standard:
-      'Team Friendly: Cohort enrollment includes a free second seat for your Executive Assistant, Chief of Staff, or Ops Lead.',
+      'Team Friendly: Guided Cohort includes a free second seat for an operator or PM, plus a 1-page L&D Stipend Approval Letter.',
     href: '/accelerator',
-    cta: 'Explore Cohort & Courses →',
+    cta: 'Explore Guided Cohort →',
     secondaryHref: '/courses',
-    secondaryCta: 'See $297 Self-Paced Academy',
+    secondaryCta: 'Browse All 4 Curricula',
   },
 ]
 
@@ -167,9 +169,9 @@ export default function WorkWithMePage() {
       />
       <div className="space-y-14">
         <PageHeader
-          meta="Free 20-Min Bottleneck Audit · Fixed-Scope Sprints · Corporate Enablement"
-          title="Automate One Bottleneck First. Keep the Growth."
-          description="Book a free 20-minute call to look at one manual bottleneck in your business, schedule a single-session $750 Roadmap, or scope corporate training for a team stuck between AI demos and production."
+          meta="Forward Deployed Engineering · Bespoke API Harnesses · Corporate & Fractional AI"
+          title="Engineer Bespoke AI Systems Your Organization Actually Owns."
+          description="Scope a multi-week Forward Deployed AI build connecting best-of-breed APIs and codified department Skills, start with a $750 90-Minute Architecture Roadmap, or book corporate department training."
         />
 
         {/* Ritesh-Style 4-Step How It Works */}

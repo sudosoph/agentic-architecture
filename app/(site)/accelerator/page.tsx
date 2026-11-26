@@ -17,33 +17,33 @@ export const metadata: Metadata = {
 const SIX_SYSTEMS = [
   {
     num: '01',
-    title: 'Company SOPs, Qualification & Escalation Rules',
-    body: 'Document your pricing floors, buyer qualification criteria, and communication standards once so every workflow follows your rules automatically.',
+    title: 'Productive-Friction Interview Skills & Escalation Schemas',
+    body: 'Replace ad-hoc team prompting with codified SKILL.md interview harnesses that extract unwritten pricing, legal, and SLA boundaries before generating.',
   },
   {
     num: '02',
-    title: 'AI Chief of Staff & Commitment Loop',
-    body: 'Prep every calendar meeting 30 minutes ahead, extract call decisions, and track open team and client commitments automatically.',
+    title: 'Folder-Based Agentic Workspace & Executive Loop',
+    body: 'Configure local/enterprise Cowork folders, calendar prep, and decision-commitment tracking with zero Python required.',
   },
   {
     num: '03',
-    title: 'Inbound Lead Research & Pre-Call Dossiers',
-    body: 'Every new booking triggers a clean prospect brief, bottleneck check, and tailored call agenda in your inbox.',
+    title: 'Best-of-Breed Search & Pre-Call Intelligence Pipeline',
+    body: 'Connect live web grounding and CRM webhooks so every incoming call or RFP triggers a verified dossier and qualification check.',
   },
   {
     num: '04',
-    title: 'Draft-First Inbox & 5-Day Follow-Up Pipeline',
-    body: 'Triage repetitive email, stage replies in Gmail Drafts in your exact voice, and queue Day-2 and Day-5 follow-ups for 10-second human approval.',
+    title: 'Level-2 Draft-First Triage & Multi-Step Follow-Ups',
+    body: 'Route routine inquiries and deal follow-ups into human-reviewed Draft queues with scoped read/draft permissions and zero reckless auto-sends.',
   },
   {
     num: '05',
-    title: 'Proposal, Onboarding & SOP Extractor',
-    body: 'Turn call transcripts and recurring deliverables into scoped proposals, onboarding packets, and reusable staff checklists.',
+    title: 'Span-Grounded Document, Proposal & SOP Extractor',
+    body: 'Pair layout-aware OCR and structured schemas to turn call transcripts, contracts, and invoices into verified proposals and checklists.',
   },
   {
     num: '06',
-    title: 'Data Privacy Guardrails & Software Spend Watchdog',
-    body: 'Keep confidential client files off public training pipelines with least-privilege permissions while cutting overlapping SaaS bills.',
+    title: '25-Case Golden Eval Suite, Privacy Tiers & AI FinOps',
+    body: 'Lock in Green/Amber/Red data rules, test reliability on 25 historical edge cases, and cut overlapping SaaS wrapper subscriptions.',
   },
 ]
 
