@@ -1,0 +1,26 @@
+---
+curriculumId: sovereign-stack
+moduleCode: "4.2"
+title: "The $9 Linux VPS & Self-Hosted Open-Source Operations Stack"
+summary: "Replace $150 to $400/month of fragmented SaaS tools on a single hardened 4GB to 8GB Linux VPS running Caddy 2 TLS, Postgres 16, n8n, Umami, Uptime Kuma, and encrypted Restic backups."
+durationMinutes: 45
+unlocked: false
+artifact: "Hardened Docker Compose + Caddyfile + Nightly Restic Backup Blueprint"
+learningOutcomes: ["Deploy five core open-source business and orchestration services behind automatic Caddy 2 TLS in 45 minutes", "Harden SSH, UFW firewall rules, and container networks so databases never bind to 0.0.0.0", "Automate encrypted off-site Postgres backups with monthly restore verification"]
+upsellBridge: "Want a zero-bloat self-hosted orchestration spine deployed inside your own cloud account? Scope a Forward Deployed Build on /work-with-me."
+---
+
+## Owning Your Orchestration Spine for Under $10/Month
+
+Before buying GPU hardware, reclaim control over your **workflow, scheduling, analytics, and state layer**. A single `4GB` to `8GB` Linux VPS (`Hetzner`, `DigitalOcean`, or your existing cloud VPC) comfortably runs:
+
+- **`Caddy 2` (~30 MB RAM):** Automatic Let's Encrypt TLS termination and clean reverse-proxy headers.
+- **`Postgres 16` + `pgvector` (~400 MB RAM):** Shared transactional state, idempotency ledger, and semantic memory store bound strictly to an internal Docker bridge network.
+- **`n8n` Community / Queue Mode (~450 MB RAM):** Visual webhook and cron orchestrator calling your direct APIs and staging human-approved drafts.
+- **`Umami` (~200 MB RAM) + `Uptime Kuma` (~80 MB RAM):** Cookie-free privacy analytics and instant webhook/email health alerts when any workflow or endpoint degrades.
+
+## Non-Negotiable Production Hardening Checklist
+
+1. Disable password SSH authentication; allow Ed25519 keys or Tailscale SSH only.
+2. Remember Docker bypasses standard `ufw` chains if you publish `-p 5432:5432`; bind internal ports exclusively to `127.0.0.1` or internal Docker networks.
+3. Run nightly `pg_dump` -> `restic` encrypted snapshots to object storage and test a full restore into a scratch container once a month.

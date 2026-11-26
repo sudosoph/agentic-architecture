@@ -1,0 +1,33 @@
+---
+curriculumId: sovereign-stack
+moduleCode: "4.1"
+title: "Open-Weights vs. Frontier Physics, Licensing & Break-Even Economics"
+summary: "Calculate exact memory-bandwidth tok/s physics and dollar break-even curves comparing closed APIs against self-hosted Qwen 3.8, DeepSeek V4.1, Mistral Large 4, and Kimi K3.1 Pro."
+durationMinutes: 50
+unlocked: true
+artifact: "Memory-Bandwidth & Sovereign Break-Even Calculator Spec"
+learningOutcomes: ["Compute real token-generation speed from memory bandwidth and active MoE parameters before buying hardware", "Compare Apache 2.0/MIT weights (Qwen 3.8, DeepSeek V4.1) against ecosystem/revenue-capped licenses (Mistral Large 4, Kimi K3.1 Pro)", "Identify the exact volume and compliance thresholds where private compute beats cloud APIs"]
+upsellBridge: "Sizing private AI infrastructure or hybrid routing for a regulated organization? Book a Fractional AI CTO scoping call on /fractional-ai-cto."
+---
+
+## Memory Bandwidth Is Destiny: The Only Formula Hardware Buyers Need
+
+Autoregressive token generation at low concurrency is **memory-bandwidth bound**, not FLOP bound. For every generated token, the GPU or unified-memory bus must read all **active** weights out of RAM:
+
+```text
+Max Single-Stream tok/s ≈ (Effective Memory Bandwidth in GB/s) / (Active Model Footprint in GB)
+```
+
+That single equation explains why **Mixture-of-Experts (`MoE`)** architectures transformed private enterprise compute in 2026:
+- A dense `70B` model at 4-bit quantization reads `~38 GB` on *every* token (`~20 tok/s` on an `800 GB/s` bus).
+- A sparse MoE model with `35B` total parameters and `3B` active parameters (or `Mistral Large 4` with `52B` active out of `1T` total on multi-node / high-RAM rigs) activates only a fraction of its weights per token, delivering snappy interactive speeds once total weights fit cleanly inside unified memory or VRAM.
+
+## When Private Compute Wins vs. When Zero-Retention APIs Win
+
+Do not buy hardware out of ideology; buy it when physics, compliance, or utilization math favors ownership:
+
+1. **Zero-Data-Retention (`ZDR`) Cloud APIs Win When:** Traffic is spiky, concurrency swings 20x during business hours, tasks require frontier Tier-1 synthesis (`GPT-6.2 Astra`, `Claude Fable 5.2`), and standard BAA/DPA terms satisfy legal.
+2. **Dedicated / Private Open-Weight Rigs Win When:**
+   - **Strict Zero-Egress Compliance:** Unredacted PHI, privileged M&A files, defense/IP codebases, or sovereign client mandates forbid third-party packet egress altogether.
+   - **Sustained High-Duty-Cycle Loops:** Continuous background extraction, repo indexing, or test-verification loops running 8+ hours daily amortize a `$4,500 to $12,000` desk node in **4 to 9 months** compared against uncapped cloud seats and API bills.
+   - **Hardened Local Harnesses:** Pairing `OpenCode` or internal services directly against local `vLLM` / `llama.cpp` with cloud fallbacks disabled in config guarantees zero accidental leakage.

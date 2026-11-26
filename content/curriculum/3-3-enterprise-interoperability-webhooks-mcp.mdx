@@ -1,0 +1,21 @@
+---
+curriculumId: bespoke-systems
+moduleCode: "3.3"
+title: "Making Enterprise Systems Speak Together: Webhooks, Canonical Schemas & MCP"
+summary: "Connect CRMs, ERPs, ticketing tools, and document vaults cleanly using Linux Foundation MCP standards (Skills over MCP, Tasks, Elicitation), idempotent webhooks, and canonical JSON schemas."
+durationMinutes: 50
+unlocked: false
+artifact: "Cross-System Canonical Event Schema + MCP Server Integration Blueprint"
+learningOutcomes: ["Use the 2026 MCP specification (Tools, Resources, Skills over MCP, async Tasks, and Elicitation) to standardize internal integrations", "Prevent duplicate writes and race conditions with idempotency keys and dead-letter queues", "Design canonical intermediate schemas so swapping a CRM or ERP never breaks downstream AI harnesses"]
+upsellBridge: "Stuck integrating legacy databases, Salesforce/HubSpot, NetSuite, or Slack? Scope a Forward Deployed Integration on /work-with-me."
+---
+
+## Why Point-to-Point Glue Collapses at Five Tools
+
+Connecting `N` enterprise apps directly to `M` agent workflows creates `N x M` custom adapters. Whenever an API field renames or an auth token expires, workflows fail silently.
+
+## Three Rules of Durable Enterprise Interoperability
+
+1. **Standardize on Model Context Protocol (`MCP`) Under Neutral Governance:** Now stewarded under the Linux Foundation's Agentic AI Foundation, MCP lets you expose an internal database, ERP, or policy repository **once**, complete with **Skills over MCP** (shipping exact usage instructions alongside tools), **Tasks** (for long-running background jobs), and **Elicitation** (structured human clarification prompts).
+2. **Define Canonical Business Entities:** Translate vendor-specific payloads (HubSpot vs. Salesforce vs. Stripe) immediately at the edge into your own typed canonical schemas (`LeadBrief`, `ContractClauseRisk`, `InvoiceVariance`) validated with `Zod` or JSON Schema.
+3. **Enforce Idempotency on Every Webhook:** Hash `(source_event_id + workflow_version)` in Postgres before running inference or staging a draft so webhook retries never double-bill tokens or create duplicate drafts.

@@ -1,0 +1,41 @@
+---
+curriculumId: bespoke-systems
+moduleCode: "3.1"
+title: "Inside Production Agent Harnesses & Multi-Model Routing"
+summary: "Why the harness matters more than the base model in late 2026: state loops, deterministic verifiers, open vs. cloud harnesses (Claude Code/Codex vs. OpenCode/OpenHands), and multi-model arbitration."
+durationMinutes: 55
+unlocked: true
+artifact: "Production Harness State-Machine Spec + 3-Tier Multi-Model Router Config"
+learningOutcomes: ["Deconstruct why identical models succeed or fail based on harness state management, context compaction, and verification gates", "Compare cloud-first harnesses (Claude Code, Codex, Cowork) against open-weight-friendly harnesses (OpenCode, OpenHands, Pi Harness)", "Implement multi-model task routing and cross-family judge arbitration"]
+upsellBridge: "Need a production harness and multi-model router engineered for your stack? Scope a Forward Deployed Build on /work-with-me."
+---
+
+## Why the Harness Beats the Base Model in Late 2026
+
+Across engineering teams and production deployments in late 2026, one lesson stands above every benchmark chart: **swapping a model moves accuracy by 3% to 5%; fixing the surrounding harness moves end-to-end task completion by 30% to 50%.**
+
+A raw model call has no memory of prior failures, no permission boundaries, no budget awareness, and no way to check whether its output compiles or matches source records. **The harness** provides six surrounding mechanisms:
+
+1. **Context Assembly & Compaction:** Injecting exact `AGENTS.md`, `SKILL.md`, and schema rules while summarizing stale tool logs before context degradation sets in around 40K to 80K active tokens.
+2. **Elicitation / Intake Gate:** Pausing to interview the caller whenever required decision parameters are missing.
+3. **Scoped Tool Loop (`MCP` / Function Calling):** Executing read, search, sandbox, and draft tools with strict timeout and retry semantics.
+4. **Deterministic Verifiers:** Running schema validation, test suites, SQL/math checks, or verbatim citation matching *before* accepting a model turn.
+5. **Hill-Climbing & Bounded Recovery:** Feeding exact compiler or verifier error messages back to the model for at most `N=3` bounded retries.
+6. **Token & Dollar Circuit Breakers:** Halting runaway loops immediately when per-run spend or step count crosses a ceiling.
+
+## Cloud-First vs. Open-Weight-Friendly Harnesses
+
+First-party harnesses (`Claude Code`, `OpenAI Codex`, `Claude Cowork`) set the UX bar for multi-step work, yet carry rigid system prompts tuned specifically for their parent lab's frontier models. When organizations route sensitive workloads to self-hosted `vLLM` or `llama.cpp` clusters running `Qwen 3.8`, `DeepSeek V4.1`, or `Mistral Large 4`, open-source harnesses (**`OpenCode`**, **`OpenHands`**, **`Pi Harness`**, **`Roo Code`**) let you tune tool-calling formats, system prompts, and **disable silent cloud API fallbacks** inside locked YAML/JSON configs.
+
+## Multi-Model Routing & Cross-Family Arbitration
+
+Never run a single model across every turn of a workflow:
+
+```text
+[Incoming Task]
+   ├── 80% Routine Extraction / Triage ──> Fast Tier (Haiku 5.5 / Hydrogen / Qwen 3.6-27B)
+   ├── 15% Multi-Step Synthesis & Code ──> Workhorse Tier (GPT-6.2 Sol / Neon / Qwen 4 Max)
+   └──  5% High-Stakes / Low-Confidence ─> Frontier Dual-Family Check (Fable 5.2 + Astra Judge)
+```
+
+For high-consequence outputs (contract redlines, clinical/regulatory summaries, production migrations), generate with Family A and run a lightweight binary rubric check on Family B so correlated single-family blind spots get caught before human review.

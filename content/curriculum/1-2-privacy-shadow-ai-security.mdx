@@ -1,0 +1,35 @@
+---
+curriculumId: foundations
+moduleCode: "1.2"
+title: "Privacy, Shadow AI & Infrastructure Security Tradeoffs"
+summary: "Understand exactly what happens to company data across consumer chat, Claude Enterprise / 3P cloud gateways, zero-data-retention APIs, and private open-weight nodes."
+durationMinutes: 40
+unlocked: false
+artifact: "Green / Amber / Red Data-Tiering Matrix & Enterprise AI Boundary Checklist"
+learningOutcomes: ["Distinguish consumer opt-out toggles, Enterprise SaaS plans, 3P cloud inference (Bedrock/Vertex/Foundry), Zero-Data-Retention (ZDR) APIs, and local open-weight compute", "Eliminate Shadow AI leaks without blocking staff productivity", "Audit local MCP extensions (.mcpb) and cloud-synced folder access on employee machines"]
+upsellBridge: "Need a formal HIPAA, SOC2, or board-level AI boundary audit? Scope a 2-Week Architecture Diagnostic on /fractional-ai-cto."
+---
+
+## Five Very Different Data Boundaries Vendors Blur Together
+
+When a vendor says *"We don't train on your data,"* security review is only 20% finished. Retention for abuse monitoring, conversation history residency, local filesystem scopes, and sub-processor logs vary dramatically across five deployment modes:
+
+| Deployment Mode | Training Opt-Out | Abuse / Trust-Safety Retention | History Residency | Appropriate Data Tier |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Free / Consumer Plus Plans** | Often opt-in by default | 30+ days human-reviewable logs | Vendor consumer cloud | **Green Only:** Public marketing copy, synthetic examples |
+| **2. Team / Enterprise SaaS (`Claude Enterprise`, `ChatGPT Enterprise`)** | Contractual no-training | Configurable retention windows + SSO/SCIM + `.mcpb` extension admin controls | Vendor enterprise tenant | **Amber:** Internal ops, SOPs, standard commercial workflows |
+| **3. Desktop Client over 3P Cloud (`Bedrock`, `Google Cloud`, `Foundry`)** | Covered by existing cloud BAA / DPA | Zero vendor abuse-log retention when ZDR enabled | Local managed device + your cloud VPC | **Amber / Regulated Red:** Healthcare BAA, enterprise finance, legal |
+| **4. Direct API with Zero Data Retention (`ZDR`)** | Contractual zero training | Zero payload persistence past HTTP response | Your own Postgres / audit store | **Regulated Red:** Bespoke internal harnesses & customer apps |
+| **5. Sovereign Self-Hosted / Local Open Weights (`vLLM`, `llama.cpp` over Tailscale)** | Mathematically zero external egress | Zero third-party packets | 100% inside your physical node or private VPS | **Strict Red:** M&A, trade secrets, unredacted PHI/privileged files |
+
+## New Late-2026 Attack Surface: Local Cowork & Desktop MCP Hosts
+
+Giving desktop AI apps direct access to local folders unlocked massive productivity for non-coders, while introducing three concrete operational risks IT and founders must govern:
+
+1. **Over-broad folder mounts:** Never mount `~/` or an entire shared company Google Drive root. Create a dedicated workspace folder containing only the project's active context and working files.
+2. **Unhydrated cloud-sync hangs & accidental syncs:** Mounting OneDrive or Google Drive virtual directories can either stall local `stdio` MCP servers during bulk reads or sync unreviewed AI scratch files straight into shared client folders.
+3. **Ungoverned MCP servers:** Require vetted `.mcpb` packages or explicit admin allowlists rather than copy-pasting random community `npx` commands that inherit developer environment variables.
+
+## Replacing 20-Page Legal PDFs With a 1-Page Green / Amber / Red Rule
+
+Employees use "Shadow AI" (personal accounts on phones or personal tabs) when IT blocks everything without providing an approved path. Publish a single-page traffic-light table naming the exact approved tool for Green, Amber, and Red data so staff move fast inside safe walls.

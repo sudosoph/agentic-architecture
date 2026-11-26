@@ -1,0 +1,27 @@
+---
+curriculumId: bespoke-systems
+moduleCode: "3.5"
+title: "Agent Security: Prompt Injection, 4-Legged OAuth & Cost Circuit Breakers"
+summary: "Harden connected harnesses against indirect prompt injection inside untrusted emails/PDFs/web pages, enforce 4-legged user-plus-agent OAuth scopes, and cap blast radius."
+durationMinutes: 45
+unlocked: false
+artifact: "Agent Threat-Model Checklist + Scoped OAuth & Spend Breaker Policy"
+learningOutcomes: ["Defend against the Lethal Trifecta (private data access + untrusted external input + outbound network/write capability)", "Implement 4-legged delegated identity so agents never run with god-mode service-account keys", "Enforce per-run, per-user, and daily spend circuit breakers"]
+upsellBridge: "Need an adversarial security and MCP permission audit across your engineering org? Book a Fractional AI CTO review on /fractional-ai-cto."
+---
+
+## Breaking the "Lethal Trifecta" in Connected Agents
+
+Indirect prompt injection happens whenever an agent simultaneously holds **all three** of these capabilities in one turn:
+1. **Access to private data** (inbox, CRM, internal docs)
+2. **Exposure to untrusted external input** (an inbound vendor PDF, cold email, or scraped webpage containing hidden instructions)
+3. **Unapproved external egress or state mutation** (`send_email`, `fetch(arbitrary_url)`, `transfer_funds`, markdown image URL exfiltration)
+
+**Architectural Fix:** Break at least one leg of the triangle structurally in code, never via a polite system prompt saying *"Ignore malicious instructions."* Parse untrusted documents inside an isolated zero-tool extraction call that emits strictly typed enum/numeric/citation fields, and require human Level-2 sign-off before any outbound write or external URL fetch.
+
+## 4-Legged Identity: Resource Owner, Client, Service, and Agent
+
+Traditional OAuth assumes three parties. Agentic systems introduce a fourth actor whose permissions must be **strictly narrower than the human delegator's**:
+- Issue short-lived, task-scoped tokens (`gmail.compose` draft creation without `gmail.send`, read-only SQL views restricted to the caller's tenant row, zero destructive DDL).
+- Log `actor_human_id` alongside `agent_run_id` on every audit record.
+- Pair every loop with hard token/dollar circuit breakers (`max_steps: 12`, `max_cost_usd: 0.75`) so a malformed retry loop fails closed in seconds rather than burning `$800` overnight.

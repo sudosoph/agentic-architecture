@@ -1,0 +1,24 @@
+---
+curriculumId: bespoke-systems
+moduleCode: "3.2"
+title: "The Bespoke AI API Stack: Best-of-Breed Primitives to Connect"
+summary: "Compose custom systems at 10x lower cost than bloated SaaS wrappers using the best 2026 APIs across Web Search/Grounding, Document OCR, Voice/Meetings, Code/Browser Sandboxes, and Transactional Ops."
+durationMinutes: 55
+unlocked: false
+artifact: "2026 Best-of-Breed AI API Reference Architecture & Cost Sheet"
+learningOutcomes: ["Select proven APIs across all 6 bespoke system layers without building commodity parsers from scratch", "Avoid brittle HTML scrapers, naive PDF text dumps, and unisolated code execution", "Estimate monthly variable API costs before writing integration glue"]
+upsellBridge: "Want our engineering practice to wire these APIs directly into your CRM, ERP, and workspace? Explore Forward Deployed Builds on /work-with-me."
+---
+
+## Why Composing Six Primitives Beats Buying Ten SaaS Wrappers
+
+Every overpriced `$2,000/month` AI SaaS wrapper in 2026 is secretly calling three or four public infrastructure APIs under the hood. Connecting those best-of-breed primitives directly gives your company full schema control, zero per-seat tax, and clean data ownership:
+
+| Capability Layer | Best-of-Breed 2026 APIs | Why Architects Pick Them | What They Replace |
+| :--- | :--- | :--- | :--- |
+| **1. Search, Grounding & Clean Web Extraction** | `Tavily` (`advanced` search + extract), `Exa` (neural/entity search), `Firecrawl` / `Jina Reader` | Returns clean LLM-ready Markdown, citations, and date-filtered passages without maintaining headless scraper proxies | Manual Google research & `$300/mo` competitive-intel wrappers |
+| **2. Layout-Aware Document & Table OCR** | `Reducto`, `Mistral OCR`, `LlamaParse`, native multimodal vision | Preserves multi-column financial tables, checkboxes, and bounding-box page coordinates on messy scanned PDFs | Broken `pdf-parse` scripts & manual AP/legal data entry |
+| **3. Voice, Transcription & Meeting Bots** | `Deepgram` (STT), `Recall.ai` (Zoom/Meet/Teams bot API), `Cartesia` / `ElevenLabs` (low-latency TTS), WebRTC Live APIs | Sub-300ms streaming latency + speaker-diarized call capture across every meeting platform via one unified webhook | `$40/seat/mo` standalone AI note-taker subscriptions |
+| **4. Isolated Code & Browser Sandboxes** | `E2B`, `Cloudflare Sandboxes`, `Modal`, `Browserbase` / `Stagehand` | Ephemeral microVMs and deterministic browser sessions so agent-written Python or UI steps never touch host servers | Running untrusted generated scripts on production machines |
+| **5. Model & Open-Weight Inference Gateways** | Direct lab APIs (`ZDR`), `OpenRouter`, `Fireworks` / `Together` / `Groq` / `Cerebras`, self-hosted `vLLM` | Unified failover, latency routing, and instant switching between frontier reasoning and fast open weights | Hardcoding one vendor SDK across 40 microservices |
+| **6. State, Email, Scheduling & Workflow Spine** | `Postgres` (`pgvector`), `Resend` (transactional + inbound webhooks), `Cal.com`, `n8n` / `Cloudflare Workers` | Auditable relational state, reliable event triggers, and zero-bloat human approval notifications | Fragile 40-step spreadsheet zaps with zero version control |

@@ -1,0 +1,29 @@
+---
+curriculumId: sovereign-stack
+moduleCode: "4.5"
+title: "Hybrid Cloud/Private Routing & Regulated Production Governance"
+summary: "Combine fast cloud APIs for Green/Amber workloads with private zero-egress nodes for Red-tier PHI/legal/IP data behind a single policy-aware internal gateway."
+durationMinutes: 45
+unlocked: false
+artifact: "Policy-Aware Hybrid LLM Gateway Spec & Audit Trail Schema"
+learningOutcomes: ["Route Green, Amber, and Red workloads automatically across public APIs, ZDR enterprise endpoints, and private open-weight nodes", "Maintain immutable audit logs (model version, prompt hash, data tier, human approver) without logging raw PII/PHI", "Deliver a complete Board & Security Committee Sovereign AI Readiness Pack"]
+upsellBridge: "Ready to put governed hybrid AI into production with executive oversight? Explore Fractional CAIO / AI CTO engagements on /fractional-ai-cto."
+---
+
+## The Pragmatic Endgame: Hybrid Policy Routing
+
+Almost no serious organization runs 100% public consumer cloud or 100% air-gapped local hardware. The highest-performing architecture in late 2026 is a **Policy-Aware Hybrid Router**:
+
+```text
+[Workflow Request + Data Tier Tag]
+   ├── Tier = GREEN (Public web research, public copy)
+   │      └──> Fast / Workhorse Cloud API (lowest cost per verified task)
+   ├── Tier = AMBER (Internal SOPs, standard CRM/ERP ops)
+   │      └──> Contractual ZDR Enterprise API or 3P VPC Gateway (Bedrock / Vertex)
+   └── Tier = RED (Unredacted PHI, privileged M&A/contracts, core IP)
+          └──> Private Tailscale / VPC Open-Weight Node (Zero external egress)
+```
+
+## Immutable Auditability Without Creating a Toxic Data Honeypot
+
+Security and compliance committees (`HIPAA`, `SOC2 Type II`, `ISO 42001`, `EU AI Act`) need proof of governance without a central log database full of raw patient or client secrets. Log **cryptographic content hashes, schema classification tags, model/harness git SHA, token cost, binary verifier outcome, and the approving human's identity** so every automated and human-gated decision is 100% reconstructable during an audit.

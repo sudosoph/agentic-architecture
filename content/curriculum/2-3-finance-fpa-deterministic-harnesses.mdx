@@ -1,0 +1,25 @@
+---
+curriculumId: departments
+moduleCode: "2.3"
+title: "AI in Finance, FP&A & Procurement Operations"
+summary: "Why naked LLMs must never compute financial numbers, how to pair deterministic Python/SQL/spreadsheet harnesses with OCR extraction, and where vertical tools like Ramp win."
+durationMinutes: 45
+unlocked: false
+artifact: "Deterministic Finance Reconciliation Harness Spec + Vendor Spend Audit Checklist"
+learningOutcomes: ["Enforce the Golden Rule of Finance AI: models extract schemas and write queries; deterministic code executes every calculation", "Combine layout-aware OCR with contract/PO tables for 3-way invoice reconciliation", "Decide between vertical spend platforms (Ramp-class) and bespoke FP&A variance harnesses"]
+upsellBridge: "Need automated invoice/contract reconciliation or an enterprise SaaS OpEx teardown? Book an Executive Scoping Call on /fractional-ai-cto."
+---
+
+## The Golden Rule of Financial AI: Zero Naked Token Arithmetic
+
+Never ask an LLM to sum 400 rows of an accounts-payable CSV or calculate cohort net revenue retention inside raw token generation. Even top reasoning models drop rows or round silently mid-context.
+
+**In Finance and FP&A, the model's job is strictly translation and anomaly interrogation, never arithmetic:**
+- **Unstructured -> Structured:** Layout-aware OCR + schema extraction turns messy vendor PDFs, MSAs, and SOWs into typed JSON rows with exact page/bounding-box citations.
+- **Question -> Deterministic Code/Query:** The agent writes a SQL query, Python `pandas`/`polars` script, or audited spreadsheet formula inside a sandboxed interpreter; the deterministic runtime computes the exact cent-accurate result.
+- **Variance -> Socratic Investigation:** Once deterministic code flags a `>8%` spend variance or duplicate billing line, the model cross-references the underlying contract terms and drafts an inquiry for controller review.
+
+## Finance Vertical AI vs. Bespoke Builds
+
+- **Buy Off-the-Shelf:** Corporate card, automated receipt matching, bill-pay, and real-time spend controls (`Ramp`-class platforms where payment rails + vendor price benchmarks are bundled).
+- **Build Bespoke In-House:** Custom board-pack variance narratives tied to your ERP + CRM definitions, multi-entity revenue-recognition pre-checks, and quarterly SaaS license utilization audits comparing SSO login logs against contracted seat counts.

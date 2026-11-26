@@ -1,0 +1,33 @@
+---
+curriculumId: departments
+moduleCode: "2.1"
+title: "The Vertical AI Build-vs-Buy Framework & Enterprise Interoperability"
+summary: "How to evaluate multi-billion-dollar vertical AI platforms (Harvey, Legora, Sierra, Ramp, Glean) versus 'Build-With' SDKs versus lean bespoke API harnesses that keep your data layer unified."
+durationMinutes: 45
+unlocked: true
+artifact: "2026 Vertical AI vs. Build-With vs. Bespoke In-House Decision Scorecard"
+learningOutcomes: ["Move beyond binary Build-vs-Buy into the 2026 3-tier model: Buy Vertical Compliance, Build-With Agent OS, or Compose Bespoke In-House", "Spot thin $50/seat SaaS wrappers before signing annual enterprise contracts", "Prevent the 'Six New AI Silos' trap where Marketing, Sales, Finance, and Legal bots cannot share context"]
+upsellBridge: "Evaluating vendor contracts or designing cross-department interoperability? Scope a 2-Week Architecture & FinOps Diagnostic on /fractional-ai-cto."
+---
+
+## Why Binary "Build vs. Buy" Broke Down in 2026
+
+Two forces collided across enterprise software in 2026:
+1. Frontier and open-weight inference prices fell precipitously while agentic coding harnesses made spinning up internal tools 5x faster.
+2. At the same time, mature vertical platforms (`Harvey` and `Legora` in legal, `Sierra` in customer operations, `Ramp` in spend/finance, `Glean` in enterprise search) proved that compliance certifications (`SOC2 Type II`, `ISO 42001`), domain-curated reference corpora, and embedded Forward Deployed support carry real value.
+
+Smart leaders no longer ask *"Do we build everything or buy everything?"* They segment every capability across **three distinct tiers**:
+
+| Strategy | When It Wins | Canonical 2026 Examples | Red Flag to Avoid |
+| :--- | :--- | :--- | :--- |
+| **1. Buy Mature Vertical AI** | Heavy regulatory/compliance transfer, proprietary external legal/tax/market databases, commodity back-office plumbing needed live this quarter | `Ramp` (spend & AP audit), `Harvey` / `Legora` (Am Law & high-volume corporate legal), `Glean` (cross-app enterprise search index) | Buying a "vertical AI" startup that has zero proprietary data moat and simply wraps a single frontier API prompt at a 10x per-seat markup |
+| **2. "Build With" Managed Agent OS** | Customer-facing multi-turn agents where you want managed voice/guardrail/observability infrastructure while owning 100% of business logic & brand rules | `Sierra` Agent OS + SDK, cloud enterprise gateways (`Bedrock` / `Vertex` + internal MCP servers) | Letting vendor professional services lock your core domain rules inside proprietary visual flowcharts you cannot export |
+| **3. Build Bespoke In-House Harnesses** | Workflows that encode your core competitive IP, cross multiple internal systems, or run 10x cheaper over direct APIs + open weights | Custom `MCP` + `n8n`/TypeScript harnesses connecting CRM, Postgres, OCR, Search, and codified `SKILL.md` rules | Building custom observability, SSO, or OCR parsers from scratch instead of snapping together best-of-breed primitives |
+
+## Avoiding the "Six Disconnected AI Silos" Trap
+
+The single costliest enterprise mistake in 2026 is letting Marketing buy 3 AI SaaS apps, Sales buy 2, Legal buy 1, and Finance buy 2, **each trapping company context inside a walled garden that cannot talk to the others**.
+
+Enforce **two non-negotiable procurement rules** before signing any vertical AI contract:
+1. **API & MCP Interoperability Required:** Every vendor tool must expose clean webhooks/REST APIs (or an MCP server) so upstream and downstream systems can read structured outputs programmatically.
+2. **Portable Context & Zero Lock-In Exit Clause:** Your prompts, evaluation rubrics, clause playbooks, and historical traces belong to your company in exportable JSON/Markdown, never held hostage on renewal day.

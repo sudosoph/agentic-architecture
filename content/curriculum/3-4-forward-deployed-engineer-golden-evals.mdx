@@ -1,0 +1,31 @@
+---
+curriculumId: bespoke-systems
+moduleCode: "3.4"
+title: "The Forward Deployed AI Engineer (FDE) Model & Practical Golden Evals"
+summary: "Why embedded Forward Deployed Engineers outperform slide-deck consultants and isolated IT backlogs, and how to build 25-case binary Golden Eval harnesses in a single afternoon."
+durationMinutes: 55
+unlocked: false
+artifact: "Forward Deployed 2-Week Sprint Runbook + 25-Case Binary Golden Eval Harness"
+learningOutcomes: ["Run the Forward Deployed AI Engineer operating cadence: shadow real operators, ship against messy live data in 72 hours, and iterate on failure traces", "Perform open-coding error analysis on 25 historical cases rather than guessing failure modes", "Replace noisy 1-to-5 LLM-as-a-Judge scores with crisp binary pass/fail code and rubric evaluators"]
+upsellBridge: "Want Sophia embedded as a Forward Deployed AI Architect or training your internal FDE champions? Visit /work-with-me or /fractional-ai-cto."
+---
+
+## Why the Forward Deployed Engineer (FDE) Model Won Enterprise AI
+
+Traditional management consultancies spend eight weeks interviewing executives to deliver a 90-slide strategy deck that nobody in engineering can implement. Traditional IT queues ask business leaders to write rigid requirements up front for probabilistic workflows they have never seen run.
+
+Pioneered by Palantir and adopted across top 2026 enterprise AI deployments (`Harvey`, `Sierra`, frontier lab enterprise teams), the **Forward Deployed AI Engineer (FDE)** collapses strategy and engineering into one person sitting directly beside the operator:
+
+1. **Days 1 to 2 (Shadow & Extract):** Watch 5 real transactions live (not how the org chart claims they happen, how staff actually click through spreadsheets and emails). Run Socratic extraction to capture unwritten exceptions.
+2. **Days 3 to 5 (Thin Vertical Slice on Real Data):** Wire a minimal end-to-end Level-2 Draft-First harness connected to real staging data so operators react to concrete outputs by Friday.
+3. **Week 2 (Error Analysis & Golden Eval Lock-In):** Harvest every correction operators make on those first 25 runs and turn them into an automated regression gate.
+
+## Building a 25-Case Binary Golden Eval Suite (Zero Guesswork)
+
+Never write evaluation metrics before looking at data:
+
+1. **Collect 25 real historical inputs** (15 routine, 10 gnarly edge cases).
+2. **Open-code the failures:** Inspect outputs yourself and write plain notes (*"Missed renewal auto-escalation clause"*, *"Invented discount tier"*).
+3. **Cluster into 3 to 5 Binary Pass/Fail Checks (`PASS` / `FAIL` only):**
+   - Prefer **deterministic code checks** first (valid JSON schema, verbatim quote present in source text, zero prohibited phrases, math totals match).
+   - Use a **narrow binary LLM-Judge** strictly for semantic checks (*"Did the draft ask all 3 required intake questions before proposing scope? YES/NO"*), calibrated against your own human labels until agreement exceeds `90%`.

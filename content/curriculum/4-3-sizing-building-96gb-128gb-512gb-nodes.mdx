@@ -1,0 +1,24 @@
+---
+curriculumId: sovereign-stack
+moduleCode: "4.3"
+title: "Sizing & Building 96GB, 128GB, and 512GB Private AI Nodes"
+summary: "Vendor-neutral hardware blueprint comparing 96GB Linux mobile rigs, 128GB Ryzen AI Halo / DGX Spark desk nodes, 512GB M5 Ultra Mac Studios (1.2 TB/s), and multi-GPU vLLM servers."
+durationMinutes: 55
+unlocked: false
+artifact: "Private AI Node BOM + vLLM & llama.cpp Production Serving Configs"
+learningOutcomes: ["Match hardware tier (96GB laptop, 128GB mini-node, 512GB unified-memory studio, or multi-GPU rack) to exact model quantizations and concurrency", "Configure llama.cpp, MLX, and vLLM with flash attention, KV-cache quantization, and OpenAI-compatible local APIs", "Lock OpenCode and IDE harnesses to local endpoints with zero cloud fallback"]
+upsellBridge: "Commissioning an on-premise or VPC open-weight cluster for your engineering or clinical team? Explore Fractional AI CTO advisory on /fractional-ai-cto."
+---
+
+## Four Proven Private Compute Form Factors in Late 2026
+
+| Hardware Class | Usable Model RAM / Bandwidth | Sweet-Spot Open-Weight Models | Ideal Workload |
+| :--- | :--- | :--- | :--- |
+| **1. 96GB Unified Linux Mobile / Mini Rig** | `~72 to 84 GB` GART allocation · `~120 to 256 GB/s` | `Qwen 3.6-27B` / `35B-A3B` (`Q4_K_M` / `Q6_K`) | Sovereign travel workstation, offline document extraction, single-developer `OpenCode` harness |
+| **2. 128GB Desk Node (`Ryzen AI Halo` / `DGX Spark`)** | `~110 GB` usable · `256 to 273 GB/s` | `70B` dense (`Q4`) or medium sparse MoE (`Qwen 3.8`) + local embeddings + OCR | Quiet office appliance for a 3 to 10-person legal, clinic, or founder team |
+| **3. 512GB Unified-Memory Node (`M5 Ultra` Class)** | `~440+ GB` usable · `~1.2 TB/s` bandwidth | Large sparse MoE weights (`DeepSeek V4.1` quantized, `Mistral Large 4` MoE) with long KV caches at silent desk acoustics (`<250W` typical) | High-capacity R&D, confidential M&A/codebase reasoning without server-room cooling |
+| **4. Multi-GPU Linux Server (`vLLM` / `SGLang`)** | `96 to 640+ GB` HBM/GDDR7 · `1.8 to 8+ TB/s` | Continuous-batched `Qwen 3.8`, `Mistral Large 4`, `DeepSeek V4.1` serving 15 to 100+ concurrent internal seats | Organization-wide private API gateway where multi-user time-to-first-token (`TTFT`) matters |
+
+## Hardening Local Serving & Eliminating Silent Cloud Fallbacks
+
+Serve an OpenAI-compatible local endpoint on loopback (`127.0.0.1:8000`) via `vLLM` or `llama-server` with explicit context limits and KV-cache quantization enabled, then audit every developer and workflow config (`OpenCode`, `Continue`, `n8n`) to confirm **zero default fallback API keys** exist in environment files. In regulated environments, block outbound traffic to public LLM domains at the DNS/firewall layer on the inference subnet so misconfigured scripts fail closed immediately.
