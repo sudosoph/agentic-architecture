@@ -52,7 +52,19 @@ export function collectCanonicalUrls(rootDir = process.cwd()) {
         .map(f => `/guides/${f.replace(/\.mdx$/, '')}`)
     : []
 
-  return [...staticPaths, ...blogSlugs, ...guideSlugs].map(p =>
+  const curriculumDir = path.join(rootDir, 'content/curriculum')
+  const unlockedCurriculumSlugs = fs.existsSync(curriculumDir)
+    ? fs
+        .readdirSync(curriculumDir)
+        .filter(f => f.endsWith('.mdx'))
+        .filter(f => {
+          const raw = fs.readFileSync(path.join(curriculumDir, f), 'utf8')
+          return /^unlocked:\s*true\s*$/m.test(raw)
+        })
+        .map(f => `/courses/${f.replace(/\.mdx$/, '')}`)
+    : []
+
+  return [...staticPaths, ...unlockedCurriculumSlugs, ...blogSlugs, ...guideSlugs].map(p =>
     p === '/' ? BASE_URL : `${BASE_URL}${p}`,
   )
 }

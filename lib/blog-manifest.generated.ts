@@ -992,6 +992,36 @@ export const blogPosts: Array<{
     ]
   },
   {
+    "slug": "forward-deployed-ai-engineering",
+    "frontmatter": {
+      "title": "Forward Deployed AI Engineering vs. Slide-Deck Consulting: How Organizations Actually Ship Production AI in 2026",
+      "slug": "forward-deployed-ai-engineering",
+      "publishedDate": "2026-11-25",
+      "description": "Why traditional management consulting decks and isolated IT backlogs both fail at AI transformation, and how the Forward Deployed Engineer (FDE) model pairs live operator shadowing with 25-case Golden Evals.",
+      "tags": [
+        "forward-deployed-engineer",
+        "evals",
+        "enterprise-ai",
+        "fractional-cto",
+        "architecture"
+      ],
+      "track": "engineering",
+      "kind": "deep-dive",
+      "readingMinutes": 2
+    },
+    "html": "<p>Ask twenty mid-market CEOs or COOs why their 2025 AI initiatives stalled before reaching P&#x26;L impact and you hear two mirror-image stories:</p>\n<ol>\n<li><strong>The $75,000 Slide Deck:</strong> They hired a strategy consultancy that interviewed VPs for six weeks, delivered a matrix of \"42 AI Use Cases,\" and left nobody capable of wiring an OAuth scope, an MCP server, or an evaluation harness.</li>\n<li><strong>The Disconnected Prototype:</strong> Internal or agency developers built a slick autonomous demo in isolation against clean synthetic data, handed it to Operations or Legal, and watched staff abandon it on Day 3 when real-world messy PDFs and unwritten exceptions broke every assumption.</li>\n</ol>\n<h2 id=\"why-forward-deployed-ai-engineering-won\">Why Forward Deployed AI Engineering Won</h2>\n<p>Originally pioneered by Palantir and now the defining enterprise delivery pattern across top 2026 AI leaders (<code>Harvey</code>, <code>Sierra</code>, and frontier lab deployment practices), <strong>Forward Deployed AI Engineering (<code>FDE</code>)</strong> puts a systems architect directly inside the business workflow alongside the operators who own the outcome.</p>\n<p>Instead of separating \"business discovery\" from \"production engineering,\" an FDE sprint runs one tight closed loop:</p>\n<ol>\n<li><strong>Shadow Five Real Transactions Live (Days 1 to 2):</strong> Never trust how an org chart describes a workflow. Watch an analyst, paralegal, or account manager process five real cases across tabs, spreadsheets, and emails. Use Socratic Productive-Friction interviews to surface the 10% edge cases that consume 80% of judgment.</li>\n<li><strong>Ship a Thin Level-2 Slice Against Real Data (Days 3 to 5):</strong> Connect canonical webhooks, layout-aware OCR or search APIs, and scoped <code>create-draft</code> outputs so operators inspect real staged work inside their actual tools within 72 hours.</li>\n<li><strong>Lock In a 25-Case Binary Golden Eval Suite (Week 2):</strong> Capture every operator edit from the first twenty-five runs, perform open-coding error analysis, and codify 3 to 5 binary <code>PASS</code>/<code>FAIL</code> checks (deterministic schema/citation verifiers plus a calibrated binary rubric judge) before expanding rollout.</li>\n<li><strong>Harden Boundaries &#x26; Train Internal FDE Champions:</strong> Lock down 4-legged OAuth scopes, disable silent public-cloud fallbacks on private <code>OpenCode</code> / <code>vLLM</code> setups, and train an internal champion in each department to maintain <code>SKILL.md</code> rules without permanent external dependency.</li>\n</ol>\n<h2 id=\"training-internal-forward-deployed-champions-inside-your-company\">Training Internal Forward Deployed Champions Inside Your Company</h2>\n<p>You do not need a fifty-person ML research group to run the FDE operating model. Some of the highest-leverage internal FDEs in 2026 are technical Product Managers, RevOps Architects, Financial Analysts, and Staff Engineers equipped with:</p>\n<ul>\n<li>Folder-native agentic harnesses (<code>Claude Cowork</code>, <code>Claude Code</code>, <code>OpenCode</code>)</li>\n<li>Standardized internal <code>MCP</code> tool servers</li>\n<li>A shared discipline around Productive-Friction <code>SKILL.md</code> specs and 25-case Golden Evals</li>\n</ul>\n<p>Read our unlocked engineering lessons on <a href=\"/courses/3-1-production-harnesses-multi-model-routing\">Production Agent Harnesses</a> and <a href=\"/courses/4-1-open-weights-vs-frontier-economics\">Open-Weights vs. Frontier Physics</a>, explore <a href=\"/fractional-ai-cto\">Fractional CAIO &#x26; Fractional AI CTO leadership</a>, or <a href=\"/work-with-me\">book a 20-minute Forward Deployed scoping call</a>.</p>",
+    "toc": [
+      {
+        "id": "why-forward-deployed-ai-engineering-won",
+        "text": "Why Forward Deployed AI Engineering Won"
+      },
+      {
+        "id": "training-internal-forward-deployed-champions-inside-your-company",
+        "text": "Training Internal Forward Deployed Champions Inside Your Company"
+      }
+    ]
+  },
+  {
     "slug": "framework-laptop-thesis",
     "frontmatter": {
       "title": "Why I Bet on a Framework Laptop in 2026",
@@ -1663,6 +1693,44 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "productive-friction-interview-ai",
+    "frontmatter": {
+      "title": "Productive Friction: Why Interview-First AI Skills Beat Ad-Hoc Prompting (And Cut Hallucinations by Design)",
+      "slug": "productive-friction-interview-ai",
+      "publishedDate": "2026-11-25",
+      "description": "Most workplace AI hallucinations are caused by lazy 12-word ad-hoc prompts that force models to guess missing rules. Here is how Socratic interview harnesses, SKILL.md folders, and MCP Elicitation fix reliability.",
+      "tags": [
+        "productive-friction",
+        "agent-skills",
+        "mcp",
+        "enterprise-ai",
+        "governance"
+      ],
+      "track": "small-business",
+      "kind": "deep-dive",
+      "readingMinutes": 3
+    },
+    "html": "<p>Walk behind ten employees using ChatGPT or Claude inside an enterprise today and you will see the same failure pattern nine times out of ten.</p>\n<p>Someone opens a blank chat window, types a twelve-word instruction (<em>\"Draft our Q1 vendor renewal negotiation plan for Acme\"</em> or <em>\"Review this client SOW for risk\"</em>), hits Enter, and receives eight hundred words of polished, confident prose that silently invents pricing thresholds, ignores legal fallback positions, and misses the single operational constraint that actually mattered.</p>\n<p>Teams call this a \"model hallucination problem\" and wait for the next frontier release to fix it. Even with late-2026 frontier models (<code>GPT-6.2 Astra</code>, <code>Claude Fable 5.2</code>, <code>Gemini 4 Carbon</code>), <strong>no amount of pre-training teaches a model unwritten rules that exist only inside your CFO's or General Counsel's head.</strong></p>\n<h2 id=\"zero-intake-friction-manufactures-guesswork\">Zero Intake Friction Manufactures Guesswork</h2>\n<p>Instruction-tuned models optimize heavily for immediate helpfulness. When you supply 15% of the required decision context on Turn 1, a zero-friction chat interface forces the model to hallucinate the missing 85% from internet medians.</p>\n<p>The fix is not \"longer prompt templates\" pasted from a cheat sheet. The fix is <strong>Productive Friction</strong>: engineering AI harnesses and reusable skills that <strong>refuse to draft prematurely and instead interview, prod, and challenge the human operator first</strong>.</p>\n<h2 id=\"three-mechanisms-powering-interview-first-ai-in-late-2026\">Three Mechanisms Powering Interview-First AI in Late 2026</h2>\n<p>Three ecosystem shifts converged this year to make Interview-First systems practical for non-engineers and engineering teams alike:</p>\n<ol>\n<li><strong>Unified Workspace &#x26; Local Folder Execution:</strong> With Anthropic unifying Chat and <strong>Cowork</strong> inside Claude Enterprise (combining sandbox execution, local project folder mounts, and admin-governed <code>.mcpb</code> Desktop Extensions) alongside terminal/IDE harnesses (<code>Claude Code</code>, <code>Codex</code>, <code>OpenCode</code>), operators can store durable organizational rules right beside their working files.</li>\n<li><strong>Open-Standard <code>SKILL.md</code> Directories:</strong> Rather than burying instructions inside one vendor's proprietary UI, teams package domain procedures into versioned folders (<code>SKILL.md</code> + <code>rules/</code> + <code>scripts/</code>).</li>\n<li><strong>Protocol-Level <code>Elicitation</code> in MCP:</strong> Under Linux Foundation governance, the Model Context Protocol (<code>MCP</code>) formalized <code>Elicitation</code>, allowing connected servers and tools to pause mid-execution and ask the human structured, typed clarifying questions before mutating state or generating high-stakes outputs.</li>\n</ol>\n<h2 id=\"anatomy-of-a-productive-friction-skill\">Anatomy of a Productive-Friction Skill</h2>\n<p>Compare how an ad-hoc prompt behaves versus an Interview-First <code>SKILL.md</code> across four departments:</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th align=\"left\">Department</th>\n<th align=\"left\">Naive Ad-Hoc Prompt</th>\n<th align=\"left\">Productive-Friction Interview Gate (Turn 1)</th>\n<th align=\"left\">Reliability Gain</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td align=\"left\"><strong>Legal</strong></td>\n<td align=\"left\"><em>\"Check this vendor MSA.\"</em></td>\n<td align=\"left\">Asks counterparty role, annual contract value, Green/Amber/Red data tier, and whether standard 2x liability cap applies before citing verbatim clauses.</td>\n<td align=\"left\">Eliminates invented clause numbers and catches uncapped data-breach exposure.</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>Finance</strong></td>\n<td align=\"left\"><em>\"Summarize Q3 SaaS variance.\"</em></td>\n<td align=\"left\">Confirms cash vs. amortized recognition rule, SSO inactivity window, and executes deterministic Python/SQL rather than naked token math.</td>\n<td align=\"left\">Zero dropped CSV rows; cent-accurate reconciliation.</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>Marketing</strong></td>\n<td align=\"left\"><em>\"Write a LinkedIn &#x26; Substack post on AI.\"</em></td>\n<td align=\"left\">Interviews the subject-matter expert for 1 real customer objection, 1 hard metric, and 1 contrarian trade-off before staging drafts.</td>\n<td align=\"left\">Eliminates generic AI slop and platform demotion.</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>Operations</strong></td>\n<td align=\"left\"><em>\"Document our onboarding SOP.\"</em></td>\n<td align=\"left\">Walks the senior operator through happy path + top 3 real-world failure exceptions in 20 minutes, compiling a reusable checklist and webhook spec.</td>\n<td align=\"left\">Extracts tribal knowledge out of senior staff heads in one afternoon.</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"turning-interviews-into-organizational-memory\">Turning Interviews Into Organizational Memory</h2>\n<p>The compounding payoff of Productive Friction goes beyond better single-turn outputs. Every time a Socratic intake skill interviews a senior operator, lawyer, or analyst, <strong>have it save the confirmed edge-case rules into a versioned <code>rules/</code> file</strong>. Within thirty days, your organization transitions from scattered ad-hoc chatting to an owned library of institutional judgment.</p>\n<p>Want to test this pattern interactively and read our full late-2026 Model Matrix? Explore <a href=\"/courses/1-1-2026-ai-landscape-model-matrix\">Curriculum 01 Module 1.1</a> on <a href=\"/courses\">/courses</a>, or <a href=\"/teaching\">scope a Corporate Department Lab</a> to train your leadership and functional teams live.</p>",
+    "toc": [
+      {
+        "id": "zero-intake-friction-manufactures-guesswork",
+        "text": "Zero Intake Friction Manufactures Guesswork"
+      },
+      {
+        "id": "three-mechanisms-powering-interview-first-ai-in-late-2026",
+        "text": "Three Mechanisms Powering Interview-First AI in Late 2026"
+      },
+      {
+        "id": "anatomy-of-a-productive-friction-skill",
+        "text": "Anatomy of a Productive-Friction Skill"
+      },
+      {
+        "id": "turning-interviews-into-organizational-memory",
+        "text": "Turning Interviews Into Organizational Memory"
       }
     ]
   },
@@ -2370,6 +2438,40 @@ export const blogPosts: Array<{
       {
         "id": "the-takeaway",
         "text": "The takeaway"
+      }
+    ]
+  },
+  {
+    "slug": "vertical-ai-vs-bespoke-api-harnesses",
+    "frontmatter": {
+      "title": "Vertical AI SaaS vs. Bespoke API Harnesses: A Late-2026 Build-vs-Buy Guide Across Marketing, Finance, Legal & Ops",
+      "slug": "vertical-ai-vs-bespoke-api-harnesses",
+      "publishedDate": "2026-11-25",
+      "description": "Binary build-vs-buy is dead. When to buy mature vertical AI (Harvey, Legora, Ramp, Glean), when to 'Build With' an Agent OS (Sierra), and which best-of-breed APIs compose bespoke systems at 1/10th the cost.",
+      "tags": [
+        "build-vs-buy",
+        "vertical-ai",
+        "apis",
+        "enterprise-architecture",
+        "finops"
+      ],
+      "track": "small-business",
+      "kind": "deep-dive",
+      "readingMinutes": 3
+    },
+    "html": "<p>Every COO, CFO, General Counsel, and VP of Marketing in late 2026 faces the same procurement headache: fifty vertical AI startups pitch <code>$40 to $150/seat/month</code> subscriptions every quarter, while internal builders argue they can recreate any vendor demo in a weekend using frontier APIs and open weights.</p>\n<p>Both extremes lose money. Buying six disconnected department AI wrappers traps company context inside walled gardens that cannot talk to each other. Conversely, trying to write your own OCR table parser, SOC2 Type II compliance envelope, or multi-jurisdiction legal database from scratch buries your team in undifferentiated plumbing.</p>\n<h2 id=\"the-2026-three-tier-framework-buy-build-with-or-compose-bespoke\">The 2026 Three-Tier Framework: Buy, \"Build With,\" or Compose Bespoke</h2>\n<p>Instead of treating build-vs-buy as a binary ideology, evaluate every functional workflow across three distinct architectural lanes:</p>\n<ol>\n<li><strong>Buy Mature Vertical AI</strong> when the vendor brings <strong>proprietary external datasets, payment/regulatory rails, or heavy compliance risk transfer (<code>ISO 42001</code>, <code>SOC2 Type II</code>, <code>HIPAA BAA</code>)</strong>. Examples: <code>Ramp</code> in spend control and automated bill-pay benchmarking; <code>Harvey</code> or <code>Legora</code> in Am Law and global corporate legal departments; <code>Glean</code> for unified enterprise search indexing across hundreds of SaaS connectors.</li>\n<li><strong>\"Build With\" a Managed Agent OS</strong> when deploying high-volume customer-facing voice or chat workflows where you want managed guardrails, sub-second streaming, and observability (<code>Sierra</code>-class Agent OS + SDK or 3P cloud VPC gateways on Bedrock/Vertex) while keeping <strong>100% ownership of your domain rules and brand logic</strong>.</li>\n<li><strong>Compose Bespoke In-House API Harnesses</strong> whenever a workflow encodes your <strong>competitive IP</strong>, spans multiple internal databases/CRMs, or replaces a thin <code>$60/seat</code> SaaS wrapper that holds zero proprietary data moat.</li>\n</ol>\n<h2 id=\"the-six-best-of-breed-api-layers-behind-every-great-bespoke-system\">The Six Best-of-Breed API Layers Behind Every Great Bespoke System</h2>\n<p>When you compose in-house, you never start from raw sockets. You snap together six proven API primitives at pennies per run:</p>\n<ul>\n<li><strong>Search &#x26; Live Web Grounding:</strong> <code>Tavily</code>, <code>Exa</code>, and <code>Firecrawl</code> for clean, cited Markdown extraction without maintaining proxy scraper farms.</li>\n<li><strong>Layout-Aware Document &#x26; Table OCR:</strong> <code>Reducto</code>, <code>Mistral OCR</code>, and multimodal schema extraction for multi-column invoices, MSAs, and clinical PDFs.</li>\n<li><strong>Voice &#x26; Meeting Capture:</strong> <code>Deepgram</code>, <code>Recall.ai</code>, and <code>Cartesia</code> to replace <code>$40/seat</code> standalone meeting-note subscriptions with unified, webhook-driven call intelligence.</li>\n<li><strong>Isolated Code &#x26; Browser Sandboxes:</strong> <code>E2B</code>, <code>Cloudflare Sandboxes</code>, and <code>Stagehand</code> so agent-generated Python/SQL reconciliation never runs on host infrastructure.</li>\n<li><strong>Multi-Model &#x26; Open-Weight Routing:</strong> Routing 80% of high-volume extraction to <code>$0.10 to $1/1M</code> fast tiers (<code>Claude Haiku 5.5</code>, <code>Gemini 4 Hydrogen</code>, <code>DeepSeek V4.1-Flash</code> MIT, or self-hosted <code>Qwen 3.8</code>), 15% to workhorse tiers (<code>GPT-6.2 Sol</code>, <code>Gemini 4 Neon</code>), and 5% to frontier deep reasoning.</li>\n<li><strong>Transactional Spine &#x26; MCP Interoperability:</strong> <code>Postgres</code>, <code>Resend</code>, <code>Cal.com</code>, and Linux Foundation <code>MCP</code> servers with idempotent webhooks and Level-2 Draft-First human approval queues.</li>\n</ul>\n<h2 id=\"department-by-department-verdict\">Department-by-Department Verdict</h2>\n<ul>\n<li><strong>Marketing &#x26; Growth:</strong> Buy primary SERP/audience datasets; <strong>build</strong> your own interview-driven content and buyer-radar harnesses so you never sound like generic wrapper copy.</li>\n<li><strong>Finance &#x26; FP&#x26;A:</strong> Buy spend rails (<code>Ramp</code>); <strong>build</strong> deterministic sandboxed Python/SQL reconciliation and quarterly SSO SaaS license-bloat audits.</li>\n<li><strong>Legal &#x26; Compliance:</strong> Buy <code>Harvey</code>/<code>Legora</code> at massive multi-jurisdiction scale; <strong>build</strong> a span-verified 25-clause NDA/MSA/DPA playbook harness over Zero-Data-Retention (<code>ZDR</code>) or private open-weight compute (<code>Mistral Large 4</code> / <code>Qwen 3.8</code>) for lean in-house teams.</li>\n</ul>\n<p>Dive deeper in unlocked <a href=\"/courses/2-1-vertical-ai-build-vs-buy-framework\">Module 2.1: The Vertical AI Build-vs-Buy Framework</a> and <a href=\"/courses/3-1-production-harnesses-multi-model-routing\">Module 3.1: Inside Production Agent Harnesses</a>, or <a href=\"/work-with-me\">scope a Forward Deployed Build</a> to wire these APIs directly inside your stack.</p>",
+    "toc": [
+      {
+        "id": "the-2026-three-tier-framework-buy-build-with-or-compose-bespoke",
+        "text": "The 2026 Three-Tier Framework: Buy, \"Build With,\" or Compose Bespoke"
+      },
+      {
+        "id": "the-six-best-of-breed-api-layers-behind-every-great-bespoke-system",
+        "text": "The Six Best-of-Breed API Layers Behind Every Great Bespoke System"
+      },
+      {
+        "id": "department-by-department-verdict",
+        "text": "Department-by-Department Verdict"
       }
     ]
   },

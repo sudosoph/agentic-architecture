@@ -1,0 +1,47 @@
+---
+title: "Productive Friction: Why Interview-First AI Skills Beat Ad-Hoc Prompting (And Cut Hallucinations by Design)"
+slug: "productive-friction-interview-ai"
+publishedDate: "2026-11-25"
+description: "Most workplace AI hallucinations are caused by lazy 12-word ad-hoc prompts that force models to guess missing rules. Here is how Socratic interview harnesses, SKILL.md folders, and MCP Elicitation fix reliability."
+tags: ["productive-friction", "agent-skills", "mcp", "enterprise-ai", "governance"]
+track: "small-business"
+kind: "deep-dive"
+readingMinutes: 9
+---
+
+Walk behind ten employees using ChatGPT or Claude inside an enterprise today and you will see the same failure pattern nine times out of ten.
+
+Someone opens a blank chat window, types a twelve-word instruction (*"Draft our Q1 vendor renewal negotiation plan for Acme"* or *"Review this client SOW for risk"*), hits Enter, and receives eight hundred words of polished, confident prose that silently invents pricing thresholds, ignores legal fallback positions, and misses the single operational constraint that actually mattered.
+
+Teams call this a "model hallucination problem" and wait for the next frontier release to fix it. Even with late-2026 frontier models (`GPT-6.2 Astra`, `Claude Fable 5.2`, `Gemini 4 Carbon`), **no amount of pre-training teaches a model unwritten rules that exist only inside your CFO's or General Counsel's head.**
+
+## Zero Intake Friction Manufactures Guesswork
+
+Instruction-tuned models optimize heavily for immediate helpfulness. When you supply 15% of the required decision context on Turn 1, a zero-friction chat interface forces the model to hallucinate the missing 85% from internet medians.
+
+The fix is not "longer prompt templates" pasted from a cheat sheet. The fix is **Productive Friction**: engineering AI harnesses and reusable skills that **refuse to draft prematurely and instead interview, prod, and challenge the human operator first**.
+
+## Three Mechanisms Powering Interview-First AI in Late 2026
+
+Three ecosystem shifts converged this year to make Interview-First systems practical for non-engineers and engineering teams alike:
+
+1. **Unified Workspace & Local Folder Execution:** With Anthropic unifying Chat and **Cowork** inside Claude Enterprise (combining sandbox execution, local project folder mounts, and admin-governed `.mcpb` Desktop Extensions) alongside terminal/IDE harnesses (`Claude Code`, `Codex`, `OpenCode`), operators can store durable organizational rules right beside their working files.
+2. **Open-Standard `SKILL.md` Directories:** Rather than burying instructions inside one vendor's proprietary UI, teams package domain procedures into versioned folders (`SKILL.md` + `rules/` + `scripts/`).
+3. **Protocol-Level `Elicitation` in MCP:** Under Linux Foundation governance, the Model Context Protocol (`MCP`) formalized `Elicitation`, allowing connected servers and tools to pause mid-execution and ask the human structured, typed clarifying questions before mutating state or generating high-stakes outputs.
+
+## Anatomy of a Productive-Friction Skill
+
+Compare how an ad-hoc prompt behaves versus an Interview-First `SKILL.md` across four departments:
+
+| Department | Naive Ad-Hoc Prompt | Productive-Friction Interview Gate (Turn 1) | Reliability Gain |
+| :--- | :--- | :--- | :--- |
+| **Legal** | *"Check this vendor MSA."* | Asks counterparty role, annual contract value, Green/Amber/Red data tier, and whether standard 2x liability cap applies before citing verbatim clauses. | Eliminates invented clause numbers and catches uncapped data-breach exposure. |
+| **Finance** | *"Summarize Q3 SaaS variance."* | Confirms cash vs. amortized recognition rule, SSO inactivity window, and executes deterministic Python/SQL rather than naked token math. | Zero dropped CSV rows; cent-accurate reconciliation. |
+| **Marketing** | *"Write a LinkedIn & Substack post on AI."* | Interviews the subject-matter expert for 1 real customer objection, 1 hard metric, and 1 contrarian trade-off before staging drafts. | Eliminates generic AI slop and platform demotion. |
+| **Operations** | *"Document our onboarding SOP."* | Walks the senior operator through happy path + top 3 real-world failure exceptions in 20 minutes, compiling a reusable checklist and webhook spec. | Extracts tribal knowledge out of senior staff heads in one afternoon. |
+
+## Turning Interviews Into Organizational Memory
+
+The compounding payoff of Productive Friction goes beyond better single-turn outputs. Every time a Socratic intake skill interviews a senior operator, lawyer, or analyst, **have it save the confirmed edge-case rules into a versioned `rules/` file**. Within thirty days, your organization transitions from scattered ad-hoc chatting to an owned library of institutional judgment.
+
+Want to test this pattern interactively and read our full late-2026 Model Matrix? Explore [Curriculum 01 Module 1.1](/courses/1-1-2026-ai-landscape-model-matrix) on [/courses](/courses), or [scope a Corporate Department Lab](/teaching) to train your leadership and functional teams live.

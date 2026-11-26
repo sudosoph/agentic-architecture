@@ -15,6 +15,10 @@ const KNOWN_STATIC_PATHS = new Set([
   '/boulder',
   '/blog',
   '/courses',
+  '/courses/1-1-2026-ai-landscape-model-matrix',
+  '/courses/2-1-vertical-ai-build-vs-buy-framework',
+  '/courses/3-1-production-harnesses-multi-model-routing',
+  '/courses/4-1-open-weights-vs-frontier-economics',
   '/academy',
   '/masterclass',
   '/accelerator',
@@ -38,22 +42,21 @@ const KNOWN_STATIC_PATHS = new Set([
 ])
 
 describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
-  it('includes the latest November 2026 buyer & systems flagship posts at the top of the 47-post archive', () => {
+  it('includes the latest November 2026 buyer, Productive Friction, Bespoke API, and FDE flagship posts at the top of the 50-post archive', () => {
     const posts = getAllPosts()
-    expect(posts).toHaveLength(47)
-    const topFourSlugs = new Set(posts.slice(0, 4).map(p => p.slug))
-    expect(topFourSlugs).toEqual(
-      new Set([
-        'ai-back-office',
-        'ai-chief-of-staff',
-        'hire-ai-agency-vs-in-house',
-        'loop-engineering',
-      ]),
-    )
-    expect(posts[4].slug).toBe('easy-ai-brand-and-workflow-setup')
-    expect(posts[5].slug).toBe('mac-studio-512gb-vs-dgx-spark')
-    expect(posts[6].slug).toBe('instinct-ai-vs-tab-review')
-    expect(posts[7].slug).toBe('gemini-4-neon-vs-deepseek-v4')
+    expect(posts).toHaveLength(50)
+    const topSevenSlugs = new Set(posts.slice(0, 7).map(p => p.slug))
+    for (const slug of [
+      'productive-friction-interview-ai',
+      'vertical-ai-vs-bespoke-api-harnesses',
+      'forward-deployed-ai-engineering',
+      'ai-back-office',
+      'ai-chief-of-staff',
+      'hire-ai-agency-vs-in-house',
+      'loop-engineering',
+    ]) {
+      expect(topSevenSlugs.has(slug), `missing ${slug} in top 7`).toBe(true)
+    }
   })
 
   it('resolves every internal /... link across all 47 blog posts without broken slugs or em-dashes', () => {
@@ -128,6 +131,12 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     }
 
     expect(urls.has('https://agenticarchitect.ai/library')).toBe(false)
+    expect(urls.has('https://agenticarchitect.ai/courses/1-1-2026-ai-landscape-model-matrix')).toBe(true)
+    expect(urls.has('https://agenticarchitect.ai/courses/2-1-vertical-ai-build-vs-buy-framework')).toBe(true)
+    expect(urls.has('https://agenticarchitect.ai/courses/3-1-production-harnesses-multi-model-routing')).toBe(true)
+    expect(urls.has('https://agenticarchitect.ai/courses/4-1-open-weights-vs-frontier-economics')).toBe(true)
+    expect(urls.has('https://agenticarchitect.ai/courses/1-2-privacy-shadow-ai-security')).toBe(false)
+    expect([...urls].some(u => u.includes('/vault/'))).toBe(false)
 
     for (const p of getAllPosts()) {
       expect(urls.has(`https://agenticarchitect.ai/blog/${p.slug}`)).toBe(true)
@@ -139,13 +148,13 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     expect(indexNowUrls.has('https://agenticarchitect.ai/research')).toBe(true)
   })
 
-  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 47 entries', async () => {
+  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 50 entries', async () => {
     const res = await getRss()
     const xml = await res.text()
     expect(xml).toContain('<title>Agentic Architect</title>')
     expect(xml).not.toContain('Local-First AI')
     expect(xml).not.toContain('\u2014')
-    expect((xml.match(/<entry>/g) ?? []).length).toBe(47)
+    expect((xml.match(/<entry>/g) ?? []).length).toBe(50)
   })
 
   it('keeps all guides free of retired localfirstai Substack branding', () => {

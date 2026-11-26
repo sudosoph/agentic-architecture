@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/mdx'
 import { getAllGuides } from '@/lib/guides'
+import { getAllCurriculumModules } from '@/lib/curriculum'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 const BASE = SITE_CONFIG.siteUrl
@@ -8,6 +9,7 @@ const BASE = SITE_CONFIG.siteUrl
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts()
   const guides = getAllGuides()
+  const unlockedModules = getAllCurriculumModules().filter(m => m.frontmatter.unlocked)
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
@@ -61,5 +63,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...postRoutes, ...guideRoutes]
+  const curriculumRoutes: MetadataRoute.Sitemap = unlockedModules.map(mod => ({
+    url: `${BASE}/courses/${mod.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.88,
+  }))
+
+  return [...staticRoutes, ...curriculumRoutes, ...postRoutes, ...guideRoutes]
 }

@@ -1,45 +1,49 @@
 # Agentic Architect · Sophia Stein
 # https://llmstxt.org
 
-> Practical AI workflows, non-coder automation courses, custom bottleneck sprints, and production AI advisory for business owners and modern organizations. Based in Boulder, Colorado.
+> Applied AI architecture, Productive-Friction interview harnesses, 4 practitioner curricula (from non-technical foundations to bespoke APIs and private open-weight rigs), Forward Deployed builds, and Fractional CAIO / AI CTO leadership. Based in Boulder, Colorado.
 
-Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background spans a B.S. in Computer Science from Columbia University, enterprise strategy and healthcare AI enablement at McKinsey & Company, and AI Systems & Enablement at Google (where she has led extensive internal AI trainings and co-invented a patent-pending AI system; all writing, teaching, and advising on this site are strictly in her personal capacity, views her own). She has trained 300+ founders and operators live at Boulder Startup Week and spoken for Women Who Code.
+Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background spans a B.S. in Computer Science from Columbia University, enterprise SaaS FinOps ($70M sales OpEx saved) and clinical AI enablement (250+ healthcare leaders trained at 79 NPS) at McKinsey & Company, and AI Systems & Enablement at Google (where she has led extensive internal AI trainings and co-invented a patent-pending AI system; all writing, teaching, and advising on this site are strictly in her personal capacity, views her own). She has trained 300+ founders and operators live at Boulder Startup Week and spoken for Women Who Code.
 
 ## Core Focus Areas
 
-1. Non-Technical Business Owners & Operators: Practical non-coder courses ($297 AI Workflow Academy), our free 5-day Prompt-to-System challenge, guided 6-System Cohort, and focused custom automation sprints across Sales, Intake, Operations, and AI Chief of Staff loops.
-2. Fractional AI Leadership & Corporate Enablement: Fractional Chief AI Officer (CAIO) and Fractional AI CTO roles, 2-week architecture diagnostics, and hands-on department trainings for mid-market, healthcare, and tech teams.
-3. Sovereign AI Infrastructure & Benchmarks: Vendor-neutral model routing, data privacy boundaries, and encrypted private AI setups.
+1. The 4-Curriculum AI Architecture Academy (/courses): 20 practitioner modules across (01) Foundations, 2026 Model Matrix & Productive-Friction Interview Skills ($297), (02) Department AI Systems: Vertical SaaS vs. Build In-House across Marketing, Finance, Legal & Ops ($397), (03) Bespoke Harnesses, Best-of-Breed APIs & Forward Deployed Engineering ($497), and (04) The Sovereign AI Stack: Open-Weights, 96GB-512GB Private Rigs & Tailscale ($497), plus the $997 All-Access Pass with 100% 60-day tuition credit.
+2. Forward Deployed "Build-For-You" AI Systems (/work-with-me): Embedded engineering wiring bespoke multi-model routers, best-of-breed Search/OCR/Voice/Sandbox APIs, MCP servers, 25-case Golden Evals, and codified department SKILL.md repositories inside client infrastructure.
+3. Fractional CAIO / AI CTO, Corporate Department Labs & Keynotes (/fractional-ai-cto, /teaching): Part-time executive AI leadership, 2-week architecture diagnostics, Half-Day ($7,500) and Full-Day ($15,000) functional trainings, and conference keynotes.
 
-## Key Pages
+## Key Pages & Unlocked Curriculum Modules
 
-- / : Audience-separated hub across Owner Courses/Sprints and Fractional AI Leadership/Corporate Training
-- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and 2-Week Architecture Diagnostic for mid-market and funded companies
-- /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role, 4-layer stack, and comparison matrix
-- /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, vendor-neutral 512GB/128GB hardware sizer, and 3 downloadable Markdown field manuals
-- /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
-- /courses : Free 5-day challenge, $297 Self-Paced AI Workflow Academy, and guided cohort
-- /academy : Practical AI Workflow Academy ($297 + $97/team seat): Build Your AI Chief of Staff & 6 Business Automations
-- /accelerator : Guided 6-System Back-Office Implementation Cohort (from $1,497, includes free EA/Ops seat)
-- /starter-kit : Free unlocked 20/80 Bottleneck Readiness Calculator, Lead Dossier workflow, and SOP templates
-- /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 90-Min Workflow Roadmap, Custom Sprints (from $2,500), and Corporate/Advisory Scoping
-- /research : 29 systems & hardware benchmarks, The Sovereign Stack book, CU Boulder syllabi, and CTO advisory
-- /teaching : Keynotes, corporate L&D workshops, and CU Boulder course syllabi
-- /stack : 15-Minute Team & Loop Stack and Private & Sovereign AI Rig reference
-- /blog : 47 playbooks defaulting to plain-English Owner Playbooks with full engineering archive access
-- /bsw : Open-source Boulder Startup Week 2026 workshop archive (slides, 17-step n8n tutorial, handouts)
+- / : Applied AI Architecture Hub with interactive Productive-Friction Explorer & Bespoke Stack Selector
+- /courses : 4-Curriculum Academy Catalog (20 modules) + $997 All-Access Pass + L&D Stipend Kit
+- /courses/1-1-2026-ai-landscape-model-matrix : Unlocked Module 1.1 on late-2026 frontier vs. open-weight model routing and Cowork workspaces
+- /courses/2-1-vertical-ai-build-vs-buy-framework : Unlocked Module 2.1 on Buy vs. Build-With vs. Bespoke In-House across enterprise functions
+- /courses/3-1-production-harnesses-multi-model-routing : Unlocked Module 3.1 on harness state machines, OpenCode vs. cloud harnesses, and multi-model arbitration
+- /courses/4-1-open-weights-vs-frontier-economics : Unlocked Module 4.1 on memory-bandwidth physics, open-weight licensing, and sovereign break-even math
+- /academy : Curriculum 01 ($297 + $97/team seat) dedicated enrollment & team calculator
+- /accelerator : Guided 6-System Implementation Cohort ($1,497, includes free operator seat)
+- /work-with-me : Forward Deployed Build-For-You Systems, $750 90-Min Architecture Roadmap, and pilot sprints
+- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and 2-Week Architecture Diagnostic
+- /teaching : Signature keynotes (Productive Friction, Vertical AI vs. Bespoke Harnesses, Forward Deployed AI), corporate L&D labs, and CU Boulder syllabi
+- /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role and 4-layer stack
+- /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, 512GB/128GB hardware sizer, and 3 free Markdown field manuals
+- /masterclass : Free 60-Min Live Briefing & 5-Day Applied AI Architecture Primer
+- /starter-kit : Free 20/80 Bottleneck Readiness Calculator and SOP templates
+- /research : 30+ systems & hardware benchmarks, book, and university syllabi
+- /stack : Reference software & private hardware stack
+- /blog : 50 practitioner playbooks and deep dives
+- /bsw : Open-source Boulder Startup Week 2026 workshop archive
 - /guides : Step-by-step workflow tutorials
 - /about : Biography, dual-track positioning, and credentials
-- /rss.xml : Atom feed of all playbooks
+- /rss.xml : Atom feed of all 50 playbooks
 
-## Start-Here Buyer & Systems Playbooks
+## Start-Here Cornerstone Playbooks
 
-- /blog/ai-back-office : The 6-workflow AI Back Office to automate before hiring a $65,000 coordinator
-- /blog/ai-chief-of-staff : 2026 setup guide, SaaS vs owned comparison, and security rules for an executive AI Chief of Staff
-- /blog/hire-ai-agency-vs-in-house : Cost & ownership comparison of $20k agencies vs courses, guided cohorts, custom sprints, and corporate workshops
-- /blog/loop-engineering : Isolated git worktrees, deterministic verifiers, token circuit breakers, and Nov 2026 loop economics
-- /blog/mac-studio-512gb-vs-dgx-spark : Vendor-neutral physics & ROI comparing 512GB M5 Ultra Mac Studio (1.2 TB/s), 128GB DGX Spark, and Ryzen AI Halo mini-PCs
-- /blog/instinct-ai-vs-tab-review : Security & OAuth audit of Instinct, Tab, and Dots vs self-hosted MIT OpenInstinct & OpenClaw
+- /blog/productive-friction-interview-ai : Why interview-first SKILL.md harnesses and MCP Elicitation beat ad-hoc prompting
+- /blog/vertical-ai-vs-bespoke-api-harnesses : Late-2026 build-vs-buy guide across Marketing, Finance, Legal & Ops
+- /blog/forward-deployed-ai-engineering : How Forward Deployed AI Engineers ship production systems with 25-case Golden Evals
+- /blog/ai-back-office : What to automate before hiring a $65,000 coordinator
+- /blog/loop-engineering : Isolated git worktrees, deterministic verifiers, and token circuit breakers
+- /blog/mac-studio-512gb-vs-dgx-spark : Vendor-neutral physics comparing 512GB M5 Ultra, 128GB DGX Spark, and Ryzen AI Halo nodes
 
 ## Newsletter & Contact
 
