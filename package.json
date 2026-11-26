@@ -16,6 +16,7 @@
     "radar:substack": "node scripts/substack-buyer-radar.mjs",
     "comments": "node scripts/comment-copilot.mjs",
     "book:build": "node scripts/compile-book-and-freebies.mjs",
+    "record:deck": "node scripts/record-linux-walkthrough.mjs",
     "deploy": "opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare preview",
     "start": "next start",
