@@ -40,7 +40,14 @@ function formatLessonBody(lesson: (typeof fiveDayLessons)[number]): string {
 }
 
 export async function POST(request: Request) {
-  let body: { email?: string; source?: string } = {}
+  let body: {
+    email?: string
+    source?: string
+    attribution?: {
+      firstTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
+      lastTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
+    }
+  } = {}
   try {
     body = await request.json()
   } catch {
@@ -108,6 +115,16 @@ export async function POST(request: Request) {
           `Email: ${email}`,
           `Source: ${source}`,
           `Referer: ${referer}`,
+          ...(body.attribution?.firstTouch
+            ? [
+                `First Touch: ${body.attribution.firstTouch.source ?? 'direct'} / ${body.attribution.firstTouch.medium ?? 'none'} (${body.attribution.firstTouch.campaign || 'no-campaign'}) via ${body.attribution.firstTouch.entryPath ?? '/'}`,
+              ]
+            : []),
+          ...(body.attribution?.lastTouch
+            ? [
+                `Last Touch: ${body.attribution.lastTouch.source ?? 'direct'} / ${body.attribution.lastTouch.medium ?? 'none'} via ${body.attribution.lastTouch.entryPath ?? '/'}`,
+              ]
+            : []),
           `Date: ${new Date(now).toISOString()}`,
         ].join('\n'),
       },

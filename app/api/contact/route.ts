@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { name, email, subject, message, website } = body as Record<string, unknown>
+  const { name, email, subject, message, website, attribution } = body as Record<string, unknown>
 
   // Honeypot trap: silently accept bot submissions without burning email quota.
   if (typeof website === 'string' && website.trim()) {
@@ -51,6 +51,16 @@ export async function POST(request: Request) {
       ? subject.trim().slice(0, 160)
       : `Contact form: ${cleanName}`
 
+  const attr = attribution as
+    | {
+        firstTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
+        lastTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
+      }
+    | undefined
+  const attributionFooter = attr?.firstTouch
+    ? `\n\n---\nAttribution:\nFirst Touch: ${attr.firstTouch.source ?? 'direct'} / ${attr.firstTouch.medium ?? 'none'} (${attr.firstTouch.campaign || 'no-campaign'}) via ${attr.firstTouch.entryPath ?? '/'}\nLast Touch: ${attr.lastTouch?.source ?? 'direct'} / ${attr.lastTouch?.medium ?? 'none'} via ${attr.lastTouch?.entryPath ?? '/'}`
+    : ''
+
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -62,7 +72,7 @@ export async function POST(request: Request) {
       to: TO,
       reply_to: cleanEmail,
       subject: subjectLine,
-      text: `From: ${cleanName} <${cleanEmail}>\n\n${cleanMessage}`,
+      text: `From: ${cleanName} <${cleanEmail}>\n\n${cleanMessage}${attributionFooter}`,
     }),
   })
 

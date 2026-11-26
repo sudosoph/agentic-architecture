@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
+import { getStoredAttribution, trackFunnelEvent } from '@/lib/attribution'
 
 interface Props {
   source?: string
@@ -26,12 +27,14 @@ export function NewsletterSignup({
     if (!clean) return
     setState('loading')
     try {
+      const attribution = getStoredAttribution()
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: clean, source }),
+        body: JSON.stringify({ email: clean, source, attribution }),
       })
       if (res.ok) {
+        trackFunnelEvent('newsletter_subscribed', { source })
         setState('subscribed')
         setEmail('')
         return
