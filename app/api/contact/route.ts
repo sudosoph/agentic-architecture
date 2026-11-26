@@ -5,6 +5,10 @@ import { getWorkerEnv } from '@/lib/cloudflare-env'
 const TO = ['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com']
 const FROM = 'Agentic Architect <hello@agenticarchitect.ai>'
 
+function cleanAttrField(val: unknown, fallback = ''): string {
+  return typeof val === 'string' && val.trim() ? val.trim().slice(0, 160) : fallback
+}
+
 export async function POST(request: Request) {
   const key = getWorkerEnv('RESEND_API_KEY')
   if (!key) {
@@ -51,15 +55,17 @@ export async function POST(request: Request) {
       ? subject.trim().slice(0, 160)
       : `Contact form: ${cleanName}`
 
-  const attr = attribution as
-    | {
-        firstTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
-        lastTouch?: { source?: string; medium?: string; campaign?: string; entryPath?: string } | null
-      }
-    | undefined
-  const attributionFooter = attr?.firstTouch
-    ? `\n\n---\nAttribution:\nFirst Touch: ${attr.firstTouch.source ?? 'direct'} / ${attr.firstTouch.medium ?? 'none'} (${attr.firstTouch.campaign || 'no-campaign'}) via ${attr.firstTouch.entryPath ?? '/'}\nLast Touch: ${attr.lastTouch?.source ?? 'direct'} / ${attr.lastTouch?.medium ?? 'none'} via ${attr.lastTouch?.entryPath ?? '/'}`
-    : ''
+  const attr =
+    attribution && typeof attribution === 'object'
+      ? (attribution as {
+          firstTouch?: Record<string, unknown> | null
+          lastTouch?: Record<string, unknown> | null
+        })
+      : undefined
+  const attributionFooter =
+    attr?.firstTouch && typeof attr.firstTouch === 'object'
+      ? `\n\n---\nAttribution:\nFirst Touch: ${cleanAttrField(attr.firstTouch.source, 'direct')} / ${cleanAttrField(attr.firstTouch.medium, 'none')} (${cleanAttrField(attr.firstTouch.campaign, 'no-campaign')}) via ${cleanAttrField(attr.firstTouch.entryPath, '/')}\nLast Touch: ${cleanAttrField(attr.lastTouch?.source, 'direct')} / ${cleanAttrField(attr.lastTouch?.medium, 'none')} via ${cleanAttrField(attr.lastTouch?.entryPath, '/')}`
+      : ''
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

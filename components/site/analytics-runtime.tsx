@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import {
   capturePageAttribution,
@@ -11,16 +11,22 @@ import {
 
 export function AttributionRuntime() {
   const pathname = usePathname()
+  const isInitialMount = useRef(true)
 
   useEffect(() => {
-    capturePageAttribution()
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      capturePageAttribution()
+    } else {
+      capturePageAttribution(undefined, '')
+    }
   }, [pathname])
 
   useEffect(() => {
     function handleDocumentClick(e: MouseEvent) {
       const target = e.target as HTMLElement | null
-      const anchor = target?.closest?.('a') as HTMLAnchorElement | null
-      if (!anchor) return
+      const anchor = target?.closest?.('a')
+      if (!(anchor instanceof HTMLAnchorElement)) return
 
       const rawHref = anchor.getAttribute('href') || ''
       const customEvent = anchor.getAttribute('data-track-event') as FunnelEventName | null

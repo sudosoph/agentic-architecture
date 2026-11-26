@@ -11,8 +11,15 @@ const SITE_URL = 'https://agenticarchitect.ai'
 
 export function cleanVoiceText(str) {
   return String(str || '')
-    .replace(/\u2014/g, ': ')
+    .replace(/\s*\u2014\s*/g, ': ')
     .replace(/\s+--\s+/g, ': ')
+    .replace(/Brand Brain/gi, 'Company Context Vault')
+    .replace(/`?voice\.md`?/gi, 'company operating rules')
+    .replace(/`?icp\.md`?/gi, 'buyer qualification criteria')
+}
+
+function singleLineYaml(str) {
+  return cleanVoiceText(str).replace(/\s+/g, ' ').trim().replace(/"/g, "'")
 }
 
 export function buildCampaignUtm(pathname, { source, medium, campaign, content }) {
@@ -24,6 +31,20 @@ export function buildCampaignUtm(pathname, { source, medium, campaign, content }
   return url.toString()
 }
 
+/**
+ * @param {{
+ *   slug: string,
+ *   headline: string,
+ *   sourceTitle: string,
+ *   sourceUrl: string,
+ *   killerFormat?: string,
+ *   opportunityLane?: string,
+ *   unlockSummary: string,
+ *   implicationSummary: string,
+ *   maximizeSteps?: string[],
+ *   date?: string
+ * }} opts
+ */
 export function buildFourFormatEditorialPack({
   slug,
   headline,
@@ -68,10 +89,10 @@ export function buildFourFormatEditorialPack({
   const writtenMdx = cleanVoiceText(
     [
       '---',
-      `title: "${cleanHeadline.replace(/"/g, "'")}"`,
+      `title: "${singleLineYaml(cleanHeadline)}"`,
       `slug: ${slug}`,
       `publishedDate: "${date}"`,
-      `description: "${cleanUnlock.slice(0, 155).replace(/"/g, "'")}"`,
+      `description: "${singleLineYaml(cleanUnlock).slice(0, 155)}"`,
       'track: "small-business"',
       `tags: ["possibilities", "${killerFormat}", "${opportunityLane}"]`,
       'draft: true',
@@ -79,11 +100,11 @@ export function buildFourFormatEditorialPack({
       '',
       '> [SOPHIA 3-LINE COLD OPEN: Add your personal take or client observation before flipping draft: false]',
       '',
-      `## 1. What Just Unlocked (${cleanVoiceText(sourceTitle)})`,
+      `## 1. What Just Unlocked (${singleLineYaml(sourceTitle)})`,
       '',
       `${cleanUnlock} ([Primary release source](${sourceUrl}))`,
       '',
-      `![${cleanHeadline}](/images/blog/${slug}-matrix.png)`,
+      `![${singleLineYaml(cleanHeadline).replace(/[[\]]/g, '')}](/images/blog/${slug}-matrix.png)`,
       '',
       '## 2. Strategic Implications for Your Business & Moat',
       '',
@@ -168,6 +189,13 @@ export function buildFourFormatEditorialPack({
   }
 }
 
+/**
+ * @param {{
+ *   originalText?: string,
+ *   editedText?: string,
+ *   reviewerComments?: string[]
+ * }} opts
+ */
 export function extractVoiceDiffLesson({
   originalText = '',
   editedText = '',
@@ -183,17 +211,54 @@ export function extractVoiceDiffLesson({
     .filter(Boolean)
   const cleanComments = (reviewerComments || []).map(c => cleanVoiceText(c).trim()).filter(Boolean)
 
-  const replacements = []
-  const maxLen = Math.max(origLines.length, editLines.length)
-  for (let i = 0; i < maxLen; i++) {
-    const before = origLines[i] || ''
-    const after = editLines[i] || ''
-    if (before && after && before !== after) {
-      replacements.push({
-        before,
-        after: cleanVoiceText(after),
-      })
+  const n = origLines.length
+  const m = editLines.length
+  const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0))
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      if (origLines[i] === editLines[j]) {
+        dp[i][j] = 1 + dp[i + 1][j + 1]
+      } else {
+        dp[i][j] = Math.max(dp[i + 1][j], dp[i][j + 1])
+      }
     }
+  }
+
+  const anchors = []
+  let i = 0
+  let j = 0
+  while (i < n && j < m) {
+    if (origLines[i] === editLines[j]) {
+      anchors.push([i, j])
+      i++
+      j++
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) {
+      i++
+    } else {
+      j++
+    }
+  }
+  anchors.push([n, m])
+
+  const replacements = []
+  let prevI = 0
+  let prevJ = 0
+  for (const [ancI, ancJ] of anchors) {
+    const removed = origLines.slice(prevI, ancI)
+    const added = editLines.slice(prevJ, ancJ).map(cleanVoiceText)
+    if (removed.length > 0 && added.length > 0) {
+      // Pair modified lines from the end of the hunk so prepended cold-open lines do not swallow the replacement
+      const pairCount = Math.min(removed.length, added.length)
+      for (let k = 0; k < pairCount; k++) {
+        const before = removed[removed.length - pairCount + k]
+        const after = added[added.length - pairCount + k]
+        if (before !== after) {
+          replacements.push({ before, after })
+        }
+      }
+    }
+    prevI = ancI + 1
+    prevJ = ancJ + 1
   }
 
   if (replacements.length === 0 && cleanComments.length === 0) {
@@ -210,14 +275,18 @@ export function extractVoiceDiffLesson({
   }
 }
 
+/**
+ * @param {Array<{ slug: string, format: string, views: number, subscribersWon: number, buyerIntentActions: number }>} items
+ */
 export function buildWeeklyGrowthScorecard(items = []) {
   const scored = items
     .map(item => {
-      const views = Math.max(Number(item.views) || 1, 1)
+      const views = Math.max(Number(item.views) || 0, 1)
       const subs = Number(item.subscribersWon) || 0
       const buyerActions = Number(item.buyerIntentActions) || 0
       const subRatePct = Math.round((subs / views) * 1000) / 10
-      const compositeScore = subs * 3 + buyerActions * 10 + subRatePct * 5
+      const smoothedRatePct = (subs / Math.max(views, 50)) * 100
+      const compositeScore = subs * 3 + buyerActions * 10 + smoothedRatePct * 5
       return { ...item, subRatePct, compositeScore }
     })
     .sort((a, b) => b.compositeScore - a.compositeScore)

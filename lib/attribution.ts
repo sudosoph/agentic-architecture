@@ -53,18 +53,34 @@ function safeWriteStorage(snapshot: AttributionSnapshot): void {
   }
 }
 
-function inferSourceFromReferrer(referrer: string): string {
+function matchesDomain(host: string, domain: string): boolean {
+  return host === domain || host.endsWith(`.${domain}`)
+}
+
+function inferSourceFromReferrer(referrer: string, currentHost = ''): string {
   if (!referrer) return ''
   try {
     const host = new URL(referrer).hostname.toLowerCase()
-    if (host.includes('agenticarchitect.ai')) return ''
-    if (host.includes('linkedin.com')) return 'linkedin'
-    if (host.includes('substack.com')) return 'substack'
-    if (host.includes('chatgpt.com') || host.includes('openai.com')) return 'chatgpt'
-    if (host.includes('perplexity.ai')) return 'perplexity'
-    if (host.includes('google.')) return 'google'
-    if (host.includes('youtube.com') || host.includes('youtu.be')) return 'youtube'
-    if (host.includes('x.com') || host.includes('twitter.com') || host.includes('t.co')) return 'x'
+    if (
+      !host ||
+      host === currentHost.toLowerCase() ||
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      matchesDomain(host, 'agenticarchitect.ai')
+    ) {
+      return ''
+    }
+    if (matchesDomain(host, 'linkedin.com') || matchesDomain(host, 'lnkd.in')) return 'linkedin'
+    if (matchesDomain(host, 'substack.com')) return 'substack'
+    if (matchesDomain(host, 'reddit.com') || matchesDomain(host, 'redd.it')) return 'reddit'
+    if (matchesDomain(host, 'ycombinator.com')) return 'hackernews'
+    if (matchesDomain(host, 'chatgpt.com') || matchesDomain(host, 'openai.com')) return 'chatgpt'
+    if (matchesDomain(host, 'perplexity.ai')) return 'perplexity'
+    if (host.startsWith('www.google.') || host.startsWith('google.')) return 'google'
+    if (matchesDomain(host, 'youtube.com') || matchesDomain(host, 'youtu.be')) return 'youtube'
+    if (matchesDomain(host, 'x.com') || matchesDomain(host, 'twitter.com') || matchesDomain(host, 't.co')) {
+      return 'x'
+    }
     return host
   } catch {
     return ''
@@ -97,7 +113,7 @@ export function capturePageAttribution(
   const utmCampaign = (parsedUrl.searchParams.get('utm_campaign') ?? '').trim()
   const utmContent = (parsedUrl.searchParams.get('utm_content') ?? '').trim()
   const utmTerm = (parsedUrl.searchParams.get('utm_term') ?? '').trim()
-  const inferredSource = utmSource || inferSourceFromReferrer(rawRef)
+  const inferredSource = utmSource || inferSourceFromReferrer(rawRef, parsedUrl.hostname)
   const hasNewChannelSignal = Boolean(inferredSource || utmMedium || utmCampaign)
 
   const nowIso = new Date().toISOString()

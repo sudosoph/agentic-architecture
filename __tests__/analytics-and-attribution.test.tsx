@@ -8,6 +8,8 @@ import {
   trackFunnelEvent,
 } from '@/lib/attribution'
 import { GET as ingestGet, POST as ingestPost } from '@/app/ingest/[...path]/route'
+import { POST as contactPost } from '@/app/api/contact/route'
+import nextConfig from '../next.config'
 import { Analytics, buildPostHogInitSnippet } from '@/components/site/analytics'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { ContactForm } from '@/components/site/contact-form'
@@ -29,13 +31,32 @@ describe('First-Party PostHog Proxy, Persistent UTMs & Funnel Events', () => {
     delete process.env.NEXT_PUBLIC_POSTHOG_KEY
   })
 
-  it('builds PostHog init snippet pointing at /ingest and registering site=agenticarchitect.ai', () => {
+  it('builds PostHog init snippet pointing at /ingest, history_change pageviews, and site=agenticarchitect.ai', () => {
+    expect(nextConfig.skipTrailingSlashRedirect).toBe(true)
     const snippet = buildPostHogInitSnippet('phc_test_key')
     expect(snippet).toContain('phc_test_key')
-    expect(snippet).toContain("api_host: '/ingest'")
+    expect(snippet).toContain('"/ingest"')
+    expect(snippet).toContain('history_change')
     expect(snippet).toContain("site: 'agenticarchitect.ai'")
     process.env.NEXT_PUBLIC_POSTHOG_KEY = 'phc_test_key'
     expect(() => render(<Analytics />)).not.toThrow()
+  })
+
+  it('matches referrer domains on exact hostname boundaries (never misclassifying reddit.com or dropbox.com as x)', () => {
+    const fromReddit = capturePageAttribution('https://agenticarchitect.ai/blog/post-1', 'https://www.reddit.com/r/AI_Agents/')
+    expect(fromReddit.firstTouch?.source).toBe('reddit')
+
+    window.localStorage.clear()
+    const fromDropbox = capturePageAttribution('https://agenticarchitect.ai/courses', 'https://paper.dropbox.com/doc/123')
+    expect(fromDropbox.firstTouch?.source).toBe('paper.dropbox.com')
+
+    window.localStorage.clear()
+    const fromTco = capturePageAttribution('https://agenticarchitect.ai/', 'https://t.co/abc123')
+    expect(fromTco.firstTouch?.source).toBe('x')
+
+    window.localStorage.clear()
+    const fromLocal = capturePageAttribution('http://localhost:3000/courses', 'http://localhost:3000/')
+    expect(fromLocal.firstTouch?.source).toBe('direct')
   })
 
   it('preserves first_touch UTMs across subsequent internal page navigations while updating last_touch', () => {
@@ -125,14 +146,56 @@ describe('First-Party PostHog Proxy, Persistent UTMs & Funnel Events', () => {
 
     const eventReq = new Request('https://agenticarchitect.ai/ingest/e/?ip=0', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', cookie: 'session=abc' },
+      headers: {
+        'content-type': 'application/json',
+        cookie: 'session=abc',
+        'cf-ray': '12345',
+        'accept-encoding': 'br',
+      },
       body: JSON.stringify({ event: '$pageview' }),
     })
     const eventRes = await ingestPost(eventReq, {
       params: Promise.resolve({ path: ['e'] }),
     })
     expect(eventRes.status).toBe(200)
-    expect(fetchMock.mock.calls[1][0]).toBe('https://us.i.posthog.com/e?ip=0')
+    expect(fetchMock.mock.calls[1][0]).toBe('https://us.i.posthog.com/e/?ip=0')
+    const eventFwdHeaders = new Headers((fetchMock.mock.calls[1][1] as RequestInit)?.headers)
+    expect(eventFwdHeaders.get('cf-ray')).toBeNull()
+    expect(eventFwdHeaders.get('accept-encoding')).toBeNull()
+
+    const arrayCfgRes = await ingestGet(
+      new Request('https://agenticarchitect.ai/ingest/array/phc_abc/config.js'),
+      { params: Promise.resolve({ path: ['array', 'phc_abc', 'config.js'] }) },
+    )
+    expect(arrayCfgRes.status).toBe(200)
+    expect(fetchMock.mock.calls[2][0]).toBe('https://us-assets.i.posthog.com/array/phc_abc/config.js')
+
+    const badTraversalRes = await ingestGet(
+      new Request('https://agenticarchitect.ai/ingest/..'),
+      { params: Promise.resolve({ path: ['..'] }) },
+    )
+    expect(badTraversalRes.status).toBe(400)
+  })
+
+  it('sanitizes malformed non-string attribution objects safely in /api/contact', async () => {
+    process.env.RESEND_API_KEY = 're_test_123'
+    vi.spyOn(globalThis, 'fetch').mockImplementation(
+      async () => Response.json({ id: 'email_1' }, { status: 200 }),
+    )
+    const req = new Request('https://agenticarchitect.ai/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Pat',
+        email: 'pat@company.com',
+        subject: 'Workshop',
+        message: 'Interested in a half-day lab.',
+        attribution: { firstTouch: { source: { bad: true }, campaign: 999 } },
+      }),
+    })
+    const res = await contactPost(req)
+    expect(res.status).toBe(200)
+    delete process.env.RESEND_API_KEY
   })
 
   it('attaches stored first/last touch attribution to /api/subscribe and /api/contact submissions', async () => {

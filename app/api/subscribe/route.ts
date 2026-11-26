@@ -16,6 +16,10 @@ const LESSON_FROM = 'Sophia Stein <sophia@agenticarchitect.ai>'
 const NOTIFY_TO = ['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com']
 const DAY_MS = 24 * 60 * 60 * 1000
 
+function cleanAttrField(val: unknown, fallback = ''): string {
+  return typeof val === 'string' && val.trim() ? val.trim().slice(0, 160) : fallback
+}
+
 function formatLessonBody(lesson: (typeof fiveDayLessons)[number]): string {
   return [
     `Hi there,`,
@@ -115,14 +119,14 @@ export async function POST(request: Request) {
           `Email: ${email}`,
           `Source: ${source}`,
           `Referer: ${referer}`,
-          ...(body.attribution?.firstTouch
+          ...(body.attribution?.firstTouch && typeof body.attribution.firstTouch === 'object'
             ? [
-                `First Touch: ${body.attribution.firstTouch.source ?? 'direct'} / ${body.attribution.firstTouch.medium ?? 'none'} (${body.attribution.firstTouch.campaign || 'no-campaign'}) via ${body.attribution.firstTouch.entryPath ?? '/'}`,
+                `First Touch: ${cleanAttrField(body.attribution.firstTouch.source, 'direct')} / ${cleanAttrField(body.attribution.firstTouch.medium, 'none')} (${cleanAttrField(body.attribution.firstTouch.campaign, 'no-campaign')}) via ${cleanAttrField(body.attribution.firstTouch.entryPath, '/')}`,
               ]
             : []),
-          ...(body.attribution?.lastTouch
+          ...(body.attribution?.lastTouch && typeof body.attribution.lastTouch === 'object'
             ? [
-                `Last Touch: ${body.attribution.lastTouch.source ?? 'direct'} / ${body.attribution.lastTouch.medium ?? 'none'} via ${body.attribution.lastTouch.entryPath ?? '/'}`,
+                `Last Touch: ${cleanAttrField(body.attribution.lastTouch.source, 'direct')} / ${cleanAttrField(body.attribution.lastTouch.medium, 'none')} via ${cleanAttrField(body.attribution.lastTouch.entryPath, '/')}`,
               ]
             : []),
           `Date: ${new Date(now).toISOString()}`,

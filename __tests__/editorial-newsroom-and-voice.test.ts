@@ -9,22 +9,25 @@ import {
 } from '../scripts/editorial-newsroom.mjs'
 
 describe('Editorial Newsroom, Substack Images, Voice-Diff Calibrator & LinkedIn Launch Kit', () => {
-  it('converts Markdown inline images into Substack captionedImage ProseMirror blocks with absolute URLs', () => {
+  it('converts Markdown inline and linked images into Substack captionedImage ProseMirror blocks with absolute URLs and MIME types', () => {
     const md = [
       '## The Frontier Capability Shift',
       '',
       '![2026 Business AI Capability Cheat Sheet](/images/blog/capability-matrix.png)',
       '',
+      '[![Explore Courses](/images/blog/cta-card.webp)](/courses)',
+      '',
       'Plain paragraph following the schematic.',
     ].join('\n')
 
     const blocks = convertMarkdownBodyToProseMirror(md)
-    const imageBlock = blocks.find((b: { type: string }) => b.type === 'captionedImage')
-    expect(imageBlock).toBeDefined()
-    expect(JSON.stringify(imageBlock)).toContain(
+    const imageBlocks = blocks.filter((b: { type: string }) => b.type === 'captionedImage')
+    expect(imageBlocks).toHaveLength(2)
+    expect(JSON.stringify(imageBlocks[0])).toContain(
       'https://agenticarchitect.ai/images/blog/capability-matrix.png',
     )
-    expect(JSON.stringify(imageBlock)).toContain('2026 Business AI Capability Cheat Sheet')
+    expect(JSON.stringify(imageBlocks[1])).toContain('image/webp')
+    expect(JSON.stringify(imageBlocks[1])).toContain('https://agenticarchitect.ai/courses')
   })
 
   it('generates a complete 4-format Possibilities & Implications pack free of em-dashes with UTM attribution links', () => {
@@ -66,10 +69,17 @@ describe('Editorial Newsroom, Substack Images, Voice-Diff Calibrator & LinkedIn 
     expect(unchanged).toBeNull()
 
     const lesson = extractVoiceDiffLesson({
-      originalText:
-        'Organizations can leverage synergistic AI methodologies to optimize cross-functional paradigms.\nSecond line stays.',
-      editedText:
-        'Smart teams use this release to ship a full client pitch prototype before lunch.\nSecond line stays.',
+      originalText: [
+        'Organizations can leverage synergistic AI methodologies to optimize cross-functional paradigms.',
+        'Second line stays identical.',
+        'Third line also stays identical.',
+      ].join('\n'),
+      editedText: [
+        'Watched two VPs hit this exact wall on Tuesday.',
+        'Smart teams use this release to ship a full client pitch prototype before lunch.',
+        'Second line stays identical.',
+        'Third line also stays identical.',
+      ].join('\n'),
       reviewerComments: ['Way too stiff and consultant-heavy: lead with the concrete outcome.'],
     })
     expect(lesson).not.toBeNull()

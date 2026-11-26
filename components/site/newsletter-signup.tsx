@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
-import { getStoredAttribution, trackFunnelEvent } from '@/lib/attribution'
+import { decorateOutboundHref, getStoredAttribution, trackFunnelEvent } from '@/lib/attribution'
 
 interface Props {
   source?: string
@@ -42,8 +42,12 @@ export function NewsletterSignup({
     } catch {
       // Fall back cleanly to Substack subscribe page
     }
+    trackFunnelEvent('substack_outbound_clicked', { source })
     window.open(
-      `${SITE_CONFIG.substackUrl}/subscribe?utm_source=${encodeURIComponent(source)}&email=${encodeURIComponent(clean)}`,
+      decorateOutboundHref(
+        `${SITE_CONFIG.substackUrl}/subscribe?utm_source=${encodeURIComponent(source)}&email=${encodeURIComponent(clean)}`,
+        source,
+      ),
       '_blank',
       'noopener,noreferrer',
     )
