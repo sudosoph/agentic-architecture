@@ -37,10 +37,10 @@ export const CURRICULA: CurriculumMeta[] = [
   {
     id: 'foundations',
     number: 'Curriculum 01',
-    title: 'Applied AI Foundations: Models, Productive Friction & Codified Skills',
+    title: 'AI-Native Work & Role Automation: Ship 5x Faster',
     subtitle:
-      'Navigate the late-2026 model landscape, replace ad-hoc prompting with Socratic interview harnesses, run agentic workspaces without Python, and drive org-wide adoption.',
-    audience: 'Founders, Executives, Managers & Non-Technical Operators',
+      'Maximize brand-new frontier capabilities the week they drop, break the search-bar mindset, automate 8+ hours/week of research, calls, inbox, data, and decks without Python, and scale habits across your team.',
+    audience: 'Ambitious Employees, Managers, Founders & Non-Technical Operators',
     priceUsd: 297,
     checkoutHref: SITE_CONFIG.cal.academy,
     vaultToken: 'aa-vault-foundations-9f4c2e',
@@ -50,12 +50,12 @@ export const CURRICULA: CurriculumMeta[] = [
   {
     id: 'departments',
     number: 'Curriculum 02',
-    title: 'Department AI Systems: Vertical SaaS vs. Build In-House',
+    title: 'AI for Growth, GTM & Executive Strategy',
     subtitle:
-      'Function-by-function build-vs-buy playbooks across Marketing, Finance, Legal, Sales/RevOps, and HR/Operations, backed by ex-McKinsey AI FinOps discipline.',
-    audience: 'COOs, Functional VPs (Marketing, Finance, Legal, Sales, HR) & Corporate L&D',
+      'Drive signal-based pipeline and sales velocity without headcount bloat, reinvent your offers, run an Executive AI Strategy & Decision Room, and deploy high-ROI systems across Marketing, Finance, and Legal.',
+    audience: 'CEOs, Founders, VPs of Revenue/Marketing/Ops & PE Operating Partners',
     priceUsd: 397,
-    checkoutHref: '/contact?subject=Curriculum%2002%20Department%20AI%20Enrollment%20(%24397)',
+    checkoutHref: '/contact?subject=Curriculum%2002%20Growth%20%26%20Strategy%20Enrollment%20(%24397)',
     vaultToken: 'aa-vault-departments-7b3d1a',
     upsellLabel: 'Book Half-Day ($7,500) or Full-Day ($15,000) Corporate Lab',
     upsellHref: '/teaching',
@@ -63,12 +63,12 @@ export const CURRICULA: CurriculumMeta[] = [
   {
     id: 'bespoke-systems',
     number: 'Curriculum 03',
-    title: 'Bespoke AI Harnesses, Best-of-Breed APIs & Forward Deployed Engineering',
+    title: 'Custom AI Systems: Multi-API Workflows & Production Agents',
     subtitle:
-      'Engineer production agent harnesses, connect best-of-breed Search/OCR/Voice/Sandbox APIs, route multi-model ensembles, and ship with Forward Deployed Golden Evals.',
-    audience: 'Builders, Product Managers, Solutions Architects & Internal FDEs',
+      'Connect best-of-breed Search, Enrichment, Voice, OCR, and Workspace APIs, engineer Context-Harness-Verifier loops, route multi-model ensembles, and ship with 25-case Golden Evals.',
+    audience: 'Builders, Product Managers, Solutions Architects & Internal AI Champions',
     priceUsd: 497,
-    checkoutHref: '/contact?subject=Curriculum%2003%20Bespoke%20Systems%20Enrollment%20(%24497)',
+    checkoutHref: '/contact?subject=Curriculum%2003%20Custom%20AI%20Systems%20Enrollment%20(%24497)',
     vaultToken: 'aa-vault-bespoke-4e8a6c',
     upsellLabel: 'Scope a Forward Deployed Build-For-You Engagement',
     upsellHref: '/work-with-me',
@@ -76,9 +76,9 @@ export const CURRICULA: CurriculumMeta[] = [
   {
     id: 'sovereign-stack',
     number: 'Curriculum 04',
-    title: 'The Sovereign AI Stack: Open-Weights, Private Rigs & Zero-Egress Compute',
+    title: 'The Sovereign AI Stack: Open-Weights, Private Rigs & Enterprise Security',
     subtitle:
-      'Deploy $9 Linux VPS stacks, size 96GB to 512GB unified-memory nodes, serve open weights over encrypted Tailscale meshes, and govern regulated workloads.',
+      'Deploy $9 Linux VPS stacks, size 96GB to 512GB unified-memory nodes, serve open weights over encrypted Tailscale meshes, and govern regulated Healthcare, Legal, and Finance workloads.',
     audience: 'CTOs, Engineering Leaders, Regulated Healthcare/Legal Teams & Technical Founders',
     priceUsd: 497,
     checkoutHref: '/contact?subject=Curriculum%2004%20Sovereign%20Stack%20Enrollment%20(%24497)',

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { SITE_CONFIG } from '@/lib/site-config'
+import { getStoredAttribution, trackFunnelEvent } from '@/lib/attribution'
 
 type Status = 'idle' | 'sending' | 'success' | 'error' | 'fallback'
 
@@ -33,6 +34,7 @@ export function ContactForm() {
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
       subject: (form.elements.namedItem('subject') as HTMLInputElement).value,
       message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+      attribution: getStoredAttribution(),
     }
 
     try {
@@ -42,6 +44,7 @@ export function ContactForm() {
         body: JSON.stringify(data),
       })
       if (res.ok) {
+        trackFunnelEvent('contact_inquiry_sent', { subject: data.subject || 'general' })
         setStatus('success')
         form.reset()
       } else {

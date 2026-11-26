@@ -140,6 +140,51 @@ function tableToBulletList(tableNode) {
   return listItems.length > 0 ? { type: 'bullet_list', content: listItems } : null
 }
 
+function inferImageMimeType(url = '') {
+  const clean = String(url).split('?')[0].toLowerCase()
+  if (clean.endsWith('.webp')) return 'image/webp'
+  if (clean.endsWith('.jpg') || clean.endsWith('.jpeg')) return 'image/jpeg'
+  if (clean.endsWith('.gif')) return 'image/gif'
+  if (clean.endsWith('.svg')) return 'image/svg+xml'
+  return 'image/png'
+}
+
+function imageNodeToProseMirror(imgNode, linkHref = null, extraCaption = '') {
+  if (!imgNode?.url) return null
+  const src = absolutizeHref(imgNode.url)
+  const captionText = (extraCaption || imgNode.alt || imgNode.title || '').trim()
+  const children = [
+    {
+      type: 'image2',
+      attrs: {
+        src,
+        fullscreen: false,
+        imageSize: 'normal',
+        height: 900,
+        width: 1600,
+        resizeWidth: null,
+        bytes: null,
+        alt: captionText,
+        title: imgNode.title || captionText,
+        type: inferImageMimeType(src),
+        href: linkHref ? absolutizeHref(linkHref) : null,
+        belowTheFold: false,
+        internalRedirect: null,
+      },
+    },
+  ]
+  if (captionText) {
+    children.push({
+      type: 'caption',
+      content: [{ type: 'text', text: captionText }],
+    })
+  }
+  return {
+    type: 'captionedImage',
+    content: children,
+  }
+}
+
 function blockMdastToProseMirror(nodes = []) {
   const blocks = []
   for (const node of nodes) {
@@ -149,10 +194,32 @@ function blockMdastToProseMirror(nodes = []) {
       if (content.length > 0) {
         blocks.push({ type: 'heading', attrs: { level }, content })
       }
+    } else if (node.type === 'image') {
+      const imgBlock = imageNodeToProseMirror(node)
+      if (imgBlock) blocks.push(imgBlock)
     } else if (node.type === 'paragraph') {
-      const content = inlineMdastToProseMirror(node.children)
-      if (content.length > 0) {
-        blocks.push({ type: 'paragraph', content })
+      const kids = Array.isArray(node.children) ? node.children : []
+      if (kids.length === 1 && kids[0].type === 'image') {
+        const imgBlock = imageNodeToProseMirror(kids[0])
+        if (imgBlock) blocks.push(imgBlock)
+      } else if (
+        kids.length === 1 &&
+        kids[0].type === 'link' &&
+        Array.isArray(kids[0].children) &&
+        kids[0].children.length === 1 &&
+        kids[0].children[0].type === 'image'
+      ) {
+        const imgBlock = imageNodeToProseMirror(kids[0].children[0], kids[0].url)
+        if (imgBlock) blocks.push(imgBlock)
+      } else if (kids.length > 1 && kids[0].type === 'image') {
+        const extraCaption = kids.slice(1).map(plainTextFromMdast).join('').trim()
+        const imgBlock = imageNodeToProseMirror(kids[0], null, extraCaption)
+        if (imgBlock) blocks.push(imgBlock)
+      } else {
+        const content = inlineMdastToProseMirror(kids)
+        if (content.length > 0) {
+          blocks.push({ type: 'paragraph', content })
+        }
       }
     } else if (node.type === 'blockquote') {
       const inner = blockMdastToProseMirror(node.children)
@@ -271,6 +338,18 @@ function buildFunnelFooterBlocks(slug) {
       ],
     },
   ]
+}
+
+export function convertMarkdownBodyToProseMirror(markdown) {
+  const stripped = String(markdown || '')
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+    .replace(/\s*\u2014\s*/g, ': ')
+    .replace(/\s+--\s+/g, ': ')
+    .replace(/Brand Brain/gi, 'Company Context Vault')
+    .replace(/`?voice\.md`?/gi, 'company operating rules')
+    .replace(/`?icp\.md`?/gi, 'buyer qualification criteria')
+  const tree = unified().use(remarkParse).use(remarkGfm).parse(stripped)
+  return blockMdastToProseMirror(tree.children)
 }
 
 export function convertMdxToSubstackPayload(slug) {

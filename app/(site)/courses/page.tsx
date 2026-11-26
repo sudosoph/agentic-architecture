@@ -40,28 +40,29 @@ export default function CoursesPage() {
         </div>
 
         <PageHeader
-          meta="Columbia CS · Ex-McKinsey · Built for Leaders, Operators & Forward Deployed Builders"
+          meta="Columbia CS · Ex-McKinsey · Built for Ambitious Operators, Executives & Builders"
           title="The Applied AI Architecture Academy"
-          description="Start free inside Module x.1 of every curriculum. Master where models stand today, engineer Productive-Friction interview harnesses, evaluate Vertical AI vs. bespoke APIs across Marketing, Finance, Legal, and Ops, or size full private open-weight rigs."
+          description="Start free inside Module x.1 of every curriculum. Automate 8+ hours of your role to ship 5x faster, build signal-driven GTM and Executive Strategy Rooms, wire custom multi-API systems, or deploy sovereign open-weight rigs."
         />
       </div>
 
-      {/* All-Access Architect Pass Banner */}
+      {/* All-Access Architect Pass + Substack Founding Executive Circle Banner */}
       <Card className="p-6 md:p-8 border-accent bg-blue-50/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="rig">Save $691 Across All 4 Tracks</Badge>
+            <Badge variant="rig">Save $691 · Direct Vault or Substack Founding</Badge>
             <span className="font-mono text-xs text-muted">
               100% Tuition Credit Toward Cohorts, Corporate Labs &amp; Bespoke Builds
             </span>
           </div>
           <h2 className="text-2xl font-bold text-fg">{ALL_ACCESS_PASS.title}</h2>
           <p className="text-sm text-muted leading-relaxed">
-            Get instant access to all 20 modules, reusable <code className="font-mono">SKILL.md</code>{' '}
-            and schema libraries, best-of-breed API recipes, and our L&amp;D reimbursement kit for{' '}
-            <strong className="text-fg">${ALL_ACCESS_PASS.priceUsd}</strong>. Every dollar credits
-            within 60 days toward our $1,497 Guided Cohort, Corporate Trainings ($7,500+), or a
-            Forward Deployed Build-For-You engagement.
+            Unlock all 20 practitioner modules, role-automation and GTM playbooks, API recipes, and
+            our L&amp;D stipend kit directly on this domain for{' '}
+            <strong className="text-fg">${ALL_ACCESS_PASS.priceUsd}</strong> (or join the{' '}
+            <strong className="text-fg">Founding Executive Circle ($997/yr)</strong> on Substack to
+            bundle all 4 curricula with live-updated cheat sheets, subscriber chat, and quarterly
+            executive briefings with zero extra community software).
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">

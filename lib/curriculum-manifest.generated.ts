@@ -13,11 +13,11 @@ export const curriculumModules: Array<{
       "slug": "1-1-2026-ai-landscape-model-matrix",
       "curriculumId": "foundations",
       "moduleCode": "1.1",
-      "title": "Where AI Actually Is Now & The Late-2026 Model Matrix",
-      "summary": "Cut through benchmark theater across late-2026 frontier reasoning releases, high-throughput workhorses, permissive vs. ecosystem open-weight contenders, and unified local/sandbox workspaces like Claude Cowork.",
+      "title": "The 2026 Frontier Capability Map: Which Model & Tool Wins Every Business Job",
+      "summary": "Spot what brand-new frontier reasoning, deep research, multimodal, and local Cowork releases unlock for your job this week, and pick the exact model class for strategy, decks, analysis, and automation.",
       "durationMinutes": 45,
       "unlocked": true,
-      "artifact": "2026 Task-to-Model Routing Matrix & Cost-Per-Verified-Task Calculator",
+      "artifact": "2026 Business Capability Cheat Sheet & Task-to-Model Selector",
       "learningOutcomes": [
         "Separate reasoning, high-throughput workhorse, multimodal, and open-weight model classes by task fit rather than leaderboard hype",
         "Evaluate late-2026 workspace shifts including Claude Enterprise unified Chat + Cowork local folder execution and governed .mcpb extensions",
@@ -85,11 +85,11 @@ export const curriculumModules: Array<{
       "slug": "1-3-productive-friction-interview-skills",
       "curriculumId": "foundations",
       "moduleCode": "1.3",
-      "title": "Productive Friction: Interview-First AI, Process Extraction & Codifying Skills",
-      "summary": "Eliminate ad-hoc prompting hallucinations by engineering Socratic interview harnesses, MCP Elicitation flows, and reusable SKILL.md and Rule folders that extract unwritten expertise.",
+      "title": "Breaking the Search-Bar Mindset: Co-Intelligent Workflows & Interview Systems",
+      "summary": "Move from treating AI like Google Search to co-intelligent workflows that interview you for missing context, challenge weak assumptions, and produce executive-ready deliverables on pass one.",
       "durationMinutes": 55,
       "unlocked": false,
-      "artifact": "Portable Interview-First SKILL.md Pack + Unwritten Process Extraction Protocol",
+      "artifact": "Co-Intelligent Project Brief & Interview Workflow Kit",
       "learningOutcomes": [
         "Replace lazy 1-line ad-hoc prompts with Intentional Productive Friction that interviews the user before generating",
         "Use Socratic AI interviews to extract tribal SOPs from senior operators in 20 minutes",
@@ -123,11 +123,11 @@ export const curriculumModules: Array<{
       "slug": "1-4-agentic-workspaces-for-non-coders",
       "curriculumId": "foundations",
       "moduleCode": "1.4",
-      "title": "Agentic Workspaces & Process Automation Without Writing Code",
-      "summary": "How non-engineers safely run file-and-folder agentic workspaces (Claude Cowork, Claude Code, Cursor, MCP connectors, and visual webhooks) over spreadsheets, docs, and calendars.",
+      "title": "Role-by-Role Job Automation: Reclaim 8+ Hours/Week Across Research, Calls, Data & Decks",
+      "summary": "Turn folder-based agentic workspaces (Claude Cowork, Cursor, workspace connectors, and visual triggers) into your personal AI Chief of Staff across inbox prep, call synthesis, spreadsheets, and interactive prototypes without Python.",
       "durationMinutes": 50,
       "unlocked": false,
-      "artifact": "Folder-Based Workspace Blueprint + 5-Level Human Approval Gate Spec",
+      "artifact": "Monday Morning Role Automation Stack + 20-Minute Prototype Blueprint",
       "learningOutcomes": [
         "Operate folder-native agentic workspaces without knowing Python or command-line plumbing",
         "Combine deterministic workspace connectors (Calendar, Docs, Sheets, Gmail Drafts) with codified Skills",
@@ -157,11 +157,11 @@ export const curriculumModules: Array<{
       "slug": "1-5-org-upskilling-ending-productivity-hoarding",
       "curriculumId": "foundations",
       "moduleCode": "1.5",
-      "title": "Running More of Your Org on AI: Upskilling Strategy & Ending Productivity Hoarding",
-      "summary": "Solve the #1 behavioral bottleneck in corporate AI adoption ('productivity hoarding'), redesign team incentives, and run a measurable 90-day upskilling operating rhythm.",
+      "title": "Turning Personal Wins Into Team Velocity: AI-First Habits & L&D Rollout",
+      "summary": "Convert individual workflow breakthroughs into shared team playbooks, overcome employee replacement anxiety ('productivity hoarding'), and become the high-leverage AI champion inside your company.",
       "durationMinutes": 40,
       "unlocked": false,
-      "artifact": "90-Day Organizational AI Upskilling & Incentive Charter",
+      "artifact": "90-Day Team AI Velocity Playbook & Executive Buy-In Brief",
       "learningOutcomes": [
         "Diagnose and eliminate employee 'productivity hoarding' caused by replacement anxiety",
         "Move teams from passive lunch-and-learns to shared departmental Skill libraries",
@@ -191,11 +191,11 @@ export const curriculumModules: Array<{
       "slug": "2-1-vertical-ai-build-vs-buy-framework",
       "curriculumId": "departments",
       "moduleCode": "2.1",
-      "title": "The Vertical AI Build-vs-Buy Framework & Enterprise Interoperability",
-      "summary": "How to evaluate multi-billion-dollar vertical AI platforms (Harvey, Legora, Sierra, Ramp, Glean) versus 'Build-With' SDKs versus lean bespoke API harnesses that keep your data layer unified.",
+      "title": "Signal-Driven GTM, Pipeline Velocity & The 2026 Build-vs-Buy Playbook",
+      "summary": "Scale outbound, account intelligence, and deal preparation without adding headcount, while separating high-ROI platforms (Harvey, Sierra, Ramp, Glean) from thin wrappers you should replace with lean custom workflows.",
       "durationMinutes": 45,
       "unlocked": true,
-      "artifact": "2026 Vertical AI vs. Build-With vs. Bespoke In-House Decision Scorecard",
+      "artifact": "Signal-to-Pipeline GTM Blueprint + 2026 Vertical AI vs. Custom Scorecard",
       "learningOutcomes": [
         "Move beyond binary Build-vs-Buy into the 2026 3-tier model: Buy Vertical Compliance, Build-With Agent OS, or Compose Bespoke In-House",
         "Spot thin $50/seat SaaS wrappers before signing annual enterprise contracts",
@@ -203,7 +203,7 @@ export const curriculumModules: Array<{
       ],
       "upsellBridge": "Evaluating vendor contracts or designing cross-department interoperability? Scope a 2-Week Architecture & FinOps Diagnostic on /fractional-ai-cto."
     },
-    "html": "<h2 id=\"why-binary-build-vs-buy-broke-down-in-2026\">Why Binary \"Build vs. Buy\" Broke Down in 2026</h2>\n<p>Two forces collided across enterprise software in 2026:</p>\n<ol>\n<li>Frontier and open-weight inference prices fell precipitously while agentic coding harnesses made spinning up internal tools 5x faster.</li>\n<li>At the same time, mature vertical platforms (<code>Harvey</code> and <code>Legora</code> in legal, <code>Sierra</code> in customer operations, <code>Ramp</code> in spend/finance, <code>Glean</code> in enterprise search) proved that compliance certifications (<code>SOC2 Type II</code>, <code>ISO 42001</code>), domain-curated reference corpora, and embedded Forward Deployed support carry real value.</li>\n</ol>\n<p>Smart leaders no longer ask <em>\"Do we build everything or buy everything?\"</em> They segment every capability across <strong>three distinct tiers</strong>:</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th align=\"left\">Strategy</th>\n<th align=\"left\">When It Wins</th>\n<th align=\"left\">Canonical 2026 Examples</th>\n<th align=\"left\">Red Flag to Avoid</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td align=\"left\"><strong>1. Buy Mature Vertical AI</strong></td>\n<td align=\"left\">Heavy regulatory/compliance transfer, proprietary external legal/tax/market databases, commodity back-office plumbing needed live this quarter</td>\n<td align=\"left\"><code>Ramp</code> (spend &#x26; AP audit), <code>Harvey</code> / <code>Legora</code> (Am Law &#x26; high-volume corporate legal), <code>Glean</code> (cross-app enterprise search index)</td>\n<td align=\"left\">Buying a \"vertical AI\" startup that has zero proprietary data moat and simply wraps a single frontier API prompt at a 10x per-seat markup</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>2. \"Build With\" Managed Agent OS</strong></td>\n<td align=\"left\">Customer-facing multi-turn agents where you want managed voice/guardrail/observability infrastructure while owning 100% of business logic &#x26; brand rules</td>\n<td align=\"left\"><code>Sierra</code> Agent OS + SDK, cloud enterprise gateways (<code>Bedrock</code> / <code>Vertex</code> + internal MCP servers)</td>\n<td align=\"left\">Letting vendor professional services lock your core domain rules inside proprietary visual flowcharts you cannot export</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>3. Build Bespoke In-House Harnesses</strong></td>\n<td align=\"left\">Workflows that encode your core competitive IP, cross multiple internal systems, or run 10x cheaper over direct APIs + open weights</td>\n<td align=\"left\">Custom <code>MCP</code> + <code>n8n</code>/TypeScript harnesses connecting CRM, Postgres, OCR, Search, and codified <code>SKILL.md</code> rules</td>\n<td align=\"left\">Building custom observability, SSO, or OCR parsers from scratch instead of snapping together best-of-breed primitives</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"avoiding-the-six-disconnected-ai-silos-trap\">Avoiding the \"Six Disconnected AI Silos\" Trap</h2>\n<p>The single costliest enterprise mistake in 2026 is letting Marketing buy 3 AI SaaS apps, Sales buy 2, Legal buy 1, and Finance buy 2, <strong>each trapping company context inside a walled garden that cannot talk to the others</strong>.</p>\n<p>Enforce <strong>two non-negotiable procurement rules</strong> before signing any vertical AI contract:</p>\n<ol>\n<li><strong>API &#x26; MCP Interoperability Required:</strong> Every vendor tool must expose clean webhooks/REST APIs (or an MCP server) so upstream and downstream systems can read structured outputs programmatically.</li>\n<li><strong>Portable Context &#x26; Zero Lock-In Exit Clause:</strong> Your prompts, evaluation rubrics, clause playbooks, and historical traces belong to your company in exportable JSON/Markdown, never held hostage on renewal day.</li>\n</ol>",
+    "html": "<h2 id=\"why-binary-build-vs-buy-broke-down-in-2026\">Why Binary \"Build vs. Buy\" Broke Down in 2026</h2>\n<p>High-growth companies no longer separate revenue velocity from systems architecture. Before signing another <code>$150/seat</code> GTM or operations SaaS contract, wire <strong>three signal-to-pipeline engines</strong> that expand output per rep without adding headcount:</p>\n<ol>\n<li><strong>Trigger-to-Dossier Account Intelligence:</strong> Monitor live hiring shifts, SEC/earnings filings, product launches, and leadership changes -> synthesize a 1-page account thesis and SPICED discovery brief 30 minutes before every executive call.</li>\n<li><strong>Transcript-to-Proposal Deal Velocity:</strong> Extract exact buyer pain metrics, security constraints, and ROI anchors from call transcripts into a tailored milestone scope ready for human review in 4 minutes instead of 3 days.</li>\n<li><strong>Unified Context Across GTM, Finance &#x26; Legal:</strong> Keep deal context portable so Sales, Legal, and Delivery never trap customer intelligence inside six disconnected SaaS silos.</li>\n</ol>\n<p>Two forces collided across enterprise software in 2026:</p>\n<ol>\n<li>Frontier and open-weight inference prices fell precipitously while agentic coding harnesses made spinning up internal tools 5x faster.</li>\n<li>At the same time, mature vertical platforms (<code>Harvey</code> and <code>Legora</code> in legal, <code>Sierra</code> in customer operations, <code>Ramp</code> in spend/finance, <code>Glean</code> in enterprise search) proved that compliance certifications (<code>SOC2 Type II</code>, <code>ISO 42001</code>), domain-curated reference corpora, and embedded Forward Deployed support carry real value.</li>\n</ol>\n<p>Smart leaders no longer ask <em>\"Do we build everything or buy everything?\"</em> They segment every capability across <strong>three distinct tiers</strong>:</p>\n<div class=\"table-scroll\"><table>\n<thead>\n<tr>\n<th align=\"left\">Strategy</th>\n<th align=\"left\">When It Wins</th>\n<th align=\"left\">Canonical 2026 Examples</th>\n<th align=\"left\">Red Flag to Avoid</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td align=\"left\"><strong>1. Buy Mature Vertical AI</strong></td>\n<td align=\"left\">Heavy regulatory/compliance transfer, proprietary external legal/tax/market databases, commodity back-office plumbing needed live this quarter</td>\n<td align=\"left\"><code>Ramp</code> (spend &#x26; AP audit), <code>Harvey</code> / <code>Legora</code> (Am Law &#x26; high-volume corporate legal), <code>Glean</code> (cross-app enterprise search index)</td>\n<td align=\"left\">Buying a \"vertical AI\" startup that has zero proprietary data moat and simply wraps a single frontier API prompt at a 10x per-seat markup</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>2. \"Build With\" Managed Agent OS</strong></td>\n<td align=\"left\">Customer-facing multi-turn agents where you want managed voice/guardrail/observability infrastructure while owning 100% of business logic &#x26; brand rules</td>\n<td align=\"left\"><code>Sierra</code> Agent OS + SDK, cloud enterprise gateways (<code>Bedrock</code> / <code>Vertex</code> + internal MCP servers)</td>\n<td align=\"left\">Letting vendor professional services lock your core domain rules inside proprietary visual flowcharts you cannot export</td>\n</tr>\n<tr>\n<td align=\"left\"><strong>3. Build Bespoke In-House Harnesses</strong></td>\n<td align=\"left\">Workflows that encode your core competitive IP, cross multiple internal systems, or run 10x cheaper over direct APIs + open weights</td>\n<td align=\"left\">Custom <code>MCP</code> + <code>n8n</code>/TypeScript harnesses connecting CRM, Postgres, OCR, Search, and codified <code>SKILL.md</code> rules</td>\n<td align=\"left\">Building custom observability, SSO, or OCR parsers from scratch instead of snapping together best-of-breed primitives</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"avoiding-the-six-disconnected-ai-silos-trap\">Avoiding the \"Six Disconnected AI Silos\" Trap</h2>\n<p>The single costliest enterprise mistake in 2026 is letting Marketing buy 3 AI SaaS apps, Sales buy 2, Legal buy 1, and Finance buy 2, <strong>each trapping company context inside a walled garden that cannot talk to the others</strong>.</p>\n<p>Enforce <strong>two non-negotiable procurement rules</strong> before signing any vertical AI contract:</p>\n<ol>\n<li><strong>API &#x26; MCP Interoperability Required:</strong> Every vendor tool must expose clean webhooks/REST APIs (or an MCP server) so upstream and downstream systems can read structured outputs programmatically.</li>\n<li><strong>Portable Context &#x26; Zero Lock-In Exit Clause:</strong> Your prompts, evaluation rubrics, clause playbooks, and historical traces belong to your company in exportable JSON/Markdown, never held hostage on renewal day.</li>\n</ol>",
     "toc": [
       {
         "id": "why-binary-build-vs-buy-broke-down-in-2026",
@@ -221,11 +221,11 @@ export const curriculumModules: Array<{
       "slug": "2-2-marketing-brand-growth-systems",
       "curriculumId": "departments",
       "moduleCode": "2.2",
-      "title": "AI in Marketing, Brand & Revenue Growth Systems",
-      "summary": "Separate thin AI copywriting wrappers from high-ROI research, SEO/GEO intelligence, interview-driven content engines, and multi-model creative pipelines.",
+      "title": "Brand Omnipresence, Demand Engines & AI-Reinvented Offers",
+      "summary": "Build a research-backed executive media engine, ship multimodal client assets at 10x speed, and embed new AI capabilities directly into your products and services to command higher margins.",
       "durationMinutes": 45,
       "unlocked": false,
-      "artifact": "Marketing AI Stack Map + Interview-Driven Omnichannel Content Skill",
+      "artifact": "Omnipresent Demand Engine + AI-Enabled Offer & Pricing Redesign Workbook",
       "learningOutcomes": [
         "Identify which vertical marketing/SEO platforms justify their subscription versus thin wrappers that produce generic slop",
         "Engineer an Interview-First voice-note/brief-to-omnichannel harness grounded in real customer calls and primary research",
@@ -233,7 +233,7 @@ export const curriculumModules: Array<{
       ],
       "upsellBridge": "Want a custom multi-channel research and content engine built inside your own workspace? Scope a Forward Deployed Build on /work-with-me."
     },
-    "html": "<h2 id=\"why-90-of-ai-marketing-saas-hurts-brand-equity\">Why 90% of \"AI Marketing SaaS\" Hurts Brand Equity</h2>\n<p>Buying a <code>$99/month</code> \"1-click AI blog and LinkedIn generator\" produces the exact median phrasing your buyers have trained their eyes to skip, and triggers anti-slop classifiers across search engines and newsletter networks.</p>\n<h2 id=\"marketing-build-vs-buy-breakdown\">Marketing Build-vs-Buy Breakdown</h2>\n<ul>\n<li><strong>Worth Buying / Connecting:</strong> Primary search, SERP, and competitive intelligence data APIs (<code>Semrush</code>, <code>Ahrefs</code>, <code>Tavily</code> / <code>Exa</code> live research), design/video asset infrastructure where human art direction stays in control, and verified analytics/attribution (<code>PostHog</code>, <code>Umami</code>).</li>\n<li><strong>Skip &#x26; Build Bespoke In-House:</strong> Generic \"AI brand copywriters,\" automated social comment bots (which destroy executive trust in seconds), and rigid content-repurposing SaaS wrappers.</li>\n</ul>\n<h2 id=\"architecture-of-an-in-house-interview-driven-content-harness\">Architecture of an In-House Interview-Driven Content Harness</h2>\n<ol>\n<li><strong>Signal Ingestion:</strong> Pull real customer discovery questions from call transcripts, support tickets, and curated industry RSS/forum radars.</li>\n<li><strong>Productive-Friction Author Interview (10 Mins):</strong> Before drafting a word, an interview skill asks your subject-matter expert 4 sharp questions to extract one contrarian point of view, one real number or scar, and one concrete trade-off.</li>\n<li><strong>Multi-Format Compilation + Human Polish:</strong> Compile the long-form canonical essay, newsletter edition, and platform-native summaries against strict style rules (zero cliches, real citations), staging drafts for human cold-open writing and final approval.</li>\n</ol>",
+    "html": "<h2 id=\"why-90-of-ai-marketing-saas-hurts-brand-equity\">Why 90% of \"AI Marketing SaaS\" Hurts Brand Equity</h2>\n<p>Buying a <code>$99/month</code> \"1-click AI blog and LinkedIn generator\" produces the exact median phrasing your buyers have trained their eyes to skip, and triggers anti-slop classifiers across search engines and newsletter networks.</p>\n<h2 id=\"marketing-build-vs-buy-breakdown\">Marketing Build-vs-Buy Breakdown</h2>\n<ul>\n<li><strong>Worth Buying / Connecting:</strong> Primary search, SERP, and competitive intelligence data APIs (<code>Semrush</code>, <code>Ahrefs</code>, <code>Tavily</code> / <code>Exa</code> live research), design/video asset infrastructure where human art direction stays in control, and verified analytics/attribution (<code>PostHog</code>, <code>Umami</code>).</li>\n<li><strong>Skip &#x26; Build Bespoke In-House:</strong> Generic \"AI brand copywriters,\" automated social comment bots (which destroy executive trust in seconds), and rigid content-repurposing SaaS wrappers.</li>\n</ul>\n<h2 id=\"architecture-of-an-in-house-interview-driven-content-harness\">Architecture of an In-House Interview-Driven Content Harness</h2>\n<ol>\n<li><strong>Signal Ingestion:</strong> Pull real customer discovery questions from call transcripts, support tickets, and curated industry RSS/forum radars.</li>\n<li><strong>Productive-Friction Author Interview (10 Mins):</strong> Before drafting a word, an interview skill asks your subject-matter expert 4 sharp questions to extract one contrarian point of view, one real number or scar, and one concrete trade-off.</li>\n<li><strong>Multi-Format Compilation + Human Polish:</strong> Compile the long-form canonical essay, newsletter edition, and platform-native summaries against strict style rules (zero cliches, real citations), staging drafts for human cold-open writing and final approval.</li>\n</ol>\n<h2 id=\"embedding-ai-into-what-you-sell-offer--pricing-reinvention\">Embedding AI Into What You Sell (Offer &#x26; Pricing Reinvention)</h2>\n<p>Beyond marketing your existing business, evaluate how new multimodal and reasoning releases upgrade <strong>the product or service your customers pay for</strong>:</p>\n<ul>\n<li><strong>Service &#x26; Advisory Firms:</strong> Package internal diagnostic scripts, benchmark databases, and custom client vaults into high-margin diagnostic sprints and recurring intelligence retainers instead of billing strictly by the hour.</li>\n<li><strong>Software &#x26; Mid-Market Companies:</strong> Shift from passive dashboards to outcome-oriented workflows where the software prepares completed drafts, reconciliations, or campaign packs ready for one-click customer approval.</li>\n</ul>",
     "toc": [
       {
         "id": "why-90-of-ai-marketing-saas-hurts-brand-equity",
@@ -246,6 +246,10 @@ export const curriculumModules: Array<{
       {
         "id": "architecture-of-an-in-house-interview-driven-content-harness",
         "text": "Architecture of an In-House Interview-Driven Content Harness"
+      },
+      {
+        "id": "embedding-ai-into-what-you-sell-offer--pricing-reinvention",
+        "text": "Embedding AI Into What You Sell (Offer &#x26; Pricing Reinvention)"
       }
     ]
   },
@@ -255,11 +259,11 @@ export const curriculumModules: Array<{
       "slug": "2-3-finance-fpa-deterministic-harnesses",
       "curriculumId": "departments",
       "moduleCode": "2.3",
-      "title": "AI in Finance, FP&A & Procurement Operations",
-      "summary": "Why naked LLMs must never compute financial numbers, how to pair deterministic Python/SQL/spreadsheet harnesses with OCR extraction, and where vertical tools like Ramp win.",
+      "title": "The Executive AI Strategy & Decision Room: Wargaming, Pricing & Financial Scenarios",
+      "summary": "Use frontier reasoning, deep research, and deterministic Python/SQL sandboxes for competitive wargaming, pricing elasticity scenarios, M&A/market due diligence, and board-ready FP&A narratives.",
       "durationMinutes": 45,
       "unlocked": false,
-      "artifact": "Deterministic Finance Reconciliation Harness Spec + Vendor Spend Audit Checklist",
+      "artifact": "Executive Strategy Room Kit: Competitor Wargame + Deterministic FP&A Sandbox",
       "learningOutcomes": [
         "Enforce the Golden Rule of Finance AI: models extract schemas and write queries; deterministic code executes every calculation",
         "Combine layout-aware OCR with contract/PO tables for 3-way invoice reconciliation",
@@ -267,8 +271,12 @@ export const curriculumModules: Array<{
       ],
       "upsellBridge": "Need automated invoice/contract reconciliation or an enterprise SaaS OpEx teardown? Book an Executive Scoping Call on /fractional-ai-cto."
     },
-    "html": "<h2 id=\"the-golden-rule-of-financial-ai-zero-naked-token-arithmetic\">The Golden Rule of Financial AI: Zero Naked Token Arithmetic</h2>\n<p>Never ask an LLM to sum 400 rows of an accounts-payable CSV or calculate cohort net revenue retention inside raw token generation. Even top reasoning models drop rows or round silently mid-context.</p>\n<p><strong>In Finance and FP&#x26;A, the model's job is strictly translation and anomaly interrogation, never arithmetic:</strong></p>\n<ul>\n<li><strong>Unstructured -> Structured:</strong> Layout-aware OCR + schema extraction turns messy vendor PDFs, MSAs, and SOWs into typed JSON rows with exact page/bounding-box citations.</li>\n<li><strong>Question -> Deterministic Code/Query:</strong> The agent writes a SQL query, Python <code>pandas</code>/<code>polars</code> script, or audited spreadsheet formula inside a sandboxed interpreter; the deterministic runtime computes the exact cent-accurate result.</li>\n<li><strong>Variance -> Socratic Investigation:</strong> Once deterministic code flags a <code>>8%</code> spend variance or duplicate billing line, the model cross-references the underlying contract terms and drafts an inquiry for controller review.</li>\n</ul>\n<h2 id=\"finance-vertical-ai-vs-bespoke-builds\">Finance Vertical AI vs. Bespoke Builds</h2>\n<ul>\n<li><strong>Buy Off-the-Shelf:</strong> Corporate card, automated receipt matching, bill-pay, and real-time spend controls (<code>Ramp</code>-class platforms where payment rails + vendor price benchmarks are bundled).</li>\n<li><strong>Build Bespoke In-House:</strong> Custom board-pack variance narratives tied to your ERP + CRM definitions, multi-entity revenue-recognition pre-checks, and quarterly SaaS license utilization audits comparing SSO login logs against contracted seat counts.</li>\n</ul>",
+    "html": "<h2 id=\"running-an-executive-ai-strategy--decision-room\">Running an Executive AI Strategy &#x26; Decision Room</h2>\n<p>CEOs, Founders, and Private Equity Operating Partners capture massive leverage by pairing <strong>frontier deep research + multi-perspective wargaming</strong> with <strong>deterministic financial execution</strong>:</p>\n<ol>\n<li><strong>Competitive &#x26; Pricing Wargames:</strong> Feed public competitor pricing pages, 10-K/earnings transcripts, customer win/loss notes, and macro shifts into a structured red-team simulation that challenges your pricing and product roadmap from three rival viewpoints before your board meeting.</li>\n<li><strong>Accelerated M&#x26;A &#x26; Market Diligence:</strong> Synthesize 150-page data rooms, customer concentration tables, and regulatory filings into citation-locked risk matrices in hours rather than weeks.</li>\n</ol>\n<h2 id=\"the-golden-rule-of-financial-ai-zero-naked-token-arithmetic\">The Golden Rule of Financial AI: Zero Naked Token Arithmetic</h2>\n<p>Never ask an LLM to sum 400 rows of an accounts-payable CSV or calculate cohort net revenue retention inside raw token generation. Even top reasoning models drop rows or round silently mid-context.</p>\n<p><strong>In Finance and FP&#x26;A, the model's job is strictly translation and anomaly interrogation, never arithmetic:</strong></p>\n<ul>\n<li><strong>Unstructured -> Structured:</strong> Layout-aware OCR + schema extraction turns messy vendor PDFs, MSAs, and SOWs into typed JSON rows with exact page/bounding-box citations.</li>\n<li><strong>Question -> Deterministic Code/Query:</strong> The agent writes a SQL query, Python <code>pandas</code>/<code>polars</code> script, or audited spreadsheet formula inside a sandboxed interpreter; the deterministic runtime computes the exact cent-accurate result.</li>\n<li><strong>Variance -> Socratic Investigation:</strong> Once deterministic code flags a <code>>8%</code> spend variance or duplicate billing line, the model cross-references the underlying contract terms and drafts an inquiry for controller review.</li>\n</ul>\n<h2 id=\"finance-vertical-ai-vs-bespoke-builds\">Finance Vertical AI vs. Bespoke Builds</h2>\n<ul>\n<li><strong>Buy Off-the-Shelf:</strong> Corporate card, automated receipt matching, bill-pay, and real-time spend controls (<code>Ramp</code>-class platforms where payment rails + vendor price benchmarks are bundled).</li>\n<li><strong>Build Bespoke In-House:</strong> Custom board-pack variance narratives tied to your ERP + CRM definitions, multi-entity revenue-recognition pre-checks, and quarterly SaaS license utilization audits comparing SSO login logs against contracted seat counts.</li>\n</ul>",
     "toc": [
+      {
+        "id": "running-an-executive-ai-strategy--decision-room",
+        "text": "Running an Executive AI Strategy &#x26; Decision Room"
+      },
       {
         "id": "the-golden-rule-of-financial-ai-zero-naked-token-arithmetic",
         "text": "The Golden Rule of Financial AI: Zero Naked Token Arithmetic"

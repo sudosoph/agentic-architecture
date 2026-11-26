@@ -12,6 +12,9 @@ describe('4-Curriculum Catalog & Module Manifest', () => {
   it('loads all 4 curricula and 20 practitioner modules free of em-dashes and retired terms', () => {
     expect(CURRICULA).toHaveLength(4)
     expect(CURRICULA.map(c => c.priceUsd)).toEqual([297, 397, 497, 497])
+    expect(CURRICULA[0].title).toContain('AI-Native Work & Role Automation')
+    expect(CURRICULA[1].title).toContain('AI for Growth, GTM & Executive Strategy')
+    expect(CURRICULA[2].title).toContain('Custom AI Systems')
     expect(ALL_ACCESS_PASS.priceUsd).toBe(997)
 
     const all = getAllCurriculumModules()

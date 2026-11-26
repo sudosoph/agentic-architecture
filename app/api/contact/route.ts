@@ -5,6 +5,10 @@ import { getWorkerEnv } from '@/lib/cloudflare-env'
 const TO = ['sophia@agenticarchitect.ai', 'sophiasteinco@gmail.com']
 const FROM = 'Agentic Architect <hello@agenticarchitect.ai>'
 
+function cleanAttrField(val: unknown, fallback = ''): string {
+  return typeof val === 'string' && val.trim() ? val.trim().slice(0, 160) : fallback
+}
+
 export async function POST(request: Request) {
   const key = getWorkerEnv('RESEND_API_KEY')
   if (!key) {
@@ -25,7 +29,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { name, email, subject, message, website } = body as Record<string, unknown>
+  const { name, email, subject, message, website, attribution } = body as Record<string, unknown>
 
   // Honeypot trap: silently accept bot submissions without burning email quota.
   if (typeof website === 'string' && website.trim()) {
@@ -51,6 +55,18 @@ export async function POST(request: Request) {
       ? subject.trim().slice(0, 160)
       : `Contact form: ${cleanName}`
 
+  const attr =
+    attribution && typeof attribution === 'object'
+      ? (attribution as {
+          firstTouch?: Record<string, unknown> | null
+          lastTouch?: Record<string, unknown> | null
+        })
+      : undefined
+  const attributionFooter =
+    attr?.firstTouch && typeof attr.firstTouch === 'object'
+      ? `\n\n---\nAttribution:\nFirst Touch: ${cleanAttrField(attr.firstTouch.source, 'direct')} / ${cleanAttrField(attr.firstTouch.medium, 'none')} (${cleanAttrField(attr.firstTouch.campaign, 'no-campaign')}) via ${cleanAttrField(attr.firstTouch.entryPath, '/')}\nLast Touch: ${cleanAttrField(attr.lastTouch?.source, 'direct')} / ${cleanAttrField(attr.lastTouch?.medium, 'none')} via ${cleanAttrField(attr.lastTouch?.entryPath, '/')}`
+      : ''
+
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -62,7 +78,7 @@ export async function POST(request: Request) {
       to: TO,
       reply_to: cleanEmail,
       subject: subjectLine,
-      text: `From: ${cleanName} <${cleanEmail}>\n\n${cleanMessage}`,
+      text: `From: ${cleanName} <${cleanEmail}>\n\n${cleanMessage}${attributionFooter}`,
     }),
   })
 

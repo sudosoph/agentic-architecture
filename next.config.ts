@@ -25,6 +25,7 @@ const RENAMED_SLUGS: Array<[string, string]> = [
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  skipTrailingSlashRedirect: true,
   images: {
     unoptimized: true,
   },

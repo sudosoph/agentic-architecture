@@ -137,18 +137,19 @@ export default function TeachingPage() {
         </div>
       </section>
 
-      {/* University Syllabi (CU Boulder) */}
+      {/* University Syllabi & Executive Education (CU Boulder) */}
       <section id="university" className="space-y-5 scroll-mt-20">
         <div>
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-            Academic &amp; University Portfolio
+            Executive Education, PE Summits &amp; University Portfolio
           </p>
           <h2 className="text-2xl font-bold text-fg mt-1">
-            University Courses &amp; Guest Lectures (CU Boulder &amp; Partner Campuses)
+            Business School Executive Education &amp; University Courses (CU Boulder &amp; Partner Campuses)
           </h2>
           <p className="text-sm text-muted mt-1 max-w-3xl leading-relaxed">
-            Based in Boulder, I design and teach applied syllabi bridging business ROI and real
-            systems architecture, backed by open-source lab repos students can run on day one.
+            Based in Boulder, I lead 1-to-2 day Executive Education intensives for regional CEOs,
+            COOs, VPs, and Private Equity portfolio leaders alongside applied graduate and
+            undergraduate courses with open-source lab curricula.
           </p>
         </div>
 

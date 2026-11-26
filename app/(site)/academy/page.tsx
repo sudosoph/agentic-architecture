@@ -89,8 +89,8 @@ export default function AcademyPage() {
 
           <PageHeader
             meta="5 Practitioner Modules · Module 1.1 Unlocked Free · L&D Stipend Eligible"
-            title="Applied AI Foundations: Models, Productive Friction &amp; Codified Skills"
-            description="Replace ad-hoc chat prompting with engineered interview harnesses, clear privacy boundaries, folder-based agentic workspaces (your real AI Chief of Staff), and a 90-day team upskilling charter."
+            title="AI-Native Work &amp; Role Automation: Ship 5x Faster"
+            description="Maximize brand-new frontier capabilities the week they drop, break the search-bar mindset, build folder-based workflows (your real AI Chief of Staff) that reclaim 8+ hours a week without coding, and turn personal wins into team velocity."
           />
 
           <div className="flex flex-wrap gap-3 pt-1">
