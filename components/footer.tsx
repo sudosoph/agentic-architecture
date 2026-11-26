@@ -31,13 +31,17 @@ const CONNECT_LINKS = [
 function FooterCol({
   heading,
   links,
+  className = '',
 }: {
   heading: string
   links: { href: string; label: string; external?: boolean }[]
+  className?: string
 }) {
   return (
-    <div>
-      <h4 className="text-fg text-xs font-semibold mb-3">{heading}</h4>
+    <div className={`p-6 sm:p-8 ${className}`}>
+      <h4 className="font-display text-xs font-semibold tracking-[-0.01em] text-fg mb-3">
+        {heading}
+      </h4>
       <ul className="space-y-2">
         {links.map(({ href, label, external }) => (
           <li key={href}>
@@ -46,12 +50,15 @@ function FooterCol({
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted hover:text-fg transition-colors"
+                className="text-xs sm:text-sm text-muted hover:text-fg transition-colors"
               >
                 {label}
               </a>
             ) : (
-              <Link href={href} className="text-sm text-muted hover:text-fg transition-colors">
+              <Link
+                href={href}
+                className="text-xs sm:text-sm text-muted hover:text-fg transition-colors"
+              >
                 {label}
               </Link>
             )}
@@ -64,19 +71,17 @@ function FooterCol({
 
 export function Footer() {
   return (
-    <footer className="bg-bg border-t border-border mt-16">
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
-          <FooterCol heading="Writing & Frameworks" links={WRITING_LINKS} />
-          <FooterCol heading="Courses & Practice" links={PRACTICE_LINKS} />
-          <FooterCol heading="Connect" links={CONNECT_LINKS} />
-        </div>
-        <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-muted">
-          <span>
-            © 2026 {SITE_CONFIG.legalName} · {SITE_CONFIG.location}
-          </span>
-          <span>Essays, courses, and systems architecture by {SITE_CONFIG.authorName}.</span>
-        </div>
+    <footer className="bg-bg border-t border-border">
+      <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border">
+        <FooterCol heading="Writing & Frameworks" links={WRITING_LINKS} />
+        <FooterCol heading="Courses & Practice" links={PRACTICE_LINKS} />
+        <FooterCol heading="Connect" links={CONNECT_LINKS} />
+      </div>
+      <div className="border-t border-border px-6 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs text-muted tabular-nums">
+        <span>
+          © 2026 {SITE_CONFIG.legalName} · {SITE_CONFIG.location}
+        </span>
+        <span>Essays, courses, and systems architecture by {SITE_CONFIG.authorName}.</span>
       </div>
     </footer>
   )

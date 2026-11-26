@@ -4,8 +4,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 vi.mock('next/font/google', () => ({
+  Inter: () => ({ variable: '--font-inter' }),
   JetBrains_Mono: () => ({ variable: '--font-jetbrains-mono' }),
-  Instrument_Serif: () => ({ variable: '--font-instrument-serif' }),
+  Plus_Jakarta_Sans: () => ({ variable: '--font-plus-jakarta' }),
 }))
 vi.mock('geist/font/sans', () => ({
   GeistSans: { variable: '--font-geist-sans' },

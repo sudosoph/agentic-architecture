@@ -12,6 +12,7 @@ interface Props {
   placeholder?: string
   successMessage?: string
   variant?: 'card' | 'inline'
+  buttonVariant?: 'primary' | 'accent'
 }
 
 export function NewsletterSignup({
@@ -22,6 +23,7 @@ export function NewsletterSignup({
   placeholder = 'Enter your email...',
   successMessage = `Check your inbox to confirm your subscription to ${SITE_CONFIG.newsletterName}.`,
   variant = 'card',
+  buttonVariant = 'accent',
 }: Props) {
   const [email, setEmail] = useState('')
   const [state, setState] = useState<'idle' | 'loading' | 'subscribed' | 'redirected'>('idle')
@@ -78,7 +80,11 @@ export function NewsletterSignup({
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="press-scale rounded-md bg-fg text-bg px-4 py-2 text-sm font-medium hover:opacity-90 cursor-pointer shrink-0"
+          className={`press-scale rounded-md px-4 py-2 text-sm font-medium cursor-pointer shrink-0 ${
+            buttonVariant === 'accent'
+              ? 'bg-accent text-white hover:opacity-95'
+              : 'bg-fg text-bg hover:opacity-90'
+          }`}
         >
           {state === 'loading' ? 'Sending...' : buttonLabel}
         </button>
@@ -92,10 +98,12 @@ export function NewsletterSignup({
   return (
     <section
       aria-label="Newsletter signup"
-      className="rounded-lg border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
+      className="rounded-md border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
     >
       <div className="space-y-1.5 max-w-xl">
-        <h3 className="font-serif text-2xl font-normal tracking-[-0.015em] text-fg">{headline}</h3>
+        <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-[-0.024em] text-fg">
+          {headline}
+        </h3>
         <p className="text-sm text-muted leading-relaxed">{sub}</p>
       </div>
       <div className="w-full md:w-auto md:min-w-[340px]">{formNode}</div>

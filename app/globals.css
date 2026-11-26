@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Option A · Crisp Editorial Monograph (OKLCH Perceptually Uniform Palette) */
-  --color-bg:               oklch(0.99 0.004 85);
+  /* Option B · Swiss Studio Grid (OKLCH Perceptually Uniform Architectural Palette) */
+  --color-bg:               oklch(0.982 0.003 250);
   --color-surface:          oklch(1 0 0);
-  --color-surface-elevated: oklch(0.968 0.005 85);
-  --color-border:           oklch(0.90 0.006 85);
-  --color-text:             oklch(0.165 0.012 265);
-  --color-fg:               oklch(0.165 0.012 265);
-  --color-muted:            oklch(0.44 0.014 265);
-  --color-accent:           oklch(0.45 0.17 262);
-  --color-online:           oklch(0.44 0.11 162);
-  --color-bench:            oklch(0.45 0.09 195);
+  --color-surface-elevated: oklch(0.968 0.004 250);
+  --color-border:           oklch(0.885 0.006 255);
+  --color-text:             oklch(0.145 0.012 255);
+  --color-fg:               oklch(0.145 0.012 255);
+  --color-muted:            oklch(0.44 0.014 255);
+  --color-accent:           oklch(0.42 0.115 165);
+  --color-online:           oklch(0.42 0.115 165);
+  --color-bench:            oklch(0.45 0.09 215);
   --color-rig:              oklch(0.48 0.11 68);
   --color-pressure:         oklch(0.52 0.19 25);
 
-  --radius: 0.5rem;
+  --radius: 0.375rem;
 
-  /* Self-hosted Next.js CSS font variable bindings */
-  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: var(--font-instrument-serif), "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  /* Self-hosted Swiss Studio Font Stack (Plus Jakarta Sans Display + Inter cv11/Geist Body + JetBrains Mono) */
+  --font-sans: var(--font-inter), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-plus-jakarta), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: var(--font-plus-jakarta), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -27,13 +28,23 @@ html {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: oklch(0.91 0.045 262);
+  background-color: oklch(0.91 0.05 165);
   color: var(--color-text);
+}
+
+/* Ensure all display & legacy font-serif headings render with crisp Swiss Studio geometry */
+.font-display,
+.font-serif,
+.font-serif.font-normal {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.026em;
 }
 
 h1, h2, h3, h4 {
@@ -44,47 +55,52 @@ p, li {
   text-wrap: pretty;
 }
 
-/* Tactile press feedback & subtle entrance choreography (Emil Kowalski / Godly bar) */
+/* Tactile press feedback & Swiss cell hover choreography */
 .press-scale {
   transition:
-    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    background-color 160ms ease-out,
-    border-color 160ms ease-out,
-    color 160ms ease-out,
-    opacity 160ms ease-out;
+    transform 150ms cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    color 150ms ease-out,
+    opacity 150ms ease-out;
 }
 .press-scale:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.swiss-cell {
+  transition: background-color 160ms ease-out;
+}
+
+.editorial-row {
+  transition: background-color 160ms ease-out, border-color 160ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .swiss-cell:hover,
+  .editorial-row:hover {
+    background-color: oklch(0.985 0.003 250);
+  }
 }
 
 .reveal-up {
-  animation: revealUp 320ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: revealUp 280ms cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 .reveal-delay-1 {
-  animation-delay: 55ms;
+  animation-delay: 50ms;
 }
 .reveal-delay-2 {
-  animation-delay: 110ms;
+  animation-delay: 100ms;
 }
 
 @keyframes revealUp {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(5px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-.editorial-row {
-  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 160ms ease-out;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .editorial-row:hover {
-    transform: translateX(3px);
   }
 }
 
@@ -96,56 +112,55 @@ p, li {
     opacity: 1;
     transform: none;
   }
-  .press-scale:active,
-  .editorial-row:hover {
+  .press-scale:active {
     transform: none;
   }
 }
 
-/* Editorial Read-Mode Prose (65ch measure, Instrument Serif section heads, crisp SVG figures) */
+/* Swiss Studio Read-Mode Prose (65ch measure, Plus Jakarta Sans display heads, crisp SVG schematics) */
 .prose {
-  color: oklch(0.23 0.012 265);
+  color: oklch(0.22 0.012 255);
   max-width: 65ch;
-  font-size: 1.0625rem;
-  line-height: 1.76;
+  font-size: 1.03125rem;
+  line-height: 1.74;
 }
 .prose h1,
 .prose h2 {
   color: var(--color-text);
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  margin-top: 2.5rem;
-  margin-bottom: 0.85rem;
-  line-height: 1.18;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.026em;
+  margin-top: 2.4rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
   scroll-margin-top: 5.5rem;
 }
 .prose h2 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 .prose h3,
 .prose h4 {
   color: var(--color-text);
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.015em;
-  margin-top: 2rem;
-  margin-bottom: 0.65rem;
+  letter-spacing: -0.018em;
+  margin-top: 1.9rem;
+  margin-bottom: 0.6rem;
   line-height: 1.3;
   scroll-margin-top: 5.5rem;
 }
 .prose h3 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
 }
 .prose p {
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.3rem;
 }
 .prose a {
   color: var(--color-accent);
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: oklch(0.76 0.09 262);
+  text-decoration-color: oklch(0.75 0.07 165);
 }
 .prose a:hover {
   text-decoration-color: var(--color-accent);
@@ -157,21 +172,21 @@ p, li {
 .prose code:not(pre > code) {
   background: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
-  border-radius: 0.325rem;
-  padding: 0.12rem 0.38rem;
+  border-radius: 0.25rem;
+  padding: 0.12rem 0.36rem;
   font-size: 0.85em;
   font-family: var(--font-mono);
   color: var(--color-text);
 }
 .prose pre {
-  background: oklch(0.16 0.012 265) !important;
-  color: oklch(0.97 0.004 85);
-  border: 1px solid oklch(0.26 0.015 265);
-  border-radius: 0.625rem;
-  padding: 1.1rem 1.35rem;
+  background: oklch(0.155 0.012 255) !important;
+  color: oklch(0.97 0.003 250);
+  border: 1px solid oklch(0.25 0.015 255);
+  border-radius: 0.5rem;
+  padding: 1.1rem 1.3rem;
   overflow-x: auto;
-  margin: 1.65rem 0;
-  font-size: 0.865rem;
+  margin: 1.6rem 0;
+  font-size: 0.85rem;
   line-height: 1.65;
 }
 .prose pre code {
@@ -182,8 +197,8 @@ p, li {
 }
 .prose ul,
 .prose ol {
-  padding-left: 1.45rem;
-  margin-bottom: 1.35rem;
+  padding-left: 1.4rem;
+  margin-bottom: 1.3rem;
 }
 .prose ul {
   list-style-type: disc;
@@ -194,31 +209,31 @@ p, li {
   list-style-position: outside;
 }
 .prose li {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.42rem;
 }
 .prose li::marker {
   color: var(--color-muted);
 }
 .prose blockquote {
-  border-left: 2px solid var(--color-text);
-  background: var(--color-surface);
-  border-radius: 0 0.5rem 0.5rem 0;
-  padding: 0.9rem 1.2rem;
+  border-left: 2px solid var(--color-accent);
+  background: var(--color-surface-elevated);
+  border-radius: 0 0.375rem 0.375rem 0;
+  padding: 0.85rem 1.15rem;
   color: var(--color-text);
-  margin: 1.65rem 0;
+  margin: 1.6rem 0;
 }
 .prose hr {
   border: none;
   border-top: 1px solid var(--color-border);
-  margin: 2.35rem 0;
+  margin: 2.25rem 0;
 }
 .prose figure,
 .editorial-figure {
-  background: var(--color-surface);
-  border: 1px solid oklch(0 0 0 / 0.1);
-  border-radius: 0.625rem;
-  padding: 1.25rem;
-  margin: 1.85rem 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1.2rem;
+  margin: 1.8rem 0;
 }
 .prose figure svg,
 .editorial-figure svg {
@@ -236,18 +251,18 @@ p, li {
   line-height: 1.5;
 }
 .briefing-box {
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-text);
-  border-radius: 0.5rem;
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0.375rem;
   padding: 1.1rem 1.25rem;
 }
 .prose .table-scroll {
   overflow-x: auto;
-  margin: 1.65rem 0;
+  margin: 1.6rem 0;
   max-width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   background: var(--color-surface);
 }
 .prose .table-scroll > table {
@@ -257,7 +272,7 @@ p, li {
 .prose table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.65rem 0;
+  margin: 1.6rem 0;
   font-variant-numeric: tabular-nums;
 }
 .prose th,
@@ -265,7 +280,7 @@ p, li {
   border: 1px solid var(--color-border);
   padding: 0.65rem 0.85rem;
   text-align: left;
-  font-size: 0.91rem;
+  font-size: 0.9rem;
 }
 .prose th {
   color: var(--color-text);

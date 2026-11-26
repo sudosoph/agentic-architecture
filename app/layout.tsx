@@ -1,20 +1,27 @@
 import type { Metadata } from 'next'
-import { Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import { Analytics } from '@/components/site/analytics'
 import { SITE_CONFIG } from '@/lib/site-config'
 import './globals.css'
 
-const instrumentSerif = Instrument_Serif({
-  weight: '400',
-  style: ['normal', 'italic'],
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-instrument-serif',
+  weight: ['500', '600', '700'],
+  variable: '--font-plus-jakarta',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-inter',
   display: 'swap',
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
+  weight: ['400', '500'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
 })
@@ -60,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${jetbrainsMono.variable} ${GeistSans.variable}`}
+      className={`${plusJakarta.variable} ${inter.variable} ${jetbrainsMono.variable} ${GeistSans.variable}`}
     >
       <body className="bg-bg text-text font-sans antialiased">
         <Analytics />

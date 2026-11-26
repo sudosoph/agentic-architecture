@@ -81,13 +81,15 @@ describe('Blog query compatibility, ContactForm 503 fallback, and OKLCH tokens',
     expect(fallbackLink.getAttribute('href')).toContain('Architecture%20Inquiry')
   })
 
-  it('defines OKLCH palette tokens, self-hosted font variables, and prefers-reduced-motion in app/globals.css', () => {
+  it('defines OKLCH palette tokens, self-hosted Swiss Studio font variables, and prefers-reduced-motion in app/globals.css', () => {
     const css = fs.readFileSync(path.join(process.cwd(), 'app/globals.css'), 'utf8')
     expect(css).toMatch(/--color-bg:\s*oklch\(/i)
     expect(css).toMatch(/--color-online:\s*oklch\(/i)
     expect(css).toMatch(/--color-rig:\s*oklch\(/i)
+    expect(css).toContain('var(--font-plus-jakarta)')
+    expect(css).toContain('var(--font-inter)')
     expect(css).toContain('var(--font-geist-sans)')
-    expect(css).toContain('var(--font-instrument-serif)')
+    expect(css).toContain('"cv11"')
     expect(css).toContain('prefers-reduced-motion: reduce')
   })
 })

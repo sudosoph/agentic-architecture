@@ -10,7 +10,7 @@ export function generateStaticParams() {
 
 const TRACK_LABELS: Record<BlogTrack, string> = {
   'small-business': 'Strategy & Operations',
-  'models-rigs': 'Models & Private Infrastructure',
+  'models-rigs': 'Models & Infrastructure',
   engineering: 'Systems Architecture',
 }
 
@@ -35,88 +35,97 @@ export default async function BlogPostOpenGraphImage({
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          backgroundColor: '#FAF8F5',
-          color: '#181920',
-          padding: '64px 76px',
-          fontFamily: 'Georgia, serif',
-          borderTop: '8px solid #181920',
+          backgroundColor: '#F5F7FA',
+          padding: '32px',
+          fontFamily: 'sans-serif',
         }}
       >
         <div
           style={{
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
             justifyContent: 'space-between',
-            fontFamily: 'sans-serif',
+            backgroundColor: '#FFFFFF',
+            color: '#15181E',
+            border: '1px solid #DCE0E6',
+            borderTop: '6px solid #106952',
+            padding: '50px 64px',
           }}
         >
-          <span style={{ fontSize: '18px', color: '#585B68', fontWeight: 500 }}>
-            {TRACK_LABELS[trackKey]} · {mins} min read
-          </span>
-          <span style={{ fontSize: '20px', fontWeight: 600, color: '#181920' }}>
-            Agentic Architect
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', maxWidth: '1040px' }}>
           <div
             style={{
-              fontSize: title.length > 70 ? '46px' : '54px',
-              fontWeight: 400,
-              color: '#181920',
-              lineHeight: 1.14,
-              letterSpacing: '-0.02em',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
-            {title}
-          </div>
-          <div
-            style={{
-              fontSize: '23px',
-              color: '#585B68',
-              lineHeight: 1.42,
-              fontFamily: 'sans-serif',
-            }}
-          >
-            {desc.length > 150 ? `${desc.slice(0, 147)}...` : desc}
-          </div>
-        </div>
-
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingTop: '22px',
-            borderTop: '1px solid #E3E0D8',
-            fontFamily: 'sans-serif',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
-              <rect width="64" height="64" rx="12" fill="#181920" />
-              <path
-                d="M14 47L25.5 17L37 47"
-                stroke="#FAF8F5"
-                strokeWidth="4.2"
-                strokeLinejoin="miter"
-              />
-              <path
-                d="M27 47L38.5 17L50 47"
-                stroke="#FAF8F5"
-                strokeOpacity="0.55"
-                strokeWidth="4.2"
-                strokeLinejoin="miter"
-              />
-              <line x1="18.5" y1="37" x2="45.5" y2="37" stroke="#FAF8F5" strokeWidth="3.4" />
-            </svg>
-            <span style={{ fontSize: '18px', fontWeight: 600, color: '#181920' }}>
-              Sophia Stein · Boulder, CO
+            <span style={{ fontSize: '18px', color: '#106952', fontWeight: 600 }}>
+              {TRACK_LABELS[trackKey]} · {mins} min read
+            </span>
+            <span style={{ fontSize: '20px', fontWeight: 700, color: '#15181E' }}>
+              Agentic Architect
             </span>
           </div>
-          <span style={{ fontSize: '17px', color: '#585B68' }}>agenticarchitect.ai/blog</span>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '1020px' }}>
+            <div
+              style={{
+                fontSize: title.length > 70 ? '44px' : '52px',
+                fontWeight: 700,
+                color: '#15181E',
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
+              }}
+            >
+              {title}
+            </div>
+            <div
+              style={{
+                fontSize: '22px',
+                color: '#5D6472',
+                lineHeight: 1.42,
+              }}
+            >
+              {desc.length > 150 ? `${desc.slice(0, 147)}...` : desc}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingTop: '20px',
+              borderTop: '1px solid #DCE0E6',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
+                <rect width="64" height="64" rx="12" fill="#15181E" />
+                <path
+                  d="M14 47L25.5 17L37 47"
+                  stroke="#FFFFFF"
+                  strokeWidth="4.2"
+                  strokeLinejoin="miter"
+                />
+                <path
+                  d="M27 47L38.5 17L50 47"
+                  stroke="#34D399"
+                  strokeWidth="4.2"
+                  strokeLinejoin="miter"
+                />
+                <line x1="18.5" y1="37" x2="45.5" y2="37" stroke="#FFFFFF" strokeWidth="3.4" />
+              </svg>
+              <span style={{ fontSize: '18px', fontWeight: 600, color: '#15181E' }}>
+                Sophia Stein · Boulder, CO
+              </span>
+            </div>
+            <span style={{ fontSize: '17px', color: '#5D6472', fontWeight: 600 }}>
+              agenticarchitect.ai/blog
+            </span>
+          </div>
         </div>
       </div>
     ),

@@ -3,11 +3,11 @@ name: editorial-and-site-qc
 description: Use when drafting, editing, or reviewing any essay, playbook, landing page, offer card, navigation link, or social distribution pack for agenticarchitect.ai, Substack, or the Skool Lab, or before committing site and content changes.
 ---
 
-# Editorial Monograph, 3-Surface Architecture & Site Quality Control
+# Swiss Studio Grid, 3-Surface Architecture & Site Quality Control
 
 ## Overview
 
-**Core principle:** `agenticarchitect.ai` is an **Option A Crisp Editorial Monograph** (Stripe Press, Nate B. Jones, and Wes Kao craft bar), backed by a strict three-surface ecosystem and an automated pre-commit quality gate (`npm run qc`).
+**Core principle:** `agenticarchitect.ai` uses **Option B: Swiss Studio Grid** (Godly Swiss/architectural studio standard), backed by self-hosted `Plus Jakarta Sans` + `Inter` (`cv02, cv03, cv04, cv11`) + `JetBrains Mono` typography, a framed `max-w-5xl` structural `1px` hairline grid, a strict three-surface ecosystem, and an automated pre-commit quality gate (`npm run qc`).
 
 Every essay, page, and component must pass **both** human editorial judgment and deterministic repository verification before completion.
 
@@ -47,7 +47,8 @@ Keep prose between **600 and 1,600 words** (hard gate: `520..1,850` words exclud
 
 <figure class="editorial-figure">
   <svg viewBox="0 0 720 200" role="img" aria-label="Descriptive diagram title">
-    <!-- Crisp monochrome/indigo SVG schematic using stroke="#1e1e24", fill="#ffffff", accent="#2f45c5" -->
+    <!-- Crisp Swiss Studio SVG schematic with ZERO blank lines inside <figure> or <svg> -->
+    <rect x="16" y="20" width="200" height="60" rx="5" fill="#F7F8FA" stroke="#DCE0E6" />
   </svg>
   <figcaption>Figure 1: Plain-English caption explaining the state boundary and human gate.</figcaption>
 </figure>
@@ -60,13 +61,14 @@ Close with natural hub-and-spoke internal links (`>= 3` internal `/...` links ac
 ### Required Essay Invariants
 1. **`briefing` MUST be a 3-item YAML array** (never a single string) so `/blog/[slug]` renders the **30-Second Briefing** box cleanly.
 2. **Unique staggered `publishedDate`:** Check existing `publishedDate` values in `content/blog/*.mdx` first. Never assign two essays the same calendar date.
-3. **Inline `<svg>` schematics:** Flagship architecture and benchmark essays include a clean `<figure class="editorial-figure"><svg ...>` schematic so readers grasp the topology in 5 seconds.
-4. **Hub-and-spoke internal links (`>= 3`):** Every essay links to at least 3 valid internal routes or active `/blog/<slug>` essays. When retiring or renaming an essay, add a permanent `308` redirect in `next.config.ts` (`RENAMED_SLUGS`).
+3. **Inline `<svg>` schematics (zero internal blank lines):** Flagship architecture and benchmark essays include a clean `<figure class="editorial-figure"><svg ...>` schematic with no blank lines inside raw HTML blocks so `remark` never wraps child tags in `<pre><code>`.
+4. **Preserve Blog Categories, Topic Clusters & Tags:** Both `/` (`HomeWritingExplorer`) and `/blog` expose the 3 primary categories (`Strategy & Operations`, `Models & Infrastructure`, `Systems Architecture`), 6 topic clusters, and `#tag` filters.
+5. **Hub-and-spoke internal links (`>= 3`):** Every essay links to at least 3 valid internal routes or active `/blog/<slug>` essays. When retiring or renaming an essay, add a permanent `308` redirect in `next.config.ts` (`RENAMED_SLUGS`).
 
-## 3. Option A Monograph UI & Copy Rules
+## 3. Option B Swiss Studio UI & Copy Rules
 
 1. **Navigation Order:** Header navigation stays strictly `About` (`/about`) -> `Writing` (`/blog`) -> `Courses` (`/courses`) -> `Speaking & Teaching` (`/teaching`) with one right-aligned button: `Work With Me` (`/work-with-me`).
-2. **Typography & Tokens:** `Instrument_Serif` (`font-serif`) for H1/H2 editorial display, `GeistSans` (`font-sans`) for UI/body (`65ch` prose measure), `JetBrains_Mono` (`font-mono`) strictly for code/commands, `text-balance` on headings, `tabular-nums` on numbers/dates, OKLCH `@theme` variables, and `prefers-reduced-motion: reduce` support.
+2. **Typography & Tokens:** Self-hosted `Plus_Jakarta_Sans` (`--font-plus-jakarta`, `font-display`, weight `600`, `-0.026em`..`-0.032em` tracking) for H1/H2/H3 display headings, `Inter` (`--font-inter` with OpenType `"cv02", "cv03", "cv04", "cv11"`) + `GeistSans` for UI/body (`65ch` prose measure), `JetBrains_Mono` (`font-mono`) strictly for metadata/tags/code, OKLCH Swiss Studio tokens (`--color-accent: oklch(0.42 0.115 165)`), and `prefers-reduced-motion: reduce` support.
 3. **Zero Hero Urgency Pills or Slop Badges:** Never stack status/urgency pills at the top of a hero (`Q1 Charter Windows Open`, `Zero Dropped Leads`, `Reclaims 10+ hrs/wk`, `Live Cohort Filling Fast`). Use a single quiet metadata line (`PageHeader meta="..."`) when context is needed.
 4. **Zero CV, Employer, Handle, Salary, or Rate-Card Leaks:**
    - **Never reference:** `Google` (as employer or `personal capacity` / `views my own`), `McKinsey`, `Columbia` (`Columbia CS`, `Columbia University`), `Meta` (employer), `Section.io`, `Webscale`, `patent-pending`, `angel investor`, `sudosoph` (X or GitHub), `Lesbians Who Tech`, `Listmonk`, `Productive Friction`, `voice.md`, `icp.md`, `Brand Brain`, or `AI Org Chart`.
@@ -80,7 +82,7 @@ Stop immediately if you catch yourself thinking any of the following under deadl
 
 | Rationalization Under Pressure | Why It Violates the Standard & What to Do Instead |
 |---|---|
-| *"I'll put `$[XX]/mo` or `Scoped Charter` in a price row so the founder can fill it in before publish."* | **Violation:** Price rows and `$[XX]` placeholders turn an executive monograph into a SaaS checkout template and risk shipping unapproved pricing. Omit price rows completely; use Founding Waitlist on `/courses` and 20-minute scoping on `/work-with-me`. |
+| *"I'll put `$[XX]/mo` or `Scoped Charter` in a price row so the founder can fill it in before publish."* | **Violation:** Price rows and `$[XX]` placeholders turn an architectural studio monograph into a SaaS checkout template and risk shipping unapproved pricing. Omit price rows completely; use Founding Waitlist on `/courses` and 20-minute scoping on `/work-with-me`. |
 | *"Adding subtle `Badge` pills like `'Q1 Advisory Windows Open'` avoids fake countdowns while creating urgency."* | **Violation:** Multi-badge hero headers are classic AI-generated landing-page slop. Use zero urgency pills; let clear typography and one primary button carry the hierarchy. |
 | *"Putting Skool courses and Enterprise Advisory side-by-side in a 3-tier grid prevents bounce."* | **Violation:** Collapses the 3-surface architecture. Keep Skool tracks on `/courses` and executive diagnostics/Forward Deployed sprints on `/work-with-me` (with a quiet text bridge for the other audience). |
 | *"`briefing: '...'` as a single string is faster and valid YAML."* | **Violation:** `briefing` in `PostFrontmatter` is `string[]` (3 concise bullets) to render a scannable briefing list, not a wall-of-text paragraph. |

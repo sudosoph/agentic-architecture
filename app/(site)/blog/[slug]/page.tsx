@@ -96,25 +96,44 @@ export default async function BlogPostPage({ params }: Props) {
         className="lg:grid lg:grid-cols-[minmax(0,680px)_220px] lg:justify-between lg:gap-12"
       >
         <div className="min-w-0">
-          {/* Editorial Article Header */}
+          {/* Swiss Studio Article Header */}
           <header className="border-b border-border pb-8 space-y-4">
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted tabular-nums">
-              <Link href={`/blog?track=${trackKey}`} className="font-medium text-fg hover:text-accent">
+              <Link
+                href={`/blog?track=${trackKey}`}
+                className="font-semibold text-accent hover:underline"
+              >
                 {TRACK_LABELS[trackKey]}
               </Link>
               <span>·</span>
-              <time dateTime={post.frontmatter.publishedDate}>{dateFormatted}</time>
+              <time dateTime={post.frontmatter.publishedDate} className="font-mono">
+                {dateFormatted}
+              </time>
               <span>·</span>
-              <span>{readingMinutes} min read</span>
+              <span className="font-mono">{readingMinutes} min read</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-[-0.02em] text-fg leading-[1.1]">
+            <h1 className="font-display text-3xl sm:text-5xl font-semibold tracking-[-0.03em] text-fg leading-[1.08]">
               {post.frontmatter.title}
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed">
               {post.frontmatter.description}
             </p>
+
+            {post.frontmatter.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {post.frontmatter.tags.map(t => (
+                  <Link
+                    key={t}
+                    href={`/blog?tag=${encodeURIComponent(t)}`}
+                    className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-[11px] text-muted hover:text-fg hover:border-fg/40 transition-colors"
+                  >
+                    #{t}
+                  </Link>
+                ))}
+              </div>
+            )}
           </header>
 
           {/* 30-Second Executive Briefing Box */}
@@ -167,7 +186,7 @@ export default async function BlogPostPage({ params }: Props) {
                   ? 'Courses & Implementation'
                   : 'Architecture & Advisory'}
               </p>
-              <h2 className="font-serif text-2xl font-normal text-fg">
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.024em] text-fg">
                 {trackKey === 'small-business'
                   ? 'Put these workflow patterns into daily operation'
                   : 'Evaluate your stack or explore fractional technical leadership'}
@@ -198,7 +217,7 @@ export default async function BlogPostPage({ params }: Props) {
           {relatedPosts.length > 0 && (
             <section className="mt-12 space-y-4">
               <div className="flex items-baseline justify-between">
-                <h2 className="font-serif text-2xl font-normal text-fg">
+                <h2 className="font-display text-2xl font-semibold tracking-[-0.024em] text-fg">
                   Continue in {TRACK_LABELS[trackKey]}
                 </h2>
                 <Link

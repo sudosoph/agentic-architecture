@@ -1,16 +1,27 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import HomePage from '@/app/(site)/page'
 import AboutPage from '@/app/(site)/about/page'
 
-describe('HomePage & AboutPage (Option A Editorial Monograph)', () => {
-  it('renders HomePage monograph hero, 3-surface ecosystem, staggered essay dates, and zero CV/bravado leaks', () => {
+describe('HomePage & AboutPage (Option B Swiss Studio Grid)', () => {
+  it('renders HomePage Swiss Studio grid hero, interactive blog categories & topic clusters, 3-surface ecosystem, and zero CV/bravado leaks', () => {
     const { container } = render(<HomePage />)
     const text = container.textContent ?? ''
     expect(screen.getByTestId('hero-section')).toBeTruthy()
     expect(screen.getByRole('heading', { level: 1 })).toBeTruthy()
     expect(text).toContain('Agentic Architect Lab')
     expect(text).toContain('Substack')
+    expect(text).toContain('Strategy & Operations')
+    expect(text).toContain('Models & Infrastructure')
+    expect(text).toContain('Systems Architecture')
+    expect(text).toContain('Local models')
+    expect(text).toContain('Agent architecture')
+
+    const modelsTab = screen.getByRole('tab', { name: /Models & Infrastructure/i })
+    fireEvent.click(modelsTab)
+    expect(modelsTab.getAttribute('aria-selected')).toBe('true')
+    expect(container.textContent).toContain('Browse all')
+
     expect(text.toLowerCase()).not.toContain('columbia')
     expect(text.toLowerCase()).not.toContain('mckinsey')
     expect(text.toLowerCase()).not.toContain('sudosoph')

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getAllPosts, type BlogTrack } from '@/lib/mdx'
-import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
@@ -177,93 +176,130 @@ export default async function BlogPage({
   const engCount = allPosts.filter(p => p.track === 'engineering').length
 
   return (
-    <div className="space-y-12">
-      <PageHeader
-        meta={`${allPosts.length} Essays & Field Notes · Updated Weekly`}
-        title="Writing"
-        description="Essays and reference notes on AI workflow design, organizational build-vs-buy strategy, model routing, and sovereign compute."
-      />
-
-      {/* Quiet Editorial Filter Bar */}
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-1.5">
-            {[
-              { key: 'all', label: `All Writing (${allPosts.length})`, href: '/blog' },
-              {
-                key: 'small-business',
-                label: `Strategy & Operations (${ownerCount})`,
-                href: '/blog?track=small-business',
-              },
-              {
-                key: 'models-rigs',
-                label: `Models & Infrastructure (${modelsCount})`,
-                href: '/blog?track=models-rigs',
-              },
-              {
-                key: 'engineering',
-                label: `Systems Architecture (${engCount})`,
-                href: '/blog?track=engineering',
-              },
-            ].map(tab => {
-              const active = effectiveTrack === tab.key && !activeTheme && !tag
-              return (
-                <Link
-                  key={tab.key}
-                  href={tab.href}
-                  className={`press-scale rounded-md px-3.5 py-1.5 text-xs font-medium border ${
-                    active
-                      ? 'bg-fg text-bg border-fg'
-                      : 'bg-surface text-muted border-border hover:border-fg/40 hover:text-fg'
-                  }`}
-                >
-                  {tab.label}
-                </Link>
-              )
-            })}
-          </div>
-
-          <Link
-            href="/sovereign-stack"
-            className="text-xs font-medium text-muted hover:text-fg underline underline-offset-3 decoration-border"
-          >
-            Read The Sovereign Stack in 12-chapter order
-          </Link>
+    <div className="-mx-6 sm:-mx-8 -mt-9 sm:-mt-11 -mb-14 sm:-mb-16 divide-y divide-border">
+      {/* Swiss Studio Header Block */}
+      <header className="px-6 sm:px-8 py-9 sm:py-11 bg-surface flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-3 max-w-2xl">
+          <p className="font-mono text-xs text-muted tabular-nums">
+            {allPosts.length} Essays &amp; Field Notes · Updated Weekly
+          </p>
+          <h1 className="font-display text-3xl sm:text-5xl font-semibold tracking-[-0.03em] text-fg leading-[1.08]">
+            Writing
+          </h1>
+          <p className="text-base sm:text-[17px] text-muted leading-relaxed">
+            Essays and reference notes on AI workflow design, organizational build-vs-buy strategy,
+            model routing, and sovereign compute.
+          </p>
         </div>
 
-        {(activeTheme || tag) && (
-          <p className="text-xs text-muted tabular-nums">
+        <Link
+          href="/sovereign-stack"
+          className="text-xs font-semibold text-fg hover:text-accent underline underline-offset-3 decoration-border shrink-0"
+        >
+          Read The Sovereign Stack (12-Chapter Monograph) →
+        </Link>
+      </header>
+
+      {/* Two-Tier Swiss Category & Topic Filter Matrix */}
+      <div className="bg-bg px-6 sm:px-8 py-5 space-y-3.5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {[
+            { key: 'all', label: `All Writing (${allPosts.length})`, href: '/blog' },
+            {
+              key: 'small-business',
+              label: `Strategy & Operations (${ownerCount})`,
+              href: '/blog?track=small-business',
+            },
+            {
+              key: 'models-rigs',
+              label: `Models & Infrastructure (${modelsCount})`,
+              href: '/blog?track=models-rigs',
+            },
+            {
+              key: 'engineering',
+              label: `Systems Architecture (${engCount})`,
+              href: '/blog?track=engineering',
+            },
+          ].map(tab => {
+            const active = effectiveTrack === tab.key && !activeTheme && !tag
+            return (
+              <Link
+                key={tab.key}
+                href={tab.href}
+                className={`press-scale rounded px-3.5 py-1.5 text-xs font-medium border tabular-nums ${
+                  active
+                    ? 'bg-fg text-bg border-fg'
+                    : 'bg-surface text-muted border-border hover:border-fg/40 hover:text-fg'
+                }`}
+              >
+                {tab.label}
+              </Link>
+            )
+          })}
+        </div>
+
+        {/* Topic Clusters Bar */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="font-mono text-[11px] text-muted mr-1">Topics:</span>
+          {LEGACY_THEMES.map(theme => {
+            const isThemeActive = activeTheme?.slug === theme.slug
+            return (
+              <Link
+                key={theme.slug}
+                href={isThemeActive ? '/blog' : `/blog?theme=${theme.slug}`}
+                className={`rounded border px-2.5 py-0.5 text-[11px] font-medium transition-colors ${
+                  isThemeActive
+                    ? 'bg-accent text-white border-accent'
+                    : 'bg-surface text-muted border-border hover:text-fg hover:border-fg/40'
+                }`}
+              >
+                {theme.label}
+              </Link>
+            )
+          })}
+        </div>
+
+        {(activeTheme || tag || effectiveTrack !== 'all') && (
+          <p className="text-xs text-muted tabular-nums pt-0.5">
             Showing {posts.length} of {allPosts.length} essays
+            {effectiveTrack !== 'all' && (
+              <>
+                {' '}
+                in <span className="text-fg font-medium">{TRACK_LABELS[effectiveTrack]}</span>
+              </>
+            )}
             {activeTheme && (
               <>
                 {' '}
-                in <span className="text-fg font-medium">{activeTheme.label}</span>
+                under <span className="text-fg font-medium">{activeTheme.label}</span>
               </>
             )}
             {tag && (
               <>
                 {' '}
-                tagged <span className="text-fg font-medium">{tag}</span>
+                tagged <span className="font-mono text-fg font-medium">#{tag}</span>
               </>
             )}{' '}
             ·{' '}
-            <Link href="/blog" className="text-fg underline underline-offset-3">
+            <Link href="/blog" className="text-fg font-medium underline underline-offset-3">
               Clear filter
             </Link>
           </p>
         )}
       </div>
 
-      {/* Dated Editorial List / Grid */}
+      {/* Swiss Studio Essay Rows with Category Badges & Tag Chips */}
       {posts.length === 0 ? (
-        <Card className="p-8 text-center space-y-3">
-          <p className="text-sm text-muted">No essays matched that filter.</p>
-          <Link href="/blog" className="text-sm font-medium text-fg underline underline-offset-3">
-            View all writing
-          </Link>
-        </Card>
+        <div className="p-8 sm:p-12 bg-surface">
+          <Card className="p-8 text-center space-y-3">
+            <p className="text-sm text-muted">No essays matched that filter.</p>
+            <Link href="/blog" className="text-sm font-medium text-fg underline underline-offset-3">
+              View all writing
+            </Link>
+          </Card>
+        </div>
       ) : (
-        <div className="divide-y divide-border border-t border-b border-border">
+        <div className="divide-y divide-border bg-surface">
           {posts.map(post => {
             const date = new Date(post.publishedDate).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -273,36 +309,58 @@ export default async function BlogPage({
             })
             const trackKey: BlogTrack = post.track ?? 'engineering'
             return (
-              <Link
+              <article
                 key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="editorial-row block py-6 group"
+                className="swiss-cell px-6 sm:px-8 py-6 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-start"
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-baseline">
-                  <div className="md:col-span-3 text-xs text-muted tabular-nums space-y-0.5">
-                    <time dateTime={post.publishedDate} className="block font-medium text-fg/80">
-                      {date}
-                    </time>
-                    <span className="block">
-                      {TRACK_LABELS[trackKey]} · {post.readingMinutes ?? 6} min read
-                    </span>
-                  </div>
-                  <div className="md:col-span-9 space-y-1.5">
-                    <h2 className="font-serif text-2xl font-normal text-fg group-hover:text-accent transition-colors leading-snug">
+                <div className="md:col-span-3 text-xs tabular-nums space-y-1">
+                  <time
+                    dateTime={post.publishedDate}
+                    className="block font-mono font-medium text-fg/85"
+                  >
+                    {date}
+                  </time>
+                  <Link
+                    href={`/blog?track=${trackKey}`}
+                    className="inline-block font-medium text-accent hover:underline"
+                  >
+                    {TRACK_LABELS[trackKey]}
+                  </Link>
+                  <span className="block text-muted">{post.readingMinutes ?? 6} min read</span>
+                </div>
+
+                <div className="md:col-span-9 space-y-2">
+                  <Link href={`/blog/${post.slug}`} className="block group">
+                    <h2 className="font-display text-xl sm:text-2xl font-semibold tracking-[-0.024em] text-fg group-hover:text-accent transition-colors leading-snug">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-muted leading-relaxed max-w-2xl">
-                      {post.description}
-                    </p>
-                  </div>
+                  </Link>
+                  <p className="text-sm text-muted leading-relaxed max-w-2xl">
+                    {post.description}
+                  </p>
+                  {post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {post.tags.slice(0, 4).map(t => (
+                        <Link
+                          key={t}
+                          href={`/blog?tag=${encodeURIComponent(t)}`}
+                          className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-[11px] text-muted hover:text-fg hover:border-fg/40 transition-colors"
+                        >
+                          #{t}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </Link>
+              </article>
             )
           })}
         </div>
       )}
 
-      <NewsletterSignup source="blog-index" />
+      <div className="p-6 sm:p-10 bg-surface">
+        <NewsletterSignup source="blog-index" buttonVariant="accent" />
+      </div>
     </div>
   )
 }
