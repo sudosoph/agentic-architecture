@@ -7,11 +7,11 @@
 **Time:** 20 minutes live demo · 45–60 minutes self-paced if new to n8n.
 **License:** MIT: fork freely, ship yours.
 
-**Repo:** [github.com/sudosoph/bsw26-agentic-workflows](https://github.com/sudosoph/bsw26-agentic-workflows)
+**Repo:** [agenticarchitect.ai/bsw](https://agenticarchitect.ai/bsw)
 **Workshop:** Boulder Startup Week 2026 · Sophia Stein · [agenticarchitect.ai/blog](https://agenticarchitect.ai/blog)
 **Live reference workflow:** https://sophiastein.app.n8n.cloud/workflow/bd3bleAE0dPG4SgN *(replace `sophiastein` with your own n8n Cloud subdomain when you import it; the workflow ID stays the same)*
 
-> ⚠️ **Before you start**, scan [`n8n/README.md`](n8n/README.md): it captures every platform gotcha we hit while building this live (Reddit blocking n8n Cloud IPs, voice.md DOCX issue, paired-item lookups, 60s code timeout, Gmail "To" field expression mode, etc.). Saves at least an hour of debugging.
+> ⚠️ **Before you start**, scan [`n8n/README.md`](n8n/README.md): it captures every platform gotcha we hit while building this live (Reddit blocking n8n Cloud IPs, operating-rules.md DOCX issue, paired-item lookups, 60s code timeout, Gmail "To" field expression mode, etc.). Saves at least an hour of debugging.
 
 ---
 
@@ -61,9 +61,9 @@ If you have **Claude for Chrome** (Max/Pro subscribers · [claude.com/chrome](ht
 >
 > *5. Open Google Sheets · create a new sheet called `Discovery Engine` with three tabs named ICP, Sent, and Runs · paste the headers from `handouts/google-sheet-seed.csv` from the BSW repo into each tab.*
 >
-> *6. Open Google Drive · create a folder called `agentic-architect` · inside it, create a Google Doc named `voice.md` and paste the contents of `handouts/voice-md-template.md` from the BSW repo (which I'll customize after).*
+> *6. Open Google Drive · create a folder called `agentic-architect` · inside it, create a Google Doc named `operating-rules.md` and paste the contents of `handouts/voice-md-template.md` from the BSW repo (which I'll customize after).*
 >
-> *7. When done, give me back: the Anthropic key, the Firecrawl key, the Groq key, the Sheet ID (from the URL), and the voice.md file ID. I'll wire these into n8n manually."*
+> *7. When done, give me back: the Anthropic key, the Firecrawl key, the Groq key, the Sheet ID (from the URL), and the operating-rules.md file ID. I'll wire these into n8n manually."*
 
 The agent handles signups + form fills + key copy. **You only intervene at OAuth consent screens and payment forms**: typically 2 minutes of your real time across the whole 10-minute autopilot run.
 
@@ -105,13 +105,13 @@ In Google Sheets, create one spreadsheet called `Discovery Engine` with **three 
 
 **Save the sheet ID from the URL**: looks like `1AbC...XyZ` between `/d/` and `/edit`.
 
-### 3. Create the Drive folder + voice.md
+### 3. Create the Drive folder + operating-rules.md
 
 In Google Drive, create a folder called `agentic-architect`.
 
-Inside it, create a Google Doc named `voice.md`. Paste the contents of `handouts/voice-md-template.md` from the repo. Edit it to be *your* voice. **5 example emails minimum.**
+Inside it, create a Google Doc named `operating-rules.md`. Paste the contents of `handouts/voice-md-template.md` from the repo. Edit it to be *your* voice. **5 example emails minimum.**
 
-Right-click `voice.md` → Get link → copy. Save the file ID (between `/d/` and `/view`).
+Right-click `operating-rules.md` → Get link → copy. Save the file ID (between `/d/` and `/view`).
 
 ### 4. Get your n8n workflow scaffold
 
@@ -120,7 +120,7 @@ Two options:
 **Option A: fork the repo (fastest)**
 ```bash
 # In your terminal
-gh repo fork sudosoph/bsw26-agentic-workflows --clone
+gh repo fork Sophia Stein/bsw26-agentic-workflows --clone
 cd bsw-growth-agent
 ```
 
@@ -168,11 +168,11 @@ For testing and live demos, add a manual trigger as a parallel entry point.
 
 **Pattern:** *Config-as-files.* The agent reads its operating instructions from a Sheet. You can edit the Sheet without touching n8n.
 
-### Step 4 · Read voice.md from Drive `[1 min]`
+### Step 4 · Read operating-rules.md from Drive `[1 min]`
 
 1. Drag a **Google Drive** node, connect from both triggers (parallel to the Sheets read)
 2. Operation: `Download File`
-3. File: paste your `voice.md` file ID
+3. File: paste your `operating-rules.md` file ID
 4. Binary Property: `voiceMd` (we'll reference this name later)
 
 **Test it:** Click "Execute Node": you should see the file content as base64. We'll decode it in Step 11.
@@ -323,9 +323,9 @@ return top5.map(lead => ({ json: lead }));
 
 **Pattern:** Cascade again: Haiku for the cheap summary, Sonnet for the next step's drafting.
 
-### Step 11 · Draft the email with Sonnet 4.6 + voice.md `[2 min]`
+### Step 11 · Draft the email with Sonnet 4.6 + operating-rules.md `[2 min]`
 
-This is the **only premium-token step** in the workflow. The voice.md file gets cached so we pay full price once and 0.1× on every subsequent run within 5 minutes.
+This is the **only premium-token step** in the workflow. The operating-rules.md file gets cached so we pay full price once and 0.1× on every subsequent run within 5 minutes.
 
 1. Drag another **HTTP Request** to Anthropic
 2. Add **header**: `anthropic-beta: prompt-caching-2024-07-31`
@@ -338,11 +338,11 @@ This is the **only premium-token step** in the workflow. The voice.md file gets 
   "system": [
     {
       "type": "text",
-      "text": "You write customer-discovery emails for a lean startup founder. Goal: an INTERVIEW ASK: not a pitch. Soft CTA. 80–110 words. Follow voice.md exactly."
+      "text": "You write customer-discovery emails for a lean startup founder. Goal: an INTERVIEW ASK: not a pitch. Soft CTA. 80–110 words. Follow operating-rules.md exactly."
     },
     {
       "type": "text",
-      "text": "voice.md contents:\n\n{{ $('Google Drive').item.binary.voiceMd.toString('utf-8') }}",
+      "text": "operating-rules.md contents:\n\n{{ $('Google Drive').item.binary.voiceMd.toString('utf-8') }}",
       "cache_control": { "type": "ephemeral" }
     }
   ],
@@ -534,7 +534,7 @@ Watch the `Runs` Sheet. The data tells you when you're ready.
 | Lever | Reduction | Effort |
 |---|---|---|
 | **Cascade** (Haiku for routing, Sonnet for drafting) | -60% to -70% | Built into this tutorial |
-| **5-min cache** on voice.md + ICP | -30% additional | Built into Step 11 |
+| **5-min cache** on operating-rules.md + ICP | -30% additional | Built into Step 11 |
 | **Batch API** on the daily digest | -50% on that node | Add `?batch=true` to digest call |
 | **Self-host n8n** on $5 Hetzner VPS | -$24/mo | One weekend of Docker |
 | **Self-host Firecrawl** on Docker | -$83/mo | Apache 2.0 image, 30 min |
@@ -556,15 +556,15 @@ The architecture you just built is general. Same six nodes, different content:
 | **Content Repurposer** | Blog publish webhook | Original blog post | Drafts in Drive |
 | **Investor Update** | Cron monthly | Your metrics dashboards | Gmail draft |
 
-Fork the repo, change the trigger, change `icp.md` and `voice.md`, ship. **Same architecture, different agent.**
+Fork the repo, change the trigger, change `qualification-criteria.md` and `operating-rules.md`, ship. **Same architecture, different agent.**
 
 ---
 
 ## Resources
 
-- **Repo:** [github.com/sudosoph/bsw26-agentic-workflows](https://github.com/sudosoph/bsw26-agentic-workflows)
+- **Repo:** [agenticarchitect.ai/bsw](https://agenticarchitect.ai/bsw)
 - **Workflow JSON:** `n8n/bsw-growth-agent.json`
-- **voice.md template:** `handouts/voice-md-template.md`
+- **operating-rules.md template:** `handouts/voice-md-template.md`
 - **ICP template:** `handouts/icp-md-template.md`
 - **Schemas reference:** `handouts/schemas-md-template.md`
 - **Workshop slides:** `slides/index.html`

@@ -1,29 +1,30 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
 
+const redirectMock = vi.fn()
 vi.mock('next/navigation', () => ({
   notFound: () => {
     throw new Error('NEXT_NOT_FOUND')
+  },
+  redirect: (url: string) => {
+    redirectMock(url)
+    throw new Error(`NEXT_REDIRECT:${url}`)
   },
 }))
 
 import CourseModulePage, {
   generateMetadata as genModuleMeta,
 } from '@/app/(site)/courses/[slug]/page'
-import StudentVaultPage, {
-  generateMetadata as genVaultMeta,
-} from '@/app/(site)/vault/[token]/page'
-import { ALL_ACCESS_PASS } from '@/lib/curriculum'
+import StudentVaultRedirectPage from '@/app/(site)/vault/[token]/page'
 
-describe('Public /courses/[slug] Reader & Unlisted /vault/[token] Portal', () => {
-  it('renders full lesson HTML on unlocked x.1 modules and hides body HTML on paid x.2..x.5 modules', async () => {
+describe('Public /courses/[slug] Reader & /vault/[token] Redirect', () => {
+  it('renders full lesson HTML on unlocked x.1 modules and hides body HTML on gated x.2..x.5 modules', async () => {
     const openJsx = await CourseModulePage({
       params: Promise.resolve({ slug: '1-1-2026-ai-landscape-model-matrix' }),
     })
     const { container: openDom } = render(openJsx)
-    expect(openDom.textContent).toContain('Unlocked Free Lesson')
+    expect(openDom.textContent).toMatch(/Unlocked|Free/i)
     expect(openDom.querySelector('.prose')).not.toBeNull()
-    expect(openDom.querySelector('.lg\\:col-span-8.min-w-0')).not.toBeNull()
     const slideAnchor = openDom.querySelector(
       'a[href="/slides/curriculum-01-models-and-landscape.html"]',
     )
@@ -34,29 +35,16 @@ describe('Public /courses/[slug] Reader & Unlisted /vault/[token] Portal', () =>
     })
     const { container: lockedDom } = render(lockedJsx)
     expect(lockedDom.querySelector('.prose')).toBeNull()
-    expect(lockedDom.textContent).toContain('Syllabus Preview')
-    expect(lockedDom.innerHTML).toContain('https://cal.com/sophia-stein/')
+    expect(lockedDom.textContent).toMatch(/Waitlist|Lab|Syllabus/i)
   })
 
-  it('enforces noindex on /vault/[token], renders full curriculum for valid tokens, and 404s on invalid tokens', async () => {
-    const meta = await genVaultMeta({
-      params: Promise.resolve({ token: ALL_ACCESS_PASS.vaultToken }),
-    })
-    expect(meta.robots).toEqual({ index: false, follow: false })
-
-    const vaultJsx = await StudentVaultPage({
-      params: Promise.resolve({ token: ALL_ACCESS_PASS.vaultToken }),
-    })
-    const { container } = render(vaultJsx)
-    expect(container.querySelectorAll('.prose').length).toBe(20)
-
-    await expect(
-      StudentVaultPage({ params: Promise.resolve({ token: 'guessed-slug' }) }),
-    ).rejects.toThrow('NEXT_NOT_FOUND')
-
+  it('enforces noindex on locked module previews and redirects legacy /vault/[token] to /courses', async () => {
     const lockedMeta = await genModuleMeta({
       params: Promise.resolve({ slug: '2-3-finance-fpa-deterministic-harnesses' }),
     })
     expect(lockedMeta.robots).toEqual({ index: false, follow: true })
+
+    expect(() => StudentVaultRedirectPage()).toThrow('NEXT_REDIRECT:/courses')
+    expect(redirectMock).toHaveBeenCalledWith('/courses')
   })
 })

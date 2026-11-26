@@ -4,162 +4,187 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'About Sophia Stein · Practical AI Workflows, Courses & Corporate Enablement',
+  title: 'About Sophia Stein',
   description:
-    'Columbia CS engineer, ex-McKinsey operator, and 7x angel investor in Boulder, CO helping non-technical businesses automate bottlenecks and helping organizations move from AI demos to production.',
+    'AI systems architect, educator, and advisor in Boulder, CO writing executive architecture essays, weekly Substack field notes, and hands-on courses inside the Agentic Architect Lab.',
   alternates: {
     canonical: '/about',
   },
 }
 
-const ICP_LAYERS = [
+const THREE_SURFACES = [
   {
-    eyebrow: '1. Non-Technical Business Owners & Operators',
-    title: 'Practical Courses, Cohorts & Focused Bottleneck Sprints',
+    number: '01 · Monograph & Benchmarks',
+    title: 'Agentic Architect (This Site)',
     detail:
-      'Founders, agencies, clinics, and service firms tired of manual follow-ups or fragile contractor zaps. Start free in our 60-minute live Prompt-to-System build, learn step-by-step in our $297 Academy or guided Cohort, or book a free 20-minute call to scope a custom sprint (from $2,500).',
+      'Long-form architecture notes, vendor-neutral model and hardware benchmarks, university syllabi, and advisory blueprints for executives, COOs, CTOs, and technical builders.',
+    href: '/blog',
+    linkLabel: 'Browse essays & research',
   },
   {
-    eyebrow: '2. Mid-Market Executives, Corporate L&D & CTOs',
-    title: 'Fractional Chief AI Officer, Fractional AI CTO & Team Enablement',
+    number: '02 · Weekly Synthesis',
+    title: 'Substack Dispatch',
     detail:
-      'Organizations across healthcare, professional services, and technology that are past the ChatGPT demo and need Fractional CAIO / AI CTO leadership, hands-on department workshops, McKinsey-grade ROI discipline, and Columbia CS security guardrails.',
+      'A clear weekly briefing translating frontier model releases, capability shifts, and real workflow experiments into plain-spoken implications for your work and organization.',
+    href: SITE_CONFIG.substackUrl,
+    linkLabel: 'Read on Substack',
+    external: true,
+  },
+  {
+    number: '03 · Hands-On Upskilling',
+    title: 'The Agentic Architect Lab',
+    detail:
+      'Practical courses and community labs built for non-technical operators, founders, and aspiring AI architects mastering Claude workspaces, smart open-weight routing, and durable workflows.',
+    href: '/courses',
+    linkLabel: 'Explore the Lab tracks',
   },
 ]
 
-const SNAPSHOTS = [
+const PRINCIPLES = [
   {
-    label: 'Applied AI Engineering & Teaching',
-    title: 'Google (Boulder, CO)',
+    title: 'Systems over prompt tricks',
     detail:
-      'Build internal AI investigation tools (cutting complex triage from 15 minutes to 2), co-invented a patent-pending multimodal QA engine, and lead internal workshops. Everything on this site is strictly in my personal capacity, views my own.',
+      'One-line chat prompts force models to guess your business context. Reliable results come from versioned operating rules, structured inputs, scoped tool permissions, and explicit human review gates.',
   },
   {
-    label: 'Commercial Strategy & Rollouts',
-    title: 'McKinsey & Company',
+    title: 'Vendor-neutral unit economics',
     detail:
-      'Restructured enterprise SaaS contracts to cut $70M in annual sales OpEx and led clinical software rollouts across 250+ healthcare leaders at a 79 NPS.',
+      'Most teams overpay for overlapping SaaS wrappers while under-investing in evaluation. Routing routine work to fast workhorse or open-weight models keeps margins predictable and portable.',
   },
   {
-    label: 'Systems & Performance Engineering',
-    title: 'Columbia University, Section.io & Meta',
+    title: 'Capability transfer, never lock-in',
     detail:
-      'B.S. in Computer Science at Columbia (Dean’s List), edge performance engineering at Section.io ahead of its Webscale acquisition (+30% conversion lift, -40% support tickets), and Mobile Engineering Fellow at Meta.',
-  },
-  {
-    label: 'Live Classrooms & Frontier Investing',
-    title: '300+ Trained Live & 7x Angel Investor',
-    detail:
-      'Trained 300+ founders and operators live at Boulder Startup Week, spoke for Women Who Code, and angel invest across seven quantum hardware, medtech, microgrid, and supply-chain companies.',
+      'Whether in a self-paced course, a university seminar, or an embedded advisory sprint, every workflow is built inside accounts and plain-text documentation your own team can inspect and evolve.',
   },
 ]
 
 export default function AboutPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <PageHeader
-        meta="Boulder, CO · Columbia CS · Ex-McKinsey · 7x Angel Investor"
+        meta="Boulder, Colorado · Essays, Courses & Systems Advisory"
         title="Sophia Stein"
-        description="I help non-technical business owners replace repetitive bottlenecks with owned AI workflows, and help leadership teams move past demos into reliable production."
+        description="I study what new AI capabilities actually unlock, design reliable workflow systems that organizations own, and teach both non-technical operators and technical teams how to build with rigor."
       />
 
-      {/* Crisp, Real-Person Positioning */}
-      <section className="max-w-3xl space-y-4 text-base text-muted leading-relaxed">
-        <p className="text-fg font-medium text-lg leading-relaxed">
-          Most business owners looking for AI help run into a frustrating split: internet marketers
-          who have never shipped software selling surface-level prompt packs, or infrastructure
-          engineers speaking in jargon that never clears your inbox or moves a client deliverable.
+      {/* Editorial Narrative */}
+      <section className="max-w-2xl space-y-5 text-base text-muted leading-relaxed">
+        <p className="text-fg text-lg leading-relaxed">
+          Every major model release creates the same gap inside organizations: leadership knows the
+          ground is shifting, teams collect scattered chat subscriptions, and very few workflows
+          ever become dependable enough to trust on real client or operational work.
         </p>
         <p>
-          My career was built across both rooms. I studied computer science at Columbia, wrote
-          production software at Meta and Section.io, spent two years at McKinsey restructuring
-          enterprise software spend and rolling out clinical tools to hundreds of healthcare
-          leaders, and now build applied AI systems in Boulder.
+          <strong>Agentic Architect</strong> exists to close that gap without hype or vendor
+          lock-in. My work sits at the intersection of systems architecture, unit economics, and
+          hands-on teaching: stress-testing frontier models and open-weight stacks the week they
+          ship, documenting what breaks under real load, and distilling repeatable patterns anyone
+          willing to think clearly can apply.
         </p>
         <p>
-          At <strong>Agentic Architect</strong>, we separate two distinct tracks cleanly: practical
-          courses and focused workflow sprints for non-technical business owners, and{' '}
-          <Link href="/fractional-ai-cto" className="text-accent font-medium hover:underline">
-            Fractional Chief AI Officer / Fractional AI CTO
-          </Link>{' '}
-          leadership and corporate enablement for organizations moving into production. Every system
-          is built inside your own accounts with clear SOPs and strict data boundaries. (And if your
-          engineering team wants our raw hardware and loop-engineering benchmarks, we publish all 18
-          chapters openly in{' '}
-          <Link href="/sovereign-stack" className="text-accent font-medium hover:underline">
-            The Sovereign Stack
-          </Link>{' '}
-          and{' '}
-          <Link href="/research" className="text-accent font-medium hover:underline">
-            Research &amp; Teaching
+          Based in Boulder, Colorado, I have trained more than 300 founders and operators live at{' '}
+          <Link href="/bsw" className="text-fg underline underline-offset-3 decoration-border hover:decoration-fg">
+            Boulder Startup Week
           </Link>
-          .)
-        </p>
-        <p className="text-xs text-muted bg-surface border border-border rounded-lg p-3.5">
-          Personal capacity note: My day job is at Google. Everything published, taught, or advised
-          through Agentic Architecture LLC (<code className="font-mono">agenticarchitect.ai</code>)
-          is independent, uses zero employer resources, and reflects my own views.
+          , spoken for Women Who Code, developed applied business and studio syllabi on{' '}
+          <Link href="/teaching" className="text-fg underline underline-offset-3 decoration-border hover:decoration-fg">
+            Speaking &amp; Teaching
+          </Link>
+          , and compiled our open hardware and loop-verification benchmarks in{' '}
+          <Link href="/sovereign-stack" className="text-fg underline underline-offset-3 decoration-border hover:decoration-fg">
+            The Sovereign Stack
+          </Link>
+          .
         </p>
       </section>
 
-      {/* Who I Work With */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight text-fg">Two Tracks, One Quality Bar</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {ICP_LAYERS.map(layer => (
-            <Card key={layer.title} className="p-6 space-y-2 bg-surface">
-              <p className="font-mono text-xs font-semibold text-online uppercase tracking-wider">
-                {layer.eyebrow}
-              </p>
-              <h3 className="text-base font-bold text-fg">{layer.title}</h3>
-              <p className="text-sm text-muted leading-relaxed">{layer.detail}</p>
+      {/* How the Three Surfaces Fit Together */}
+      <section className="space-y-5 pt-4 border-t border-border">
+        <div>
+          <p className="text-xs font-medium text-muted">How to Read &amp; Participate</p>
+          <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+            Three surfaces, one coherent point of view
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {THREE_SURFACES.map(surface => (
+            <Card key={surface.title} className="p-6 flex flex-col justify-between space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted tabular-nums">{surface.number}</p>
+                <h3 className="font-serif text-xl font-normal text-fg">{surface.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{surface.detail}</p>
+              </div>
+              <div className="pt-3 border-t border-border">
+                {surface.external ? (
+                  <a
+                    href={surface.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-fg hover:text-accent transition-colors"
+                  >
+                    {surface.linkLabel}
+                  </a>
+                ) : (
+                  <Link
+                    href={surface.href}
+                    className="text-xs font-medium text-fg hover:text-accent transition-colors"
+                  >
+                    {surface.linkLabel}
+                  </Link>
+                )}
+              </div>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Crisp 4-Card Track Record */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight text-fg">Track Record</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {SNAPSHOTS.map(item => (
+      {/* Operating Principles */}
+      <section className="space-y-5 pt-4 border-t border-border">
+        <div>
+          <p className="text-xs font-medium text-muted">Methodology</p>
+          <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+            Two tracks, one quality bar
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {PRINCIPLES.map(item => (
             <Card key={item.title} className="p-6 space-y-2">
-              <p className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-                {item.label}
-              </p>
-              <h3 className="text-base font-bold text-fg">{item.title}</h3>
+              <h3 className="text-base font-semibold text-fg">{item.title}</h3>
               <p className="text-sm text-muted leading-relaxed">{item.detail}</p>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Clear Funnel CTA */}
-      <section className="rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h2 className="text-lg font-bold text-fg">
-            Start Free or Book a 20-Minute Bottleneck Audit Call
+      {/* Inquiry Bridge */}
+      <section className="rounded-lg border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="space-y-1 max-w-xl">
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            Exploring courses, speaking, or bespoke advisory?
           </h2>
-          <p className="text-sm text-muted">
-            Join the live 60-minute build on{' '}
-            <Link href="/masterclass" className="text-accent font-medium hover:underline">
-              /masterclass
+          <p className="text-sm text-muted leading-relaxed">
+            Start with unlocked lessons in{' '}
+            <Link href="/courses" className="text-fg underline underline-offset-3 decoration-border">
+              Courses
             </Link>
-            , explore self-paced courses on{' '}
-            <Link href="/courses" className="text-accent font-medium hover:underline">
-              /courses
+            , review workshop and university topics on{' '}
+            <Link href="/teaching" className="text-fg underline underline-offset-3 decoration-border">
+              Speaking &amp; Teaching
             </Link>
-            , or scope a custom sprint or corporate workshop.
+            , or inquire directly about an architecture engagement.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
-          <Button variant="primary" size="sm" href="/masterclass">
-            Free 60-Min Live Build
+          <Button variant="primary" size="md" href="/work-with-me">
+            Work With Me
           </Button>
-          <Button variant="outline" size="sm" href="/work-with-me">
-            Custom Sprints &amp; Training
+          <Button variant="outline" size="md" href="/courses">
+            Explore Courses
           </Button>
         </div>
       </section>

@@ -6,22 +6,30 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/',
 }))
 
-describe('Nav', () => {
-  it('renders wordmark linking to /', () => {
-    render(<Nav />)
+describe('Nav (Logo 1 Mitered Architectural AA + Coherent Hierarchy)', () => {
+  it('renders Logo 1 SVG mark and wordmark linking to /', () => {
+    const { container } = render(<Nav />)
     const brand = screen.getByRole('link', { name: /Agentic Architect/i })
     expect(brand.getAttribute('href')).toBe('/')
+    expect(brand.querySelector('svg')).not.toBeNull()
+    expect(container.textContent).not.toContain('\u2014')
   })
 
-  it('renders audience-separated navigation including Owner Playbooks, Courses, Bespoke Builds, Fractional AI / CTO, and Research & Teaching', () => {
-    render(<Nav />)
-    expect(screen.getByRole('link', { name: 'Owner Playbooks' }).getAttribute('href')).toBe('/blog')
-    expect(screen.getByRole('link', { name: 'Courses & Cohort' }).getAttribute('href')).toBe('/courses')
-    expect(screen.getByRole('link', { name: 'Bespoke AI Builds' }).getAttribute('href')).toBe('/work-with-me')
-    expect(screen.getByRole('link', { name: 'Fractional AI / CTO' }).getAttribute('href')).toBe('/fractional-ai-cto')
-    expect(screen.getByRole('link', { name: 'Research & Teaching' }).getAttribute('href')).toBe('/research')
-    expect(screen.getByRole('link', { name: 'About' }).getAttribute('href')).toBe('/about')
-    expect(screen.getByRole('link', { name: /Free Live Briefing/i }).getAttribute('href')).toBe('/masterclass')
+  it('orders desktop navigation as About, Writing, Courses, Speaking & Teaching + single Work With Me CTA', () => {
+    const { container } = render(<Nav />)
+    const navLinks = Array.from(container.querySelectorAll('header a')).map(a => ({
+      text: a.textContent?.trim(),
+      href: a.getAttribute('href'),
+    }))
+    // Brand first, then About, Writing, Courses, Speaking & Teaching, then Work With Me
+    expect(navLinks.map(l => l.href)).toEqual([
+      '/',
+      '/about',
+      '/blog',
+      '/courses',
+      '/teaching',
+      '/work-with-me',
+    ])
   })
 
   it('opens and closes mobile drawer cleanly', () => {

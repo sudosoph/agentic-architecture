@@ -17,7 +17,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [240, 200],
-      "notes": "Wakes the agent up daily at 7am Boulder/Denver (13:00 UTC during MDT). Adjust UTC values for your timezone — PT=14, ET=11, UK=06, CET=05."
+      "notes": "Wakes the agent up daily at 7am Boulder/Denver (13:00 UTC during MDT). Adjust UTC values for your timezone :  PT=14, ET=11, UK=06, CET=05."
     },
     {
       "parameters": {
@@ -57,7 +57,7 @@
           "name": "Google Sheets account"
         }
       },
-      "notes": "CONFIG: ICP tab columns are icp_description, signal_keywords, subreddits (comma-separated). Edit the Sheet to change agent behavior — no redeploy needed."
+      "notes": "CONFIG: ICP tab columns are icp_description, signal_keywords, subreddits (comma-separated). Edit the Sheet to change agent behavior :  no redeploy needed."
     },
     {
       "parameters": {
@@ -72,7 +72,7 @@
         }
       },
       "id": "read-voice",
-      "name": "Read voice.md from Drive",
+      "name": "Read operating-rules.md from Drive",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [460, 460],
@@ -82,7 +82,7 @@
           "name": "Google Drive account"
         }
       },
-      "notes": "Pulls the voice.md tone-of-voice file. NOT connected downstream — it's executed by the trigger and read cross-node by Build Draft Body via $('Read voice.md from Drive')."
+      "notes": "Pulls the operating-rules.md tone-of-voice file. NOT connected downstream :  it's executed by the trigger and read cross-node by Build Draft Body via $('Read operating-rules.md from Drive')."
     },
     {
       "parameters": {
@@ -125,7 +125,7 @@
           "name": "Anthropic API · x-api-key"
         }
       },
-      "notes": "Sub-agent #1 — Haiku 4.5 with built-in web_search tool. Single call does both search AND structured extraction. Returns typed JSON."
+      "notes": "Sub-agent #1 :  Haiku 4.5 with built-in web_search tool. Single call does both search AND structured extraction. Returns typed JSON."
     },
     {
       "parameters": {
@@ -202,7 +202,7 @@
           "name": "Firecrawl API · Authorization Bearer"
         }
       },
-      "notes": "Progressive enrichment — only the top 5 leads get a Firecrawl scrape. Apache 2.0 OSS — self-host or Cloud."
+      "notes": "Progressive enrichment :  only the top 5 leads get a Firecrawl scrape. Apache 2.0 OSS :  self-host or Cloud."
     },
     {
       "parameters": {
@@ -245,19 +245,19 @@
           "name": "Anthropic API · x-api-key"
         }
       },
-      "notes": "Cheap classifier extracts a 2-sentence company context. Cascade pattern — Haiku for summary, Sonnet for drafting."
+      "notes": "Cheap classifier extracts a 2-sentence company context. Cascade pattern :  Haiku for summary, Sonnet for drafting."
     },
     {
       "parameters": {
         "language": "javaScript",
-        "jsCode": "const summary = $input.first().json;\nconst summaryText = (summary.content && summary.content[0] && summary.content[0].text) ? summary.content[0].text : '';\n\nconst lead = $('Dedup · top 5 fresh leads').item.json;\n\nconst voiceBuffer = $('Read voice.md from Drive').item.binary.voiceMd;\nconst voiceMd = voiceBuffer ? Buffer.from(voiceBuffer.data, 'base64').toString('utf-8') : '';\n\nconst body = {\n  model: 'claude-sonnet-4-6',\n  max_tokens: 600,\n  system: [\n    {\n      type: 'text',\n      text: 'You write customer-discovery emails for a lean startup founder. Goal of every email: an INTERVIEW ASK, not a pitch. Soft CTA. 80-110 words. Follow the voice.md file exactly.'\n    },\n    {\n      type: 'text',\n      text: `voice.md contents:\\n\\n${voiceMd}`,\n      cache_control: { type: 'ephemeral' }\n    }\n  ],\n  messages: [\n    {\n      role: 'user',\n      content: `Draft a customer-discovery email.\n\nPerson: ${lead.person || 'unknown'}\nTheir signal: ${lead.signal_type || ''} - ${lead.evidence_quote || ''}\nSource URL: ${lead.source_url || ''}\nCompany context (2 sentences): ${summaryText}\n\nReturn ONLY the email subject and body in this format:\nSUBJECT: [subject line]\nBODY:\n[email body]`\n    }\n  ]\n};\n\nreturn [{ json: { body, lead } }];\n"
+        "jsCode": "const summary = $input.first().json;\nconst summaryText = (summary.content && summary.content[0] && summary.content[0].text) ? summary.content[0].text : '';\n\nconst lead = $('Dedup · top 5 fresh leads').item.json;\n\nconst voiceBuffer = $('Read operating-rules.md from Drive').item.binary.voiceMd;\nconst voiceMd = voiceBuffer ? Buffer.from(voiceBuffer.data, 'base64').toString('utf-8') : '';\n\nconst body = {\n  model: 'claude-sonnet-4-6',\n  max_tokens: 600,\n  system: [\n    {\n      type: 'text',\n      text: 'You write customer-discovery emails for a lean startup founder. Goal of every email: an INTERVIEW ASK, not a pitch. Soft CTA. 80-110 words. Follow the operating-rules.md file exactly.'\n    },\n    {\n      type: 'text',\n      text: `operating-rules.md contents:\\n\\n${voiceMd}`,\n      cache_control: { type: 'ephemeral' }\n    }\n  ],\n  messages: [\n    {\n      role: 'user',\n      content: `Draft a customer-discovery email.\n\nPerson: ${lead.person || 'unknown'}\nTheir signal: ${lead.signal_type || ''} - ${lead.evidence_quote || ''}\nSource URL: ${lead.source_url || ''}\nCompany context (2 sentences): ${summaryText}\n\nReturn ONLY the email subject and body in this format:\nSUBJECT: [subject line]\nBODY:\n[email body]`\n    }\n  ]\n};\n\nreturn [{ json: { body, lead } }];\n"
       },
       "id": "build-draft-body",
       "name": "Build Draft Body",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [2440, 280],
-      "notes": "Constructs the Sonnet /v1/messages body. Pulls voice.md cross-node from Read voice (which is fired by the trigger but not piped here)."
+      "notes": "Constructs the Sonnet /v1/messages body. Pulls operating-rules.md cross-node from Read voice (which is fired by the trigger but not piped here)."
     },
     {
       "parameters": {
@@ -279,7 +279,7 @@
         "options": {}
       },
       "id": "draft-email",
-      "name": "Draft · Sonnet 4.6 + voice.md",
+      "name": "Draft · Sonnet 4.6 + operating-rules.md",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [2660, 280],
@@ -289,7 +289,7 @@
           "name": "Anthropic API · x-api-key"
         }
       },
-      "notes": "Sub-agent #2 — Sonnet 4.6 drafts the personalized email using voice.md as cached context. The only premium-token step in the workflow."
+      "notes": "Sub-agent #2 :  Sonnet 4.6 drafts the personalized email using operating-rules.md as cached context. The only premium-token step in the workflow."
     },
     {
       "parameters": {
@@ -323,7 +323,7 @@
           "name": "Gmail account"
         }
       },
-      "notes": "HITL GATE — the agent NEVER sends. Drops a draft in your Drafts folder. You approve and send manually."
+      "notes": "HITL GATE :  the agent NEVER sends. Drops a draft in your Drafts folder. You approve and send manually."
     },
     {
       "parameters": {
@@ -403,12 +403,12 @@
           "name": "Anthropic API · x-api-key"
         }
       },
-      "notes": "Sub-agent #3 — generates the morning digest summary."
+      "notes": "Sub-agent #3 :  generates the morning digest summary."
     },
     {
       "parameters": {
         "language": "javaScript",
-        "jsCode": "const response = $input.first().json;\nconst text = (response.content?.[0]?.text || '').trim();\n\nconst subjectMatch = text.match(/^SUBJECT:\\s*(.+?)\\s*\\n/i) || text.match(/^Subject:\\s*(.+?)\\s*\\n/);\nconst bodyMatch    = text.match(/(?:BODY:|Body:)\\s*\\n([\\s\\S]+)$/i);\n\nconst subject = subjectMatch ? subjectMatch[1].trim() : 'Discovery Pulse — ' + new Date().toISOString().slice(0,10);\nconst body    = bodyMatch ? bodyMatch[1].trim() : text;\n\nreturn [{ json: { subject, body } }];\n"
+        "jsCode": "const response = $input.first().json;\nconst text = (response.content?.[0]?.text || '').trim();\n\nconst subjectMatch = text.match(/^SUBJECT:\\s*(.+?)\\s*\\n/i) || text.match(/^Subject:\\s*(.+?)\\s*\\n/);\nconst bodyMatch    = text.match(/(?:BODY:|Body:)\\s*\\n([\\s\\S]+)$/i);\n\nconst subject = subjectMatch ? subjectMatch[1].trim() : 'Discovery Pulse :  ' + new Date().toISOString().slice(0,10);\nconst body    = bodyMatch ? bodyMatch[1].trim() : text;\n\nreturn [{ json: { subject, body } }];\n"
       },
       "id": "parse-digest",
       "name": "Parse · Digest fields",
@@ -437,7 +437,7 @@
           "name": "Gmail account"
         }
       },
-      "notes": "Sends the digest email to YOU. The only place the agent actually sends — and it's only sending to you, not to prospects."
+      "notes": "Sends the digest email to YOU. The only place the agent actually sends :  and it's only sending to you, not to prospects."
     },
     {
       "parameters": {
@@ -474,20 +474,20 @@
           "name": "Google Sheets account"
         }
       },
-      "notes": "Audit log — every run appends a row."
+      "notes": "Audit log :  every run appends a row."
     }
   ],
   "connections": {
     "Cron · Daily 7am MDT": {
       "main": [[
         { "node": "Read ICP from Sheets", "type": "main", "index": 0 },
-        { "node": "Read voice.md from Drive", "type": "main", "index": 0 }
+        { "node": "Read operating-rules.md from Drive", "type": "main", "index": 0 }
       ]]
     },
     "Manual · Webhook": {
       "main": [[
         { "node": "Read ICP from Sheets", "type": "main", "index": 0 },
-        { "node": "Read voice.md from Drive", "type": "main", "index": 0 }
+        { "node": "Read operating-rules.md from Drive", "type": "main", "index": 0 }
       ]]
     },
     "Read ICP from Sheets": {
@@ -521,9 +521,9 @@
       "main": [[ { "node": "Build Draft Body", "type": "main", "index": 0 } ]]
     },
     "Build Draft Body": {
-      "main": [[ { "node": "Draft · Sonnet 4.6 + voice.md", "type": "main", "index": 0 } ]]
+      "main": [[ { "node": "Draft · Sonnet 4.6 + operating-rules.md", "type": "main", "index": 0 } ]]
     },
-    "Draft · Sonnet 4.6 + voice.md": {
+    "Draft · Sonnet 4.6 + operating-rules.md": {
       "main": [[ { "node": "Parse · Subject + Body", "type": "main", "index": 0 } ]]
     },
     "Parse · Subject + Body": {

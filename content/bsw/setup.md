@@ -26,10 +26,10 @@
 ### What changes
 
 - **LLM (drafting/discovery):** swap `claude-sonnet-4-6` and `claude-haiku-4-5` for Groq's `meta-llama/llama-4-scout-17b-16e-instruct` (drafting/discovery) and `llama-3.1-8b-instant` (classification/digest)
-- **Web search:** Groq has no built-in web search — use the public **HN Algolia** + **Reddit JSON** endpoints (both no-auth, no signup), or alternatively **Tavily free tier** (1,000 searches/month)
+- **Web search:** Groq has no built-in web search :  use the public **HN Algolia** + **Reddit JSON** endpoints (both no-auth, no signup), or alternatively **Tavily free tier** (1,000 searches/month)
 - **Web extraction:** swap Firecrawl for **Jina Reader** (no key, no signup)
 
-### Step 5 (Discovery) — Groq + Tavily
+### Step 5 (Discovery) :  Groq + Tavily
 
 Replace the Anthropic HTTP Request node with two nodes:
 
@@ -68,7 +68,7 @@ Replace the Anthropic HTTP Request node with two nodes:
 }
 ```
 
-### Step 9 (Enrichment) — Jina Reader
+### Step 9 (Enrichment) :  Jina Reader
 
 Replace the Firecrawl HTTP Request node:
 
@@ -84,7 +84,7 @@ Header: Authorization: Bearer fc-...
 - (no auth header needed)
 - Returns clean markdown directly
 
-### Step 11 (Drafting) — Groq Llama 4 Scout
+### Step 11 (Drafting) :  Groq Llama 4 Scout
 
 Replace the Sonnet HTTP Request:
 - URL: `https://api.groq.com/openai/v1/chat/completions`
@@ -93,7 +93,7 @@ Replace the Sonnet HTTP Request:
 {
   "model": "meta-llama/llama-4-scout-17b-16e-instruct",
   "messages": [
-    { "role": "system", "content": "[voice.md contents]" },
+    { "role": "system", "content": "[operating-rules.md contents]" },
     { "role": "user",   "content": "Draft a customer-discovery email..." }
   ]
 }
@@ -205,7 +205,7 @@ grep -r "sk-or-" . --include="*.json" --include="*.md" 2>/dev/null
 # All three should return nothing.
 ```
 
-If a key sneaks through, rotate it immediately — assume it's compromised the moment it hits a public repo.
+If a key sneaks through, rotate it immediately :  assume it's compromised the moment it hits a public repo.
 
 ---
 
@@ -250,12 +250,12 @@ Only the *vendor* of each step changes. **Patterns don't change. Tools do.**
 
 ## Resources
 
-- **Default workflow:** [`n8n/bsw-growth-agent.json`](./n8n/bsw-growth-agent.json) — Anthropic + Firecrawl
-- **Lite workflow:** [`n8n/bsw-growth-agent-lite.json`](./n8n/bsw-growth-agent-lite.json) — Groq + Jina (free tier path)
-- **Tutorial:** [TUTORIAL.md](./TUTORIAL.md) — full 17-step build
+- **Default workflow:** [`n8n/bsw-growth-agent.json`](./n8n/bsw-growth-agent.json) :  Anthropic + Firecrawl
+- **Lite workflow:** [`n8n/bsw-growth-agent-lite.json`](./n8n/bsw-growth-agent-lite.json) :  Groq + Jina (free tier path)
+- **Tutorial:** [TUTORIAL.md](./TUTORIAL.md) :  full 17-step build
 - **Workshop deck:** [`slides/index.html`](./slides/index.html)
 
 ---
 
-*MIT licensed · fork freely · ship yours · — Sophia Stein, AI Architect*
+*MIT licensed · fork freely · ship yours · :  Sophia Stein, AI Architect*
 *Questions? sophia@agenticarchitect.ai · agenticarchitect.ai/blog*

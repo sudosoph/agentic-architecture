@@ -11,6 +11,7 @@ import { GET as ingestGet, POST as ingestPost } from '@/app/ingest/[...path]/rou
 import { POST as contactPost } from '@/app/api/contact/route'
 import nextConfig from '../next.config'
 import { Analytics, buildPostHogInitSnippet } from '@/components/site/analytics'
+import { AttributionRuntime, sanitizeAnalyticsHref } from '@/components/site/analytics-runtime'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { ContactForm } from '@/components/site/contact-form'
 
@@ -61,19 +62,19 @@ describe('First-Party PostHog Proxy, Persistent UTMs & Funnel Events', () => {
 
   it('preserves first_touch UTMs across subsequent internal page navigations while updating last_touch', () => {
     const first = capturePageAttribution(
-      'https://agenticarchitect.ai/blog/productive-friction-interview-ai?utm_source=linkedin&utm_medium=carousel&utm_campaign=launch-week&utm_content=slide-6',
+      'https://agenticarchitect.ai/blog/ai-back-office?utm_source=linkedin&utm_medium=carousel&utm_campaign=launch-week&utm_content=slide-6',
       'https://www.linkedin.com/',
     )
     expect(first.firstTouch?.source).toBe('linkedin')
     expect(first.firstTouch?.medium).toBe('carousel')
     expect(first.firstTouch?.campaign).toBe('launch-week')
-    expect(first.firstTouch?.entryPath).toBe('/blog/productive-friction-interview-ai')
+    expect(first.firstTouch?.entryPath).toBe('/blog/ai-back-office')
 
     // Subsequent internal navigation with no UTMs keeps firstTouch intact
     const second = capturePageAttribution('https://agenticarchitect.ai/courses', '')
     expect(second.firstTouch?.source).toBe('linkedin')
     expect(second.firstTouch?.campaign).toBe('launch-week')
-    expect(second.firstTouch?.entryPath).toBe('/blog/productive-friction-interview-ai')
+    expect(second.firstTouch?.entryPath).toBe('/blog/ai-back-office')
     expect(second.lastTouch?.entryPath).toBe('/courses')
 
     // Later visit from Substack updates lastTouch while keeping firstTouch
@@ -235,5 +236,142 @@ describe('First-Party PostHog Proxy, Persistent UTMs & Funnel Events', () => {
     const contactPayload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body))
     expect(contactPayload.attribution.firstTouch.source).toBe('linkedin')
     expect(contactPayload.attribution.firstTouch.entryPath).toBe('/blog/forward-deployed-ai-engineering')
+  })
+
+  it('captures universal ui_link_clicked with section context and fires deduplicated 50% and 85% article_read_milestone events', () => {
+    vi.useFakeTimers()
+    const captureSpy = vi.fn()
+    ;(window as unknown as Record<string, unknown>).posthog = { capture: captureSpy }
+
+    const { container, unmount } = render(
+      <div>
+        <AttributionRuntime />
+        <header>
+          <a href="/work-with-me">Work With Me</a>
+        </header>
+        <article data-article-slug="ai-back-office" data-reading-minutes="6">
+          <p>Long-form essay body</p>
+          <a href="/courses">Explore the Lab</a>
+        </article>
+      </div>,
+    )
+
+    const navLink = container.querySelector('header a')!
+    fireEvent.click(navLink)
+
+    expect(captureSpy).toHaveBeenCalledWith(
+      'ui_link_clicked',
+      expect.objectContaining({
+        href: '/work-with-me',
+        label: 'Work With Me',
+        section: 'header',
+      }),
+    )
+
+    // Advance past minimum dwell gate (8s) and simulate scrolling to 55% then 90%
+    vi.advanceTimersByTime(9000)
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      configurable: true,
+      value: 2000,
+    })
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 500,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      configurable: true,
+      writable: true,
+      value: 400, // (400 + 500) / 2000 = 45% -> below 50%, wait let's set 600 -> (600+500)/2000 = 55%
+    })
+    window.scrollY = 600
+    fireEvent.scroll(window)
+    fireEvent.scroll(window) // duplicate scroll should not double-fire 50%
+
+    const fiftyCalls = captureSpy.mock.calls.filter(
+      c => c[0] === 'article_read_milestone' && c[1]?.milestone === 50,
+    )
+    expect(fiftyCalls).toHaveLength(1)
+    expect(fiftyCalls[0][1]).toMatchObject({
+      slug: 'ai-back-office',
+      milestone: 50,
+      reading_minutes: 6,
+    })
+
+    window.scrollY = 1300 // (1300 + 500) / 2000 = 90% -> triggers 85%
+    vi.advanceTimersByTime(150)
+    fireEvent.scroll(window)
+    const eightyFiveCalls = captureSpy.mock.calls.filter(
+      c => c[0] === 'article_read_milestone' && c[1]?.milestone === 85,
+    )
+    expect(eightyFiveCalls).toHaveLength(1)
+
+    unmount()
+    vi.useRealTimers()
+  })
+
+  it('strips PII from mailto/tel links and fires dwell-gated milestone when scrolled early', () => {
+    expect(
+      sanitizeAnalyticsHref(
+        'mailto:sophia@agenticarchitect.ai?subject=Advisory&body=Secret%20client%20context',
+      ),
+    ).toBe('mailto:sophia@agenticarchitect.ai')
+    expect(
+      sanitizeAnalyticsHref('/contact?track=ops&email=ceo@acme.com&token=secret123'),
+    ).toBe('/contact?track=ops')
+
+    vi.useFakeTimers()
+    const captureSpy = vi.fn()
+    ;(window as unknown as Record<string, unknown>).posthog = { capture: captureSpy }
+
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      configurable: true,
+      value: 1000,
+    })
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 600,
+    })
+    window.scrollY = 300 // (300 + 600) / 1000 = 90% before 8s dwell
+
+    const { container, unmount } = render(
+      <div>
+        <AttributionRuntime />
+        <a href="mailto:sophia@agenticarchitect.ai?subject=Inquiry&body=Private">Email</a>
+        <article data-article-slug="loop-engineering" data-reading-minutes="7">
+          <aside>
+            <a href="/sovereign-stack">Sidebar Hub</a>
+          </aside>
+        </article>
+      </div>,
+    )
+
+    fireEvent.click(container.querySelector('a[href^="mailto:"]')!)
+    expect(captureSpy).toHaveBeenCalledWith(
+      'ui_link_clicked',
+      expect.objectContaining({ href: 'mailto:sophia@agenticarchitect.ai' }),
+    )
+
+    fireEvent.click(container.querySelector('aside a')!)
+    expect(captureSpy).toHaveBeenCalledWith(
+      'ui_link_clicked',
+      expect.objectContaining({ href: '/sovereign-stack', section: 'sidebar' }),
+    )
+
+    // Reader scrolled before 8s and stayed reading without scrolling again
+    expect(captureSpy.mock.calls.filter(c => c[0] === 'article_read_milestone')).toHaveLength(0)
+    vi.advanceTimersByTime(8500)
+    expect(
+      captureSpy.mock.calls.filter(
+        c => c[0] === 'article_read_milestone' && c[1]?.depth_percent === 50,
+      ),
+    ).toHaveLength(1)
+    expect(
+      captureSpy.mock.calls.filter(
+        c => c[0] === 'article_read_milestone' && c[1]?.depth_percent === 85,
+      ),
+    ).toHaveLength(1)
+
+    unmount()
+    vi.useRealTimers()
   })
 })

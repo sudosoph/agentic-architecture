@@ -4,108 +4,99 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { RoiCalculator } from '@/components/site/roi-calculator'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Work With Sophia · Forward Deployed AI Builds, Corporate Training & Advisory',
+  title: 'Work With Sophia · Bespoke AI Systems, Advisory & Corporate Training',
   description:
-    'Commission a Forward Deployed Build-For-You AI system (bespoke API harnesses, multi-model routing, codified department skills), schedule a $750 Architecture Roadmap, or book corporate AI training.',
+    'Inquire about Forward Deployed AI workflow builds, architecture and build-vs-buy diagnostics, Fractional CAIO / AI CTO leadership, or corporate team training.',
   alternates: { canonical: '/work-with-me' },
 }
 
 const PROCESS_STEPS = [
   {
-    step: '01 · Shadow & Scope',
-    title: 'Inspect Real Workflows',
-    body: 'Answer 3 short questions on booking so we inspect your actual tools, data sensitivity, and integration bottlenecks.',
+    step: '01 · Context',
+    title: 'Share Your Bottleneck',
+    body: 'Answer three short intake questions when booking so we review your current stack, data boundaries, and operational goals beforehand.',
   },
   {
-    step: '02 · Discovery (20 Mins)',
-    title: 'Architecture & Fit Call',
-    body: 'We evaluate Vertical AI vs. bespoke build economics live on Zoom and tell you candidly what to buy, skip, or engineer.',
+    step: '02 · Fit Call (20 Mins)',
+    title: 'Candid Architecture Review',
+    body: 'We evaluate off-the-shelf platforms versus lightweight custom workflows live and recommend what to buy, skip, or build.',
   },
   {
-    step: '03 · Milestone Charter',
-    title: 'Fixed Scope or Multi-Week FDE',
-    body: 'Start with a focused pilot sprint (from $2,500) or scope a multi-week Forward Deployed build across Marketing, Finance, Legal, and Ops.',
+    step: '03 · Charter',
+    title: 'Defined Milestones',
+    body: 'Every engagement begins with a clearly bounded diagnostic, team workshop, or focused implementation sprint.',
   },
   {
-    step: '04 · Ship, Eval & Transfer',
-    title: '100% Owned Inside Your Stack',
-    body: 'Engineered inside your own cloud/accounts with 25-case binary Golden Evals, SKILL.md playbooks, and internal champion handoff.',
+    step: '04 · Transfer',
+    title: 'Owned Inside Your Stack',
+    body: 'Workflows, schemas, evaluation suites, and SOP documentation ship directly inside your own infrastructure with full team handoff.',
   },
 ]
 
-const PATH_CARDS = [
+const ENGAGEMENT_PATHS = [
   {
-    badge: 'Single Session · 100% Credited Toward Any Build',
-    badgeVariant: 'online' as const,
-    title: '90-Minute Architecture, Model & Build-vs-Buy Roadmap',
-    price: 'From $750 (One-Time Session + 48-Hr Written Blueprint)',
+    tag: 'Diagnostic & Roadmap',
+    title: 'Architecture, Model & Build-vs-Buy Diagnostic',
     detail:
-      'Want a rigorous build-vs-buy, privacy boundary, and SaaS FinOps plan before committing to engineering? In 90 minutes we audit your stack, map Frontier vs. Open-Weights and best-of-breed APIs, and deliver a written 90-day charter within 48 hours.',
+      'A focused teardown of your current software stack, manual bottlenecks, data privacy boundaries, and model routing options, delivered with a written implementation charter.',
     standard:
-      'Scope Standard: Includes recorded teardown, written architecture roadmap, and 100% fee credit toward a Forward Deployed build or Corporate Lab within 30 days.',
+      'Deliverable: Recorded architecture review, prioritized build-vs-buy matrix, and 90-day execution roadmap.',
     href: SITE_CONFIG.cal.audit,
-    cta: 'Book 90-Min Roadmap ($750) →',
+    cta: 'Schedule Diagnostic Call',
   },
   {
-    badge: 'Build-For-You · Pilot Sprint to Multi-Month Embedded Engineering',
-    badgeVariant: 'rig' as const,
-    title: 'Forward Deployed AI Systems & Bespoke API Integration',
-    price: 'Pilot Sprints from $2,500 · Multi-System Department Builds Custom-Scoped',
+    tag: 'Forward Deployed Engineering',
+    title: 'Bespoke AI Systems & Workflow Integration',
     detail:
-      'Embed Forward Deployed AI engineering directly alongside your team to wire bespoke multi-model harnesses, best-of-breed APIs (Search, OCR, Voice, Sandboxes, MCP), Productive-Friction interview Skills, and 25-case Golden Eval gates across your CRM, ERP, and workspace.',
+      'Embed Forward Deployed engineering alongside your team to connect search, OCR, voice, calendar, and CRM primitives with tiered model routing, draft-first gates, and 25-case evaluation suites.',
     standard:
-      'Ownership Standard: Zero black-box agency lock-in. 100% of code, schemas, and SKILL.md repositories ship inside your own infrastructure.',
+      'Ownership standard: Zero black-box agency lock-in. Every repository, workflow, and SOP lives inside your own accounts.',
     href: SITE_CONFIG.cal.scoping,
-    cta: 'Scope a Forward Deployed Build →',
+    cta: 'Scope a Bespoke Build',
     secondaryHref: '/downloads/forward-deployed-ai-scoping-guide.md',
-    secondaryCta: 'Download Scoping Guide ↓',
+    secondaryCta: 'Download Scoping Guide',
   },
   {
-    badge: 'Executive & Enterprise Track · Mid-Market & Funded Teams',
-    badgeVariant: 'tag' as const,
-    title: 'Fractional CAIO, Fractional AI CTO & Corporate Department Labs',
-    price: '2-Wk Diagnostic, Half/Full-Day Functional Labs ($7.5K to $15K+), or Monthly Cadence',
+    tag: 'Executive & Organizational Track',
+    title: 'Fractional CAIO, Fractional AI CTO & Team Labs',
     detail:
-      'For organizations scaling beyond chat seats: part-time Fractional Chief AI Officer or Fractional AI CTO leadership, plus hands-on corporate trainings with tailored tracks for Marketing, Finance, Legal, Operations, and internal Forward Deployed champions.',
+      'Part-time executive AI leadership, governance and security oversight, and hands-on functional workshops tailored for Marketing, Finance, Legal, Operations, and Engineering teams.',
     standard:
-      'Quality Bar: Strategy and production architecture in one seat (Columbia CS + ex-McKinsey), aligned to ZDR, HIPAA, SOC2, and sovereign open-weight boundaries.',
+      'Designed for organizations moving past scattered chat seats into governed, measurable production.',
     href: '/fractional-ai-cto',
-    cta: 'Explore Fractional CAIO & AI CTO →',
+    cta: 'Explore Fractional Leadership',
     secondaryHref: SITE_CONFIG.cal.speaking,
-    secondaryCta: 'Corporate Training & Speaking Call',
+    secondaryCta: 'Workshop & Speaking Inquiry',
   },
   {
-    badge: 'Self-Paced & Live Group Learning · L&D Stipend Eligible',
-    badgeVariant: 'online' as const,
-    title: '4-Curriculum AI Architecture Academy & Guided Cohort',
-    price: 'Curricula from $297 ($997 All-Access) · Guided Cohort from $1,497',
+    tag: 'Self-Paced & Cohort Upskilling',
+    title: 'The Agentic Architect Lab & Open Starter Kit',
     detail:
-      'Train yourself or upskill internal leads across our 20-module Academy (Foundations & Productive Friction, Department Build-vs-Buy, Bespoke APIs & FDEs, and Sovereign Open-Weight Rigs), with 100% tuition credit toward live builds.',
+      'Upskill yourself or internal champions through our hands-on Skool Lab tracks, free unlocked cornerstone lessons, and interactive 20/80 Task Readiness Scorecard.',
     standard:
-      'Team Friendly: Guided Cohort includes a free second seat for an operator or PM, plus a 1-page L&D Stipend Approval Letter.',
-    href: '/accelerator',
-    cta: 'Explore Guided Cohort →',
-    secondaryHref: '/courses',
-    secondaryCta: 'Browse All 4 Curricula',
+      'Start immediately with unlocked lessons and downloadable SOP templates.',
+    href: '/courses',
+    cta: 'Explore the Lab & Courses',
+    secondaryHref: '/starter-kit',
+    secondaryCta: 'Open Free 20/80 Kit',
   },
 ]
 
 const WORK_FAQS = [
   {
-    q: 'Why does the calendar book a 20-minute scoping call instead of a multi-month package?',
-    a: 'Every serious automation build or corporate workshop depends on your existing tools, data sensitivity, and workflow volume. A focused 20-minute discovery call lets us verify ROI first and send a clean, fixed-scope proposal with zero pressure.',
+    q: 'Why start with a 20-minute scoping call instead of a fixed menu?',
+    a: 'Every serious workflow build or executive engagement depends on your existing systems, compliance boundaries, and process volume. Twenty minutes lets us verify fit first and scope clean, bounded milestones.',
   },
   {
-    q: 'Do I need a developer on payroll to maintain what you build?',
-    a: 'No. We avoid over-engineered autonomous agents when a clean, auditable workflow solves the job reliably at 10x lower cost. Every sprint ships inside your own accounts with clear SOP documentation and short video walkthroughs your existing team can edit.',
+    q: 'Do we need dedicated AI engineers on staff to maintain what gets built?',
+    a: 'No. We avoid over-engineered autonomous loops when an auditable, deterministic workflow solves the problem cleanly. Every engagement includes plain-English SOPs, regression checks, and live walkthroughs for your team.',
   },
   {
-    q: 'Where can our engineering leader or L&D committee inspect your technical depth?',
-    a: 'Visit our Research & Teaching hub (/research) to review 30+ published systems and hardware benchmarks, all 18 chapters of The Sovereign Stack, our CU Boulder syllabi, and open-source workshop labs.',
+    q: 'Where can our technical lead or L&D committee inspect your published work?',
+    a: 'Browse our systems benchmarks, 12-chapter Sovereign Stack monograph, and university syllabi on /research and /teaching.',
   },
 ]
 
@@ -116,37 +107,13 @@ export default function WorkWithMePage() {
       {
         '@type': 'Service',
         '@id': `${SITE_CONFIG.siteUrl}/work-with-me#service`,
-        name: 'Custom AI Workflow Automation Sprints, Corporate Workshops & Technical Advisory',
+        name: 'Bespoke AI Workflow Architecture, Corporate Workshops & Fractional Advisory',
         provider: {
           '@type': 'Organization',
           '@id': `${SITE_CONFIG.siteUrl}/#organization`,
           name: SITE_CONFIG.siteName,
         },
         areaServed: ['Boulder, CO', 'Denver, CO', 'United States'],
-        hasOfferCatalog: {
-          '@type': 'OfferCatalog',
-          name: 'Agentic Architect Services & Courses',
-          itemListElement: [
-            {
-              '@type': 'Offer',
-              name: '90-Minute Workflow & Cost Roadmap',
-              price: '750',
-              priceCurrency: 'USD',
-            },
-            {
-              '@type': 'Offer',
-              name: 'Custom Bottleneck Automation Sprint (Starting Floor)',
-              price: '2500',
-              priceCurrency: 'USD',
-            },
-            {
-              '@type': 'Offer',
-              name: '6-System Back-Office Implementation Cohort',
-              price: '1497',
-              priceCurrency: 'USD',
-            },
-          ],
-        },
       },
       {
         '@type': 'FAQPage',
@@ -167,62 +134,46 @@ export default function WorkWithMePage() {
           __html: JSON.stringify(workLd).replace(/</g, '\\u003c'),
         }}
       />
-      <div className="space-y-14">
+      <div className="space-y-16">
         <PageHeader
-          meta="Forward Deployed Engineering · Bespoke API Harnesses · Corporate & Fractional AI"
-          title="Engineer Bespoke AI Systems Your Organization Actually Owns."
-          description="Scope a multi-week Forward Deployed AI build connecting best-of-breed APIs and codified department Skills, start with a $750 90-Minute Architecture Roadmap, or book corporate department training."
+          meta="Forward Deployed Systems · Executive Advisory · Corporate Enablement"
+          title="Architect AI systems your organization actually owns."
+          description="Scope a bespoke workflow sprint, schedule an architecture and build-vs-buy diagnostic, or inquire about Fractional CAIO / AI CTO leadership and team workshops."
         />
 
-        {/* Ritesh-Style 4-Step How It Works */}
+        {/* 4-Step Process */}
         <section className="space-y-4">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            How Custom Engagements Work (No Blind Retainers)
-          </p>
+          <p className="text-xs font-medium text-muted">How Engagements Work</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {PROCESS_STEPS.map(item => (
-              <Card key={item.step} className="p-5 space-y-2 bg-surface">
-                <p className="font-mono text-xs font-semibold text-online">{item.step}</p>
-                <h2 className="text-base font-bold text-fg">{item.title}</h2>
+              <Card key={item.step} className="p-5 space-y-2">
+                <p className="text-xs font-medium text-muted tabular-nums">{item.step}</p>
+                <h2 className="text-base font-semibold text-fg">{item.title}</h2>
                 <p className="text-xs text-muted leading-relaxed">{item.body}</p>
               </Card>
             ))}
           </div>
         </section>
 
-        {/* Interactive Bottleneck Cost Calculator */}
-        <section className="space-y-4">
-          <div>
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Quantify the Cost of Manual Busywork
-            </p>
-            <h2 className="text-2xl font-bold text-fg mt-1">
-              Adding $65,000+ Headcount vs. Automating the Bottleneck
-            </h2>
-          </div>
-          <RoiCalculator />
-        </section>
-
-        {/* 2x2 Clean Approach-2 Offer Grid */}
+        {/* 2x2 Engagement Grid */}
         <section id="offers" className="space-y-5 scroll-mt-20">
           <div>
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Choose Your Path
-            </p>
-            <h2 className="text-2xl font-bold text-fg mt-1">
-              Single-Session Roadmap, Custom Sprint, Corporate Training, or DIY Courses
+            <p className="text-xs font-medium text-muted">Engagement Models</p>
+            <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+              Diagnostics, bespoke builds, fractional leadership, and team training
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {PATH_CARDS.map(offer => (
+            {ENGAGEMENT_PATHS.map(offer => (
               <Card key={offer.title} className="p-6 flex flex-col justify-between space-y-5">
                 <div className="space-y-3">
-                  <Badge variant={offer.badgeVariant}>{offer.badge}</Badge>
-                  <h3 className="text-xl font-bold text-fg">{offer.title}</h3>
-                  <p className="font-mono text-sm font-semibold text-accent">{offer.price}</p>
+                  <Badge variant="tag">{offer.tag}</Badge>
+                  <h3 className="font-serif text-2xl font-normal text-fg leading-snug">
+                    {offer.title}
+                  </h3>
                   <p className="text-sm text-muted leading-relaxed">{offer.detail}</p>
-                  <div className="rounded-lg border border-border bg-surface p-3 text-xs text-fg leading-relaxed">
+                  <div className="rounded-md border border-border bg-bg p-3 text-xs text-fg/90 leading-relaxed">
                     {offer.standard}
                   </div>
                 </div>
@@ -236,7 +187,7 @@ export default function WorkWithMePage() {
                       <a
                         href={offer.secondaryHref}
                         download
-                        className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-4 py-2 text-sm font-semibold text-fg hover:border-accent hover:text-accent transition-colors"
+                        className="press-scale inline-flex items-center justify-center rounded-md border border-border bg-surface px-4 py-2 text-sm font-medium text-fg hover:border-fg/45"
                       >
                         {offer.secondaryCta}
                       </a>
@@ -251,54 +202,56 @@ export default function WorkWithMePage() {
           </div>
         </section>
 
-        {/* Technical Wing Bridge */}
+        {/* Direct Written Note + Research Bridge */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <Card className="lg:col-span-7 p-6 bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <Card className="lg:col-span-7 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
             <div className="space-y-1">
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-                Single Discrete Calendar Call · $0
-              </p>
-              <h3 className="text-lg font-bold text-fg">
-                Not Sure Which Path Fits? Book a 20-Minute Bottleneck &amp; Fit Call
+              <p className="text-xs font-medium text-muted">20-Minute Scoping Call</p>
+              <h3 className="font-serif text-xl font-normal text-fg">
+                Not sure which path fits? Start with one concrete bottleneck.
               </h3>
               <p className="text-sm text-muted leading-relaxed">
-                Bring one process costing your team hours each week. You leave knowing whether to
-                automate it solo in our courses or have us scope a custom build.
+                Bring one recurring workflow or organizational question. You leave with a clear
+                recommendation on whether to tackle it internally or scope a project together.
               </p>
             </div>
             <div className="shrink-0">
               <Button variant="outline" size="md" href={SITE_CONFIG.cal.scoping}>
-                Book 20-Min Call →
+                Book 20-Min Call
               </Button>
             </div>
           </Card>
 
           <Card className="lg:col-span-5 p-6 flex flex-col justify-between space-y-4">
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-fg">University, Keynotes &amp; CTO Research?</h3>
+              <h3 className="text-base font-semibold text-fg">Prefer to send a written brief?</h3>
               <p className="text-sm text-muted leading-relaxed">
-                Inspect our CU Boulder syllabi, 18-chapter Sovereign Stack book, and 30+ benchmarks
-                in{' '}
-                <Link href="/research" className="text-accent font-medium hover:underline">
-                  Research &amp; Teaching
-                </Link>
-                .
+                Inspect published benchmarks and syllabi in{' '}
+                <Link
+                  href="/research"
+                  className="text-fg underline underline-offset-3 decoration-border"
+                >
+                  Research
+                </Link>{' '}
+                or send a written inquiry directly.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div>
               <Button variant="outline" size="sm" href="/contact">
-                Send a Written Inquiry
+                Send Written Inquiry
               </Button>
             </div>
           </Card>
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-fg">Engagement &amp; Scoping FAQ</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl font-normal text-fg">
+            Engagement &amp; scoping FAQ
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {WORK_FAQS.map(faq => (
               <Card key={faq.q} className="p-6 space-y-2">
-                <h3 className="text-sm font-bold text-fg leading-snug">{faq.q}</h3>
+                <h3 className="text-sm font-semibold text-fg leading-snug">{faq.q}</h3>
                 <p className="text-xs text-muted leading-relaxed">{faq.a}</p>
               </Card>
             ))}

@@ -1,5 +1,5 @@
 # The OSS Growth Playbook
-## How AI Tools Grow — and How Your Startup Can Use the Same Playbook
+## How AI Tools Grow :  and How Your Startup Can Use the Same Playbook
 
 **A take-home reference from "Architecting Agentic Workflows for the Lean 2026 Startup"**
 *Boulder Startup Week 2026 · Sophia Stein · AI Architect*
@@ -20,7 +20,7 @@ Every AI tool we used in the workshop today followed this exact pattern:
 ## Why it works in 2026
 
 - **Distribution is the moat now.** Differentiation is a 2-week head start; distribution is a 2-year head start.
-- **Founder taste is the new craft.** The discriminator isn't who CAN build the tool — it's who shipped a USEFUL one first.
+- **Founder taste is the new craft.** The discriminator isn't who CAN build the tool :  it's who shipped a USEFUL one first.
 - **AI lowered the cost of "shipping something useful"** from a 4-engineer team to a solo founder over a weekend. The funnel-top is wider than ever.
 - **Buyers trust open source.** When your stack might run for years, locked-down vendors look fragile.
 
@@ -47,21 +47,21 @@ Every AI tool we used in the workshop today followed this exact pattern:
 
 ---
 
-## How to apply this to YOUR startup — 5 concrete moves this month
+## How to apply this to YOUR startup :  5 concrete moves this month
 
-### Move 1 — Open-source one internal tool that solves a niche pain
+### Move 1 :  Open-source one internal tool that solves a niche pain
 Look at the scripts and tools you've built for yourselves over the last 6 months. The ones you'd happily share with another founder. Pick the smallest, sharpest one. License MIT. Drop a README. Ship to GitHub. **Distribution often starts with a single 200-star repo.**
 
-### Move 2 — Publish a high-quality template
-n8n template. Claude prompt. CSV schema. Bash script. A README that makes it easy. **Templates beat tutorials** because they ship value before requiring time investment. The Founder's Discovery Engine you got from this workshop is exactly this — fork it, configure it, become the n8n template author for your niche.
+### Move 2 :  Publish a high-quality template
+n8n template. Claude prompt. CSV schema. Bash script. A README that makes it easy. **Templates beat tutorials** because they ship value before requiring time investment. The Founder's Discovery Engine you got from this workshop is exactly this :  fork it, configure it, become the n8n template author for your niche.
 
-### Move 3 — Write 5 deep-dive blog posts that document your craft
-Pick one technical thing you do well. Write it down with code, screenshots, decisions, and dead-ends. Don't gatekeep. SEO won't help you in 2026 — referrals will, and a deep-dive post that's *the best on the internet* about a specific topic gets shared by exactly the people you want to reach. **My recommendation:** start a blog. Mine is at agenticarchitect.ai/blog if you want a model.
+### Move 3 :  Write 5 deep-dive blog posts that document your craft
+Pick one technical thing you do well. Write it down with code, screenshots, decisions, and dead-ends. Don't gatekeep. SEO won't help you in 2026 :  referrals will, and a deep-dive post that's *the best on the internet* about a specific topic gets shared by exactly the people you want to reach. **My recommendation:** start a blog. Mine is at agenticarchitect.ai/blog if you want a model.
 
-### Move 4 — Sponsor or contribute to one OSS tool you use
+### Move 4 :  Sponsor or contribute to one OSS tool you use
 Find the tool you can't live without. Send the maintainer $20/month, or open one substantive PR. **You'll learn the codebase**, build a relationship with someone whose audience overlaps yours, and earn long-term goodwill. It's the cheapest BD you'll ever do.
 
-### Move 5 — Treat your repo's README like your landing page
+### Move 5 :  Treat your repo's README like your landing page
 Every founder visiting your README is a potential evaluator. Spend 4 hours making it phenomenal. Hero image. Quickstart in 60 seconds. Use cases. FAQ. Discord/community link. **A great README is a sales asset.**
 
 ---
@@ -92,11 +92,11 @@ The Discovery Engine you got from this workshop is option C, ready-made. Fork it
 
 ## Resources
 
-- **The repo:** github.com/sudosoph/bsw26-agentic-workflows (MIT licensed)
+- **The repo:** agenticarchitect.ai/bsw (MIT licensed)
 - **The blog:** agenticarchitect.ai/blog (weekly deep-dives)
 - **Architecture audits:** 5 free for BSW attendees · QR on closing slide
 - **Boulder community:** Boulder AI Builders Meetup · Rocky Mountain AI Interest Group (RMAIIG) · Silicon Flatirons (CU Boulder)
 
 ---
 
-*Take it. Build it. Ship it. — Sophia Stein · agenticarchitect.ai/blog*
+*Take it. Build it. Ship it. :  Sophia Stein · agenticarchitect.ai/blog*

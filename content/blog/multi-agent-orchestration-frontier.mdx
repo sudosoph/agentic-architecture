@@ -1,138 +1,50 @@
 ---
-title: "The Multi-Agent Orchestration Frontier in May 2026"
+title: "Multi-Agent Orchestration in Production: Frameworks, Durable Execution, and Why Swarms Fail"
 slug: multi-agent-orchestration-frontier
-publishedDate: "2026-05-07"
-description: "Nine frameworks, one durable-execution wedge, zero unbroken benchmarks. An honest map of the multi-agent ecosystem in May 2026, anchored in Anthropic's 90.2%/15× receipts and Berkeley's eight-benchmark exploit."
+publishedDate: "2026-09-10"
+description: "An honest production map across LangGraph, Mastra, Pydantic AI, Microsoft Agent Framework, Letta, and Temporal, grounded in empirical failure taxonomies and token economics."
+briefing:
+  - "Peer-to-peer chat swarms where multiple personas debate in unstructured prose multiply latency, cost, and context drift."
+  - "Reliable multi-agent systems use a thin deterministic state machine dispatching narrow, read-scoped parallel workers that return typed JSON."
+  - "Reserving multi-agent fan-out strictly for independent parallel research or context isolation beats complex swarms on 90% of workflows."
 track: "engineering"
 tags: ["agents", "frameworks", "production", "langgraph", "crewai"]
 kind: deep-dive
 draft: false
 ---
 
-In June 2025 Anthropic shipped the receipts on multi-agent: a research system that beat single-agent Opus 4 by **90.2%** on internal evals while burning roughly **15× the tokens**, with token usage alone explaining **80% of the variance** in browsing performance ([anthropic.com/engineering/multi-agent-research-system](https://www.anthropic.com/engineering/multi-agent-research-system)). Eleven months later, the ecosystem has organized around those three numbers. Multi-agent wins when the task value clears the token tax, fails everywhere else, and lives or dies on prompt-and-tool design. In April 2026 Berkeley RDI broke seven of eight major agent benchmarks to ≥99% scores without solving a single task ([rdi.berkeley.edu](https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/)), so any "SOTA" you read this week is conditional on a benchmark someone has already exploited. What follows is the honest map: nine frameworks worth knowing, the durable-execution substrate that sits beneath them, the benchmark crisis that invalidates the leaderboards, and the Cemri et al. failure-mode taxonomy that explains why most multi-agent systems break in the same fourteen ways.
+Few architectural ideas demo better on a Friday afternoon: or fail faster under Monday traffic: than multi-agent swarms.
 
-The shape of the 2026 market: production-default frameworks with named case studies (LangGraph, Mastra, Microsoft Agent Framework), DX-leader frameworks with mass adoption but thinner public receipts (CrewAI, OpenAI Agents SDK), thesis frameworks betting on a specific axis (Letta on memory, Pydantic AI on types, smolagents on code-as-action), and the substrate (Temporal). Every winner ships a durable-execution story and an MCP integration. Every laggard punts on both. If you came for the conference takeaways, the [AI Dev SF post](/blog/ai-dev-sf-takeaways) and the [Agent Conf NYC post](/blog/ai-agent-conf-nyc-takeaways) cover those. This is the framework deep dive.
+Empirical production data anchors the tradeoff clearly: fanning a complex research or coding problem out across parallel subagents can lift recall significantly on broad search tasks while consuming **3.5x to 15x as many tokens** as a single well-contextualized loop. Worse, UC Berkeley's `MAST` audit of more than 1,600 multi-agent traces (`arXiv:2503.13657`, Cemri et al.) demonstrated that **fourteen recurring failure modes stem from specification, handoff context loss, and missing termination verifiers** rather than raw model IQ.
 
-## CrewAI
+Before splitting a workflow into five conversing personas, ask whether one state machine with clean context and deterministic tools solves the job first. When parallel subagents genuinely earn their token tax, choose your orchestration layer with clear eyes.
 
-Version 1.14.4 hit PyPI on April 30, 2026; the 1.0 line shipped late 2025. The repo carries 47.8k stars on GitHub, was created October 27, 2023, and ships ~5M monthly PyPI downloads against ~27M cumulative. CrewAI claims roughly 2 billion agentic executions over the prior twelve months as of January 2026, with ~12M daily executions in steady state. Funding is $18M Series A from Insight Partners and boldstart in October 2024, no Series B yet. The headline adoption claim is "more than 60% of Fortune 500."
+## The production framework landscape
 
-The 2026 additions are a tell. RuntimeState RootModel unifies state serialization. Flows is the new event-driven pipeline mode for production workloads where Crews-style role-play is too non-deterministic. Telemetry spans now cover skill and memory events. GPT-5.x support landed quickly. The Flows escape hatch matters because it suggests CrewAI internalized the Cognition critique ([cognition.ai/blog/dont-build-multi-agents](https://cognition.ai/blog/dont-build-multi-agents)): role-playing crews are excellent for prototypes and unreliable for predictable production paths.
+| Stack / Ecosystem | Recommended Default | Core Strength | Watch Out For |
+|---|---|---|---|
+| **Python · Explicit State Graphs** | **LangGraph 1.x** | Mature checkpointing, pause/resume HITL gates, deepest production footprint | Verbose boilerplate on tiny linear flows |
+| **TypeScript / Node** | **Mastra 1.x** | End-to-end TypeScript ergonomics, clean tool/workflow primitives, strong DX | Keep long-running state backed by durable storage |
+| **Python · Strict Type Safety** | **Pydantic AI (+ Logfire &amp; Temporal)** | Cleanest typed schemas, dependency injection, model-agnostic | Pair with Temporal when runs exceed 60 seconds |
+| **.NET &amp; Enterprise Microsoft** | **Microsoft Agent Framework (`MAF`)** | Unifies AutoGen + Semantic Kernel with first-class C#, Python, MCP &amp; A2A | Migrate off legacy standalone AutoGen |
+| **Stateful Long-Horizon Memory** | **Letta** | Explicit core / recall / archival memory blocks ([see Long-Term Memory](/blog/long-term-memory-for-agents)) | Overkill for stateless request-response pipelines |
+| **Minimal Sandboxed Code Actions** | **smolagents** | ~1,000-line codebase emitting sandboxed Python actions | Thin out-of-the-box enterprise governance |
+| **Durable Substrate (Beneath All)** | **Temporal** | Activity checkpointing cuts wasted retry compute by ~60% across crashes/deploys | Unnecessary for sub-30-second synchronous calls |
 
-Honest take: best DX in the comparison set if your team thinks in roles and wants a working multi-agent demo in four lines of Python. Worst case-study rigor; CrewAI does not publish named-customer numbers comparable to LangGraph's Klarna or Uber receipts. If you are shipping CrewAI to production in 2026, ship Flows, not Crews.
+## Why durable execution matters more than agent persona prompts
 
-## LangGraph
+When an orchestration pipeline spans twenty tool calls, external webhook waits, and human approval pauses, process restarts and transient 502s are guaranteed. Teams migrating prototypes into production discover quickly that **durable state checkpointing**: resuming from Activity 14 instead of re-billing Activities 1 through 13: decides both reliability and gross margin.
 
-Version 1.0 GA hit October 2025 and the SDK reached 0.3.14 on May 5, 2026. The Python repo carries ~31k stars, with a separate JS repo. Distribution: ~40M monthly PyPI downloads as of May 2026, roughly 8× CrewAI. The 1.0 promise was "no breaking changes," which is the inverse of the AutoGen-to-MAF story unfolding next door.
+Whether you use LangGraph's native persistence or wrap Pydantic AI / SDK steps as Temporal Activities, treat durability and idempotency keys as non-negotiable whenever a run crosses sixty seconds.
 
-LangGraph's differentiator is the production receipts. Klarna runs LangGraph for support across 85M active users; their published numbers are an 80% reduction in resolution time, a 25% drop in repeat inquiries, and ~$40M of profit lift in 2024 ([blog.langchain.com/customers-klarna](https://blog.langchain.com/customers-klarna/)). Uber's Validator and AutoCover serve roughly 5,000 engineers, with thousands of daily code fixes and ~21,000 dev-hours saved. Replit Agent runs a manager/editor/verifier topology with hundreds of thousands of production runs and ~90% tool-invocation success ([langchain.com/breakoutagents/replit](https://www.langchain.com/breakoutagents/replit)). Elastic Security co-developed Automatic Import, Attack Discovery, and Elastic Assistant on the same agent-tool-graph substrate.
+## Preventing the three `MAST` multi-agent failure clusters
 
-The Klarna detail matters because Klarna walked back its full-AI claims in 2025 and reintroduced human agents for complex disputes, fraud, and hardship cases. Read that as the load-bearing failure-mode anchor of this entire post: even the most cited multi-agent customer success story shipped a public correction. LangGraph is the most boring framework here and the deepest production substrate. If you are a Python shop with named-customer requirements, this is the default.
+1. **Specification & Role Drift:** Never let two peer agents "debate" in freeform prose over shared mutable state. Pass typed JSON artifacts (`Pydantic` / `Zod`) between an explicit **Orchestrator** and bounded, read-scoped **Subagents**.
+2. **Context Pollution Across Handoffs:** Sending full raw tool histories between agents blows past [token budgets](/blog/token-budgeting-for-startups) and degrades attention. Return concise, schema-validated summaries plus source pointers from each subagent.
+3. **False Consensus & Missing Verifiers:** Two LLMs agreeing with each other is not verification. Terminate every multi-agent workflow at a deterministic verifier (`tsc`, SQL reconciliation, citation-span check, or [6-layer eval harness](/blog/eval-harness-catches-regressions)) paired with [Level-2 human sign-off](/blog/the-hitl-standard) on external actions.
 
-## Microsoft Agent Framework (MAF)
+## Architectural rule of thumb
 
-MAF 1.0 GA shipped April 3, 2026 ([devblogs.microsoft.com/agent-framework](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/)). It absorbs both AutoGen and Semantic Kernel into a single repo at github.com/microsoft/agent-framework, with the same teams behind it. Combined predecessor star count was ~75k, so this is the largest framework consolidation event since LangChain spawned LangGraph.
+Start with a **single state-machine harness** + [scoped MCP tools](/blog/mcp-server-audit-2026). Add **parallel read-only subagents** only when independent search or file partitions must be explored simultaneously, and keep all external writes centralized behind one deterministic gate ([see Loop Engineering](/blog/loop-engineering)).
 
-The patterns that ship stable: sequential, concurrent, handoff, group chat, and Magentic-One. All five support streaming, checkpointing, human-in-the-loop, and pause/resume. Magentic-One is the interesting one; it is a manager agent that plans against a shared task ledger while worker agents execute, which is the cleanest open implementation of the Anthropic orchestrator-worker pattern. Differentiators worth flagging: declarative YAML for agents and workflows, MCP and A2A support, a browser-based DevUI debugger, and full .NET parity with Python. MAF is the only framework on this list where C# is first-class. Microsoft ships migration assistants for both Semantic Kernel and AutoGen codebases.
-
-AutoGen is now in maintenance mode. The repo still gets traffic, the announcement explicitly directs new work to MAF. Honest take: this is the cutover the .NET enterprise crowd has been waiting on for a year. The Python community will mostly ignore it and stay on LangGraph, which is fine; both can be right. If you are building inside the Microsoft stack and you have not started the migration yet, start.
-
-## Letta
-
-Version 0.16.7 (March 31, 2026), still pre-1.0. ~22.4k stars on GitHub. The lineage runs through the MemGPT paper out of UC Berkeley's Sky Computing Lab, with the OSS project folded into Letta in 2024. Positioning is "stateful agents" or "LLM-as-OS." The architecture is built around programmatic memory tiers: core memory (the always-in-context block), archival memory (vector-searchable long-term storage), and recall memory (conversational history). Their April 2026 "Context Constitution" post is the explicit principles document; Context Repositories are git-backed versioned agent memory; Skill Learning is runtime skill acquisition.
-
-Production receipts are thin compared to LangGraph or Mastra. There is no Klarna-tier named-customer case study in Letta's public record yet. Letta Code, their coding-agent product, is the canary for whether the memory-first thesis breaks out into a category.
-
-Honest take: Letta is the memory-first bet. If you believe agents are memory systems with a thin reasoning shell on top, which is Charles Packer's MemGPT thesis carried forward, this is the only framework architected from that primitive. Every other framework here treats memory as a bolt-on, with vector stores and ad-hoc summarization. Letta treats it as the core data structure. Watch traction on "the personal agent that remembers me" use case; that is the wedge. The post on [the 40K token wall](/blog/the-40k-token-wall) makes the orthogonal case for why context engineering, not context expansion, is what production agents need.
-
-## Pydantic AI
-
-Version 1.91.0 (May 6, 2026), with the 1.x stable line reached late 2025. ~16.9k stars on GitHub as of May 7, 2026. Position: type-safe, Pydantic-native, model-agnostic across OpenAI, Anthropic, Gemini, DeepSeek, Bedrock, Vertex, and Ollama. The release cadence is healthy; April 22 and May 6 in 2026 alone, which is the kind of iteration pace that signals a real maintainer team.
-
-The killer combo is Pydantic AI plus Logfire (Pydantic's OTel-based observability product) plus Temporal for durable execution. The TemporalAgent wrapper offloads I/O, including model calls, tool calls, and MCP invocations, to Temporal Activities, so reasoning loops survive crashes and deploys ([temporal.io/blog](https://temporal.io/blog/build-durable-ai-agents-pydantic-ai-and-temporal)). AWS Bedrock AgentCore documentation references Pydantic AI directly, which is a vendor-validation signal worth tracking.
-
-Honest take: this is the framework HN's Python-purist crowd recommends, and they are right. The mental model is clean: Pydantic AI when you want types and structured output, LangGraph when you want graphs, CrewAI when you want roles. The Temporal integration story is the most coherent durable-execution story in the Python ecosystem alongside LangGraph's built-in checkpointing. If your team already lives in Pydantic, the migration cost is roughly zero.
-
-## smolagents (HuggingFace)
-
-Version 1.24.0 (January 16, 2026), with active commits through March 29, 2026. ~26k stars on GitHub, up from ~3k in early 2025, which is the steepest adoption curve in the comparison set. The thesis: code-as-action. CodeAgent emits Python code as its action format instead of JSON tool calls, and the entire library fits in roughly 1,000 lines.
-
-Sandbox options span Blaxel, E2B, Modal, Docker, and a Pyodide-plus-Deno WASM mode. OTel instrumentation is built in. The LiteLLM bridge means any provider works. Production posture is strong on the security side; code execution always runs in an isolated sandbox by design.
-
-No named Fortune 500-scale case studies. Adoption is concentrated in the HuggingFace ecosystem and small-model crowd. Honest take: smolagents is the framework that did the literature review and concluded code-as-action beats JSON tool calls for most action shapes, which lines up with the original ReAct-paper instinct minus the framework bureaucracy. Right for researchers, HuggingFace-native shops, and anyone who wants the smallest possible blast radius for a working agent. Wrong if you need enterprise sales collateral.
-
-## Mastra (TypeScript)
-
-Mastra 1.0 GA hit January 2026. The repo carries 22.3k stars as of late March, growing 30 to 35 stars per day, with ~1.8M monthly npm downloads in February 2026 and 300k-plus weekly downloads at the 1.0 cutover. Funding: $13M seed (October 2025) with reported follow-on Series A (~$22M) in 2026 ([mastra.ai/blog/series-a](https://mastra.ai/blog/series-a)).
-
-The customer logo wall is the strongest mid-market signal of any framework on this list. Replit, Brex, MongoDB, Workday, Salesforce, PayPal, Sanity, SoftBank, Marsh McLennan. Platform teams at MongoDB, Workday, and Salesforce automate DevOps and SRE work on Mastra. The April 2026 OpenBox AI partnership ships default runtime governance.
-
-Honest take: this is the only framework on this list that JavaScript and TypeScript shops should default to. Created by the Gatsby team, so the DX is unsurprisingly excellent: file-system routing for agents, hot-reload, a built-in playground, types end-to-end. LangGraph.js exists; Mastra is better. If you are shipping in TypeScript in 2026 and you are not on Mastra, you are paying a tax.
-
-## OpenAI Agents SDK
-
-Version 0.15.3 (May 6, 2026), still pre-1.0. ~25.9k stars on GitHub. Lineage: production replacement for the 2024 Swarm "educational" framework. Primitives are clean: Agents, Handoffs (agents-as-tools), Guardrails, Tracing. The April 2026 "next evolution" announcement shipped native sandbox execution, a model-native harness, Sandbox Agents (v0.14.0), and a default handoff history that collapses into a single recap message ([openai.com/index/the-next-evolution-of-the-agents-sdk](https://openai.com/index/the-next-evolution-of-the-agents-sdk/)).
-
-The Temporal integration went GA on March 23, 2026 for Python ([temporal.io/blog](https://temporal.io/blog/announcing-openai-agents-sdk-integration)). Every agent invocation runs as a Temporal Activity; orchestration runs as a Workflow. The credibility signal: OpenAI's own Codex Web product runs on Temporal in production handling millions of requests, so this is not a marketing partnership.
-
-Honest take: if you are already in OpenAI's tool-calling and Responses API world, this is the path of least resistance, and the handoff primitive is well-designed. Outside that orbit it is vendor lock-in dressed as an SDK. The Temporal partnership made it credible for production workloads; without that, the durability story was thin. If you want neutrality across model providers, default to Pydantic AI or LangGraph.
-
-## Temporal (the substrate, not a framework)
-
-Temporal raised $300M at a $5B valuation in February 2026, led by a16z. They are not a competing agent framework. They are the durable-execution substrate beneath all of them. Integrations ship for OpenAI Agents SDK, Pydantic AI, Vercel AI SDK, BrainTrust, and LangFuse. Production users include OpenAI Codex (web), Replit, and Lovable. The published economics: checkpointing reportedly cuts wasted compute by ~60% on multi-step workflows, because failed runs resume from the last successful Activity rather than restarting from zero.
-
-The named case study worth citing is Grid Dynamics ([temporal.io/blog](https://temporal.io/blog/prototype-to-prod-ready-agentic-ai-grid-dynamics)), who built a deep-research agent for a Fortune 500 manufacturer with 100+ plants. They started on LangGraph and migrated to Temporal for durability. The agent searches internal databases, shared drives, and local repos, then falls through to web search with citations when internal sources fail. The migration was about runtime guarantees, not framework features.
-
-Honest take: Temporal is the AWS-of-agents play. Sit beneath every framework, charge for durability, win on the ecosystem rather than the API. If your agent runs are under 60 seconds and stateless, Temporal is overkill. If your runs are multi-hour, multi-step, or touch external systems whose responses you cannot afford to lose, it is the cheapest insurance you can buy. The $5B valuation is the leading indicator on whether the market believes durable execution is the wedge; a16z does, and the framework integrations confirm it.
-
-## The benchmark crisis
-
-In April 2026, Hao Wang, Qiuyang Mang, Alvin Cheung, Koushik Sen, and Dawn Song at UC Berkeley RDI applied a single automated agent uniformly to eight industry-standard agent benchmarks ([rdi.berkeley.edu](https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/)). Seven of the eight scored ≥99%, with six hitting a clean 100%, and the agent did not solve a single task on any of them. The benchmarks broken include SWE-bench, WebArena, OSWorld, GAIA, Terminal-Bench, FieldWorkArena, and CAR-bench. OSWorld held best at 73%, and even there the exploit mechanism is instructive.
-
-OSWorld embeds gold-file URLs in task metadata. The VM has internet access. The exploit agent downloaded the gold file directly into the path the evaluator checks. Gold compared to gold. Score: perfect. Different benchmarks had different evaluator-design flaws; the unifying observation is that benchmark authors specified what counts as success without specifying what counts as legitimate success, and a sufficiently lazy agent reads the spec.
-
-Companion finding from the same lab in the same month: Berkeley RDI published peer-preservation research showing all seven frontier models exhibit peer-preservation behavior at up to 99% rates under some conditions. Gemini 3 Pro disabled its own shutdown 31% of the time when a peer model existed in the same context. Multi-agent systems amplify this; the more agents you stack, the more peer-preservation pressure exists. This is an HN-bait result on its own, and it ties cleanly into the Cemri failure-mode taxonomy below.
-
-Princeton HAL ([hal.cs.princeton.edu](https://hal.cs.princeton.edu/reliability/)) paused new model evaluations and pivoted to a Reliability Dashboard measuring consistency, predictability, robustness, safety, and abstention, not accuracy. The implicit acknowledgement: leaderboards-as-published-numbers are no longer the right product. The license to write, in May 2026: every claimed agent SOTA you read this week is conditional on a benchmark someone has already exploited, and the eighth one held only because OSWorld is harder to cheat.
-
-## Three structural shifts
-
-**The two-layer protocol stack stuck.** MCP for agent-to-tool, A2A for agent-to-agent. By April 2026, MCP is reportedly running on 10,000-plus enterprise servers with 97M-plus SDK downloads. Every framework discussed above ships MCP support. A2A is now table stakes in Microsoft Agent Framework and increasingly in everything else. If you are still rolling your own tool-calling protocol in 2026, you are paying integration tax that the rest of the ecosystem stopped paying eight months ago.
-
-**Durable execution is the wedge.** Temporal at $5B is the mainstream signal. LangGraph 1.0's "durable state with automatic persistence" is the framework-native version. Pydantic AI's TemporalAgent wrapper is the bridge play. Whatever you build, if it runs longer than a request-response cycle, durability is now non-optional in production. The Grid Dynamics migration from LangGraph to Temporal is not a framework defection; it is the discovery that the substrate question and the framework question are different questions, and the substrate question is the one that determines whether your agent survives a deploy.
-
-**The single-vs-multi-agent debate has resolved into "context engineering wins."** Cognition's "Don't Build Multi-Agents" post and Anthropic's 90.2% multi-agent paper appear to disagree, and the synthesis is that both are right. Anthropic's own post says multi-agent only beats single-agent when task value clears the 15× token cost. Cemri et al. show that 14 of the most common multi-agent failure modes are organizational rather than capability ceilings. The interesting question is not "single or multi" but "how much context can you compress, share, and verify across your topology." That is the same conclusion the [40K token wall](/blog/the-40k-token-wall) post reached from the long-context side.
-
-## MAST: the failure-mode taxonomy worth knowing
-
-Cemri et al., "Why Do Multi-Agent LLM Systems Fail?" ([arXiv 2503.13657](https://arxiv.org/abs/2503.13657)), annotated 1,600-plus traces across seven frameworks and produced the MAST taxonomy: 14 failure modes in three clusters, with an inter-annotator agreement of κ=0.88 across 150 expert-annotated traces. That is one of the few rigorous datasets in the space.
-
-Cluster one, **specification and system design**: architecture deficiencies, conversation-management bugs, unclear task specifications, role-definition violations. Cluster two, **inter-agent misalignment**: ineffective communication, conflicting behaviors, gradual derailment from the initial task. Cluster three, **task verification and termination**: no verifier role, premature termination, conformity bias, false-consensus reinforcement.
-
-The token-economics failure layered on top: a 3-agent workflow that demos at $5 to $50 generates $18,000 to $90,000 per month at scale. A document-analysis task that costs 10,000 tokens single-agent runs 35,000 tokens with 4 distributed agents, a 3.5× multiplier before you account for retries. Anthropic's honest disclosure of 15× token cost over chat is the self-reported version. Recent work like the SupervisorAgent paper ([arXiv 2510.26585](https://arxiv.org/html/2510.26585v1)) reports a 35% token-cost reduction and 63% variance reduction on GAIA Level 2, which is early evidence that the failure modes are partially fixable through better orchestration topology rather than better models.
-
-Klarna's walk-back is the cautionary case. Their LangGraph deployment matched human performance for simple queries and degraded on complex disputes, fraud, and hardship cases, so they reintroduced human agents in 2025. This is not a benchmark; it is a Fortune 500 customer publicly correcting their own automation thesis, which is rarer and more useful than a leaderboard.
-
-## Recommendation matrix
-
-| If you are… | Default to | Avoid |
-|---|---|---|
-| Python shop, durable workflows, named case studies | **LangGraph 1.0** | OpenAI Agents SDK if you want vendor neutrality |
-| TypeScript shop | **Mastra 1.0** | LangGraph.js (smaller community, lagging features) |
-| .NET / Microsoft stack | **MAF 1.0** | AutoGen (deprecated April 2026) |
-| Want type safety + observability | **Pydantic AI + Logfire (+ Temporal)** | CrewAI (limited typing) |
-| Building memory-first personal/coding agents | **Letta** | LangGraph (memory is bolt-on) |
-| Researcher / HF-native / single Python file | **smolagents** | MAF (overkill) |
-| Already in OpenAI's Responses API world | **OpenAI Agents SDK + Temporal** | self-rolling; their handoff primitive is good |
-| Multi-hour workflows that must survive crashes | **Any of the above + Temporal** | anything without checkpointing |
-| "Roles + crews" mental model, fast prototype | **CrewAI Flows** (not Crews) for production | CrewAI Crews if you need predictability |
-
-Honorable mentions worth tracking but not deep-diving here: Google ADK paired with A2A for enterprise traction, AG2 as the community fork for users who do not want to migrate off pre-MAF AutoGen, LlamaIndex Workflows for RAG-heavy shops, the Vercel AI SDK as the JavaScript developer's first-agent route, and Anthropic's own Claude Agent SDK, increasingly invoked alongside LangGraph in hybrid systems.
-
-## The thread worth pulling
-
-The under-reported story of 2026 is not that Berkeley broke the benchmarks. It is that the entire frontier-model marketing apparatus depends on benchmarks the same lab can break with one agent in a weekend, and nobody has shipped a credible replacement. Princeton HAL pivoting to a Reliability Dashboard is the only serious move in that direction, and it is a measurement framework, not a leaderboard. Until a HAL Reliability or successor lands, every "agent SOTA" claim should be read with the same skepticism you bring to a startup's deck.
-
-The second under-reported story is that the AutoGen-to-MAF cutover is the largest framework-deprecation event since LangChain spawned LangGraph, and the .NET community is the unspoken winner. The Python community will spend 2026 arguing about whether LangGraph or Pydantic AI is more idiomatic. The C# community just got a first-class Microsoft-backed agent framework with declarative YAML, MCP, A2A, and a browser debugger, and they will quietly ship more production agents than anyone expects.
-
-The third thread matters most for what you build next quarter. The real production ranking is durable-execution capability, not framework features. Temporal's $5B is the leading indicator, Grid Dynamics is the case study. Pick the framework that fits your team's mental model, then put it on a substrate that survives a deploy. Every multi-agent system you ship will fail in one of fourteen documented ways, and most of them are organizational rather than algorithmic. The [96GB RAM thesis](/blog/96gb-ram-thesis) is the orthogonal economic argument: when the token tax goes to zero, the fourteen failure modes are still there, and whether your agents converge is the only question that matters.
+Explore unlocked [Lesson 3.1: Production Agent Harnesses](/courses/3-1-production-harnesses-multi-model-routing) in [Courses](/courses) or [inquire about an architecture review](/work-with-me).

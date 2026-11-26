@@ -2,45 +2,28 @@ import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { Badge } from '@/components/ui/badge'
 
-describe('Badge', () => {
-  it('renders tag variant with text', () => {
-    render(<Badge variant="tag">agent</Badge>)
-    expect(screen.getByText('agent')).toBeTruthy()
+describe('Badge (Option A Editorial Monograph)', () => {
+  it('renders tag variant with restrained border and zero pill radius', () => {
+    render(<Badge variant="tag" data-testid="b">architecture</Badge>)
+    const el = screen.getByTestId('b')
+    expect(el.textContent).toBe('architecture')
+    expect(el.className).toContain('rounded-md')
+    expect(el.className).not.toContain('rounded-full')
+    expect(el.className).toContain('bg-surface-elevated')
   })
 
-  it('tag variant applies font-mono class', () => {
-    render(<Badge variant="tag" data-testid="b">agent</Badge>)
-    expect(screen.getByTestId('b').className).toContain('font-mono')
-  })
-
-  it('renders status variant with text', () => {
-    render(<Badge variant="status" color="green">online</Badge>)
-    expect(screen.getByText('online')).toBeTruthy()
-  })
-
-  it('status variant with amber color applies text-amber class', () => {
-    render(<Badge variant="status" color="amber" data-testid="b">warn</Badge>)
-    expect(screen.getByTestId('b').className).toContain('text-amber')
-  })
-
-  it('status variant with green color applies text-green class', () => {
-    render(<Badge variant="status" color="green" data-testid="b">ok</Badge>)
-    expect(screen.getByTestId('b').className).toContain('text-green')
-  })
-
-  it('status variant with red color applies text-red class', () => {
-    render(<Badge variant="status" color="red" data-testid="b">down</Badge>)
-    expect(screen.getByTestId('b').className).toContain('text-red')
-  })
-
-  it('renders online and rig semantic Crisp Operator variants', () => {
+  it('renders status, online, rig, and accent variants cleanly', () => {
     render(
       <>
+        <Badge variant="status" data-testid="status">active</Badge>
         <Badge variant="online" data-testid="online">live</Badge>
         <Badge variant="rig" data-testid="rig">mesh</Badge>
+        <Badge variant="accent" data-testid="accent">featured</Badge>
       </>,
     )
-    expect(screen.getByTestId('online').className).toContain('text-emerald-700')
-    expect(screen.getByTestId('rig').className).toContain('text-amber-700')
+    expect(screen.getByTestId('status').className).toContain('text-fg')
+    expect(screen.getByTestId('online').className).toContain('border-fg/20')
+    expect(screen.getByTestId('rig').className).toContain('text-muted')
+    expect(screen.getByTestId('accent').className).toContain('text-accent')
   })
 })

@@ -1,5 +1,5 @@
 // Compiles all MDX modules in content/curriculum into a static TypeScript manifest
-// so Cloudflare Workers SSR renders /courses/[slug] and /vault/[token] without runtime fs.
+// so Cloudflare Workers SSR renders /courses/[slug] without runtime fs.
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -14,6 +14,17 @@ import rehypeStringify from 'rehype-stringify'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const CURRICULUM_DIR = path.join(__dirname, '..', 'content', 'curriculum')
 const OUT_FILE = path.join(__dirname, '..', 'lib', 'curriculum-manifest.generated.ts')
+
+function decodeHtmlEntities(input) {
+  return String(input)
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+}
 
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
@@ -69,7 +80,7 @@ function extractToc(html) {
   const matches = [...html.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)]
   return matches.map(([, id, inner]) => ({
     id,
-    text: inner.replace(/<[^>]+>/g, '').trim(),
+    text: decodeHtmlEntities(inner.replace(/<[^>]+>/g, '').trim()),
   }))
 }
 
@@ -92,8 +103,8 @@ const modules = await Promise.all(
     return {
       slug,
       frontmatter: {
-        slug,
         ...data,
+        slug,
       },
       html,
       toc,

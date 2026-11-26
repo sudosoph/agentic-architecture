@@ -7,86 +7,75 @@ import { SITE_CONFIG } from '@/lib/site-config'
 export const metadata: Metadata = {
   title: 'Now',
   description:
-    'What Sophia Stein is building, teaching, and writing right now in Boulder, CO. Updated November 2026.',
+    'What Sophia Stein is writing, teaching, and building right now in Boulder, CO.',
   alternates: { canonical: '/now' },
 }
 
 export default function NowPage() {
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <PageHeader
-        meta="Last updated November 24, 2026 · Boulder, CO"
+        meta="Updated November 2026 · Boulder, Colorado"
         title="What I Am Focused On Right Now"
-        description="A snapshot of active cohorts, workshops, writing, and teaching commitments, following Derek Sivers’ /now page convention."
+        description="A snapshot of active writing, courses, workshops, and advisory focus, following Derek Sivers’ /now page convention."
       />
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <Card className="p-6 space-y-2">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Courses, Sprints &amp; Fractional Leadership
-          </p>
-          <h2 className="text-lg font-bold text-fg">
-            Business Automation Courses &amp; Fractional CAIO / AI CTO
+          <p className="text-xs font-medium text-muted">Courses &amp; Skool Lab</p>
+          <h2 className="font-serif text-xl font-normal text-fg">
+            The Agentic Architect Lab
           </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Teaching non-technical business owners and operations leads how to automate repetitive
-            bottlenecks through our{' '}
-            <Link href="/masterclass" className="text-accent font-medium hover:underline">
-              Free 60-Min Live Build
-            </Link>{' '}
-            and{' '}
-            <Link href="/academy" className="text-accent font-medium hover:underline">
-              $297 Practical AI Workflow Academy
-            </Link>
-            , alongside executive Fractional CAIO / AI CTO partnerships on{' '}
-            <Link href="/fractional-ai-cto" className="text-accent font-medium hover:underline">
-              /fractional-ai-cto
+            Building hands-on screen-share modules across Claude Superuser &amp; Cowork OS,
+            open-weight cost routing, and practical AI architecture on{' '}
+            <Link
+              href="/courses"
+              className="text-fg underline underline-offset-3 decoration-border"
+            >
+              /courses
             </Link>
             .
           </p>
         </Card>
 
         <Card className="p-6 space-y-2">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-            Weekly Playbooks &amp; Newsletter
-          </p>
-          <h2 className="text-lg font-bold text-fg">{SITE_CONFIG.newsletterName}</h2>
+          <p className="text-xs font-medium text-muted">Essays &amp; Weekly Dispatch</p>
+          <h2 className="font-serif text-xl font-normal text-fg">{SITE_CONFIG.newsletterName}</h2>
           <p className="text-sm text-muted leading-relaxed">
-            Publishing practical playbooks on small-business AI workflows, cost strategy, and
-            private autonomous setups on the{' '}
-            <Link href="/blog" className="text-accent font-medium hover:underline">
+            Publishing architecture essays and hardware/model benchmarks on the{' '}
+            <Link href="/blog" className="text-fg underline underline-offset-3 decoration-border">
               blog
             </Link>{' '}
-            and{' '}
+            alongside weekly field notes on{' '}
             <a
               href={SITE_CONFIG.substackUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent font-medium hover:underline"
+              className="text-fg underline underline-offset-3 decoration-border"
             >
               Substack
             </a>
-            , alongside serialized chapters of{' '}
-            <Link href="/courses#book" className="text-accent font-medium hover:underline">
-              The Sovereign Stack
-            </Link>
             .
           </p>
         </Card>
 
         <Card className="p-6 space-y-2">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-rig">
-            Corporate &amp; Academic Teaching
-          </p>
-          <h2 className="text-lg font-bold text-fg">Workshops, Keynotes &amp; CU Boulder</h2>
+          <p className="text-xs font-medium text-muted">Speaking &amp; Campus Seminars</p>
+          <h2 className="font-serif text-xl font-normal text-fg">
+            Workshops, Keynotes &amp; University Syllabi
+          </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Following a 300+ attendee workshop at{' '}
-            <Link href="/bsw" className="text-accent font-medium hover:underline">
+            Following a 300+ attendee session at{' '}
+            <Link href="/bsw" className="text-fg underline underline-offset-3 decoration-border">
               Boulder Startup Week
             </Link>{' '}
-            and speaking for Women Who Code, expanding corporate enablement labs and university
-            course modules across Boulder and Denver. See{' '}
-            <Link href="/teaching" className="text-accent font-medium hover:underline">
+            and speaking for Women Who Code, expanding corporate enablement intensives and
+            university syllabi on{' '}
+            <Link
+              href="/teaching"
+              className="text-fg underline underline-offset-3 decoration-border"
+            >
               /teaching
             </Link>
             .
@@ -94,14 +83,17 @@ export default function NowPage() {
         </Card>
 
         <Card className="p-6 space-y-2">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Selective 1:1 Audits &amp; Advisory
-          </p>
-          <h2 className="text-lg font-bold text-fg">Executive Workflow &amp; Cost Audits</h2>
+          <p className="text-xs font-medium text-muted">Selective Advisory</p>
+          <h2 className="font-serif text-xl font-normal text-fg">
+            Architecture Diagnostics &amp; Fractional CAIO / CTO
+          </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Reserving two slots per week for 90-minute VIP AI Workflow &amp; Cost Audits and ongoing
-            fractional advisory. Book directly on{' '}
-            <Link href="/work-with-me" className="text-accent font-medium hover:underline">
+            Partnering with a small number of leadership and engineering teams on workflow
+            diagnostics, bespoke builds, and Fractional CAIO / AI CTO oversight via{' '}
+            <Link
+              href="/work-with-me"
+              className="text-fg underline underline-offset-3 decoration-border"
+            >
               /work-with-me
             </Link>
             .
@@ -115,11 +107,11 @@ export default function NowPage() {
           href="https://nownownow.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-accent hover:underline"
+          className="text-fg underline underline-offset-3 decoration-border"
         >
           nownownow.com
         </a>
-        . {SITE_CONFIG.personalCapacityNote}
+        .
       </p>
     </div>
   )

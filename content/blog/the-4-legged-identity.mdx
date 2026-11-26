@@ -1,8 +1,12 @@
 ---
 title: "OAuth Was Built for Three Actors. Agents Are the Fourth."
 slug: the-4-legged-identity
-publishedDate: "2026-05-01"
+publishedDate: "2026-06-22"
 description: "OAuth was designed for three actors. Agentic systems have four. Here is what breaks, what RFC 8693 fixes, and why most teams are shipping shared credentials anyway."
+briefing:
+  - "Giving an AI agent your personal admin API key collapses audit trails and grants every prompt-injected input your full organizational privileges."
+  - "Four-legged OAuth binds four distinct principals on every action: Organization Policy, Human Delegator, Agent Orchestrator, and Downstream Resource."
+  - "Short-lived, task-scoped tokens with cryptographic delegation logs make enterprise security and compliance teams confident in production deployment."
 track: "engineering"
 tags: ["identity", "oauth", "agents", "mcp", "security"]
 draft: false
@@ -93,7 +97,7 @@ Downstream call to API:
 
 The downstream API now has the full picture. Audit logs are correct. Authorization decisions can be conditional on both user and acting agent.
 
-## IdP support, May 2026
+## IdP support, 2026
 
 The painful part. Token exchange is a 2020 RFC and adoption is uneven.
 
@@ -126,7 +130,7 @@ This is what shipping looks like in production. It is a quarter of work. It is a
 
 Honest list of when not to bother.
 
-**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/personal-ai-agent-weekend).
+**stdio-only local agents.** The MCP spec itself carves an exception: stdio transport SHOULD NOT follow the OAuth specification. Use environment variables and file permissions. The auth dance is overkill for a [single-machine local setup](/blog/instinct-ai-vs-tab-review).
 
 **Single-user dev tools.** A coding agent that only ever runs as you, on your machine, against your own GitHub PAT, does not need token exchange. Your token is fine.
 
@@ -147,7 +151,7 @@ If any of these describe your product, plan for token exchange. Pick an IdP that
 
 ## What this connects to
 
-This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/below-the-waterline), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/eu-ai-act-deadline) and the shadow-testing pattern in [Shadow Testing](/blog/shadow-testing).
+This post is the deep version of the [4-legged identity section in MCP 101](/blog/mcp-101). It pairs with [Below the Waterline](/blog/eval-harness-catches-regressions), where agent identity is one of the three foundations of production-ready agentic systems. The compliance angle lives in [Ethical Autonomy](/blog/eu-ai-act-deadline) and the shadow-testing pattern in [Shadow Testing](/blog/eval-harness-catches-regressions).
 
 ## The takeaway
 

@@ -1,14 +1,18 @@
 ---
 title: "Three Ways to Run Open Weights for Pennies"
 slug: three-ways-to-run-open-weight-models
-publishedDate: "2026-05-05"
+publishedDate: "2026-07-17"
 description: "Local hardware vs rented GPUs vs serverless OSS APIs. Real prices, real benchmarks, and the workload-shape question that decides which path is right."
+briefing:
+  - "Teams adopting open-weight models choose among three distinct deployment modes: zero-retention serverless APIs, dedicated cloud GPUs, and local unified-memory hardware."
+  - "Serverless endpoints win below ~20M daily tokens; dedicated or local nodes win when sustained volume or strict data residency dominates."
+  - "Keeping prompts, schemas, and evaluation suites runtime-agnostic lets you shift workloads across all three modes without rewriting application code."
 track: "models-rigs"
 tags: ["local-models", "open-weights", "cloud", "benchmarks", "cost"]
 draft: false
 ---
 
-Open-weight models in 2026 (Qwen 3.6 27B, Gemma 4 31B, Kimi K2.6, DeepSeek V4) have closed enough of the quality gap with frontier proprietary models that the question is no longer *should I run open*. It is *which deployment path*. There are three: own the hardware, rent the GPU, pay per token to a managed serverless host. Each has different unit economics, latency, sovereignty, and setup complexity. This post is the actual numbers from May 2026, the tradeoff matrix, and the workload-shape questions that decide which path is right for you.
+Open-weight models in 2026 (Qwen 3.6 27B, Gemma 4 31B, Kimi K2.6, DeepSeek V4) have closed enough of the quality gap with frontier proprietary models that the question is no longer *should I run open*. It is *which deployment path*. There are three: own the hardware, rent the GPU, pay per token to a managed serverless host. Each has different unit economics, latency, sovereignty, and setup complexity. This post is the actual numbers from 2026, the tradeoff matrix, and the workload-shape questions that decide which path is right for you.
 
 ## The three paths
 
@@ -30,7 +34,7 @@ What you buy: a workstation or laptop with enough unified memory to hold the mod
 
 **What it costs to run.** Electricity. ~65W under sustained load at $0.13/kWh = three cents per active hour. Annualized at 4 hours/day: under $50/year of variable cost.
 
-**What it costs to *not* run it well.** Setup time: a weekend if you have done it before, longer if not. ROCm 7.3, GART config, llama.cpp HIP build, model download. The full path is in [The 96GB RAM Thesis](/blog/96gb-ram-thesis) and [Why I Bet on a Framework Laptop in 2026](/blog/framework-laptop-thesis).
+**What it costs to *not* run it well.** Setup time: a weekend if you have done it before, longer if not. ROCm 7.3, GART config, llama.cpp HIP build, model download. The full path is in [The 96GB RAM Thesis](/blog/mac-studio-512gb-vs-dgx-spark) and [Why I Bet on a Framework Laptop in 2026](/blog/mac-studio-512gb-vs-dgx-spark).
 
 **Where it wins.** Privacy-sensitive workloads. Long-running unattended loops. High fan-out research agents. Anything that compounds because retries and parallel runs are free. The behavioral consequence is bigger than the cost number: you stop rationing.
 
@@ -49,7 +53,7 @@ What you buy: hourly access to a GPU instance running your choice of model. The 
 
 (Sources: [RunPod pricing](https://www.runpod.io/pricing), [Lambda Labs](https://lambdalabs.com/), comparison aggregator [getdeploying.com/gpus/nvidia-h100](https://getdeploying.com/gpus/nvidia-h100).)
 
-**What it costs to run.** A single H100 spot instance at $1.49/hr running 8 hours a day = $360/month. Same instance running 24/7 at on-demand rates = ~$1,800/month. Multiply by the number of GPUs you need for the model.
+**What it costs to run.** A single H100 spot instance at $1.49/hr running 8 hours a day = $360/month. Same instance running 24/7 at on-demand rates = ~workstation-grade/month. Multiply by the number of GPUs you need for the model.
 
 **Model fit on a single H100 (80GB):** Qwen 3.6 27B Dense at FP16 fits comfortably. Gemma 4 31B Dense fits with care. DeepSeek V4 Flash (284B / 13B active) fits at INT4. DeepSeek V4 Pro (1.6T) needs multi-GPU.
 
@@ -77,7 +81,7 @@ What you buy: per-token access to open-weight models hosted by someone else. The
 
 **Where it loses.** Sovereignty. The provider sees every prompt and response. Some have data-retention policies you may not love (read them). For regulated workloads that cannot send data to third parties, this path is a non-starter regardless of price.
 
-## The actual benchmarks (May 2026)
+## The actual benchmarks (2026)
 
 Pricing is half the question. The other half is whether the model is good enough to do the job. The current open-weight frontier:
 
@@ -120,7 +124,7 @@ The right split:
 - **Serverless** (Fireworks Llama 3.1 8B at $0.20/M) for the customer-facing product. ~$200/month.
 - **Rented spot GPU** for the 24/7 triage. ~$360/month at RunPod spot rates, scales down off-peak.
 
-Total monthly variable: ~$560. Capex: ~$6,400 amortized over 5 years = ~$110/month. **Total ~$670/month for the entire stack.** A pure-SaaS equivalent runs $1,500-$2,500/month at this volume.
+Total monthly variable: ~$560. Capex: ~$6,400 amortized over 5 years = ~$110/month. **Total ~$670/month for the entire stack.** A pure-SaaS equivalent runs $1,500-custom-scoped/month at this volume.
 
 The savings are real. The bigger effect is behavioral: when the dev loop is electricity and the burst loop is spot pricing, you stop rationing retries. The teams that ship in 2026 run experiments without scheduling budget meetings first.
 
@@ -131,3 +135,9 @@ Pick by workload, not by ideology.
 Spin up a Fireworks or Together account this afternoon, run your workload through Qwen 3.6 27B for $5. If quality is there and the cost makes sense, you have your answer. If cost is going to scale into real money, evaluate whether you have an engineer who would enjoy owning the hardware. Break-even is usually around $200-300/month of cloud spend.
 
 Pure local is a tax on optionality. Pure cloud is a tax on margin. Hybrid is what production looks like.
+
+## Related Reading & Next Steps
+
+- **Model Routing Matrix:** [Frontier Planners vs. Open-Weight Workhorses](/blog/gemini-4-neon-vs-deepseek-v4) and [Six Open-Weight Routing Recipes](/blog/mixing-and-matching-open-weight-models)
+- **Hardware & Mesh Physics:** [512GB M5 Ultra vs. DGX Spark vs. Ryzen AI Halo](/blog/mac-studio-512gb-vs-dgx-spark) and [Zero-Port Tailscale Rigs](/blog/autonomous-ai-rig-tailscale-guide)
+- **Interactive Sizer:** Run your token and hardware numbers in [The Sovereign Stack](/sovereign-stack) or explore [Courses](/courses).

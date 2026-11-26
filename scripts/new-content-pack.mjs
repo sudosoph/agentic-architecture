@@ -1,6 +1,6 @@
 // Scaffolds a canonical MDX playbook + zero-cost omnichannel distribution pack
 // (Substack issue + Notes, LinkedIn + X thread, native Reddit markdown + HN brief).
-// Usage: npm run new:pack -- <slug> "<title>" [small-business|models-rigs|engineering]
+// Usage: node scripts/new-content-pack.mjs <slug> "<title>" [small-business|models-rigs|engineering]
 
 import fs from 'fs'
 import path from 'path'
@@ -96,10 +96,10 @@ Here is the 3-step fix we just published on Agentic Architect:
 Full breakdown: ${canonicalUrl}
 
 ## Substack Note #2 (Contrarian / Numbers Take)
-Before adding another SaaS subscription or $65,000 coordinator hire, score your top 5 weekly chores on volume, bounded variability, reversibility, and structured signal. Anything 18+ out of 25 ships in an afternoon.
+Before adding another SaaS subscription or full-time operations hire, score your top 5 weekly chores on volume, bounded variability, reversibility, and structured signal. Anything 18+ out of 25 ships in an afternoon.
 `
 
-  const linkedinX = `# LinkedIn & X (@sudosoph) Queue: ${title}
+  const linkedinX = `# LinkedIn & Short-Form Social Queue: ${title}
 
 - **Zero-Cost Queue Options:** Buffer Free Tier, Postiz (GitHub OSS), or Zapier Free Tier
 
@@ -124,16 +124,16 @@ Three changes fix 80% of the friction:
 - Slide 6: Real weekly hours & margin math
 - Slide 7: Run the free 20/80 Bottleneck Scorer at agenticarchitect.ai/starter-kit
 
-## X (@sudosoph) 4-Post Thread
+## Short-Form 4-Post Thread
 1/ ${title}
 
 Here is the exact blueprint and cost math (0 fluff):
 
 2/ Step 1: Stop re-prompting from scratch. Standardize 5 approved company examples + escalation boundaries so every workflow stays on-policy.
 
-3/ Step 2: Wire calendar and inbox triggers to stage drafts, never blind auto-sends. Ten seconds of human review protects client trust while reclaiming hours.
+3/ Step 2: Wire calendar and inbox triggers to stage drafts, never blind auto-sends. Ten seconds of human review protects client trust while recovering hours.
 
-4/ Full writeup + copy-paste templates from @sudosoph: ${canonicalUrl}
+4/ Full writeup + copy-paste templates from Agentic Architect: ${canonicalUrl}
 `
 
   const redditHn = `# Native Reddit Post & Hacker News Checklist: ${title}
@@ -169,7 +169,7 @@ Happy to answer questions on the setup or share the raw JSON/templates if helpfu
 function runCli() {
   const [, , rawSlug, rawTitle, rawTrack] = process.argv
   if (!rawSlug || !rawTitle) {
-    console.error('Usage: npm run new:pack -- <slug> "<title>" [small-business|models-rigs|engineering]')
+    console.error('Usage: node scripts/new-content-pack.mjs <slug> "<title>" [small-business|models-rigs|engineering]')
     process.exit(1)
   }
 

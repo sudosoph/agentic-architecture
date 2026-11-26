@@ -4,36 +4,35 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { RoiCalculator } from '@/components/site/roi-calculator'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Boulder & Denver Corporate AI Training, Workshops & Advisory',
   description:
-    'On-site and virtual corporate AI workshops, executive workflow audits, and keynotes in Boulder, Denver, and the Colorado Front Range by Sophia Stein (Columbia CS, ex-McKinsey).',
+    'In-person and hybrid corporate AI workshops, executive workflow diagnostics, and keynotes across Boulder, Denver, and the Colorado Front Range by Sophia Stein.',
   alternates: { canonical: '/boulder' },
 }
 
 const COLORADO_PROGRAMS = [
   {
-    badge: 'On-Site or Hybrid · Half Day ($7,500)',
-    title: 'Leadership & Operations AI Workflow Intensive',
-    body: '3.5-hour hands-on lab for Boulder, Denver, and Front Range teams (10 to 40 staff). Standardize departmental SOPs, score operational bottlenecks, and wire human-approved workflows across Sales, Intake, and Operations.',
+    badge: 'On-Site or Hybrid · Half-Day Intensive',
+    title: 'Leadership & Operations AI Workflow Lab',
+    body: 'Hands-on 3.5-hour session for Boulder, Denver, and Front Range teams (10 to 40 participants). Standardize departmental operating context, score operational bottlenecks, and build human-reviewed workflows across Sales, Intake, and Operations.',
   },
   {
-    badge: 'On-Site · Full Day ($15,000)',
-    title: 'Organization-Wide AI Enablement & Roadmap Lab',
-    body: 'Morning executive ROI, data privacy, and cost-governance session paired with afternoon department build tracks across Operations, Sales/Marketing, and Client Delivery.',
+    badge: 'On-Site · Full-Day Enablement',
+    title: 'Organization-Wide AI Enablement & Governance Lab',
+    body: 'Morning executive build-vs-buy, data privacy, and cost-governance briefing paired with afternoon functional build tracks across Operations, GTM, Finance, and Client Delivery.',
   },
   {
-    badge: '90-Min Executive Session ($750 · 100% Creditable)',
-    title: 'Front Range Founder & COO Workflow Roadmap',
-    body: 'Rapid 1:1 teardown of your team’s weekly busywork and software spend, delivered with a written 48-hour implementation roadmap. 100% credited toward a Half-Day Intensive, Full-Day Lab, or Custom Sprint.',
+    badge: 'Executive Diagnostic',
+    title: 'Front Range Founder & COO Architecture Roadmap',
+    body: 'Focused 1:1 teardown of your team’s recurring manual bottlenecks and overlapping AI subscriptions, delivered with a written implementation charter.',
   },
   {
     badge: 'Conferences, Offsites & Universities',
-    title: 'Colorado Keynotes & CU Boulder Guest Lectures',
-    body: 'High-energy keynotes and applied seminars backed by open-source lab curricula, following a standing-room 300+ attendee workshop at Boulder Startup Week.',
+    title: 'Colorado Keynotes & Campus Seminars',
+    body: 'Practical keynotes and applied university guest lectures backed by open-source lab curricula, following a standing-room 300+ attendee workshop at Boulder Startup Week.',
   },
 ]
 
@@ -47,14 +46,13 @@ export default function BoulderPage() {
     founder: {
       '@type': 'Person',
       name: SITE_CONFIG.authorName,
-      alumniOf: 'Columbia University',
     },
     description:
-      'Hands-on corporate AI enablement workshops, executive workflow audits, keynotes, and private AI advisory across Boulder, Denver, and the Colorado Front Range.',
+      'Hands-on corporate AI enablement workshops, executive workflow diagnostics, keynotes, and private AI advisory across Boulder, Denver, and the Colorado Front Range.',
   }
 
   return (
-    <div className="space-y-14">
+    <div className="space-y-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -63,103 +61,88 @@ export default function BoulderPage() {
       />
 
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="online">Based in Boulder, CO · Serving Denver &amp; the Front Range</Badge>
-          <span className="font-mono text-xs text-muted">Zero Travel Overhead for Front Range On-Sites</span>
-        </div>
         <PageHeader
+          meta="Based in Boulder, CO · Serving Denver & the Colorado Front Range"
           title="Boulder & Denver Corporate AI Training, Workshops & Advisory"
-          description="Practical, in-person AI enablement for Colorado founders, leadership teams, healthcare and enterprise groups, and university programs."
+          description="Practical, in-person AI enablement and architecture advisory for Colorado leadership teams, regulated groups, founders, and university programs."
         />
         <div className="flex flex-wrap gap-3 pt-1">
           <Button variant="primary" size="lg" href={SITE_CONFIG.cal.speaking}>
-            Book a 20-Min Colorado Workshop Intake →
+            Schedule Colorado Workshop Intake
           </Button>
           <Button variant="outline" size="lg" href={SITE_CONFIG.cal.audit}>
-            Book a $750 90-Min Roadmap
+            Schedule Diagnostic Call
           </Button>
           <a
             href="/downloads/corporate-ai-workshop-sheet.md"
             download
-            className="inline-flex items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold text-accent hover:underline"
+            className="press-scale inline-flex items-center justify-center rounded-md border border-border bg-surface px-4 py-2.5 text-sm font-medium text-fg hover:border-fg/45"
           >
-            Download 1-Page Workshop Sheet ↓
+            Download 1-Page Workshop Sheet
           </a>
         </div>
       </div>
 
       {/* Local Credibility Strip */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-5 bg-surface space-y-1">
-          <p className="text-2xl font-extrabold text-accent">300+</p>
-          <p className="text-xs font-semibold text-fg">Colorado Founders &amp; Operators Trained</p>
-          <p className="text-xs text-muted">Standing-room Boulder Startup Week lab at RegenHub</p>
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Card className="p-5 space-y-1">
+          <p className="font-serif text-2xl text-fg tabular-nums">300+ Attendees</p>
+          <p className="text-xs font-medium text-fg">Boulder Startup Week</p>
+          <p className="text-xs text-muted">Standing-room workflow build lab at RegenHub</p>
         </Card>
-        <Card className="p-5 bg-surface space-y-1">
-          <p className="text-2xl font-extrabold text-online">Ex-McKinsey</p>
-          <p className="text-xs font-semibold text-fg">Boardroom-Ready ROI &amp; Governance</p>
-          <p className="text-xs text-muted">250+ enterprise &amp; healthcare leaders enabled (79 NPS)</p>
+        <Card className="p-5 space-y-1">
+          <p className="font-serif text-2xl text-fg">In-Person Across CO</p>
+          <p className="text-xs font-medium text-fg">Boulder, Denver &amp; Front Range</p>
+          <p className="text-xs text-muted">Zero travel overhead for local offsites and office labs</p>
         </Card>
-        <Card className="p-5 bg-surface space-y-1">
-          <p className="text-2xl font-extrabold text-fg">Columbia CS</p>
-          <p className="text-xs font-semibold text-fg">Real Systems Engineering Depth</p>
-          <p className="text-xs text-muted">Translating architecture into plain-English SOPs</p>
-        </Card>
-        <Card className="p-5 bg-surface space-y-1">
-          <p className="text-2xl font-extrabold text-rig">$0 Travel</p>
-          <p className="text-xs font-semibold text-fg">Local Across Boulder &amp; Denver</p>
-          <p className="text-xs text-muted">In-person offsites, office labs, and campus lectures</p>
+        <Card className="p-5 space-y-1">
+          <p className="font-serif text-2xl text-fg">Owned Workflows</p>
+          <p className="text-xs font-medium text-fg">Built Inside Your Stack</p>
+          <p className="text-xs text-muted">Plain-English SOPs, privacy tiers, and human review gates</p>
         </Card>
       </section>
 
       {/* Programs Grid */}
       <section className="space-y-5">
-        <h2 className="text-2xl font-bold text-fg">Front Range Training &amp; Advisory Formats</h2>
+        <h2 className="font-serif text-3xl font-normal text-fg">
+          Front Range training &amp; advisory formats
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {COLORADO_PROGRAMS.map(item => (
             <Card key={item.title} className="p-6 space-y-3">
               <Badge variant="tag">{item.badge}</Badge>
-              <h3 className="text-lg font-bold text-fg">{item.title}</h3>
+              <h3 className="font-serif text-xl font-normal text-fg">{item.title}</h3>
               <p className="text-sm text-muted leading-relaxed">{item.body}</p>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Team ROI Calculator */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold text-fg">
-          Calculate Your Team’s Reclaimed Capacity Before Booking
-        </h2>
-        <RoiCalculator />
-      </section>
-
       {/* Local Links */}
-      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <section className="rounded-lg border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="space-y-1 max-w-xl">
-          <h2 className="text-xl font-bold text-fg">
-            Inspect Our Boulder Startup Week Lab or University Syllabi
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            Inspect our Boulder Startup Week lab or university syllabi
           </h2>
           <p className="text-sm text-muted leading-relaxed">
             Browse the open-source slides and 17-step build from Boulder Startup Week at{' '}
-            <Link href="/bsw" className="text-accent font-medium hover:underline">
+            <Link href="/bsw" className="text-fg underline underline-offset-3 decoration-border">
               /bsw
             </Link>{' '}
             or view university syllabi on{' '}
-            <Link href="/teaching" className="text-accent font-medium hover:underline">
+            <Link
+              href="/teaching"
+              className="text-fg underline underline-offset-3 decoration-border"
+            >
               /teaching
             </Link>
             .
           </p>
         </div>
         <Button variant="primary" size="md" href={SITE_CONFIG.cal.speaking}>
-          Schedule Front Range Intake →
+          Schedule Front Range Intake
         </Button>
       </section>
-
-      <p className="text-xs text-muted border-t border-border pt-6">
-        {SITE_CONFIG.personalCapacityNote}
-      </p>
     </div>
   )
 }

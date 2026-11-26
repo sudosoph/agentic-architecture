@@ -47,11 +47,22 @@ function extractDescription(content) {
   return ''
 }
 
+function decodeHtmlEntities(input) {
+  return String(input)
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+}
+
 function extractToc(html) {
   const matches = [...html.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)]
   return matches.map(([, id, inner]) => ({
     id,
-    text: inner.replace(/<[^>]+>/g, '').trim(),
+    text: decodeHtmlEntities(inner.replace(/<[^>]+>/g, '').trim()),
   }))
 }
 

@@ -15,13 +15,13 @@ describe('Card', () => {
     expect(card.className).toContain('border-border')
   })
 
-  it('adds hover:border-accent when interactive prop is set', () => {
+  it('adds hairline hover:border-fg/35 when interactive prop is set', () => {
     render(<Card interactive data-testid="card">content</Card>)
-    expect(screen.getByTestId('card').className).toContain('hover:border-accent')
+    expect(screen.getByTestId('card').className).toContain('hover:border-fg/35')
   })
 
-  it('does not add hover:border-accent without interactive prop', () => {
+  it('does not add hover:border-fg/35 without interactive prop', () => {
     render(<Card data-testid="card">content</Card>)
-    expect(screen.getByTestId('card').className).not.toContain('hover:border-accent')
+    expect(screen.getByTestId('card').className).not.toContain('hover:border-fg/35')
   })
 })

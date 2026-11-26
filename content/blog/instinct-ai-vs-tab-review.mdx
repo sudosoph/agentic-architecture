@@ -1,8 +1,12 @@
 ---
 title: "Instinct AI vs. Tab AI Review (2026): Is It Safe for Your Inbox, Plus OpenInstinct"
 slug: instinct-ai-vs-tab-review
-publishedDate: "2026-11-23"
+publishedDate: "2026-09-30"
 description: "An executive security and privacy review of Instinct AI ($10B), Tab AI, and OpenAI Dots: why full Gmail/Drive permissions put business owners at risk, and safer alternatives."
+briefing:
+  - "Always-on texting and browser agents frequently request full read/write Gmail, Drive, and payment scopes while storing tokens in vendor clouds."
+  - "Auditing consumer agents against MIT-licensed self-hosted alternatives (`OpenInstinct` + `OpenClaw`) exposes sharp differences in credential blast radius."
+  - "Keeping OAuth tokens inside an encrypted vault outside the LLM context window prevents prompt injection from becoming account exfiltration."
 track: "small-business"
 tags: ["security", "agents", "open-source", "privacy", "tool-review"]
 kind: deep-dive
@@ -48,7 +52,7 @@ The open-source response that matured this fall solves the core architectural fl
 ## What to deploy on Monday morning
 
 1. **For your personal errands (restaurants, airline hold lines):** If you use a consumer agent like `Tab`, connect a dedicated alias email and a virtual card with a $250 cap, never your primary founder Workspace.
-2. **For your company inbox, calendar, and client prep:** Keep data inside your own boundary using portable `voice.md` + `icp.md` files ([free Starter Kit](/starter-kit)), draft-only Gmail scopes, or a self-hosted `OpenInstinct` / `OpenClaw` instance on a [$9/month Linux VPS](/blog/self-hosting-ai-stack-hetzner).
+2. **For your company inbox, calendar, and client prep:** Keep data inside your own boundary using portable `operating-rules.md` + `qualification-criteria.md` files ([free Starter Kit](/starter-kit)), draft-only Gmail scopes, or a self-hosted `OpenInstinct` / `OpenClaw` instance on a [$9/month Linux VPS](/blog/autonomous-ai-rig-tailscale-guide).
 3. **For your engineering IDE:** Run open-weight next-edit models (`Continue Instinct` or `Qwen 3.8`) locally so proprietary repository diffs stay on your machine at $0 marginal cost.
 
 Need an architectural review of which AI tools and browser agents are safe to approve across your company? Grab **Field Manual 03 (MCP Security & Eval Checklist)** on [/sovereign-stack](/sovereign-stack) or book a [90-Minute Workflow & Security Audit](/work-with-me).

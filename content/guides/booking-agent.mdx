@@ -2,11 +2,10 @@
 title: "Stop Replying to Scheduling Emails: Build a Booking Agent in an Afternoon"
 slug: booking-agent
 publishedDate: "2026-05-06"
-description: "A copy-paste tutorial for non-coders. Paste a scheduling email, get a draft reply with your Cal.com link in plain English, hit send. No SaaS, no monthly subscription, ~$0 to run. Includes a forkable GitHub repo."
+description: "A copy-paste tutorial for non-coders. Paste a scheduling email, get a draft reply with your Cal.com link in plain English, hit send. No SaaS, no monthly subscription, ~$0 to run."
 tags: ["beginner", "booking", "automation", "cal-com", "guides"]
 difficulty: "beginner"
 estimatedTime: "45 minutes"
-repoUrl: "https://github.com/sudosoph/booking-agent"
 draft: false
 ---
 
@@ -42,7 +41,7 @@ We're going to:
 
 Go to [console.anthropic.com](https://console.anthropic.com) and sign up. Once you're in:
 
-1. Click **Settings** → **API keys** in the sidebar.
+1. Click **Settings** and then **API keys** in the sidebar.
 2. Click **Create Key**, give it a name like "booking-agent", and copy the key.
 3. Save it somewhere safe (a password manager is ideal). You won't be able to see it again after you close the page.
 
@@ -54,17 +53,18 @@ If you don't already have one, sign up at [cal.com](https://cal.com) and create 
 
 Your link will look like `https://cal.com/your-name/30min`. Copy it.
 
-## Step 3. Clone the repo
+## Step 3. Create the project folder
 
-Open the Terminal app (on Mac: Cmd+Space, type "Terminal"; on Windows: open PowerShell). Paste this and press Enter:
+Open the Terminal app (on Mac: Cmd+Space, type "Terminal"; on Windows: open PowerShell). Paste these commands and press Enter:
 
 ```bash
-git clone https://github.com/sudosoph/booking-agent.git
+mkdir booking-agent
 cd booking-agent
-npm install
+npm create next-app@latest . --yes
+npm install @anthropic-ai/sdk
 ```
 
-The first command downloads the code. The second moves you into the folder. The third installs the libraries the app needs (it'll print a lot of text, that's normal, wait for it to finish).
+The first two commands create and enter your folder. The third scaffolds a clean local web app, and the fourth installs the official Anthropic SDK.
 
 If you get an error like "command not found: npm", you need to install Node.js first. Go to [nodejs.org](https://nodejs.org), download the LTS version, install it, then run the three commands above again.
 
@@ -107,7 +107,7 @@ Read it. If it's good, click **Copy**, paste it into your email reply, hit send.
 
 ## Step 7. Make it sound like you
 
-The whole personality of the agent lives in one file: `src/voice.md`. Open it. It looks something like this:
+The whole personality of the agent lives in one file: `src/operating-rules.md`. Open it. It looks something like this:
 
 ```markdown
 # How to write replies for me
@@ -140,7 +140,7 @@ The voice file is the most important customization, and the most fun. Add your o
 
 For the curious: when you click **Draft reply**, the app sends three things to the Anthropic API:
 
-1. Your `voice.md` file (your brand instructions).
+1. Your `operating-rules.md` file (your brand instructions).
 2. Your Cal.com link, your name, your timezone (basic context).
 3. The pasted email body.
 
@@ -187,7 +187,7 @@ If you're a developer reading this and thinking "I just want the full Gmail inte
 
 **The browser says "this site can't be reached".** Make sure `npm run dev` is still running in the Terminal. If you closed the Terminal, open it again, `cd booking-agent`, and run `npm run dev` again.
 
-**The draft is in a weird tone or makes things up.** Two fixes: (1) make `voice.md` more specific (add example replies you've sent before, show, don't tell), and (2) try Claude Sonnet instead of Haiku (see "What it costs" above). The smarter model picks up subtle tone shifts faster.
+**The draft is in a weird tone or makes things up.** Two fixes: (1) make `operating-rules.md` more specific (add example replies you've sent before, show, don't tell), and (2) try Claude Sonnet instead of Haiku (see "What it costs" above). The smarter model picks up subtle tone shifts faster.
 
 **It mentioned a meeting time the sender didn't ask for.** Open `src/prompt.ts` and look for the line that says "Do not invent times". Make it more explicit, e.g., "Never propose a specific time. Always offer the Cal.com link instead."
 

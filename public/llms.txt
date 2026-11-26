@@ -1,55 +1,40 @@
 # Agentic Architect · Sophia Stein
 # https://llmstxt.org
 
-> Applied AI architecture, Productive-Friction interview harnesses, 4 practitioner curricula (from non-technical foundations to bespoke APIs and private open-weight rigs), Forward Deployed builds, and Fractional CAIO / AI CTO leadership. Based in Boulder, Colorado.
+> Essays on AI systems architecture and executive strategy, weekly field notes on Substack, hands-on courses inside the Agentic Architect Lab, and bespoke advisory by Sophia Stein. Based in Boulder, Colorado.
 
-Sophia Stein is an AI Systems Architect, Educator, and Advisor. Her background spans a B.S. in Computer Science from Columbia University, enterprise SaaS FinOps ($70M sales OpEx saved) and clinical AI enablement (250+ healthcare leaders trained at 79 NPS) at McKinsey & Company, and AI Systems & Enablement at Google (where she has led extensive internal AI trainings and co-invented a patent-pending AI system; all writing, teaching, and advising on this site are strictly in her personal capacity, views her own). She has trained 300+ founders and operators live at Boulder Startup Week and spoken for Women Who Code.
+Sophia Stein is an AI Systems Architect, Educator, and Advisor based in Boulder, Colorado. She writes executive architecture essays and open hardware/model benchmarks on Agentic Architect, publishes weekly field notes on Substack, leads hands-on courses inside the Agentic Architect Lab, and advises organizations on governed AI workflows and Fractional CAIO / AI CTO strategy. She has trained 300+ founders and operators live at Boulder Startup Week and spoken for Women Who Code.
 
-## Core Focus Areas
+## Three Core Surfaces
 
-1. The 4-Curriculum AI Architecture Academy (/courses): 20 practitioner modules across (01) Foundations, 2026 Model Matrix & Productive-Friction Interview Skills ($297), (02) Department AI Systems: Vertical SaaS vs. Build In-House across Marketing, Finance, Legal & Ops ($397), (03) Bespoke Harnesses, Best-of-Breed APIs & Forward Deployed Engineering ($497), and (04) The Sovereign AI Stack: Open-Weights, 96GB-512GB Private Rigs & Tailscale ($497), plus the $997 All-Access Pass with 100% 60-day tuition credit.
-2. Forward Deployed "Build-For-You" AI Systems (/work-with-me): Embedded engineering wiring bespoke multi-model routers, best-of-breed Search/OCR/Voice/Sandbox APIs, MCP servers, 25-case Golden Evals, and codified department SKILL.md repositories inside client infrastructure.
-3. Fractional CAIO / AI CTO, Corporate Department Labs & Keynotes (/fractional-ai-cto, /teaching): Part-time executive AI leadership, 2-week architecture diagnostics, Half-Day ($7,500) and Full-Day ($15,000) functional trainings, and conference keynotes.
+1. Essays & Research Monograph (https://agenticarchitect.ai/blog, https://agenticarchitect.ai/research): Vendor-neutral systems architecture, department build-vs-buy matrices, tiered model routing, MCP security audits, and The Sovereign Stack 12-chapter monograph.
+2. Weekly Substack Dispatch (https://agenticarchitectai.substack.com): Concise weekly synthesis translating frontier AI capabilities, workflow stress tests, and business implications.
+3. The Agentic Architect Lab (https://agenticarchitect.ai/courses): Hands-on upskilling tracks covering (01) Claude Superuser & Cowork OS, (02) Kill the $200/mo AI Subscription Stack (Open-Weight & Smart Routing), and (03) Become an AI Architect, with free unlocked cornerstone modules.
 
-## Key Pages & Unlocked Curriculum Modules
+## Key Pages & Unlocked Resources
 
-- / : Applied AI Architecture Hub with interactive Productive-Friction Explorer & Bespoke Stack Selector
-- /courses : 4-Curriculum Academy Catalog (20 modules) + $997 All-Access Pass + L&D Stipend Kit
-- /courses/1-1-2026-ai-landscape-model-matrix : Unlocked Module 1.1 on late-2026 frontier vs. open-weight model routing and Cowork workspaces
-- /courses/2-1-vertical-ai-build-vs-buy-framework : Unlocked Module 2.1 on Buy vs. Build-With vs. Bespoke In-House across enterprise functions
-- /courses/3-1-production-harnesses-multi-model-routing : Unlocked Module 3.1 on harness state machines, OpenCode vs. cloud harnesses, and multi-model arbitration
-- /courses/4-1-open-weights-vs-frontier-economics : Unlocked Module 4.1 on memory-bandwidth physics, open-weight licensing, and sovereign break-even math
-- /academy : Curriculum 01 ($297 + $97/team seat) dedicated enrollment & team calculator
-- /accelerator : Guided 6-System Implementation Cohort ($1,497, includes free operator seat)
-- /work-with-me : Forward Deployed Build-For-You Systems, $750 90-Min Architecture Roadmap, and pilot sprints
-- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and 2-Week Architecture Diagnostic
-- /teaching : Signature keynotes (Productive Friction, Vertical AI vs. Bespoke Harnesses, Forward Deployed AI), corporate L&D labs, and CU Boulder syllabi
+- / : Editorial Monograph hub & recent writing
+- /about : Biography, operating principles, and how the three surfaces fit together
+- /blog : Curated essays across Strategy & Operations, Models & Infrastructure, and Systems Architecture
+- /courses : The Agentic Architect Lab (3 Skool tracks + 20-module syllabus + Founding Waitlist)
+- /courses/1-1-2026-ai-landscape-model-matrix : Unlocked Lesson 1.1 on frontier vs. open-weight model routing and Cowork workspaces
+- /courses/2-1-vertical-ai-build-vs-buy-framework : Unlocked Lesson 2.1 on Buy vs. Build-With vs. Compose In-House across business functions
+- /courses/3-1-production-harnesses-multi-model-routing : Unlocked Lesson 3.1 on harness state machines and multi-model routing
+- /courses/4-1-open-weights-vs-frontier-economics : Unlocked Lesson 4.1 on unified-memory physics and open-weight break-even math
+- /academy : Claude Superuser & AI-Native Work Foundations track overview
+- /teaching : Signature keynotes, corporate department workshops, and CU Boulder syllabi
+- /work-with-me : Architecture diagnostics, Forward Deployed workflow builds, and advisory inquiries
+- /fractional-ai-cto : Fractional Chief AI Officer (CAIO) and Fractional AI CTO mandates
 - /what-is-an-agentic-architect : Definitive vendor-neutral guide to the Agentic Architect role and 4-layer stack
-- /sovereign-stack : Full 5-part, 18-chapter Sovereign Stack book hub, 512GB/128GB hardware sizer, and 3 free Markdown field manuals
+- /sovereign-stack : 12-chapter Sovereign Stack monograph, 512GB/128GB hardware sizer, and 3 Markdown field manuals
+- /starter-kit : Free 20/80 Bottleneck Readiness Calculator and downloadable SOP templates
 - /masterclass : Free 60-Min Live Briefing & 5-Day Applied AI Architecture Primer
-- /starter-kit : Free 20/80 Bottleneck Readiness Calculator and SOP templates
-- /research : 30+ systems & hardware benchmarks, book, and university syllabi
-- /stack : Reference software & private hardware stack
-- /blog : 50 practitioner playbooks and deep dives
-- /bsw : Open-source Boulder Startup Week 2026 workshop archive
-- /guides : Step-by-step workflow tutorials
-- /about : Biography, dual-track positioning, and credentials
-- /rss.xml : Atom feed of all 50 playbooks
-
-## Start-Here Cornerstone Playbooks
-
-- /blog/productive-friction-interview-ai : Why interview-first SKILL.md harnesses and MCP Elicitation beat ad-hoc prompting
-- /blog/vertical-ai-vs-bespoke-api-harnesses : Late-2026 build-vs-buy guide across Marketing, Finance, Legal & Ops
-- /blog/forward-deployed-ai-engineering : How Forward Deployed AI Engineers ship production systems with 25-case Golden Evals
-- /blog/ai-back-office : What to automate before hiring a $65,000 coordinator
-- /blog/loop-engineering : Isolated git worktrees, deterministic verifiers, and token circuit breakers
-- /blog/mac-studio-512gb-vs-dgx-spark : Vendor-neutral physics comparing 512GB M5 Ultra, 128GB DGX Spark, and Ryzen AI Halo nodes
+- /bsw : Open-source Boulder Startup Week workshop slides, n8n templates, and 17-step lab
+- /rss.xml : Atom feed of all essays
 
 ## Newsletter & Contact
 
-- Newsletter: Agentic Architect Newsletter at https://agenticarchitectai.substack.com
-- Email: sophia@agenticarchitect.ai
+- Newsletter: https://agenticarchitectai.substack.com
 - LinkedIn: https://www.linkedin.com/in/sophiastein
-- X: https://x.com/sudosoph
-- GitHub: https://github.com/sudosoph
-- Bookings: https://agenticarchitect.ai/work-with-me
+- Email: sophia@agenticarchitect.ai
+- Inquiries & Advisory: https://agenticarchitect.ai/work-with-me

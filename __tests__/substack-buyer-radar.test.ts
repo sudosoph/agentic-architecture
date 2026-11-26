@@ -20,7 +20,11 @@ describe('Substack Buyer-Room Radar & Bot-vs-Buyer Interaction Classifier', () =
   })
 
   it('accurately separates 5-second cron AI brand bots from real Executive / Business Owner buyers', () => {
-    const botVerdict = classifySubstackInteraction({
+    const classify = classifySubstackInteraction as (
+      input: Record<string, unknown>,
+    ) => { classification: string; recommendedAction: string }
+
+    const botVerdict = classify({
       commenterName: 'Tamara Ashworth',
       commentBody:
         'Treating an agent like a new employee keeps workflows owned. Which of the six would you keep a sign-off on?',
@@ -32,7 +36,7 @@ describe('Substack Buyer-Room Radar & Bot-vs-Buyer Interaction Classifier', () =
     expect(botVerdict.classification).toBe('PEER_AI_BRAND_AGENT')
     expect(botVerdict.recommendedAction).not.toContain('\u2014')
 
-    const buyerVerdict = classifySubstackInteraction({
+    const buyerVerdict = classify({
       commenterName: 'Elena Vance',
       commentBody:
         'We run a 35-person dental group in Denver and are debating whether to build pre-call intake triage internally or bring in fractional oversight.',

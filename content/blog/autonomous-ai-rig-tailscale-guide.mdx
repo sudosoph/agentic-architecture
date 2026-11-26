@@ -1,8 +1,12 @@
 ---
 title: "The Pocket-Sized Private AI Cloud: Connecting to Your Own Autonomous Rig Anywhere With Tailscale"
 slug: autonomous-ai-rig-tailscale-guide
-publishedDate: "2026-11-20"
+publishedDate: "2026-09-25"
 description: "How to turn an always-on workstation or quiet office mini-PC into a zero-exposed-port private AI cloud over Tailscale, running DeepSeek 4.1 and automated n8n workflows from your phone or laptop anywhere."
+briefing:
+  - "Exposing local inference ports (`11434` or `8080`) on a home or office router invites immediate credential and prompt scraping."
+  - "Binding `llama-server` or `vLLM` strictly to `127.0.0.1` and publishing over `tailscale serve` gives every authorized device encrypted WireGuard access with zero open firewall ports."
+  - "Pairing systemd auto-restart units with per-device ACL tags turns a desk workstation into a dependable private team endpoint."
 track: "models-rigs"
 tags: ["tailscale", "hardware", "local-first", "deepseek", "security", "framework"]
 kind: deep-dive
@@ -27,7 +31,7 @@ You do not need a noisy server rack to run useful local models in late 2026. Mem
 
 | Setup Tier | Hardware Specification | Realistic Sweet Spot | Who Should Pick It |
 |---|---|---|---|
-| **My Daily Workstation** | **Framework 16** (AMD Ryzen AI 9 HX 370, 96GB DDR5, 90GB unified GART pool, Ubuntu LTS) | Runs 27B to 35B dense models and quantized DeepSeek 4.1 / MoE variants at ~3 cents/session of electricity | Builders who want one repairable Linux rig for both travel and desk duty ([full breakdown](/blog/96gb-ram-thesis)) |
+| **My Daily Workstation** | **Framework 16** (AMD Ryzen AI 9 HX 370, 96GB DDR5, 90GB unified GART pool, Ubuntu LTS) | Runs 27B to 35B dense models and quantized DeepSeek 4.1 / MoE variants at ~3 cents/session of electricity | Builders who want one repairable Linux rig for both travel and desk duty ([full breakdown](/blog/mac-studio-512gb-vs-dgx-spark)) |
 | **Quiet Small-Office Node** | **Apple Mac Mini (M4 Pro, 48GB to 64GB unified memory)** | Silent, ~15W idle, plug-and-play `llama.cpp` / `Ollama` server tucked on a bookshelf | Founders, agencies, and 2 to 15 person offices wanting zero Linux driver maintenance |
 | **Compact Linux Mini-PC** | **Ryzen AI Max / Strix Halo 64GB to 128GB Mini-PC** | High unified RAM per dollar in a lunchbox footprint for Docker + Postgres + local models | Technical operators building a dedicated headless Linux automation box |
 

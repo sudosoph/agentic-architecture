@@ -1,8 +1,12 @@
 ---
 title: "Research-First Outreach: How to Use AI for Sales and Partnerships Without Sounding Like a Bot"
 slug: cold-email-agent
-publishedDate: "2026-04-20"
+publishedDate: "2026-08-01"
 description: "A research-first outbound agent that scrapes news, LinkedIn, and financials before drafting an email. With the architecture, the prompts, and the guardrails."
+briefing:
+  - "High-volume AI outbound sequences burn domain reputation within weeks because generic templates ignore real account timing and buyer fit."
+  - "Signal-driven outbound filters prospects against explicit qualification criteria first, then assembles cited account research into staged drafts."
+  - "Human-approved sending at low daily volume outperforms unreviewed spray-and-pray automation on both reply rate and sender trust."
 track: "small-business"
 tags: ["sales", "agents", "n8n", "outbound", "automation"]
 draft: false
@@ -57,7 +61,7 @@ Three stages, glued together with n8n.
 
 [Stage 3] Drafter
    - Drafting LLM (with voice rules)
-   - Inputs: dossier + voice.md + ICP-specific opener templates
+   - Inputs: dossier + operating-rules.md + ICP-specific opener templates
    - Output: drafted opener + 2 follow-ups, queued for human review
 ```
 
@@ -154,3 +158,9 @@ Two rules I learned the painful way.
 ## The takeaway
 
 The cold email industry is not dead. The volume version of cold email is dead. The replacement is a small number of well-researched, well-drafted, human-approved emails per day, supported by an agent that does the eight hours of research a real SDR used to spend their morning on. The economics work. The reputation cost is lower. The deliverability is better. The skill that matters is writing the voice rules and reviewing the drafts. Both are jobs the founder is already qualified to do.
+
+## Related Reading & Next Steps
+
+- **Reference Architecture:** [What Is an Agentic Architect? The 4-Layer Stack](/what-is-an-agentic-architect)
+- **Back-Office Blueprint:** [The 6-Workflow AI Back Office](/blog/ai-back-office) and [How to Build an AI Chief of Staff](/blog/ai-chief-of-staff)
+- **Templates & Hands-On Courses:** Score your own processes in the [20/80 Task Readiness Kit](/starter-kit) or explore [The Agentic Architect Lab](/courses).

@@ -5,39 +5,35 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { SITE_CONFIG } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'Systems Research, Book & University Teaching',
+  title: 'Systems Research, Monograph & University Syllabi',
   description:
-    'Published AI systems benchmarks, The Sovereign Stack 18-chapter book, CU Boulder university syllabi, open-source labs, and CTO technical advisory by Sophia Stein.',
+    'Published AI systems benchmarks, The Sovereign Stack 12-chapter monograph, university syllabi, open-source labs, and CTO technical advisory by Sophia Stein.',
   alternates: { canonical: '/research' },
 }
 
 const PILLARS = [
   {
-    badge: '18 Chapters + Hardware Sizer',
-    badgeVariant: 'rig' as const,
-    title: 'The Sovereign Stack (Book & Field Manuals)',
+    badge: '12 Chapters + Hardware Sizer',
+    title: 'The Sovereign Stack (Monograph & Manuals)',
     body: 'Vendor-neutral engineering benchmarks across 512GB unified-memory nodes, three-tier open-weight routing, MCP security audits, and deterministic loop verifiers.',
     href: '/sovereign-stack',
-    cta: 'Open 18-Chapter Book & Sizer →',
+    cta: 'Open Monograph & Sizer',
   },
   {
-    badge: 'CU Boulder Syllabi + Keynotes',
-    badgeVariant: 'online' as const,
+    badge: 'University Syllabi + Keynotes',
     title: 'University Teaching, Speaking & Open Labs',
     body: 'Applied graduate and undergraduate syllabi (Leeds School of Business & ATLAS Institute), Women Who Code talks, and our open-source 300+ attendee Boulder Startup Week lab.',
     href: '/teaching',
-    cta: 'View Syllabi & Speaking →',
+    cta: 'View Syllabi & Speaking',
   },
   {
     badge: 'Fractional Leadership & Architecture',
-    badgeVariant: 'tag' as const,
     title: 'Fractional Chief AI Officer & Fractional AI CTO',
-    body: 'Part-time executive AI leadership, 2-week architecture diagnostics, evaluation harnesses, and technical due diligence for mid-market companies, healthcare groups, and engineering teams.',
+    body: 'Part-time executive AI leadership, 2-week architecture diagnostics, evaluation harnesses, and technical due diligence for scaling organizations and engineering teams.',
     href: '/fractional-ai-cto',
-    cta: 'Explore Fractional AI Roles →',
+    cta: 'Explore Fractional Roles',
   },
 ]
 
@@ -48,28 +44,27 @@ export default function ResearchPage() {
   )
 
   return (
-    <div className="space-y-14">
+    <div className="space-y-16">
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="rig">Technical Credibility · Academic Syllabi · Systems Benchmarks</Badge>
-          <Link href="/blog" className="font-mono text-xs text-accent hover:underline">
-            Looking for non-technical Business Owner Playbooks? Go here →
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+          <span>Systems Architecture · Hardware Physics · Academic Syllabi</span>
+          <Link href="/blog" className="hover:text-fg underline underline-offset-3">
+            Looking for Strategy &amp; Operations essays? Go here
           </Link>
         </div>
         <PageHeader
-          meta="Columbia CS · Applied AI Engineering · 300+ Trained Live"
-          title="Systems Research, Book & University Teaching"
-          description="Our engineering benchmarks, open-source labs, and university course syllabi live here so business owners get clean executive playbooks on the front door while CTOs, engineers, and academic committees can inspect the underlying architecture."
+          title="Systems Research, Monograph & University Teaching"
+          description="Our engineering benchmarks, open-source labs, and university course syllabi live together here so CTOs, builders, and academic committees can inspect the underlying architecture."
         />
       </div>
 
-      {/* 3 Academic & Engineering Pillars */}
+      {/* 3 Pillars */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {PILLARS.map(item => (
           <Card key={item.title} className="p-6 flex flex-col justify-between space-y-4">
             <div className="space-y-2.5">
-              <Badge variant={item.badgeVariant}>{item.badge}</Badge>
-              <h2 className="text-lg font-bold text-fg leading-snug">{item.title}</h2>
+              <Badge variant="tag">{item.badge}</Badge>
+              <h2 className="font-serif text-xl font-normal text-fg leading-snug">{item.title}</h2>
               <p className="text-sm text-muted leading-relaxed">{item.body}</p>
             </div>
             <div className="pt-3 border-t border-border">
@@ -82,13 +77,11 @@ export default function ResearchPage() {
       </section>
 
       {/* Open-Source Workshop Strip */}
-      <Card className="p-6 bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <Card className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-online">
-            Open-Source Lab Curriculum
-          </p>
-          <h2 className="text-lg font-bold text-fg">
-            Boulder Startup Week 2026: 17-Step Autonomous Workflow Lab
+          <p className="text-xs font-medium text-muted">Open-Source Lab Curriculum</p>
+          <h2 className="font-serif text-xl font-normal text-fg">
+            Boulder Startup Week: 17-Step Autonomous Workflow Lab
           </h2>
           <p className="text-sm text-muted">
             Full lecture slides, reproducible setup scripts, and handouts taught live to 300+
@@ -97,10 +90,10 @@ export default function ResearchPage() {
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
           <Button variant="outline" size="sm" href="/bsw">
-            Open BSW Lab Archive →
+            Open BSW Lab Archive
           </Button>
           <Button variant="ghost" size="sm" href="/stack">
-            Hardware &amp; Software Stack →
+            Reference Stack &amp; Rigs
           </Button>
         </div>
       </Card>
@@ -109,15 +102,15 @@ export default function ResearchPage() {
       <section className="space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Engineering &amp; Model Benchmarks ({technicalPosts.length} Papers &amp; Teardowns)
+            <p className="text-xs font-medium text-muted tabular-nums">
+              Engineering &amp; Model Benchmarks ({technicalPosts.length} Notes)
             </p>
-            <h2 className="text-2xl font-bold text-fg mt-1">
-              Production Architecture, Hardware Physics &amp; Evaluation Harnesses
+            <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+              Production architecture, hardware physics &amp; evaluation harnesses
             </h2>
           </div>
-          <Link href="/sovereign-stack" className="text-xs font-semibold text-accent hover:underline">
-            Read in compiled 18-chapter book order →
+          <Link href="/sovereign-stack" className="text-xs font-medium text-muted hover:text-fg">
+            Read in compiled monograph order
           </Link>
         </div>
 
@@ -131,34 +124,35 @@ export default function ResearchPage() {
             })
             return (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
-                <Card className="p-5 h-full flex flex-col justify-between space-y-3 hover:border-accent transition-colors">
+                <Card
+                  interactive
+                  className="p-5 h-full flex flex-col justify-between space-y-3"
+                >
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2 text-xs font-mono text-muted">
-                      <Badge variant={post.track === 'models-rigs' ? 'rig' : 'tag'}>
-                        {post.track === 'models-rigs' ? 'Models & Hardware' : 'Systems Engineering'}
-                      </Badge>
+                    <div className="flex items-center justify-between gap-2 text-xs text-muted tabular-nums">
                       <span>
-                        {post.readingMinutes ?? 5} min · {date}
+                        {post.track === 'models-rigs' ? 'Models & Hardware' : 'Systems Architecture'}
+                      </span>
+                      <span>
+                        {date} · {post.readingMinutes ?? 6} min
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-fg group-hover:text-accent transition-colors leading-snug">
+                    <h3 className="font-serif text-xl font-normal text-fg group-hover:text-accent transition-colors leading-snug">
                       {post.title}
                     </h3>
                     <p className="text-xs text-muted leading-relaxed line-clamp-2">
                       {post.description}
                     </p>
                   </div>
-                  <span className="text-xs font-semibold text-accent">Read technical note →</span>
+                  <span className="text-xs font-medium text-fg group-hover:text-accent">
+                    Read note
+                  </span>
                 </Card>
               </Link>
             )
           })}
         </div>
       </section>
-
-      <p className="text-xs text-muted border-t border-border pt-6">
-        {SITE_CONFIG.personalCapacityNote}
-      </p>
     </div>
   )
 }

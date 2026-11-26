@@ -7,11 +7,10 @@ export interface PostFrontmatter {
   slug: string
   publishedDate: string
   description: string
+  briefing: string[]
   tags: string[]
   track?: BlogTrack
   readingMinutes?: number
-  /** Format. Defaults to 'post'. Deep dives are 2,500+ word reference articles
-   * with primary research. */
   kind?: 'post' | 'deep-dive'
   draft?: boolean
 }

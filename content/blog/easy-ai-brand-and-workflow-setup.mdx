@@ -1,73 +1,88 @@
 ---
-title: "How Business Owners Wire a Company Context Vault and 3 AI Workflows in One Afternoon"
+title: "How to Wire a Company Context Folder and Three AI Workflows in One Afternoon"
 slug: easy-ai-brand-and-workflow-setup
-publishedDate: "2026-11-24"
-description: "An afternoon blueprint for $1M to $50M founders and firm principals: standardize company operating rules and automate inbox triage, pre-call dossiers, and follow-ups."
+publishedDate: "2026-10-30"
+description: "An afternoon blueprint for founders and operators: separate plain-text company operating rules from workflow triggers across pre-call briefs, inbox triage, and weekly publishing."
+briefing:
+  - "Re-explaining your business tone, Ideal Customer Profile, and scope boundaries in every new chat tab wastes hours and produces generic copy."
+  - "Two plain-English Markdown files (`company-operating-rules` and `buyer-qualification-criteria`) make your context portable across Claude, ChatGPT, and open-weight tools."
+  - "Combining portable folder context with structured intake questions eliminates repetitive prompting without vendor lock-in."
 track: "small-business"
 tags: ["smb", "founders", "automation", "n8n", "operations"]
 kind: deep-dive
 draft: false
 ---
 
-Most business owners do not have an AI problem; they have a blank-box problem. Every morning starts by opening a fresh chat tab, re-explaining what the company sells, pasting a rough email, and spending twenty minutes editing out stiff corporate phrasing. After two weeks, the team quietly goes back to doing everything manually.
+Most teams do not have an AI model problem; they have a blank-prompt problem. Every morning starts by opening an empty chat window, re-explaining what the company sells, pasting a rough email, and spending twenty minutes editing out stiff corporate clichés. Within two weeks, busy people quietly return to doing the work manually.
 
-You can fix that in a single focused afternoon without writing code or buying bloated agency retainers. The secret is separating **context** (a 1-page Company Context Vault you write once) from **workflows** (three connected triggers wired to your existing inbox, calendar, and docs).
+You can fix that pattern in a single focused afternoon without writing custom software. The key architectural move is separating **portable context** (two plain-English reference documents you write once) from **workflows** (three event-driven triggers connected to your existing calendar, inbox, and docs).
 
-## Step 1: Build your Company Context Vault (`voice.md` + `icp.md`) in 30 minutes
+<figure class="editorial-figure">
+  <svg viewBox="0 0 600 190" role="img" aria-label="Portable company context folder feeding three afternoon workflows">
+    <rect x="20" y="42" width="190" height="106" rx="6" fill="#FFFFFF" stroke="#181920" />
+    <text x="36" y="70" fill="#181920" font-size="12" font-weight="600">Shared Context Folder</text>
+    <text x="36" y="94" fill="#636674" font-size="11">· operating-rules.md</text>
+    <text x="36" y="114" fill="#636674" font-size="11">· qualification-criteria.md</text>
+    <text x="36" y="134" fill="#636674" font-size="11">· 5 approved real examples</text>
 
-Before connecting any automation tool, create two plain text or Google Docs files in a shared folder:
+    <line x1="210" y1="95" x2="262" y2="45" stroke="#181920" stroke-width="1.4" />
+    <line x1="210" y1="95" x2="262" y2="95" stroke="#181920" stroke-width="1.4" />
+    <line x1="210" y1="95" x2="262" y2="145" stroke="#181920" stroke-width="1.4" />
 
-1. **`voice.md` (How you sound):** Three sentences on what your business does, four strict tone rules (for example: short paragraphs, concrete numbers, zero jargon, never use filler openers), and **five real examples** of emails or posts you wrote yourself that got great client responses.
-2. **`icp.md` (Who buys and why):** Your ideal customer profile, the top three problems they pay to solve, your pricing tiers, and common objections.
+    <rect x="262" y="18" width="318" height="46" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="278" y="38" fill="#181920" font-size="11.5" font-weight="600">Workflow 01 · Calendar Booking -&gt; Pre-Call Brief</text>
+    <text x="278" y="54" fill="#636674" font-size="10.5">Enriches domain &amp; stages 1-page dossier 30m prior</text>
 
-Why plain files beat locked prompt libraries: a markdown file or Google Doc works everywhere. You can drop it into a workspace project today, read it automatically from an [n8n or Zapier workflow](/starter-kit) tomorrow, and keep 100% ownership if you switch providers next quarter. You can copy the exact template free inside the [20-Minute Starter Kit](/starter-kit).
+    <rect x="262" y="72" width="318" height="46" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="278" y="92" fill="#181920" font-size="11.5" font-weight="600">Workflow 02 · Four-Bucket Draft-First Inbox</text>
+    <text x="278" y="108" fill="#636674" font-size="10.5">Stages replies in Gmail Drafts; queues Day-5 nudges</text>
 
-## Step 2: Pick the right zero-bloat glue
+    <rect x="262" y="126" width="318" height="46" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="278" y="146" fill="#181920" font-size="11.5" font-weight="600">Workflow 03 · Voice Memo -&gt; Canonical Essay Pack</text>
+    <text x="278" y="162" fill="#636674" font-size="10.5">Structured interview -&gt; site essay + weekly dispatch</text>
+  </svg>
+  <figcaption>Figure 1 · Write your operating rules once in portable Markdown or Docs so every downstream workflow shares the same standards.</figcaption>
+</figure>
 
-Lean businesses rarely need custom code. Use the tools your team already opens every day:
+## Step 1: Create your two-file Context Folder in thirty minutes
 
-| Layer | Practical Zero-Bloat Pick | Monthly Fixed Cost | Role in Your Stack |
-|---|---|---|---|
-| **Context Files** | Google Docs or Markdown in Git/Drive | $0 | Stores `voice.md`, `icp.md`, and SOP checklists |
-| **Bookings & Payments** | Cal.com + Stripe | $0 fixed | Captures structured intake answers and paid consults |
-| **Workflow Glue** | n8n (self-hosted OSS) or Zapier Free | $0 to $24 | Triggers on bookings, emails, or new notes |
-| **Human Approval Gate** | Gmail Drafts + Google Sheets | $0 | Holds every outbound message until you click Send |
-| **Publishing** | Website Blog + Substack + Buffer Free | $0 | Turns one weekly article into email and social posts |
+Before touching any automation tool, create two plain Markdown or Google Docs files in a shared project folder:
 
-Notice the fourth row: **Gmail Drafts**. Following the [5 Levels of AI Autonomy](/blog/the-hitl-standard), small businesses get the fastest ROI at Level 2 (Draft & Approve). Let the workflow gather context and prepare the draft; keep a ten-second human check before anything reaches a customer.
+1. **Operating & Communication Rules (`operating-rules.md`):** Three sentences describing what your organization does, four concrete style rules (short paragraphs, specific timelines, zero filler intros, never auto-send external messages), and **five real examples** of client replies or memos you wrote that landed well.
+2. **Buyer & Scope Criteria (`qualification-criteria.md`):** Who your best-fit clients are, the three urgent bottlenecks that prompt them to act, clear scope boundaries, and what always escalates to a principal.
 
-## Step 3: Wire these 3 workflows first
+Plain files beat proprietary prompt libraries because they travel cleanly across Claude Cowork folders, API workflows, and future models with zero lock-in. Both templates are unlocked in our [20/80 Task Readiness & SOP Kit](/starter-kit).
 
-Once `voice.md` exists, connect the three repetitive loops that eat the most founder and operator hours each week. Every one of these scores 18 or higher on the [90-minute Agent-Readiness Audit](/blog/agent-ready-tasks).
+## Step 2: Choose lightweight, auditable glue
 
-### Workflow 1: Pre-call lead brief and tailored agenda (Saves 3 to 4 hrs/week)
+Lean organizations rarely need heavy middleware. Combine tools your team already trusts:
 
-Whenever a prospect books on your calendar, trigger a simple three-step flow:
-- Pull the company domain and intake answers from the calendar webhook.
-- Summarize what the company sells, team size signals, and likely bottlenecks onto a 1-page Google Doc.
-- Draft a three-bullet confirmation note in Gmail Drafts confirming the agenda.
+| Layer | Practical Choice | Role in the Architecture |
+|---|---|---|
+| **Context Folder** | Markdown in Git or Google Docs | Canonical source for SOPs, qualification rules &amp; examples |
+| **Scheduling & Intake** | Cal.com | Captures structured intake answers &amp; fires clean webhooks |
+| **Workflow Orchestration** | n8n (open source) or lightweight webhooks | Connects bookings, search enrichment &amp; transcripts |
+| **Human Sign-Off Gate** | Gmail Drafts + shared sheet | Holds every external reply until a human clicks Send |
 
-Instead of scrambling five minutes before Zoom, you show up prepared like an executive advisor.
+Following [The 5 Levels of AI Autonomy](/blog/the-hitl-standard), Level 2 (Stage in Drafts) delivers the fastest trust and ROI: the workflow handles ninety percent of the gathering and drafting, while a human approves outbound communication in ten seconds.
 
-### Workflow 2: The 4-bucket inbox triage and follow-up queue (Saves 4 to 6 hrs/week)
+## Step 3: Wire these three high-return workflows first
 
-Summarizers just give you more reading. Instead, use the [4-Bucket Zero-Inbox pattern](/blog/the-zero-inbox-agent):
-- **Ignore / Archive:** Newsletters, receipts, automated alerts.
-- **Quick Reply Drafted:** Scheduling, standard pricing questions, and intro replies drafted using `voice.md` and parked in Gmail Drafts.
-- **Needs Context:** Pulls the client's recent invoice or project row from Google Sheets and attaches a two-line summary beside the draft.
-- **5-Day Gentle Nudge:** Checks sent threads with no reply after five business days and queues a polite two-sentence check-in draft.
+Each of these workflows scores 18 or higher on our [20/80 Task Readiness Scorecard](/blog/agent-ready-tasks):
 
-### Workflow 3: One voice memo to omnichannel brand pack (Saves 4 hrs/week)
+### 1. Pre-call prospect dossier and agenda confirmation
+When a booking lands on your calendar, pull the company domain and intake answers, summarize what the organization does and likely operational bottlenecks onto a one-page doc, and stage a polite three-bullet agenda confirmation in Drafts.
 
-Consistent marketing fails when every platform requires starting from scratch. Record one 5-minute voice note answering a real client question from that week:
-1. Transcribe the note and pass it through `voice.md` to draft one helpful 900-word canonical guide on your website.
-2. Send the same guide to your [Substack newsletter](https://agenticarchitectai.substack.com) list.
-3. Extract three standalone lessons for LinkedIn and X, queued across Tuesday, Thursday, and Saturday.
+### 2. Four-bucket inbox triage and five-day follow-up queue
+Instead of passive email summaries that create more reading, apply the [Zero-Inbox Agent](/blog/the-zero-inbox-agent) buckets: archive routine noise, stage standard scheduling or FAQ replies in Gmail Drafts, attach account context for complex client questions, and queue a two-sentence check-in draft whenever a sent proposal sits quiet for five business days.
 
-## Your 3-hour afternoon schedule
+### 3. Structured voice note to weekly essay and dispatch
+Record a ten-minute voice walkthrough answering a real client or architectural question from the week, verify facts and structure, publish the canonical guide on your own domain, and share the weekly synthesis with your newsletter readers.
 
-- **Hour 1:** Copy `voice.md` and `icp.md` from the [Starter Kit](/starter-kit) and paste five real writing samples.
-- **Hour 2:** Turn on Workflow 1 (Calendar booking to Pre-Call Brief Doc).
-- **Hour 3:** Turn on Workflow 3 (Weekly voice note to Blog + Newsletter + 3 Social Drafts).
+## Your three-hour afternoon schedule
 
-If you want to watch all three systems built live on screen, save a seat for the next [Free 60-Min Live Masterclass](/masterclass), or explore the 8-week [Agentic Business Accelerator](/accelerator) where we install all six core business workflows directly alongside you and your ops lead.
+- **Hour 1:** Download the two templates from the [Starter Kit](/starter-kit) and paste five real writing samples.
+- **Hour 2:** Connect Calendar bookings to your Pre-Call Dossier doc.
+- **Hour 3:** Enable Draft-First inbox staging and test five historical threads.
+
+Want screen-share walkthroughs of folder-based workspaces and custom Skills? Explore [The Agentic Architect Lab](/courses) or join our next [Free 60-Minute Live Briefing](/masterclass).

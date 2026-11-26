@@ -8,66 +8,66 @@ import { SITE_CONFIG } from '@/lib/site-config'
 export const metadata: Metadata = {
   title: 'Sponsor Agentic Architect',
   description:
-    'Partner with Agentic Architect across weekly playbooks and the Substack newsletter. Single sponsor per issue, full editorial independence.',
+    'Partner with Agentic Architect across essays and the weekly Substack dispatch. Single partner per issue, full editorial independence.',
   alternates: { canonical: '/sponsor' },
 }
 
-const TIERS = [
+const FORMATS = [
   {
-    name: 'Single Playbook & Newsletter Issue',
-    spec: 'Exclusive top-of-issue partner callout · permanent web archive',
-    starting: '$500',
-    body: 'One clearly labeled partner block in a weekly Substack edition and its matching permanent playbook on agenticarchitect.ai.',
+    tag: 'Weekly Dispatch',
+    name: 'Single Newsletter & Essay Issue',
+    spec: 'Exclusive top-of-issue partner note · permanent web edition',
+    body: 'One clearly labeled partner placement in a weekly Substack edition paired with its permanent essay on agenticarchitect.ai.',
   },
   {
-    name: '4-Issue Monthly Partner Package',
-    spec: 'Four consecutive weekly editions · category exclusivity',
-    starting: '$1,800',
-    body: 'Reserved placement across four weekly issues with category exclusivity so no competing product runs during your month.',
+    tag: 'Monthly Series',
+    name: 'Four-Issue Category Exclusivity',
+    spec: 'Four consecutive weekly editions · exclusive category slot',
+    body: 'Reserved placement across four weekly dispatches with category exclusivity so no competing product appears alongside yours.',
   },
   {
-    name: 'Open Guide or Starter Kit Patron',
-    spec: '12-month placement on a flagship guide or lab archive',
-    starting: '$2,500',
-    body: 'Long-tail placement on a high-intent step-by-step tutorial or open workshop archive read by founders and technical decision-makers.',
+    tag: 'Evergreen Resource',
+    name: 'Open Guide or Field Manual Patron',
+    spec: 'Long-term placement on an unlocked tutorial or benchmark hub',
+    body: 'Sustained visibility on step-by-step workflow tutorials and reference guides read by founders, operators, and technical leaders.',
   },
 ]
 
 const AUDIENCE_FACTS = [
   {
     label: 'Readership',
-    value: 'Business owners, COOs, founders, and AI builders implementing practical workflows',
+    value: 'Founders, COOs, operators, and technical builders implementing real AI workflows',
   },
   {
-    label: 'Newsletter',
-    value: `${SITE_CONFIG.newsletterName} published weekly on Substack`,
+    label: 'Distribution',
+    value: `${SITE_CONFIG.newsletterName} weekly dispatch on Substack + search-canonical essays`,
   },
   {
     label: 'Best-Fit Partners',
-    value: 'Workflow tools, workspace software, developer infrastructure, and privacy-first hardware',
+    value: 'Workspace software, developer & API infrastructure, analytics, and privacy-first hardware',
   },
   {
     label: 'Editorial Policy',
-    value: 'Single partner per issue, clear disclosure, zero tracking pixels, full editorial independence',
+    value: 'Single partner per issue, transparent disclosure, zero tracking pixels, full editorial independence',
   },
 ]
 
 export default function SponsorPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <PageHeader
-        meta="Partnerships · Full Editorial Firewall"
+        meta="Partnerships · Full Editorial Independence"
         title="Sponsor Agentic Architect"
-        description="Reach founders, operators, and technical leaders who actively buy workflow software, infrastructure, and enablement tools."
+        description="Introduce developer tools, workflow platforms, and privacy-first infrastructure to founders, operators, and technical decision-makers."
       />
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {TIERS.map(tier => (
+        {FORMATS.map(tier => (
           <Card key={tier.name} className="p-6 flex flex-col justify-between space-y-4">
-            <div className="space-y-2">
-              <Badge variant="tag">Starting at {tier.starting}</Badge>
-              <h2 className="text-lg font-bold text-fg">{tier.name}</h2>
-              <p className="font-mono text-xs text-accent">{tier.spec}</p>
+            <div className="space-y-2.5">
+              <Badge variant="tag">{tier.tag}</Badge>
+              <h2 className="font-serif text-xl font-normal text-fg">{tier.name}</h2>
+              <p className="text-xs font-medium text-fg/80">{tier.spec}</p>
               <p className="text-sm text-muted leading-relaxed">{tier.body}</p>
             </div>
           </Card>
@@ -76,32 +76,29 @@ export default function SponsorPage() {
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {AUDIENCE_FACTS.map(fact => (
-          <Card key={fact.label} className="p-5 bg-surface space-y-1">
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              {fact.label}
-            </p>
+          <Card key={fact.label} className="p-5 space-y-1">
+            <p className="text-xs font-medium text-muted">{fact.label}</p>
             <p className="text-sm font-medium text-fg">{fact.value}</p>
           </Card>
         ))}
       </section>
 
-      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <section className="rounded-lg border border-border bg-surface p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold text-fg">Request Current Availability &amp; Media Kit</h2>
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            Request availability &amp; media kit
+          </h2>
           <p className="text-sm text-muted">
-            Share your product URL and preferred tier; replies go out within two business days.
+            Share your product URL and preferred placement window; we reply within two business
+            days.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
-          <Button
-            variant="primary"
-            size="md"
-            href="/contact?subject=Sponsorship%20Inquiry"
-          >
-            Send Sponsorship Inquiry →
+          <Button variant="primary" size="md" href="/contact">
+            Send Sponsorship Inquiry
           </Button>
           <Button variant="outline" size="md" href="/stack">
-            View Current Stack →
+            View Reference Stack
           </Button>
         </div>
       </section>

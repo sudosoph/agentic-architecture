@@ -1,78 +1,90 @@
 ---
-title: "Loop Engineering in Production: Isolated Worktrees, Deterministic Verifiers, and Token Circuit Breakers"
+title: "Loop Engineering in Production: Isolated Worktrees, Deterministic Verifiers, and Circuit Breakers"
 slug: loop-engineering
-publishedDate: "2026-11-25"
-description: "Why late-2026 teams are moving past prompt and context tweaks to closed-loop engineering: isolated git worktrees, independent deterministic verifiers, and model-routing economics across Gemini 4 Neon, Kimi K3.1 Pro, DeepSeek V4.1, and Qwen 3.8."
+publishedDate: "2026-10-20"
+description: "Why engineering teams are moving past prompt tweaks to closed-loop design: isolated git worktrees, independent deterministic verifiers, nested feedback loops, and hard token circuit breakers."
+briefing:
+  - "Naive `while (true)` agent loops amplify hallucinations, corrupt working directories, and burn hundreds of dollars on stuck retries."
+  - "Production Loop Engineering pairs isolated git worktrees with deterministic external verifiers (compilers, tests, schema checks) rather than self-critique."
+  - "Hard per-run iteration caps and dollar circuit breakers guarantee predictable unit economics across unattended background tasks."
 track: "engineering"
 tags: ["loop-engineering", "evals", "architecture", "economics", "agents"]
 kind: deep-dive
 draft: false
 ---
 
-*Personal-capacity note: My day job is in applied AI at Google. Everything in this article is written independently in my personal capacity using strictly public model cards, open-weight releases, academic papers, and third-party benchmarks (such as Artificial Analysis). Views are my own.*
+Over the past two years, applied AI engineering matured up four distinct rungs:
 
-Over the past eighteen months, engineering teams walked up four distinct rungs:
+1. **Prompt phrasing:** Tuning wording inside a single chat turn.
+2. **Context engineering:** Versioned project rules (`AGENTS.md`, SOP folders) and clean retrieval boundaries.
+3. **Harness design:** Wrapping one model run with typed tool schemas and state machines.
+4. **Loop engineering:** Designing the complete closed-loop control system across triggers, isolated sandboxes, independent verifiers, subagent routing, and hard cost ceilings so multi-step runs converge instead of compounding errors.
 
-1. **Prompt engineering (2023 to 2024):** Tuning phrasing inside a single chat turn.
-2. **Context engineering (2025):** Versioned project memory (`AGENTS.md`, `voice.md`, `icp.md`) and clean retrieval boundaries.
-3. **Harness engineering (early 2026):** Wrapping one agent run with tool schemas, retries, and structured state.
-4. **Loop engineering (late 2026):** Designing the full closed-loop feedback system across triggers, isolated sandboxes, independent verifiers, subagent routing, and hard cost ceilings so autonomous runs converge instead of compounding errors.
+Empirical audits of open-source repositories show why naive agent rollouts stall after week two: teams commit instruction files, yet omit deterministic post-step verification and explicit stopping budgets. Without an external check, a faster model simply produces plausible regressions faster.
 
-An August 2026 empirical audit of **2,853 open-source repositories** (`arXiv:2608.21884`, Lulla et al.) exposed why so many agent rollouts stall after week two: plenty of teams committed instruction files, yet very few wired deterministic post-step verification or explicit stopping budgets. Without an external check, a faster model simply produces plausible regressions faster.
+<figure class="editorial-figure">
+  <svg viewBox="0 0 600 192" role="img" aria-label="Closed-loop engineering pipeline with isolated worktree, deterministic verifier, and 3-try circuit breaker">
+    <rect x="16" y="54" width="120" height="84" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="28" y="82" fill="#181920" font-size="11.5" font-weight="600">1. Scoped Trigger</text>
+    <text x="28" y="102" fill="#636674" font-size="10.5">Ticket, CI event,</text>
+    <text x="28" y="118" fill="#636674" font-size="10.5">or webhook</text>
 
-Andrej Karpathy's formulation remains the cleanest physical law in software automation: **your delegation ceiling equals your verification reliability**. If you can verify an output deterministically in three seconds, you can safely let an agent iterate ten times in the background. If verification requires a tired human skimming 600 lines of prose or diff, autonomy collapses into rubber-stamping.
+    <line x1="136" y1="96" x2="160" y2="96" stroke="#181920" stroke-width="1.4" />
 
-## The 5 building blocks of a production agent loop
+    <rect x="160" y="54" width="136" height="84" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="172" y="82" fill="#181920" font-size="11.5" font-weight="600">2. Git Worktree</text>
+    <text x="172" y="102" fill="#636674" font-size="10.5">Isolated branch</text>
+    <text x="172" y="118" fill="#636674" font-size="10.5">or microVM</text>
 
-Every reliable loop we ship or audit for Seed-to-Series B engineering and operations teams has five explicit parts:
+    <line x1="296" y1="96" x2="320" y2="96" stroke="#181920" stroke-width="1.4" />
 
-| Loop Component | Amateur Setup (Breaks at Scale) | Production Loop Standard |
+    <rect x="320" y="42" width="142" height="108" rx="6" fill="#FFFFFF" stroke="#181920" />
+    <text x="332" y="70" fill="#181920" font-size="11.5" font-weight="600">3. External Verifier</text>
+    <text x="332" y="90" fill="#636674" font-size="10.5">tsc + vitest/pytest</text>
+    <text x="332" y="106" fill="#636674" font-size="10.5">+ schema + link check</text>
+    <text x="332" y="126" fill="#181920" font-size="10.5" font-weight="500">Max 3 retries / $ cap</text>
+
+    <line x1="462" y1="96" x2="486" y2="96" stroke="#181920" stroke-width="1.4" />
+
+    <rect x="486" y="54" width="98" height="84" rx="6" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="498" y="82" fill="#181920" font-size="11.5" font-weight="600">4. Draft PR</text>
+    <text x="498" y="102" fill="#636674" font-size="10.5">Attached logs</text>
+    <text x="498" y="118" fill="#636674" font-size="10.5">Human merge</text>
+  </svg>
+  <figcaption>Figure 1 · Never let a generator grade its own homework: gate every iteration on an independent deterministic verifier and hard retry budget.</figcaption>
+</figure>
+
+## The five building blocks of a production agent loop
+
+| Loop Component | Fragile Prototype | Production Standard |
 |---|---|---|
-| **1. Trigger** | Manual copy-paste into a chat sidebar | Webhook, CI failure event, scheduled cron, or scoped ticket label |
-| **2. Workspace Isolation** | Running directly against shared `main` or live prod records | Ephemeral `git worktree`, container, or per-task microVM |
-| **3. Tool & Context Surface** | 25 unvetted MCP tools dumped into one prompt | Scoped `AGENTS.md` + [audited least-privilege MCP set](/blog/mcp-server-audit-2026) |
-| **4. Independent Verifier** | Asking the same LLM *"Did you do a good job?"* | Deterministic `tsc` + `vitest`/`pytest` + JSON Schema + [calibrated binary rubric](/blog/eval-harness-catches-regressions) |
-| **5. Stopping & Cost Ceiling** | Open-ended retries until context window overflows | Max 3 repair iterations + hard dollar/token circuit breaker -> human escalation |
+| **1. Trigger** | Manual paste into a chat sidebar | Scoped webhook, CI failure event, or labeled issue |
+| **2. Isolation** | Mutating shared `main` or live records | Disposable `git worktree`, container, or microVM |
+| **3. Tool Surface** | Dozens of unvetted MCP tools in one prompt | Scoped `AGENTS.md` + [audited least-privilege MCP set](/blog/mcp-server-audit-2026) |
+| **4. Verifier** | Asking the same LLM *"Is this correct?"* | Deterministic `tsc` + tests + JSON Schema + [regression evals](/blog/eval-harness-catches-regressions) |
+| **5. Circuit Breaker** | Open-ended retries until context overflows | Max 3 repair passes + hard dollar ceiling -> human escalation |
 
-Never let a generator grade its own homework inside the same context window. Even a cheap deterministic check (`exit code 0` on typecheck, unit tests, link validation, and schema compliance) beats an uncalibrated self-critique prompt every day of the week.
+## Separating inner, middle, and outer feedback timescales
 
-## Nested loops: Inner, middle, and outer
+High-output engineering and operations teams separate loops by horizon:
 
-Borrowing from control systems (and echoed in Andrew Ng's late-2026 writing on agentic development), high-output teams separate loops by timescale:
-
-- **Inner loop (seconds to minutes):** Propose edit -> run typecheck and targeted unit tests inside an isolated `git worktree` -> inspect stderr -> patch until green or hit the 3-retry cap.
-- **Middle loop (hours / async PR queue):** Parallel background workers handle bounded chores (dependency upgrades, test coverage gaps, competitive signal pulls, changelog validation) and open draft Pull Requests with full verifier logs attached for a two-minute human review.
-- **Outer loop (weekly architecture hygiene):** Audit failure traces from the week's rejected PRs, add one rule to `AGENTS.md` or one new golden test case, and tighten model routing so the system stops repeating last week's mistake.
-
-## Late-November 2026 model economics inside multi-step loops
-
-Loop cost is **not** determined by per-million-token sticker price alone. Total cost per converged task equals `(tokens per turn x turns to pass verifier x cache hit ratio)`. Verbose models that spin for twelve turns cost more than sharper models that converge in three.
-
-Here is how current public frontier and open-weight options stack up for multi-step coding and operational loops as of **November 2026** (compiled from public vendor pricing and Artificial Analysis Coding Agent benchmarks):
-
-| Model Tier (Nov 2026 Public Specs) | License / Access | Public List Price (Input / Output per 1M) | Strength Inside a Closed Loop | Loop Failure Mode to Watch |
-|---|---|---|---|---|
-| **Gemini 4 Neon** *(Nov 18, 2026)* | Cloud API (`1M` ctx) | `$3.00` / `$15.00` (`$0.15` cached) | `#1` AA Coding Agent Index (`61`), ~100 tok/s, tunable `low/medium/high/xhigh` thinking, `$7.37` avg session cost; delegates parallel sub-tasks cleanly to **Hydrogen** (`$1.50/$7.50`) | Over-allocating `xhigh` thinking on trivial lint fixes wastes output tokens |
-| **Gemini 4 Carbon** *(Nov 10, 2026)* | Cloud API (`1M` ctx) | `$2/$10` intro -> `$4.00` / `$20.00` (Dec 1) | Deepest deliberate synthesis on ambiguous multi-file architecture (~55 tok/s) | `$16.50` avg coding session makes it overkill as a default inner-loop worker |
-| **Kimi K3.1 Pro** *(Nov 6 open weights)* | Open Weights (`2.8T` / `104B` active) & `$2/$10` API | `$2.00` / `$10.00` API (or self-hosted cluster) | Built specifically for multi-hour tool-use trajectories (`1M` context) | High output verbosity inflates per-task token count without strict `max_tokens` caps |
-| **DeepSeek V4.1 Flash-1017** | **MIT** Open Weights (`763B` sparse MoE, multimodal) | Pennies via API or private VPC | Exceptional cost-to-reasoning ratio for batch code diffs, SQL, and JSON extraction | Pair with strict schema/test verifiers on ambiguous UI specs |
-| **Qwen 3.8-27B** | **Apache 2.0** Dense (`17 GB` @ 4-bit) | `$0` marginal token cost on [local hardware](/blog/mac-studio-512gb-vs-dgx-spark) | Fast local inner-loop worker, data/chart verification (`38/43` Plotly bench), zero external data egress | Escalate cross-repo architectural refactors to a frontier planner |
-
-The clear architectural pattern in November 2026 is **orchestrator-subagent routing**: run an orchestrator (`Gemini 4 Neon` at medium/high thinking, or your primary frontier planner) to decompose the spec and own final verification, while fanning routine file reads, test scaffolds, and classification turns out to cheaper subagents (`Hydrogen`, `DeepSeek V4.1 Flash`, or a local `Qwen 3.8-27B` endpoint over Tailscale).
+- **Inner loop (seconds to minutes):** Propose change -> run typecheck and targeted unit tests inside an isolated `git worktree` -> read `stderr` -> patch until green or hit the three-retry cap.
+- **Middle loop (async draft queue):** Background workers process bounded maintenance tasks (schema syncs, test coverage gaps, research sweeps) and open draft Pull Requests with verifier logs attached for a two-minute human review.
+- **Outer loop (weekly hygiene):** Inspect rejected runs every Friday, add one rule to `AGENTS.md` or one new test case to the golden suite, and adjust [three-tier model routing](/blog/mixing-and-matching-open-weight-models) so the system never repeats last week's failure.
 
 ## A minimal circuit-breaker wrapper you can ship today
 
-Before letting any background loop run unattended in CI or n8n, enforce three hard invariants in code:
+Before running any unattended loop in CI or workflow automation, enforce retry, timeout, and dollar caps in code:
 
 ```typescript
 export interface LoopBudget {
-  maxIterations: number      // e.g. 3 repair passes max
-  maxCostUsd: number         // e.g. $1.50 per ticket ceiling
-  timeoutMs: number          // e.g. 180_000 (3 minutes)
+  maxIterations: number // e.g. 3 repair passes max
+  maxCostUsd: number    // e.g. $1.50 per ticket ceiling
+  timeoutMs: number     // e.g. 180_000 (3 minutes)
 }
 
 export async function runVerifiedLoop<T>(
-  propose: (attempt: number, lastVerifierFeedback: string) => Promise<{ output: T; costUsd: number }>,
+  propose: (attempt: number, feedback: string) => Promise<{ output: T; costUsd: number }>,
   verifyDeterministic: (output: T) => Promise<{ passed: boolean; diagnostics: string }>,
   budget: LoopBudget,
 ) {
@@ -84,7 +96,6 @@ export async function runVerifiedLoop<T>(
     if (Date.now() - startedAt > budget.timeoutMs) {
       return { status: 'escalate_human' as const, reason: 'timeout_exceeded', spentUsd, feedback }
     }
-
     const step = await propose(attempt, feedback)
     spentUsd += step.costUsd
 
@@ -92,24 +103,24 @@ export async function runVerifiedLoop<T>(
     if (check.passed) {
       return { status: 'converged' as const, output: step.output, attempt, spentUsd }
     }
-
     feedback = check.diagnostics
     if (spentUsd >= budget.maxCostUsd) {
       return { status: 'escalate_human' as const, reason: 'cost_ceiling_hit', spentUsd, feedback }
     }
   }
-
   return { status: 'escalate_human' as const, reason: 'max_iterations_exhausted', spentUsd, feedback }
 }
 ```
 
-Notice what happens when `maxIterations` or `maxCostUsd` trips: the loop does not silently commit broken code or spin up $90 of retry tokens overnight (see [Why AI Bills Spike Overnight](/blog/token-budgeting-for-startups)). It packages the exact deterministic diagnostics and escalates to a [Rung 2 human checkpoint](/blog/the-hitl-standard).
+When `maxIterations` or `maxCostUsd` trips, the loop never commits broken work or burns runaway API spend overnight ([see Token Budgeting for Startups](/blog/token-budgeting-for-startups)). It packages the exact compiler or schema diagnostics and routes to a [human review gate](/blog/the-hitl-standard).
 
-## Checklist for CTOs and engineering leads this week
+## Measuring loop convergence instead of demo screenshots
 
-1. **Pick one narrow task with an existing binary verifier:** Failing unit test triage, OpenAPI schema sync, broken-link cleanup, or SQL migration lint.
-2. **Isolate execution:** Run every agent attempt inside a disposable `git worktree` or container rather than mutating a shared checkout.
-3. **Separate planner cost from worker cost:** Use [three-tier routing](/blog/mixing-and-matching-open-weight-models) so 80% of inner-loop checks run on Flash-class or local open-weight models.
-4. **Log convergence rate, not just demo wins:** Track `first-pass pass rate`, `3-try convergence rate`, and `cost per merged PR`.
+Teams running closed-loop systems in production track four operational telemetry metrics rather than anecdotal chat impressions:
 
-Want a second set of eyes on your team's verification harness and inference spend? Explore the full 18-chapter architecture map on [/sovereign-stack](/sovereign-stack) or book a [90-Minute Architecture & Cost Audit](/work-with-me).
+1. **First-Pass Verifier Rate:** Percentage of scoped tasks where Attempt 1 clears `tsc`, unit tests, and schema validation with zero retries. When this drops below fifty percent, tighten `AGENTS.md` or split the task into two smaller steps rather than raising `maxIterations`.
+2. **Three-Try Convergence Rate:** Share of tasks resolved cleanly within the three-attempt budget. Across well-scoped maintenance, extraction, and test-scaffolding queues, deterministic compiler or schema feedback lifts pass rates from roughly fifty-five percent on Attempt 1 to more than eighty-five percent by Attempt 3.
+3. **All-In Cost per Converged PR or Deliverable:** Total orchestrator plus subagent spend divided by *merged* outputs, exposing verbose models that appear cheap per token while burning twelve unproductive retries.
+4. **Human Review Time to Merge:** A healthy loop reduces reviewer effort to inspecting a concise verifier receipt and a minimal diff in under two minutes. Whenever reviewers spend twenty minutes untangling subtle side effects, shrink the blast radius of the trigger.
+
+Explore all twelve chapters of [The Sovereign Stack](/sovereign-stack), review [Coding Agent Infrastructure](/blog/coding-agent-infrastructure), or inquire about an architecture review on [Work With Me](/work-with-me).

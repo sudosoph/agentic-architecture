@@ -1,8 +1,12 @@
 ---
 title: "MCP, Honestly: What It Is and What It Is Not"
 slug: mcp-101
-publishedDate: "2026-05-02"
+publishedDate: "2026-07-07"
 description: "What the Model Context Protocol actually is, what it gets right, where it leaks, and why the local-first version is the cleaner story."
+briefing:
+  - "Custom point-to-point API wrappers force teams to rewrite tool connectors every time they switch models or workspace interfaces."
+  - "The Model Context Protocol (MCP) standardizes Resources (read context), Tools (typed actions), and Prompts across local and remote runtimes."
+  - "Designing narrow, business-intent MCP tools with explicit read-versus-write separation keeps agent integrations portable and auditable."
 track: "models-rigs"
 tags: ["mcp", "agents", "protocols", "local-first", "ollama"]
 draft: false
@@ -88,7 +92,7 @@ A real config most users hand-edit:
 
 Four stdio servers and one streamable-HTTP server in the same file. Mix-and-match is the whole pitch.
 
-## Ecosystem state, May 2026
+## Ecosystem state, 2026
 
 - **Reference servers** (`github.com/modelcontextprotocol/servers`): seven left in the canonical list. `everything`, `fetch`, `filesystem`, `git`, `memory`, `sequential-thinking`, `time`. Notably moved out (now in `servers-archived`): GitHub, GitLab, Slack, Postgres, SQLite, Sentry, Redis, Puppeteer, Google Drive, Google Maps, Brave Search. Superseded by first-party servers from those vendors. Sign of maturity.
 - **First-party heavyweights**: GitHub MCP (~30k stars, 80+ tools), Playwright MCP (~32k stars, accessibility-tree-driven, no screenshots).
@@ -162,3 +166,9 @@ In order:
 MCP is not magic. It is a wire format with a handshake and good defaults. What makes it interesting is that it is the first wire format that treats the LLM as a first-class actor in a distributed system, not a black box behind a single API call. The implementation is uneven. The shape is right.
 
 Run it locally before you bother with the cloud version. Write at least one server for something boring you do every week. The protocol gets out of the way once you stop fighting it.
+
+## Related Reading & Next Steps
+
+- **Model Routing Matrix:** [Frontier Planners vs. Open-Weight Workhorses](/blog/gemini-4-neon-vs-deepseek-v4) and [Six Open-Weight Routing Recipes](/blog/mixing-and-matching-open-weight-models)
+- **Hardware & Mesh Physics:** [512GB M5 Ultra vs. DGX Spark vs. Ryzen AI Halo](/blog/mac-studio-512gb-vs-dgx-spark) and [Zero-Port Tailscale Rigs](/blog/autonomous-ai-rig-tailscale-guide)
+- **Interactive Sizer:** Run your token and hardware numbers in [The Sovereign Stack](/sovereign-stack) or explore [Courses](/courses).

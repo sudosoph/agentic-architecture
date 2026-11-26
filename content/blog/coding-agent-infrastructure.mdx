@@ -1,8 +1,12 @@
 ---
 title: "Coding Agent Infrastructure in Production"
 slug: coding-agent-infrastructure
-publishedDate: "2026-05-04"
+publishedDate: "2026-06-27"
 description: "Codex, Linear, and Graphite shared the stage at AI Agent Conference NYC on what scales coding agents past the demo. The infrastructure underneath is the actual work."
+briefing:
+  - "Coding agents fail in messy repositories not from weak reasoning, but from slow test feedback, shared working trees, and undocumented conventions."
+  - "Isolated git worktrees, sub-10-second typecheck/lint verifiers, and concise root `AGENTS.md` files multiply first-pass merge rates."
+  - "Deterministic CI gates catch regressions automatically before a human engineer ever spends review cycles on generated diffs."
 track: "engineering"
 tags: ["coding-agents", "infrastructure", "codex", "linear", "graphite"]
 draft: false
@@ -12,7 +16,7 @@ OpenAI Codex, Linear, and Graphite (acquired by Cursor) shared a panel at AI Age
 
 ## What changed
 
-Two years ago, a coding agent that produced a working diff for a small task was a research demo. In May 2026, every major coding harness (Claude Code, Cursor, Codex, OpenClaw) ships agents that handle real refactors, real bug fixes, and real feature implementations. The agent itself is no longer the bottleneck.
+Two years ago, a coding agent that produced a working diff for a small task was a research demo. In 2026, every major coding harness (Claude Code, Cursor, Codex, OpenClaw) ships agents that handle real refactors, real bug fixes, and real feature implementations. The agent itself is no longer the bottleneck.
 
 The bottleneck moved. Three places it landed:
 
@@ -46,7 +50,7 @@ Concretely, what matters:
 
 **Per-file review takes a back seat to per-system review.** The agent already understands single-file changes. The review work that adds value is the cross-file impact: what tests should now exist, what callers might break, what API contract is now violated.
 
-**Test the review pipeline like product code.** Erik Thorelli from CodeRabbit at AI Dev SF: every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline, then shadow, then online. Same [shadow testing](/blog/shadow-testing) discipline.
+**Test the review pipeline like product code.** Erik Thorelli from CodeRabbit at AI Dev SF: every change to a review agent is a hypothesis. Every model swap is a hypothesis. Test offline, then shadow, then online. Same [shadow testing](/blog/eval-harness-catches-regressions) discipline.
 
 The teams that got this right ship a 5-minute median PR-to-review-complete time. The teams that did not are at 4 hours and growing.
 
@@ -64,7 +68,7 @@ Real patterns from production:
 
 **Dependency updates.** Renovate or Dependabot handle the proposing. An agent handles the *evaluating* (what changed, is it safe, run the tests) and merges if the criteria are met.
 
-These are all Ring 2 of the [self-healing CI/CD pattern](/blog/self-healing-cicd): agent does the work, human reviews and merges. Bounded, cheap, compounding.
+These are all Ring 2 of the [self-healing CI/CD pattern](/blog/coding-agent-infrastructure): agent does the work, human reviews and merges. Bounded, cheap, compounding.
 
 ## The harness pattern that decides which teams ship
 
@@ -74,7 +78,7 @@ Tom Moor (Linear) and Derrick Choi (OpenAI) both made the same point: the harnes
 
 **2. Virtuous cycles in tooling.** Each new piece of harness automation becomes the input to the next one. The release skill calls the review skill calls the deploy skill. Composability is the multiplier.
 
-**3. Token efficiency.** OpenAI's GPT-5.5 release prioritized token efficiency over raw capability. Same intelligence per turn, fewer thinking tokens, faster latency. The harness wins that comes from [scoping context aggressively](/blog/the-40k-token-wall) compounds.
+**3. Token efficiency.** OpenAI's GPT-5.5 release prioritized token efficiency over raw capability. Same intelligence per turn, fewer thinking tokens, faster latency. The harness wins that comes from [scoping context aggressively](/blog/long-term-memory-for-agents) compounds.
 
 ## Open-source pieces and platforms
 

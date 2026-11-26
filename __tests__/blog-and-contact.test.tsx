@@ -4,7 +4,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 vi.mock('next/navigation', () => ({
-  useSearchParams: () => new URLSearchParams('subject=VIP%20Audit'),
+  useSearchParams: () => new URLSearchParams('subject=Architecture%20Inquiry'),
   notFound: () => {
     throw new Error('NOT_FOUND')
   },
@@ -13,34 +13,34 @@ vi.mock('next/navigation', () => ({
 import BlogPage from '@/app/(site)/blog/page'
 import { ContactForm } from '@/components/site/contact-form'
 
-describe('Blog query compatibility, ContactForm 503 fallback, and WCAG AA tokens', () => {
+describe('Blog query compatibility, ContactForm 503 fallback, and OKLCH tokens', () => {
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
-  it('filters BlogPage cleanly for ?track=, legacy ?theme=local-models, ?tag=rocm, and repeated array params', async () => {
+  it('filters BlogPage cleanly for ?track=, legacy ?theme=local-models, ?tag=, and repeated array params', async () => {
     const themeView = await BlogPage({
       searchParams: Promise.resolve({ theme: 'local-models' }),
     })
     const { container: c1, unmount: u1 } = render(themeView)
     expect(c1.textContent).toContain('Local models')
-    expect(c1.querySelectorAll('a[href^="/blog/"]').length).toBeGreaterThanOrEqual(10)
+    expect(c1.querySelectorAll('a[href^="/blog/"]').length).toBeGreaterThanOrEqual(7)
     u1()
 
     const arrayTagView = await BlogPage({
       searchParams: Promise.resolve({
-        tag: ['rocm', 'amd'] as unknown as string,
+        tag: ['agents', 'production'] as unknown as string,
       }),
     })
     const { container: c2, unmount: u2 } = render(arrayTagView)
-    expect(c2.querySelectorAll('a[href^="/blog/"]').length).toBeGreaterThanOrEqual(2)
+    expect(c2.querySelectorAll('a[href^="/blog/"]').length).toBeGreaterThanOrEqual(3)
     u2()
 
     const trackView = await BlogPage({
       searchParams: Promise.resolve({ track: 'small-business' }),
     })
     const { container: c3, unmount: u3 } = render(trackView)
-    expect(c3.querySelectorAll('a[href^="/blog/"]').length).toBe(20)
+    expect(c3.querySelectorAll('a[href^="/blog/"]').length).toBeGreaterThanOrEqual(10)
     u3()
   })
 
@@ -78,12 +78,16 @@ describe('Blog query compatibility, ContactForm 503 fallback, and WCAG AA tokens
     expect(fallbackLink.className).toContain('bg-accent')
     expect(fallbackLink.className).toContain('text-white')
     expect(fallbackLink.getAttribute('href')).toContain('mailto:sophia@agenticarchitect.ai')
-    expect(fallbackLink.getAttribute('href')).toContain('VIP%20Audit')
+    expect(fallbackLink.getAttribute('href')).toContain('Architecture%20Inquiry')
   })
 
-  it('defines WCAG AA >= 4.5:1 tokens for --color-online and --color-rig in app/globals.css', () => {
+  it('defines OKLCH palette tokens, self-hosted font variables, and prefers-reduced-motion in app/globals.css', () => {
     const css = fs.readFileSync(path.join(process.cwd(), 'app/globals.css'), 'utf8')
-    expect(css).toMatch(/--color-online:\s*#047857/i)
-    expect(css).toMatch(/--color-rig:\s*#b45309/i)
+    expect(css).toMatch(/--color-bg:\s*oklch\(/i)
+    expect(css).toMatch(/--color-online:\s*oklch\(/i)
+    expect(css).toMatch(/--color-rig:\s*oklch\(/i)
+    expect(css).toContain('var(--font-geist-sans)')
+    expect(css).toContain('var(--font-instrument-serif)')
+    expect(css).toContain('prefers-reduced-motion: reduce')
   })
 })

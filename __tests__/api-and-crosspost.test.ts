@@ -176,7 +176,8 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
       ledgerPath: tmpLedger,
       env: { DEVTO_API_KEY: 'devto_test_key' },
     })
-    expect(firstRun.results.devto.status).toBe('published')
+    const firstResults = firstRun.results as Record<string, { status: string }> | undefined
+    expect(firstResults?.devto?.status).toBe('published')
     expect(fetchSpy).toHaveBeenCalledTimes(1)
 
     const secondRun = await runSyndication('loop-engineering', {
@@ -187,7 +188,8 @@ describe('Contact, Subscribe, Healthcheck, Studio Cross-Post API, and Zero-Ban S
       ledgerPath: tmpLedger,
       env: { DEVTO_API_KEY: 'devto_test_key' },
     })
-    expect(secondRun.results.devto.status).toBe('already_syndicated')
+    const secondResults = secondRun.results as Record<string, { status: string }> | undefined
+    expect(secondResults?.devto?.status).toBe('already_syndicated')
     expect(fetchSpy).toHaveBeenCalledTimes(1)
 
     if (fs.existsSync(tmpLedger)) fs.unlinkSync(tmpLedger)

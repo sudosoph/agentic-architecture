@@ -1,6 +1,5 @@
-// Reads all MDX files from content/guides, renders MDX → HTML at build time,
-// and writes a static manifest. Mirrors generate-blog-manifest.mjs exactly so
-// the two pipelines stay in sync.
+// Reads all MDX files from content/guides, renders MDX to HTML at build time,
+// and writes a static manifest.
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -16,6 +15,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const GUIDES_DIR = path.join(__dirname, '..', 'content', 'guides')
 const OUT_FILE = path.join(__dirname, '..', 'lib', 'guides-manifest.generated.ts')
 
+function decodeHtmlEntities(input) {
+  return String(input)
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+}
+
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
   if (!match) return { data: {}, content: raw }
@@ -27,8 +37,11 @@ function parseFrontmatter(raw) {
     const key = line.slice(0, colon).trim()
     const val = line.slice(colon + 1).trim()
     if (val.startsWith('[')) {
-      data[key] = val.slice(1, val.lastIndexOf(']')).split(',')
-        .map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean)
+      data[key] = val
+        .slice(1, val.lastIndexOf(']'))
+        .split(',')
+        .map(s => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean)
     } else if (val === 'true') {
       data[key] = true
     } else if (val === 'false') {
@@ -58,7 +71,7 @@ function extractToc(html) {
   const matches = [...html.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)]
   return matches.map(([, id, inner]) => ({
     id,
-    text: inner.replace(/<[^>]+>/g, '').trim(),
+    text: decodeHtmlEntities(inner.replace(/<[^>]+>/g, '').trim()),
   }))
 }
 
@@ -75,11 +88,11 @@ const guides = await Promise.all(
     const html = await mdxToHtml(content)
     const toc = extractToc(html)
     return { slug, frontmatter: data, html, toc }
-  })
+  }),
 )
 
 const json = JSON.stringify(guides, null, 2)
-const code = `// AUTO-GENERATED — do not edit manually; regenerated on every build via scripts/generate-guides-manifest.mjs
+const code = `// AUTO-GENERATED: do not edit manually; regenerated on every build via scripts/generate-guides-manifest.mjs
 import type { GuideFrontmatter } from './guides'
 
 export const guides: Array<{
@@ -91,4 +104,4 @@ export const guides: Array<{
 `
 
 fs.writeFileSync(OUT_FILE, code)
-console.log(`[guides-manifest] wrote ${guides.length} guide(s) → lib/guides-manifest.generated.ts`)
+console.log(`[guides-manifest] wrote ${guides.length} guide(s) -> lib/guides-manifest.generated.ts`)

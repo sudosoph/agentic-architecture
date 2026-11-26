@@ -29,6 +29,9 @@ jobs:
       - name: Compile Sovereign Stack book & field manuals
         run: npm run book:build
 
+      - name: Run Brand & SEO Quality Gate + Unit Tests
+        run: npm run qc && npm test
+
       - name: Build
         run: npm run build
         env:

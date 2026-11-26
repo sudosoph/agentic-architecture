@@ -1,4 +1,4 @@
-# Agent Schemas — JSON output shapes
+# Agent Schemas :  JSON output shapes
 
 > Every Claude node returns typed JSON to the next node. Schemas are the contract. Connections that don't break.
 
@@ -49,7 +49,7 @@ After Firecrawl scrape and the Haiku summarization step, each lead carries:
 
 ---
 
-## Drafted email (Sub-agent #2 · Sonnet 4.6 · voice.md cached)
+## Drafted email (Sub-agent #2 · Sonnet 4.6 · operating-rules.md cached)
 
 The drafting node returns a SUBJECT/BODY block as plain text. The parse-draft Code node splits it.
 
@@ -60,11 +60,11 @@ SUBJECT: re: your Lindy thread
 BODY:
 Saw your thread last night. The credit-based pricing surprise is the #1 complaint I hear about Lindy, and you nailed why.
 
-I build agentic systems for early-stage founders — n8n + Claude mostly, costs predictable to the dollar. Curious what your stack would look like without the surprises.
+I build agentic systems for early-stage founders :  n8n + Claude mostly, costs predictable to the dollar. Curious what your stack would look like without the surprises.
 
 Worth 15 minutes Thursday?
 
-— Sophia
+:  Sophia
 ```
 
 **Parsed JSON for downstream Gmail node:**
@@ -85,16 +85,16 @@ LLMs occasionally produce malformed JSON when asked for nested fields with multi
 
 ```json
 {
-  "subject": "string · 'Discovery Pulse — YYYY-MM-DD'",
+  "subject": "string · 'Discovery Pulse :  YYYY-MM-DD'",
   "body":    "string · 1-paragraph morning summary"
 }
 ```
 
 The digest references metrics from upstream nodes:
-- `$('Discovery · ...').all().length` — total raw leads
-- `$('Parse · Extract qualified leads').all().length` — qualified
-- `$('Dedup · top 5 fresh leads').all().length` — fresh
-- `$('Parse · Subject + Body').all().length` — drafts created
+- `$('Discovery · ...').all().length` :  total raw leads
+- `$('Parse · Extract qualified leads').all().length` :  qualified
+- `$('Dedup · top 5 fresh leads').all().length` :  fresh
+- `$('Parse · Subject + Body').all().length` :  drafts created
 - Top signal types via `.map(i => i.json.signal_type)`
 
 ---
@@ -108,10 +108,10 @@ date · person · signal_type · source_url · score · draft_subject · status
 ```
 
 **Status values:**
-- `pending_review` — agent created the draft, awaiting founder approval
-- `sent` — founder approved and sent (manual update)
-- `rejected` — founder rejected without sending (manual update)
-- `bounced` — sent but email bounced (future automation)
+- `pending_review` :  agent created the draft, awaiting founder approval
+- `sent` :  founder approved and sent (manual update)
+- `rejected` :  founder rejected without sending (manual update)
+- `bounced` :  sent but email bounced (future automation)
 
 ---
 
@@ -127,4 +127,4 @@ This is your trust-building primitive. After 14 consecutive runs with high appro
 
 ---
 
-*Schemas file · part of github.com/sudosoph/bsw26-agentic-workflows · MIT licensed*
+*Schemas file · part of agenticarchitect.ai/bsw · MIT licensed*

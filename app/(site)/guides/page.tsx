@@ -10,7 +10,7 @@ import { SITE_CONFIG } from '@/lib/site-config'
 export const metadata: Metadata = {
   title: 'Workflow Templates & Step-by-Step AI Guides',
   description:
-    'Copy-paste 2026 AI workflow templates, bottleneck scorecards, lead dossier blueprints, and beginner-friendly build guides by Sophia Stein.',
+    'Copy-paste AI workflow templates, bottleneck scorecards, lead dossier blueprints, and beginner-friendly build guides by Sophia Stein.',
   alternates: { canonical: '/guides' },
 }
 
@@ -20,7 +20,7 @@ const TEMPLATES_2026 = [
     title: '20/80 Bottleneck Readiness Calculator & SOP Starter Kit',
     description:
       'Company operating rules, buyer qualification criteria, and interactive 20/80 Task Readiness Scorer for ranking your highest-ROI workflow.',
-    meta: '2026 Core Kit · SOP + CSV',
+    meta: 'Core Kit · SOP + CSV',
     href: '/starter-kit',
   },
   {
@@ -59,28 +59,30 @@ export default function GuidesPage() {
   const liveGuides = getAllGuides()
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <PageHeader
-        meta="Updated November 2026 · Zero-Bloat Templates"
+        meta="Workflow Blueprints · Zero-Bloat Templates"
         title="Workflow Templates & Step-by-Step Guides"
-        description="Ready-to-import 2026 workflow blueprints and plain-English tutorials for founders and teams."
+        description="Ready-to-import workflow blueprints and plain-English tutorials for founders, operators, and teams."
       />
 
-      {/* Current 2026 Templates */}
+      {/* Workflow Templates */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-fg">2026 Workflow Templates</h2>
+        <h2 className="font-serif text-2xl sm:text-3xl font-normal text-fg">Workflow templates</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {TEMPLATES_2026.map(item => (
             <Link key={item.slug} href={item.href} className="block group">
-              <Card className="p-6 h-full flex flex-col justify-between space-y-3 hover:border-accent transition-colors">
+              <Card interactive className="p-6 h-full flex flex-col justify-between space-y-3">
                 <div className="space-y-2">
                   <Badge variant="tag">{item.meta}</Badge>
-                  <h3 className="text-base font-bold text-fg group-hover:text-accent transition-colors">
+                  <h3 className="font-serif text-xl font-normal text-fg group-hover:text-accent transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-sm text-muted leading-relaxed">{item.description}</p>
                 </div>
-                <span className="font-mono text-xs font-semibold text-accent">Open resource →</span>
+                <span className="text-xs font-medium text-fg group-hover:text-accent transition-colors">
+                  Open resource
+                </span>
               </Card>
             </Link>
           ))}
@@ -89,17 +91,17 @@ export default function GuidesPage() {
 
       {/* Live Step-by-Step Guides */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-fg">Self-Paced Builds</h2>
+        <h2 className="font-serif text-2xl sm:text-3xl font-normal text-fg">Self-paced builds</h2>
         <div className="grid grid-cols-1 gap-5">
           {liveGuides.map(guide => (
             <Link key={guide.slug} href={`/guides/${guide.slug}`} className="block group">
-              <Card className="p-6 space-y-2 hover:border-accent transition-colors">
+              <Card interactive className="p-6 space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-lg font-bold text-fg group-hover:text-accent transition-colors">
+                  <h3 className="font-serif text-xl font-normal text-fg group-hover:text-accent transition-colors">
                     {guide.title}
                   </h3>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-muted">~{guide.estimatedTime}</span>
+                    <span className="text-xs text-muted tabular-nums">~{guide.estimatedTime}</span>
                     <Badge variant="online">
                       {DIFFICULTY_LABELS[guide.difficulty] ?? guide.difficulty}
                     </Badge>
@@ -111,37 +113,39 @@ export default function GuidesPage() {
           ))}
         </div>
         <p className="text-xs text-muted pt-1">
-          Looking for slides or handouts from the May 2026 conference session? Visit the{' '}
-          <Link href="/bsw" className="text-accent hover:underline">
-            past workshop archive
+          Looking for slides or handouts from our Boulder Startup Week lab? Visit the{' '}
+          <Link href="/bsw" className="text-fg underline underline-offset-3 decoration-border">
+            workshop archive
           </Link>
           .
         </p>
       </section>
 
-      {/* Live Masterclass CTA */}
-      <section className="rounded-2xl border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Live Briefing CTA */}
+      <section className="rounded-lg border border-border bg-surface p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-1.5 max-w-xl">
-          <h2 className="text-xl font-bold text-fg">Want a Live Walkthrough Instead?</h2>
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            Want a live walkthrough instead?
+          </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Join the next free 60-minute live session, subscribe free to{' '}
+            Join the next free 60-minute live briefing, read weekly synthesis on{' '}
             <a
               href={SITE_CONFIG.substackUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent font-medium hover:underline"
+              className="text-fg underline underline-offset-3 decoration-border"
             >
               {SITE_CONFIG.newsletterName}
-            </a>{' '}
-            on Substack, or book a 1:1 workflow teardown.
+            </a>
+            , or explore hands-on courses in the Lab.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 shrink-0">
           <Button variant="primary" size="md" href="/masterclass">
-            Free 60-Min Masterclass →
+            Free 60-Min Briefing
           </Button>
-          <Button variant="outline" size="md" href="/work-with-me">
-            Ways to Work Together
+          <Button variant="outline" size="md" href="/courses">
+            Explore Courses
           </Button>
         </div>
       </section>

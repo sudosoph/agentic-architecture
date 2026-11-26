@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { SITE_CONFIG } from '@/lib/site-config'
 
-export const alt = 'The Sovereign Stack · OSS Workflows, Hardware Rigs & AI Unit Economics'
+export const alt = 'The Sovereign Stack · Hardware Physics, Model Routing & Loop Engineering'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -15,39 +15,62 @@ export default function SovereignStackOgImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#0F172A',
-          color: '#F8FAFC',
-          padding: '60px 72px',
-          fontFamily: 'sans-serif',
-          borderTop: '12px solid #10B981',
+          backgroundColor: '#FAF8F5',
+          color: '#181920',
+          padding: '64px 76px',
+          fontFamily: 'Georgia, serif',
+          borderTop: '8px solid #181920',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: '22px', fontWeight: 800, color: '#93C5FD' }}>
-            {SITE_CONFIG.siteName} · Open Field Guide
-          </span>
-          <div
-            style={{
-              display: 'flex',
-              padding: '8px 16px',
-              borderRadius: '999px',
-              backgroundColor: '#064E3B',
-              color: '#6EE7B7',
-              fontSize: '15px',
-              fontWeight: 700,
-            }}
-          >
-            15 Live Chapters + 3 Free Manuals
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontFamily: 'sans-serif',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <svg width="42" height="42" viewBox="0 0 64 64" fill="none">
+              <rect width="64" height="64" rx="12" fill="#181920" />
+              <path
+                d="M14 47L25.5 17L37 47"
+                stroke="#FAF8F5"
+                strokeWidth="4.2"
+                strokeLinejoin="miter"
+              />
+              <path
+                d="M27 47L38.5 17L50 47"
+                stroke="#FAF8F5"
+                strokeOpacity="0.55"
+                strokeWidth="4.2"
+                strokeLinejoin="miter"
+              />
+              <line x1="18.5" y1="37" x2="45.5" y2="37" stroke="#FAF8F5" strokeWidth="3.4" />
+            </svg>
+            <span style={{ fontSize: '21px', fontWeight: 600, color: '#181920' }}>
+              {SITE_CONFIG.siteName} · Technical Monograph
+            </span>
           </div>
+          <span style={{ fontSize: '17px', color: '#585B68' }}>
+            12 Live Chapters + 3 Field Manuals
+          </span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', maxWidth: '1040px' }}>
-          <div style={{ fontSize: '58px', fontWeight: 800, lineHeight: 1.1 }}>
+          <div style={{ fontSize: '58px', fontWeight: 400, lineHeight: 1.1, color: '#181920' }}>
             The Sovereign Stack
           </div>
-          <div style={{ fontSize: '26px', color: '#CBD5E1', lineHeight: 1.38 }}>
-            Self-hosted $9/mo OSS infrastructure, 96GB unified-memory hardware rigs over Tailscale,
-            and three-tier open-weight routing that cuts AI spend by 84%.
+          <div
+            style={{
+              fontSize: '25px',
+              color: '#585B68',
+              lineHeight: 1.4,
+              fontFamily: 'sans-serif',
+            }}
+          >
+            Vendor-neutral unified-memory benchmarks, three-tier open-weight routing, encrypted
+            Tailscale meshes, and deterministic loop verifiers.
           </div>
         </div>
 
@@ -57,14 +80,14 @@ export default function SovereignStackOgImage() {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingTop: '22px',
-            borderTop: '1px solid #334155',
-            fontSize: '17px',
-            color: '#94A3B8',
-            fontWeight: 600,
+            borderTop: '1px solid #E3E0D8',
+            fontSize: '18px',
+            color: '#585B68',
+            fontFamily: 'sans-serif',
           }}
         >
-          <span>By Sophia Stein · Boulder, CO</span>
-          <span style={{ color: '#6EE7B7', fontWeight: 700 }}>
+          <span>Sophia Stein · Boulder, CO</span>
+          <span style={{ color: '#181920', fontWeight: 600 }}>
             agenticarchitect.ai/sovereign-stack
           </span>
         </div>

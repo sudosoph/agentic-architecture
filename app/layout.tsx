@@ -1,24 +1,32 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
+import { Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import { Analytics } from '@/components/site/analytics'
 import { SITE_CONFIG } from '@/lib/site-config'
 import './globals.css'
 
+const instrumentSerif = Instrument_Serif({
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  display: 'swap',
+})
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-jetbrains-mono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   applicationName: SITE_CONFIG.siteName,
   title: {
-    default: `${SITE_CONFIG.siteName} | ${SITE_CONFIG.authorName} · AI Systems & Workflows`,
+    default: `${SITE_CONFIG.siteName} | ${SITE_CONFIG.authorName}`,
     template: `%s | ${SITE_CONFIG.siteName}`,
   },
   description:
-    'Agentic Architect by Sophia Stein: non-coder AI workflow courses, custom automation sprints, Fractional CAIO / AI CTO leadership, and corporate training in Boulder, CO.',
+    'Essays on AI systems architecture and executive strategy, weekly field notes on Substack, hands-on courses inside the Agentic Architect Lab, and bespoke advisory by Sophia Stein.',
   metadataBase: new URL(SITE_CONFIG.siteUrl),
   alternates: {
     canonical: '/',
@@ -37,7 +45,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@sudosoph',
   },
   robots: {
     index: true,
@@ -53,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable} ${GeistSans.variable}`}
+      className={`${instrumentSerif.variable} ${jetbrainsMono.variable} ${GeistSans.variable}`}
     >
       <body className="bg-bg text-text font-sans antialiased">
         <Analytics />

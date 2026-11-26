@@ -1,5 +1,7 @@
 export type FunnelEventName =
   | 'cta_clicked'
+  | 'ui_link_clicked'
+  | 'article_read_milestone'
   | 'cal_booking_clicked'
   | 'substack_outbound_clicked'
   | 'curriculum_preview_opened'

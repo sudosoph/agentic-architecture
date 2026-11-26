@@ -1,8 +1,12 @@
 ---
 title: "Data Privacy, Compliance, and the EU AI Act: 4 Questions Every Business Must Ask"
 slug: eu-ai-act-deadline
-publishedDate: "2026-05-02"
+publishedDate: "2026-07-02"
 description: "Privacy, security, and consent when agents have access to your terminal and your sensitive data. The 2026 framework, and the EU AI Act deadline most teams are sleeping on."
+briefing:
+  - "The August 2026 EU AI Act enforcement milestone turns undocumented shadow AI workflows into concrete compliance and procurement blockers."
+  - "Risk tiering maps internal productivity workflows, customer-facing disclosures, and high-risk HR/credit/clinical decisions to proportionate controls."
+  - "Versioned system cards, scoped OAuth audit logs, and explicit human-in-the-loop sign-off satisfy enterprise security reviews cleanly."
 track: "models-rigs"
 tags: ["ethics", "agents", "security", "privacy", "ai-act"]
 draft: false
@@ -31,7 +35,7 @@ Before any agent gets a credential to a system, four questions. If the answer to
 
 **1. What data does the agent see, and where does it go?** A coding agent on a metered API sends every line of your code to the API provider. Their data-retention policy is your data-retention policy. Most teams do not know what their vendor's policy is. Read it.
 
-**2. What can the agent do with what it sees?** Read-only and read-write are different threat models. Default to read-only. Promote to write only after the agent has been validated against the specific write actions in [shadow mode](/blog/shadow-testing).
+**2. What can the agent do with what it sees?** Read-only and read-write are different threat models. Default to read-only. Promote to write only after the agent has been validated against the specific write actions in [shadow mode](/blog/eval-harness-catches-regressions).
 
 **3. Who can the agent contact externally?** A network-restricted agent can write all the code it wants and exfiltrate exactly nothing. The [lethal trifecta attack](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) (private data, untrusted content, exfiltration capability) only works if all three legs exist. Cut the network leg by default.
 
@@ -89,8 +93,8 @@ Three actions that close the compliance gap immediately under late-2026 enforcem
 
 ## What this connects to
 
-Ethical autonomy is the layer above the technical patterns this site already covers. [Shadow testing](/blog/shadow-testing) is what you do before you ship. [HITL](/blog/the-hitl-standard) is the production discipline. [Below the waterline](/blog/below-the-waterline) is the engineering substrate. This post is the regulatory and ethical envelope all of those operate inside.
+Ethical autonomy is the layer above the technical patterns this site already covers. [Shadow testing](/blog/eval-harness-catches-regressions) is what you do before you ship. [HITL](/blog/the-hitl-standard) is the production discipline. [Below the waterline](/blog/eval-harness-catches-regressions) is the engineering substrate. This post is the regulatory and ethical envelope all of those operate inside.
 
 ## The takeaway
 
-The August 2026 deadline is real, the requirements are specific, and most US-headquartered teams shipping to EU customers are not ready. The good news is that the practices required for compliance are also the practices that produce reliable agents: HITL, shadow testing, scoped credentials, immutable audit, intervention points. The compliance investment doubles as engineering quality. The teams that have already built these patterns are months ahead. The teams that delayed are now spending late 2026 retrofitting controls under active customer procurement audits.
+The August 2026 deadline is real, the requirements are specific, and most US-headquartered teams shipping to EU customers are not ready. The good news is that the practices required for compliance are also the practices that produce reliable agents: HITL, shadow testing, scoped credentials, immutable audit, intervention points. The compliance investment doubles as engineering quality. The teams that have already built these patterns are months ahead. The teams that delayed are now scrambling to retrofit controls at the last minute under active customer procurement audits.

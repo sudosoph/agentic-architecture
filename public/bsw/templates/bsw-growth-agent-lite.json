@@ -17,7 +17,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [240, 200],
-      "notes": "Wakes the agent up daily at 7am Boulder/Denver time (13:00 UTC during MDT). Adjust cron expression for your timezone — UTC values: PT=14, ET=11, UK=06, CET=05."
+      "notes": "Wakes the agent up daily at 7am Boulder/Denver time (13:00 UTC during MDT). Adjust cron expression for your timezone :  UTC values: PT=14, ET=11, UK=06, CET=05."
     },
     {
       "parameters": {
@@ -57,7 +57,7 @@
           "name": "Google Sheets account"
         }
       },
-      "notes": "CONFIG: ICP tab columns are icp_description, signal_keywords, subreddits (comma-separated). Edit the Sheet to change agent behavior — no redeploy needed."
+      "notes": "CONFIG: ICP tab columns are icp_description, signal_keywords, subreddits (comma-separated). Edit the Sheet to change agent behavior :  no redeploy needed."
     },
     {
       "parameters": {
@@ -72,7 +72,7 @@
         }
       },
       "id": "read-voice",
-      "name": "Read voice.md from Drive",
+      "name": "Read operating-rules.md from Drive",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [460, 460],
@@ -82,7 +82,7 @@
           "name": "Google Drive account"
         }
       },
-      "notes": "CONFIG: voice.md in your Drive 'agentic-architect' folder. Edit the Doc and the next run inherits the change. 5+ example emails recommended."
+      "notes": "CONFIG: operating-rules.md in your Drive 'agentic-architect' folder. Edit the Doc and the next run inherits the change. 5+ example emails recommended."
     },
     {
       "parameters": {
@@ -162,12 +162,12 @@
           "name": "Groq API · Authorization Bearer"
         }
       },
-      "notes": "Sub-agent #1 — Llama 4 Scout on Groq scores the search results against ICP. Non-reasoning model, ~1.5s per call. Groq has no built-in web_search like Anthropic does, so we feed it pre-fetched HN + Reddit results from the previous step."
+      "notes": "Sub-agent #1 :  Llama 4 Scout on Groq scores the search results against ICP. Non-reasoning model, ~1.5s per call. Groq has no built-in web_search like Anthropic does, so we feed it pre-fetched HN + Reddit results from the previous step."
     },
     {
       "parameters": {
         "language": "javaScript",
-        "jsCode": "// Parse Groq's OpenAI-format response and extract the leads JSON array.\n// Groq returns { choices: [{ message: { content: \"...\" } }] }.\n\nconst response = $input.first().json;\nconst rawText = response?.choices?.[0]?.message?.content || '';\n\n// Strip any leading/trailing prose around the JSON array\nconst jsonMatch = rawText.match(/\\[[\\s\\S]*\\]/);\nif (!jsonMatch) {\n  return [{ json: { error: 'No JSON array in response', raw: rawText, leads: [] } }];\n}\n\nlet leads;\ntry {\n  leads = JSON.parse(jsonMatch[0]);\n} catch (e) {\n  return [{ json: { error: 'JSON parse failed', message: e.message, raw: jsonMatch[0], leads: [] } }];\n}\n\n// Filter to leads scored 6 or higher (defense in depth — model already prompted to filter)\nconst qualified = leads.filter(l => (l.score ?? 0) >= 6);\n\nreturn qualified.map(lead => ({ json: lead }));\n"
+        "jsCode": "// Parse Groq's OpenAI-format response and extract the leads JSON array.\n// Groq returns { choices: [{ message: { content: \"...\" } }] }.\n\nconst response = $input.first().json;\nconst rawText = response?.choices?.[0]?.message?.content || '';\n\n// Strip any leading/trailing prose around the JSON array\nconst jsonMatch = rawText.match(/\\[[\\s\\S]*\\]/);\nif (!jsonMatch) {\n  return [{ json: { error: 'No JSON array in response', raw: rawText, leads: [] } }];\n}\n\nlet leads;\ntry {\n  leads = JSON.parse(jsonMatch[0]);\n} catch (e) {\n  return [{ json: { error: 'JSON parse failed', message: e.message, raw: jsonMatch[0], leads: [] } }];\n}\n\n// Filter to leads scored 6 or higher (defense in depth :  model already prompted to filter)\nconst qualified = leads.filter(l => (l.score ?? 0) >= 6);\n\nreturn qualified.map(lead => ({ json: lead }));\n"
       },
       "id": "parse-leads",
       "name": "Parse · Extract qualified leads",
@@ -206,7 +206,7 @@
     {
       "parameters": {
         "language": "javaScript",
-        "jsCode": "// Idempotent dedup — drop any lead already in the Sent log.\n\nconst leads = $input.all().map(i => i.json);\nconst sentRows = $('Read Sent log').all().map(i => i.json);\n\nconst contactedUrls    = new Set(sentRows.map(r => r.source_url).filter(Boolean));\nconst contactedHandles = new Set(sentRows.map(r => r.person).filter(Boolean));\n\nconst fresh = leads.filter(lead => {\n  if (lead.source_url && contactedUrls.has(lead.source_url)) return false;\n  if (lead.person     && contactedHandles.has(lead.person))    return false;\n  return true;\n});\n\nfresh.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));\nconst top5 = fresh.slice(0, 5);\n\nreturn top5.map(lead => ({ json: lead }));\n"
+        "jsCode": "// Idempotent dedup :  drop any lead already in the Sent log.\n\nconst leads = $input.all().map(i => i.json);\nconst sentRows = $('Read Sent log').all().map(i => i.json);\n\nconst contactedUrls    = new Set(sentRows.map(r => r.source_url).filter(Boolean));\nconst contactedHandles = new Set(sentRows.map(r => r.person).filter(Boolean));\n\nconst fresh = leads.filter(lead => {\n  if (lead.source_url && contactedUrls.has(lead.source_url)) return false;\n  if (lead.person     && contactedHandles.has(lead.person))    return false;\n  return true;\n});\n\nfresh.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));\nconst top5 = fresh.slice(0, 5);\n\nreturn top5.map(lead => ({ json: lead }));\n"
       },
       "id": "dedup",
       "name": "Dedup · top 5 fresh leads",
@@ -229,7 +229,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [2020, 320],
-      "notes": "Progressive enrichment via Jina Reader. No key, no signup — just hit https://r.jina.ai/<URL> and get clean markdown back. Free forever."
+      "notes": "Progressive enrichment via Jina Reader. No key, no signup :  just hit https://r.jina.ai/<URL> and get clean markdown back. Free forever."
     },
     {
       "parameters": {
@@ -259,7 +259,7 @@
           "name": "Groq API · Authorization Bearer"
         }
       },
-      "notes": "Cheap classifier extracts a 2-sentence company context from the Jina extract. Cascade pattern — small fast model for the summary, same model for drafting (paid tier uses Sonnet here for nuance)."
+      "notes": "Cheap classifier extracts a 2-sentence company context from the Jina extract. Cascade pattern :  small fast model for the summary, same model for drafting (paid tier uses Sonnet here for nuance)."
     },
     {
       "parameters": {
@@ -275,11 +275,11 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"meta-llama/llama-4-scout-17b-16e-instruct\",\n  \"max_tokens\": 600,\n  \"temperature\": 0.5,\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"=You write customer-discovery emails for a lean startup founder. Goal of every email: an INTERVIEW ASK — not a pitch. Soft CTA. 80-110 words. Follow the voice.md file exactly.\\n\\n--- voice.md contents ---\\n{{ $('Read voice.md from Drive').item.binary.voiceMd.toString('utf-8') }}\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"=Draft a customer-discovery email.\\n\\nPerson: {{ $('Dedup · top 5 fresh leads').item.json.person || 'unknown' }}\\nTheir signal: {{ $('Dedup · top 5 fresh leads').item.json.signal_type }} — {{ $('Dedup · top 5 fresh leads').item.json.evidence_quote }}\\nSource URL: {{ $('Dedup · top 5 fresh leads').item.json.source_url }}\\nCompany context (2 sentences): {{ $('Summarize · Groq Llama 3.1 8B').item.json.choices[0].message.content }}\\n\\nReturn ONLY the email subject and body in this exact format:\\nSUBJECT: [subject line]\\nBODY:\\n[email body]\"\n    }\n  ]\n}",
+        "jsonBody": "={\n  \"model\": \"meta-llama/llama-4-scout-17b-16e-instruct\",\n  \"max_tokens\": 600,\n  \"temperature\": 0.5,\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"=You write customer-discovery emails for a lean startup founder. Goal of every email: an INTERVIEW ASK :  not a pitch. Soft CTA. 80-110 words. Follow the operating-rules.md file exactly.\\n\\n--- operating-rules.md contents ---\\n{{ $('Read operating-rules.md from Drive').item.binary.voiceMd.toString('utf-8') }}\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"=Draft a customer-discovery email.\\n\\nPerson: {{ $('Dedup · top 5 fresh leads').item.json.person || 'unknown' }}\\nTheir signal: {{ $('Dedup · top 5 fresh leads').item.json.signal_type }} :  {{ $('Dedup · top 5 fresh leads').item.json.evidence_quote }}\\nSource URL: {{ $('Dedup · top 5 fresh leads').item.json.source_url }}\\nCompany context (2 sentences): {{ $('Summarize · Groq Llama 3.1 8B').item.json.choices[0].message.content }}\\n\\nReturn ONLY the email subject and body in this exact format:\\nSUBJECT: [subject line]\\nBODY:\\n[email body]\"\n    }\n  ]\n}",
         "options": {}
       },
       "id": "draft-groq",
-      "name": "Draft · Groq Llama 4 Scout + voice.md",
+      "name": "Draft · Groq Llama 4 Scout + operating-rules.md",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [2460, 320],
@@ -289,7 +289,7 @@
           "name": "Groq API · Authorization Bearer"
         }
       },
-      "notes": "Sub-agent #2 — Llama 4 Scout drafts the personalized email using voice.md inline in the system prompt. The paid tier uses Sonnet 4.6 with Anthropic prompt caching here for better voice match — Groq does not support prompt caching."
+      "notes": "Sub-agent #2 :  Llama 4 Scout drafts the personalized email using operating-rules.md inline in the system prompt. The paid tier uses Sonnet 4.6 with Anthropic prompt caching here for better voice match :  Groq does not support prompt caching."
     },
     {
       "parameters": {
@@ -324,7 +324,7 @@
           "name": "Gmail account"
         }
       },
-      "notes": "HITL GATE — the agent NEVER sends. Drops a draft in your Drafts folder. You approve and send manually. Real-world usage requires resolving the recipient's actual email (add an Apollo/Hunter step here)."
+      "notes": "HITL GATE :  the agent NEVER sends. Drops a draft in your Drafts folder. You approve and send manually. Real-world usage requires resolving the recipient's actual email (add an Apollo/Hunter step here)."
     },
     {
       "parameters": {
@@ -392,12 +392,12 @@
           "name": "Groq API · Authorization Bearer"
         }
       },
-      "notes": "Sub-agent #3 — generates the morning digest summary."
+      "notes": "Sub-agent #3 :  generates the morning digest summary."
     },
     {
       "parameters": {
         "language": "javaScript",
-        "jsCode": "const response = $input.first().json;\nconst text = (response?.choices?.[0]?.message?.content || '').trim();\n\nconst subjectMatch = text.match(/^SUBJECT:\\s*(.+?)\\s*\\n/i) || text.match(/^Subject:\\s*(.+?)\\s*\\n/);\nconst bodyMatch    = text.match(/(?:BODY:|Body:)\\s*\\n([\\s\\S]+)$/i);\n\nconst subject = subjectMatch ? subjectMatch[1].trim() : 'Discovery Pulse — ' + new Date().toISOString().slice(0,10);\nconst body    = bodyMatch ? bodyMatch[1].trim() : text;\n\nreturn [{ json: { subject, body } }];\n"
+        "jsCode": "const response = $input.first().json;\nconst text = (response?.choices?.[0]?.message?.content || '').trim();\n\nconst subjectMatch = text.match(/^SUBJECT:\\s*(.+?)\\s*\\n/i) || text.match(/^Subject:\\s*(.+?)\\s*\\n/);\nconst bodyMatch    = text.match(/(?:BODY:|Body:)\\s*\\n([\\s\\S]+)$/i);\n\nconst subject = subjectMatch ? subjectMatch[1].trim() : 'Discovery Pulse :  ' + new Date().toISOString().slice(0,10);\nconst body    = bodyMatch ? bodyMatch[1].trim() : text;\n\nreturn [{ json: { subject, body } }];\n"
       },
       "id": "parse-digest",
       "name": "Parse · Digest fields",
@@ -426,7 +426,7 @@
           "name": "Gmail account"
         }
       },
-      "notes": "Sends the digest email to YOU. The only place the agent actually sends — and it's only sending to you, not to prospects."
+      "notes": "Sends the digest email to YOU. The only place the agent actually sends :  and it's only sending to you, not to prospects."
     },
     {
       "parameters": {
@@ -463,20 +463,20 @@
           "name": "Google Sheets account"
         }
       },
-      "notes": "Audit log — every run appends a row. After 2 weeks of clean runs, promote the agent up the trust ladder."
+      "notes": "Audit log :  every run appends a row. After 2 weeks of clean runs, promote the agent up the trust ladder."
     }
   ],
   "connections": {
     "Cron · Daily 7am MDT": {
       "main": [[
         { "node": "Read ICP from Sheets", "type": "main", "index": 0 },
-        { "node": "Read voice.md from Drive", "type": "main", "index": 0 }
+        { "node": "Read operating-rules.md from Drive", "type": "main", "index": 0 }
       ]]
     },
     "Manual · Webhook": {
       "main": [[
         { "node": "Read ICP from Sheets", "type": "main", "index": 0 },
-        { "node": "Read voice.md from Drive", "type": "main", "index": 0 }
+        { "node": "Read operating-rules.md from Drive", "type": "main", "index": 0 }
       ]]
     },
     "Read ICP from Sheets": {
@@ -485,7 +485,7 @@
         { "node": "Search · Reddit JSON", "type": "main", "index": 0 }
       ]]
     },
-    "Read voice.md from Drive": {
+    "Read operating-rules.md from Drive": {
       "main": [[]]
     },
     "Search · HN Algolia": {
@@ -516,9 +516,9 @@
       "main": [[ { "node": "Summarize · Groq Llama 3.1 8B", "type": "main", "index": 0 } ]]
     },
     "Summarize · Groq Llama 3.1 8B": {
-      "main": [[ { "node": "Draft · Groq Llama 4 Scout + voice.md", "type": "main", "index": 0 } ]]
+      "main": [[ { "node": "Draft · Groq Llama 4 Scout + operating-rules.md", "type": "main", "index": 0 } ]]
     },
-    "Draft · Groq Llama 4 Scout + voice.md": {
+    "Draft · Groq Llama 4 Scout + operating-rules.md": {
       "main": [[ { "node": "Parse · Subject + Body", "type": "main", "index": 0 } ]]
     },
     "Parse · Subject + Body": {
@@ -549,7 +549,7 @@
   "id": "bsw-growth-agent-lite",
   "meta": {
     "templateCredsSetupCompleted": false,
-    "description": "FREE-TIER version of the BSW Growth Agent. Uses Groq's free Llama 4 Scout (drafting/discovery) + Llama 3.1 8B Instant (cheap classification cascade), HN Algolia + Reddit JSON for search (both no-auth), Jina Reader for web extraction (no auth). Total cost: $0 within Groq's free rate limits and n8n.cloud's 14-day trial. Configure ICP / signal_keywords / subreddits / voice.md without touching the workflow JSON. Repo: github.com/sudosoph/bsw26-agentic-workflows · MIT licensed."
+    "description": "FREE-TIER version of the BSW Growth Agent. Uses Groq's free Llama 4 Scout (drafting/discovery) + Llama 3.1 8B Instant (cheap classification cascade), HN Algolia + Reddit JSON for search (both no-auth), Jina Reader for web extraction (no auth). Total cost: $0 within Groq's free rate limits and n8n.cloud's 14-day trial. Configure ICP / signal_keywords / subreddits / operating-rules.md without touching the workflow JSON. Repo: agenticarchitect.ai/bsw · MIT licensed."
   },
   "tags": [
     { "name": "agentic-workflow" },

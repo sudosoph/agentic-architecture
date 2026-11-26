@@ -151,8 +151,8 @@ export function buildCrosspostPayloads(inputSlug, options = {}) {
 
   const cleanMarkdownBody = absolutizeMarkdownLinks(content.trim())
   const canonicalFooter = isOwnerTrack
-    ? `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Join the next free 60-minute [Prompt-to-System Live Build](${SITE_URL}/masterclass), explore our [$297 AI Workflow Academy](${SITE_URL}/courses), or book a [Free 20-Min Bottleneck Call](${SITE_URL}/work-with-me).*`
-    : `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Explore more reproducible benchmarks in the [Research & University Lab](${SITE_URL}/research) and [The Sovereign Stack](${SITE_URL}/sovereign-stack).*`
+    ? `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Join the next free 60-minute [Live Architecture Briefing](${SITE_URL}/masterclass), explore [The Agentic Architect Lab](${SITE_URL}/courses), or book a [20-Min Scoping Call](${SITE_URL}/work-with-me).*`
+    : `\n\n---\n\n*Originally published on [Agentic Architect](${canonicalUrl}). Explore more reproducible benchmarks in [Research & Syllabi](${SITE_URL}/research) and [The Sovereign Stack](${SITE_URL}/sovereign-stack).*`
 
   const bullets = extractKeyBullets(content, 3)
   const bulletBlock =
@@ -219,7 +219,7 @@ export function buildCrosspostPayloads(inputSlug, options = {}) {
     },
   }
 
-  // 5. X (@sudosoph) Official v2 API Single-Post / Thread Starter (<= 280 chars)
+  // 5. Short-Form Official v2 API Single-Post / Thread Starter (<= 280 chars)
   const xLead = `${title}\n\n${canonicalUrl}`
   const xPost = sanitizeCleanCopy(
     xLead.length <= 275 ? xLead : `${title.slice(0, 235)}...\n\n${canonicalUrl}`,
@@ -464,11 +464,13 @@ export async function runSyndication(inputSlug, opts = {}) {
   const payload = buildCrosspostPayloads(inputSlug, opts)
   const grace = checkCanonicalGraceWindow(payload.publishedDate, opts.minHours ?? 24)
 
-  // Always write the local reviewable social bundle
+  // Write local reviewable social bundle unless running inside unit tests
   const packOutDir = path.join(SOCIAL_DIR, payload.publicSlug)
-  fs.mkdirSync(packOutDir, { recursive: true })
   const packOutPath = path.join(packOutDir, 'crosspost-pack.json')
-  fs.writeFileSync(packOutPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
+  if (!process.env.VITEST && !opts.skipWritePack) {
+    fs.mkdirSync(packOutDir, { recursive: true })
+    fs.writeFileSync(packOutPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
+  }
 
   if (!grace.ready && !force && !dryRun) {
     return {

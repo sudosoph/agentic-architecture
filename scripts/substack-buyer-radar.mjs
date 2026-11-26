@@ -23,7 +23,7 @@ export const CURATED_BUYER_SUBSTACKS = [
     feedUrl: 'https://bigdealsmallbusiness.substack.com/feed',
     readerProfile: '$1M to $10M SMB acquirers and owner-operators focused on EBITDA and staff leverage',
     commentAngle:
-      'Connect post-acquisition or owner-operator margin bottlenecks to draft-first back-office workflows before adding $65K admin headcount.',
+      'Connect post-acquisition or owner-operator margin bottlenecks to draft-first back-office workflows before adding full-time admin headcount.',
   },
   {
     id: 125007,
@@ -95,7 +95,7 @@ export const CURATED_BUYER_SUBSTACKS = [
     feedUrl: 'https://www.oneusefulthing.org/feed',
     readerProfile: 'Enterprise executives, L&D directors, university leaders, and board members',
     commentAngle:
-      'Share field data from training 250+ healthcare/enterprise leaders and 300+ founders: why department SOP labs beat generic prompt trainings.',
+      'Share field data from training 300+ founders and operators live at Boulder Startup Week: why department SOP labs beat generic prompt trainings.',
   },
   {
     id: 1173386,

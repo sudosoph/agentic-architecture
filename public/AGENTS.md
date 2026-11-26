@@ -3,26 +3,24 @@
 This site is LLM-friendly and welcomes indexing and citation with attribution.
 
 ## About This Site
-Agentic Architect (https://agenticarchitect.ai) is the publication, education hub, and advisory practice of Sophia Stein in Boulder, Colorado, covering practical AI workflows and courses for non-technical business owners, focused custom automation sprints, corporate AI enablement, and sovereign AI infrastructure.
+Agentic Architect (https://agenticarchitect.ai) is the publication, course hub, and advisory practice of Sophia Stein in Boulder, Colorado, covering practical AI systems architecture, organizational workflow design, hands-on courses in the Agentic Architect Lab, corporate AI enablement, and private open-weight infrastructure.
 
 ## Key Routes
-- /blog : 47 playbooks across Owner Playbooks, Models & Rigs, and Systems Engineering
-- /masterclass : Free 60-Min Live Prompt-to-System Build & 5-Day Challenge
-- /courses : Free starter challenge, $297 Self-Paced AI Workflow Academy, and guided cohort
-- /academy : Practical AI Workflow Academy ($297 + $97/team seat) for non-technical business owners and EAs
-- /accelerator : 6-System Back-Office Implementation Cohort (includes free operator seat)
-- /fractional-ai-cto : Fractional Chief AI Officer (CAIO), Fractional AI CTO, and enterprise architecture diagnostics
-- /starter-kit : Unlocked 20/80 Task Readiness Calculator and business workflow templates
-- /work-with-me : Free 20-Min 1-Bottleneck Discovery Call, $750 Roadmap, Custom Sprints, and Corporate Scoping
-- /research : Systems benchmarks, 18-chapter Sovereign Stack book, CU Boulder syllabi, and CTO advisory
-- /sovereign-stack : 18-chapter Sovereign Stack book, 512GB/128GB hardware sizer, and 3 free Markdown manuals
-- /teaching : Keynotes, corporate AI enablement workshops, and university syllabi
-- /stack : Curated business automation and private AI hardware/software stack
+- /blog : Curated essays across Strategy & Operations, Models & Infrastructure, and Systems Architecture
+- /courses : The Agentic Architect Lab (Claude Superuser OS, Open-Weight Routing, Become an AI Architect) + 4 unlocked lessons
+- /academy : Claude Superuser & AI-Native Work Foundations track
+- /teaching : Keynotes, corporate AI enablement intensives, and university syllabi
+- /work-with-me : Architecture diagnostics, Forward Deployed workflow builds, and advisory inquiries
+- /fractional-ai-cto : Fractional Chief AI Officer (CAIO) and Fractional AI CTO mandates
+- /what-is-an-agentic-architect : Vendor-neutral 4-layer Agentic Architecture reference guide
+- /sovereign-stack : 12-chapter Sovereign Stack monograph, 512GB/128GB hardware sizer, and 3 free Markdown manuals
+- /starter-kit : Unlocked 20/80 Task Readiness Calculator and downloadable SOP templates
+- /masterclass : Free 60-Min Live Briefing & 5-Day Applied AI Architecture Primer
+- /research : Systems benchmarks, monograph, and university syllabi
 - /bsw : Open-source Boulder Startup Week workshop slides, n8n templates, and tutorial
 
 ## Author
 Sophia Stein · AI Systems Architect, Educator & Advisor (Boulder, CO)
-Credentials: Columbia University B.S. in Computer Science, ex-McKinsey, AI Systems & Enablement at Google (writing and teaching here strictly in a personal capacity, views her own), 300+ trained at Boulder Startup Week, Women Who Code speaker.
+Community & Teaching: 300+ founders and operators trained live at Boulder Startup Week, Women Who Code speaker, applied university syllabi.
 Newsletter: https://agenticarchitectai.substack.com
-X: https://x.com/sudosoph
-GitHub: https://github.com/sudosoph
+LinkedIn: https://www.linkedin.com/in/sophiastein

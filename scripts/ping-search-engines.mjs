@@ -13,7 +13,6 @@ export function collectCanonicalUrls(rootDir = process.cwd()) {
     '/what-is-an-agentic-architect',
     '/sovereign-stack',
     '/masterclass',
-    '/accelerator',
     '/starter-kit',
     '/courses',
     '/academy',

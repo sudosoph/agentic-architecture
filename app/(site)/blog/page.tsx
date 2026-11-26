@@ -3,27 +3,21 @@ import type { Metadata } from 'next'
 import { getAllPosts, type BlogTrack } from '@/lib/mdx'
 import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 
 export const metadata: Metadata = {
-  title: 'Owner Playbooks & AI Workflow Guides',
+  title: 'Writing · Essays on AI Architecture, Workflows & Strategy',
   description:
-    'Plain-English AI workflow blueprints, AI Chief of Staff setups, security reviews, and ROI calculators for business owners and operators by Sophia Stein.',
+    'Essays and technical field notes on AI workflow design, build-vs-buy strategy, model routing, evaluation harnesses, and private compute by Sophia Stein.',
   alternates: {
     canonical: '/blog',
   },
 }
 
 const TRACK_LABELS: Record<BlogTrack, string> = {
-  'small-business': 'Owner Playbook',
-  'models-rigs': 'Models & Private Rigs',
-  engineering: 'Systems Research',
-}
-
-const TRACK_BADGE_VARIANT: Record<BlogTrack, 'online' | 'rig' | 'tag'> = {
-  'small-business': 'online',
-  'models-rigs': 'rig',
-  engineering: 'tag',
+  'small-business': 'Strategy & Operations',
+  'models-rigs': 'Models & Infrastructure',
+  engineering: 'Systems Architecture',
 }
 
 type Theme = { slug: string; label: string; tags: string[] }
@@ -105,8 +99,6 @@ const LEGACY_THEMES: Theme[] = [
       'sdr',
       'inbox',
       'outbound',
-      'monorepo',
-      'turborepo',
       'saas',
       'n8n',
       'startups',
@@ -132,8 +124,6 @@ const LEGACY_THEMES: Theme[] = [
       'community',
       'startup-week',
       'boulder',
-      'ax',
-      'ux',
       'seo',
       'ai-agents',
       'economics',
@@ -166,15 +156,14 @@ export default async function BlogPage({
   const allPosts = getAllPosts()
 
   const activeTheme = LEGACY_THEMES.find(t => t.slug === themeSlug) ?? null
-  // Default /blog strictly to non-technical Owner Playbooks ('small-business' track) unless another filter or ?track=all is explicitly chosen
   const effectiveTrack: BlogTrack | 'all' =
     trackParam === 'all'
       ? 'all'
-      : trackParam === 'models-rigs' || trackParam === 'engineering' || trackParam === 'small-business'
+      : trackParam === 'models-rigs' ||
+          trackParam === 'engineering' ||
+          trackParam === 'small-business'
         ? trackParam
-        : activeTheme || tag
-          ? 'all'
-          : 'small-business'
+        : 'all'
 
   const posts = allPosts.filter(post => {
     if (effectiveTrack !== 'all' && post.track !== effectiveTrack) return false
@@ -184,109 +173,97 @@ export default async function BlogPage({
   })
 
   const ownerCount = allPosts.filter(p => p.track === 'small-business').length
-  const researchCount = allPosts.length - ownerCount
+  const modelsCount = allPosts.filter(p => p.track === 'models-rigs').length
+  const engCount = allPosts.filter(p => p.track === 'engineering').length
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <PageHeader
-        meta="Practical Workflows · Bottleneck Audits · Cost & Security Guides"
-        title="Business Owner Playbooks"
-        description="Plain-English playbooks for founders, firm principals, and operators automating repetitive back-office work without writing code. (Looking for our engineering & hardware papers? Visit Research & Teaching.)"
+        meta={`${allPosts.length} Essays & Field Notes · Updated Weekly`}
+        title="Writing"
+        description="Essays and reference notes on AI workflow design, organizational build-vs-buy strategy, model routing, and sovereign compute."
       />
 
-      {/* Owner Conversion Strip */}
-      <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Where Are You Right Now?
-          </p>
-          <p className="text-sm font-bold text-fg">
-            Learn step-by-step in our free live workshop &amp; $297 Academy, or book a free 20-min call to scope a custom sprint.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2.5 shrink-0">
-          <Link
-            href="/masterclass"
-            className="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
-          >
-            Free 60-Min Live Build →
-          </Link>
-          <Link
-            href="/work-with-me"
-            className="inline-flex items-center rounded-lg border border-border bg-white px-4 py-2 text-xs font-semibold text-fg hover:border-accent transition-colors"
-          >
-            Free 20-Min Bottleneck Call
-          </Link>
-        </div>
-      </div>
-
-      {/* Clean Two-Room Filter Bar */}
+      {/* Quiet Editorial Filter Bar */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-2">
-            <Link
-              href="/blog"
-              className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
-                effectiveTrack === 'small-business' && !activeTheme && !tag
-                  ? 'bg-accent text-white border-accent'
-                  : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
-              }`}
-            >
-              Owner Playbooks ({ownerCount})
-            </Link>
-            <Link
-              href="/blog?track=all"
-              className={`rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
-                effectiveTrack === 'all' && !activeTheme && !tag
-                  ? 'bg-accent text-white border-accent'
-                  : 'bg-white text-muted border-border hover:border-accent hover:text-fg'
-              }`}
-            >
-              All Archive ({allPosts.length})
-            </Link>
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              { key: 'all', label: `All Writing (${allPosts.length})`, href: '/blog' },
+              {
+                key: 'small-business',
+                label: `Strategy & Operations (${ownerCount})`,
+                href: '/blog?track=small-business',
+              },
+              {
+                key: 'models-rigs',
+                label: `Models & Infrastructure (${modelsCount})`,
+                href: '/blog?track=models-rigs',
+              },
+              {
+                key: 'engineering',
+                label: `Systems Architecture (${engCount})`,
+                href: '/blog?track=engineering',
+              },
+            ].map(tab => {
+              const active = effectiveTrack === tab.key && !activeTheme && !tag
+              return (
+                <Link
+                  key={tab.key}
+                  href={tab.href}
+                  className={`press-scale rounded-md px-3.5 py-1.5 text-xs font-medium border ${
+                    active
+                      ? 'bg-fg text-bg border-fg'
+                      : 'bg-surface text-muted border-border hover:border-fg/40 hover:text-fg'
+                  }`}
+                >
+                  {tab.label}
+                </Link>
+              )
+            })}
           </div>
 
           <Link
-            href="/research"
-            className="text-xs font-semibold text-accent hover:underline"
+            href="/sovereign-stack"
+            className="text-xs font-medium text-muted hover:text-fg underline underline-offset-3 decoration-border"
           >
-            Systems Benchmarks, 18-Ch. Book &amp; University Syllabi ({researchCount}) →
+            Read The Sovereign Stack in 12-chapter order
           </Link>
         </div>
 
         {(activeTheme || tag) && (
-          <p className="font-mono text-xs text-muted">
-            Showing {posts.length} of {allPosts.length} playbooks
+          <p className="text-xs text-muted tabular-nums">
+            Showing {posts.length} of {allPosts.length} essays
             {activeTheme && (
               <>
                 {' '}
-                in <span className="text-fg">{activeTheme.label}</span>
+                in <span className="text-fg font-medium">{activeTheme.label}</span>
               </>
             )}
             {tag && (
               <>
                 {' '}
-                tagged <span className="text-fg">{tag}</span>
+                tagged <span className="text-fg font-medium">{tag}</span>
               </>
             )}{' '}
             ·{' '}
-            <Link href="/blog" className="text-accent hover:underline">
-              Back to Owner Playbooks
+            <Link href="/blog" className="text-fg underline underline-offset-3">
+              Clear filter
             </Link>
           </p>
         )}
       </div>
 
-      {/* Post Grid */}
+      {/* Dated Editorial List / Grid */}
       {posts.length === 0 ? (
         <Card className="p-8 text-center space-y-3">
-          <p className="text-sm text-muted">No playbooks matched that filter.</p>
-          <Link href="/blog" className="text-sm font-semibold text-accent hover:underline">
-            View Owner Playbooks →
+          <p className="text-sm text-muted">No essays matched that filter.</p>
+          <Link href="/blog" className="text-sm font-medium text-fg underline underline-offset-3">
+            View all writing
           </Link>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="divide-y divide-border border-t border-b border-border">
           {posts.map(post => {
             const date = new Date(post.publishedDate).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -296,42 +273,36 @@ export default async function BlogPage({
             })
             const trackKey: BlogTrack = post.track ?? 'engineering'
             return (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
-                <Card className="p-6 h-full flex flex-col justify-between space-y-4 hover:border-accent transition-colors">
-                  <div className="space-y-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <Badge variant={TRACK_BADGE_VARIANT[trackKey]}>
-                        {TRACK_LABELS[trackKey]}
-                      </Badge>
-                      <span className="font-mono text-xs text-muted">
-                        {post.readingMinutes ?? 5} min read · {date}
-                      </span>
-                    </div>
-                    <h2 className="text-lg font-bold text-fg group-hover:text-accent transition-colors leading-snug">
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="editorial-row block py-6 group"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-baseline">
+                  <div className="md:col-span-3 text-xs text-muted tabular-nums space-y-0.5">
+                    <time dateTime={post.publishedDate} className="block font-medium text-fg/80">
+                      {date}
+                    </time>
+                    <span className="block">
+                      {TRACK_LABELS[trackKey]} · {post.readingMinutes ?? 6} min read
+                    </span>
+                  </div>
+                  <div className="md:col-span-9 space-y-1.5">
+                    <h2 className="font-serif text-2xl font-normal text-fg group-hover:text-accent transition-colors leading-snug">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-muted leading-relaxed">{post.description}</p>
+                    <p className="text-sm text-muted leading-relaxed max-w-2xl">
+                      {post.description}
+                    </p>
                   </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-border">
-                    <div className="flex flex-wrap gap-1.5">
-                      {post.tags.slice(0, 3).map(t => (
-                        <span
-                          key={t}
-                          className="font-mono text-[11px] text-muted bg-white border border-border rounded-md px-2 py-0.5"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-xs font-semibold text-accent shrink-0">Read →</span>
-                  </div>
-                </Card>
+                </div>
               </Link>
             )
           })}
         </div>
       )}
+
+      <NewsletterSignup source="blog-index" />
     </div>
   )
 }

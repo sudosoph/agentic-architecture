@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 
 export default function StudioPage() {
   const isLocal = process.env.NODE_ENV !== 'production'
-  // Never serialize queue or radar data into unauthenticated production HTML
   const initialReplies =
     isLocal && Array.isArray(pendingRepliesData)
       ? (pendingRepliesData as Parameters<typeof StudioInbox>[0]['initialReplies'])
@@ -24,13 +23,9 @@ export default function StudioPage() {
   return (
     <div className="space-y-10">
       <PageHeader
-        meta={
-          isLocal
-            ? 'Owner Workbench · Local Dev Mode'
-            : 'Restricted Owner Access · sudosoph/agentic-architecture'
-        }
+        meta={isLocal ? 'Owner Workbench · Local Dev Mode' : 'Restricted Owner Access'}
         title="Agentic Architect Owner Studio"
-        description="Restricted to the repository owner. Authenticate with a write-scoped GitHub token to load queues, approve replies, or open draft PRs."
+        description="Restricted to the repository owner. Authenticate with a write-scoped GitHub token or Studio passcode to load queues, approve replies, or open draft pull requests."
       />
       <StudioInbox
         initialReplies={initialReplies}

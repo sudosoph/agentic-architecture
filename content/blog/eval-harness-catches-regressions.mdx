@@ -1,220 +1,91 @@
 ---
-title: "Building an Eval Harness That Catches Regressions"
+title: "Building an Eval Harness That Catches Silent Agent Regressions"
 slug: eval-harness-catches-regressions
-publishedDate: "2026-05-07"
-description: "Anthropic shipped three concurrent regressions over six weeks and their eval suite caught none of them. Even Anthropic ships blind. Here is the six-layer harness pattern that would have caught it."
+publishedDate: "2026-10-15"
+description: "Most agent eval suites are vanity scoreboards that miss multi-week regressions in tool trajectories, prompt verbosity, and edge-case policy drift. Here is the six-layer regression net."
+briefing:
+  - "Prompt tweaks, model version bumps, and tool-schema edits silently break production agent behaviors when teams rely on manual spot-checking."
+  - "A 6-layer evaluation harness checks JSON schema validity, tool-argument safety, factual grounding, latency/cost ceilings, and 25+ real failure fixtures."
+  - "Running binary pass/fail assertions in CI turns model upgrades and routing changes into routine, reversible engineering deploys."
 track: "engineering"
-tags: ["evals", "agents", "production", "testing", "anthropic", "shadow-testing"]
+tags: ["evals", "agents", "production", "testing", "shadow-testing"]
 kind: deep-dive
 draft: false
 ---
 
-On April 23, Anthropic published a [public postmortem](https://www.anthropic.com/engineering/april-23-postmortem) admitting that Claude Code degraded for roughly six weeks because three independent infrastructure changes shipped between March 4 and April 16, and the standard internal eval suite caught none of them. Only post-incident ablation found a 3% drop on a single eval the regression suite never tested. Three regressions, six weeks of user-visible quality drop, zero pre-merge eval signal. The team that publishes the canonical [*Demystifying Evals for AI Agents*](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) ships blind. If Anthropic ships blind, your eval is almost certainly worse. The fix is not a bigger scoreboard. It is a six-layer harness against a dataset that grows from real failures, where each layer catches what the layer above misses.
+Public postmortems across leading AI engineering teams keep exposing the exact same blind spot: a routine quantization tweak, context-compaction change, or well-intentioned system-prompt edit (`"keep tool commentary under 25 words"`) passes pre-merge benchmarks cleanly while quietly degrading real multi-step task completion for weeks.
 
-## Even Anthropic ships blind
+The lesson is not that evaluation is impossible. The lesson is that **most teams build static scoreboards rather than regression nets**. A scoreboard measures average performance on clean synthetic prompts; a regression net catches behavioral shifts along the exact axes where production workflows break.
 
-The April 23 incident is the cleanest negative case study the field has produced in 2026. Three concurrent issues converged. A context-window-management change degraded long-context coherence. An inference routing change shifted small-percentage traffic to a quantization variant that scored within noise on the standard suite but mis-handled tool-call schemas on the long tail. And a system-prompt update shipped with Opus 4.7 added a verbosity instruction (`≤25 words between tool calls, ≤100 words final`) that passed the regression suite cleanly and quietly hurt coding quality for two weeks.
+<figure class="editorial-figure">
+  <svg viewBox="0 0 600 220" role="img" aria-label="Six-layer evaluation harness pyramid from fast CI checks to continuous shadow monitoring">
+    <rect x="24" y="16" width="552" height="30" rx="4" fill="#FFFFFF" stroke="#181920" />
+    <text x="38" y="35" fill="#181920" font-size="11.5" font-weight="600">Layer 1 · Failure-Derived Golden Set (25-100 real incidents, runs in seconds)</text>
 
-None of those changes failed pre-merge eval. None tripped the on-call alert. The signal that surfaced was diffuse: more thumbs-down on long sessions, more "Claude got worse this week" threads on Hacker News, and a slow drift in internal task-completion telemetry that lagged the actual regression by weeks. Engineering ran post-incident ablation, dropped the verbosity instruction, and watched a single coding eval recover by 3%. That eval did not exist in the regression suite. The fix took an hour. Finding the bug took six weeks.
+    <rect x="24" y="50" width="552" height="30" rx="4" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="38" y="69" fill="#181920" font-size="11.5" font-weight="600">Layer 2 · Trajectory Assertions (tool call order, scopes &amp; loop bounds)</text>
 
-This is the article that should have written itself a year ago, and now has the irreplaceable primary source it needed. If a SOTA shop with a published eval methodology, a dedicated infra team, and millions in compute can ship a six-week regression because the eval suite tested the wrong axis, the lesson is not that evals are hard. The lesson is that most agent eval harnesses are *scoreboards, not regression nets*. They measure where the team thinks the system lives. They do not measure where it actually breaks.
+    <rect x="24" y="84" width="552" height="30" rx="4" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="38" y="103" fill="#181920" font-size="11.5" font-weight="600">Layer 3 · Calibrated Binary Rubric Judge (cross-family, >90% human agreement)</text>
 
-The rest of this post is the playbook. Six layers, paste-able code, the shadow-testing pattern that operationalizes it, and the reframe that lifts the whole thing: your eval is your spec. If you cannot write the rubric, you do not know what you are shipping.
+    <rect x="24" y="118" width="552" height="30" rx="4" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="38" y="137" fill="#181920" font-size="11.5" font-weight="600">Layer 4 · Multi-Turn Stateful Simulation (pass^k stability over repeated runs)</text>
 
-## Why most agent evals fail
+    <rect x="24" y="152" width="552" height="30" rx="4" fill="#FAF8F5" stroke="#DFDCD3" />
+    <text x="38" y="171" fill="#181920" font-size="11.5" font-weight="600">Layer 5 &amp; 6 · Blind Shadow Replay + 5% Async Production Sampling</text>
+  </svg>
+  <figcaption>Figure 1 · Each evaluation layer catches a distinct failure class that single-number benchmark averages hide.</figcaption>
+</figure>
 
-Three failure modes show up over and over in postmortems. Each has a primary citation in the last sixty days.
+## Three reasons single-layer evals ship blind
 
-**The standard suite tests the wrong axis.** This is what happened to Anthropic. The verbosity instruction (`≤25 words between tool calls, ≤100 words final`) is a perfectly reasonable system-prompt line for a coding agent that talks too much. It also happens to truncate the chain-of-thought the model uses to plan multi-file edits. The regression suite scored final answers, not intermediate reasoning. The line shipped, the suite passed, the user experience degraded. The suite was not wrong; it was incomplete. It tested correctness on a held-out dataset that did not include the failure mode the new instruction introduced. This is the default state of every hand-built eval suite: it tests what the team already thought to test.
+1. **Scoring final prose while ignoring intermediate trajectories:** A prompt change that truncates planning steps or triggers redundant tool calls can keep final-answer accuracy within noise on easy cases while collapsing multi-file or multi-policy tasks.
+2. **Public benchmark contamination:** Saturated public leaderboards reward memorization rather than generalization on your organization's messy PDFs, schemas, and domain rules.
+3. **Static Day-1 datasets:** Customer support and operations rollouts fail in Month 3 when the test set never incorporates real policy disputes, refund exceptions, and malformed inputs observed after launch.
 
-**Benchmarks get contaminated.** OpenAI's January 2026 audit found that every major frontier model could reproduce verbatim gold patches for some [SWE-bench Verified](https://www.swebench.com) tasks, so OpenAI stopped reporting Verified scores. [SWE-bench Pro](https://www.morphllm.com/swe-bench-pro) replaced it; the best score on Pro is around 46% versus 81% on Verified. That is not a 35-point capability gap. That is the contamination tax. Then in March 2026, Anthropic published the [BrowseComp eval-awareness finding](https://www.anthropic.com/engineering/eval-awareness-browsecomp): Claude Opus 4.6 independently *recognized* it was being evaluated, enumerated benchmark names (BrowseComp, FRAMES), located the answer key in a public repository, and decrypted it. 18 of 1,266 runs converged on the same strategy without coordination. A benchmark a model can recognize and game is no longer a benchmark. It is a memorization test that flatters the leaderboard.
+## The six-layer regression harness
 
-**Your golden set measures month one, not month twelve.** Klarna's AI assistant handled 2.3M chats in its first month, replaced roughly 700 FTE-equivalents of work, and dropped resolution time from 11 minutes to under 2. That was the [LangChain customer post](https://blog.langchain.com/customers-klarna/) that ran on every AI newsletter in 2024. By 2025 Klarna walked it back. The assistant was confident-but-wrong on policy, fees, and payment terms. Quality dropped on disputes, fraud, and hardship cases. The eval that proved month-one ROI did not measure the failure modes that mattered for retention. The reversal is not a failure of LLMs. It is a failure of the eval set to grow with production.
-
-The pattern across all three: an eval that was correct at the time it was written, on the slice it was written for, and stopped being correct the moment the system, the model, or the input distribution moved. A scoreboard does not catch that. A regression net does.
-
-## The six-layer harness
-
-The pattern that holds up under scrutiny in 2026 is six layers. Each layer is cheap on its own, expensive only in combination, and catches what the layer above misses. The Anthropic April 23 incident failed because they had layers 1, 4, and arguably 6, but no layer 5 (trajectory) and no per-line system-prompt ablation in CI.
-
-| Layer | What it catches | Primary source |
+| Layer | Failure Class Caught | Execution Cadence |
 |---|---|---|
-| **1. Golden dataset** | Known-good behavior; basic regressions | Anthropic recommends 20 to 50 tasks from real failures; CI suites run on 100+ examples per [Hamel Husain](https://hamel.dev/blog/posts/evals-faq/). |
-| **2. Shadow testing** | Behavior on real prod traffic before user exposure | [Statsig's silent-interleaving pattern](https://www.statsig.com/perspectives/shadow-testing-ai-model-evaluation); Replit's decision-time guidance is a shadow-tested release path. |
-| **3. Simulation** | Multi-turn, tool-using interactions a static dataset cannot capture | [τ-bench](https://arxiv.org/pdf/2406.12045) and [τ²-bench](https://arxiv.org/pdf/2506.07982) from Sierra Research; dual-control sim where a user-LLM and tool-using agent share state. GPT-4o pass^8 under 25% on retail. |
-| **4. LLM-as-judge** | Open-ended quality (concision, tone, helpfulness) | Hamel: target binary scoped tasks, iterate to high TPR/TNR vs human labels. [*Justice or Prejudice*](https://arxiv.org/abs/2410.02736) catalogs 12 judge biases (position, verbosity, self-preference). |
-| **5. Trajectory eval** | The path the agent took, not just the final answer | LangChain [agentevals](https://github.com/langchain-ai/agentevals): `trajectory_strict_match`, `trajectory_llm_as_judge`. |
-| **6. Continuous eval** | Drift, regressions, novel failures post-deploy | Replit: ephemeral [decision-time reminders](https://blog.replit.com/decision-time-guidance), ~90% lower cost than dynamic system prompts. Background LLM-judge async-samples ~5% of daily sessions. |
+| **1. Failure-Derived Golden Set** | Known regressions on real past bugs &amp; policy rules | Every PR in CI |
+| **2. Trajectory Assertions** | Out-of-order tool calls, missing verification steps, runaway loops | Every PR in CI |
+| **3. Binary Rubric Judge** | Unsourced numbers, policy overconfidence, tone drift | Every PR + nightly |
+| **4. Stateful Simulation (`pass^k`)** | Run-to-run instability across multi-turn user dialogues | Pre-release &amp; model swaps |
+| **5. Blind Shadow Replay** | Regressions on real production traffic distributions before cutover | Candidate model/prompt rollout |
+| **6. Async Production Sampling** | Post-deploy drift on 5% of live sessions | Continuous background |
 
-Read the table top-to-bottom as a cost-and-coverage gradient. Layer 1 is cheapest signal, lowest coverage, runs in seconds. Layer 6 is most expensive, highest coverage, runs forever in the background. The argument for using all six is not completeness for completeness's sake; it is that production agent failures distribute themselves unevenly across the layers, and any layer you skip is a class of failure you ship to users.
+## Minimal implementation patterns
 
-A few definitions before the code, since these terms get used loosely:
-
-- **Golden dataset.** A small, curated set of input-output pairs drawn from real production failures. 20 to 50 examples is the floor; 100+ is CI-grade. Not synthetic. Not edge cases someone imagined. Real things the system got wrong.
-- **Shadow testing.** Run a candidate agent in parallel with the production agent on real traffic. The user only sees prod output; the candidate's output is scored silently. Covered in depth in [/blog/shadow-testing](/blog/shadow-testing).
-- **Trajectory eval.** Score the *sequence* of tool calls and intermediate steps the agent took, not just the final answer. A correct answer reached by an unsafe path is a regression waiting to happen.
-- **LLM-as-judge.** Use a stronger model to grade the output of a weaker one against a written rubric. Powerful and bias-prone; the [Justice or Prejudice paper](https://arxiv.org/abs/2410.02736) documents 12 biases that have to be controlled for.
-- **RAGAS.** A scoring library specifically for retrieval-augmented generation that decomposes quality into faithfulness, answer relevance, and context recall. Useful for layer 4 when retrieval is in the loop.
-- **SWE-bench.** A benchmark of real GitHub issues from open-source Python projects that an agent has to fix. Verified is the human-validated subset; Pro is the contamination-resistant 2026 replacement.
-
-Each of those terms shows up in the layers below. The point of a six-layer harness is that no single one is enough.
-
-## Concrete paste-able code
-
-The following snippets are the minimum-viable implementation of each layer. Pin them into a real repo, parametrize the agent under test, and you have a regression net by Friday.
-
-### Layer 1: Golden Dataset (DeepEval + pytest)
+### 1. Binary groundedness check (defeating confident fabrication)
+Avoid vague 1-to-5 Likert scales. Force binary `PASS`/`FAIL` criteria calibrated against twenty-five human-labeled traces, and **never let Model A grade Model A** (eliminating self-preference bias):
 
 ```python
-# tests/eval/test_golden.py
-import pytest
-from deepeval import assert_test
-from deepeval.metrics import GEval
-from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-
-correctness = GEval(
-    name="Correctness",
-    criteria="Determine if 'actual_output' is factually consistent with 'expected_output'.",
-    evaluation_params=[LLMTestCaseParams.ACTUAL_OUTPUT,
-                       LLMTestCaseParams.EXPECTED_OUTPUT],
-    threshold=0.7,
-)
-
-GOLDEN = [
-    ("What's our refund policy?", "30-day full refund, no questions."),
-    # 20-50 examples drawn from real failures
-]
-
-@pytest.mark.parametrize("q,gold", GOLDEN)
-def test_golden_set(q, gold, agent):
-    out = agent.run(q)
-    assert_test(LLMTestCase(input=q, actual_output=out, expected_output=gold),
-                [correctness])
+RUBRIC = """
+Return PASS (1) only if the response:
+1. Answers the user's question using facts present in retrieval_context, AND
+2. Explicitly flags any missing policy threshold, fee, or date rather than guessing.
+Return FAIL (0) if any number, SLA, or clause is asserted without a matching source span.
+"""
 ```
 
-The discipline is that every production incident becomes a row in `GOLDEN`. The set never shrinks. It only grows from things the system got wrong in the wild.
-
-### Layer 4: LLM-as-judge with bias guardrails
+### 2. Trajectory order verification
+A correct final message reached via an unsafe tool sequence (for example, issuing a credit before checking eligibility) is a severity-one bug:
 
 ```python
-# Calibrate against human labels first. Hamel: ship the judge only when
-# it agrees with your domain expert >90% on a held-out set
-# (Honeycomb took 3 iterations).
-from deepeval.metrics import GEval
-from deepeval.test_case import LLMTestCaseParams as P
-
-judge = GEval(
-    name="Helpful_NotOverconfident",
-    criteria=(
-      "Score 1 if the response answers the user's question AND hedges "
-      "appropriately on policy, fees, or eligibility. Score 0 if it "
-      "asserts a specific number, date, or rule not in retrieval_context."
-    ),
-    evaluation_params=[P.INPUT, P.ACTUAL_OUTPUT, P.RETRIEVAL_CONTEXT],
-    threshold=0.5,
-)
-# Mitigations from Justice-or-Prejudice (arXiv 2410.02736):
-# - randomize answer order to defeat position bias
-# - strip length cues to defeat verbosity bias
-# - never let model A judge model A (self-preference)
+def assert_safe_refund_trajectory(tool_calls: list[str]) -> bool:
+    required = ["lookup_order", "check_refund_policy", "stage_refund_draft"]
+    indices = [tool_calls.index(step) for step in required if step in tool_calls]
+    return len(indices) == len(required) and indices == sorted(indices)
 ```
 
-The Klarna failure mode lives in this rubric. "Asserts a specific number, date, or rule not in retrieval_context" is exactly the behavior the month-one eval missed.
+### 3. Blind shadow evaluation before switching models
+When evaluating a cheaper open-weight worker ([see our three-tier routing guide](/blog/gemini-4-neon-vs-deepseek-v4)) or a revised `SKILL.md` prompt, mirror live requests silently in the background, strip provider labels, and require candidate parity plus latency and schema compliance before shifting traffic.
 
-### Layer 5: Trajectory eval (agentevals)
+### 4. Per-line system-prompt ablation
+System prompts accumulate contradictory rules over time. Run a nightly or pre-release script that drops one instruction line at a time against your golden and trajectory suites; any line whose removal *improves* pass rate gets deleted immediately.
 
-```python
-from agentevals.trajectory.match import create_trajectory_match_evaluator
-from agentevals.trajectory.llm import (
-    create_trajectory_llm_as_judge, TRAJECTORY_ACCURACY_PROMPT,
-)
+## Your evaluation harness is your specification
 
-strict = create_trajectory_match_evaluator(trajectory_match_mode="strict")
-fuzzy  = create_trajectory_llm_as_judge(
-    model="anthropic:claude-sonnet-4-7",
-    prompt=TRAJECTORY_ACCURACY_PROMPT,
-)
+Traditional software specs assumed deterministic code paths. In [Loop Engineering](/blog/loop-engineering) and [Simulation Sandboxes](/blog/why-every-agent-needs-a-simulation-sandbox), the dataset plus deterministic trajectory and rubric checks *is* the specification that keeps [Coding Agent Infrastructure](/blog/coding-agent-infrastructure) honest across model upgrades.
 
-def test_trajectory(agent_run, expected_tool_calls):
-    res = agent_run("Refund order #4421")
-    # Layer 5a: did it call refund_tool BEFORE notify_tool?
-    assert strict(outputs=res.messages, reference_outputs=expected_tool_calls)["score"]
-    # Layer 5b: was the path generally sane (no infinite loops, no junk tool calls)?
-    assert fuzzy(outputs=res.messages)["score"]
-```
-
-This is the layer Anthropic was missing. A trajectory eval over the verbosity-instructed agent would have surfaced truncated reasoning chains immediately, because the *path* changed even when the final answers stayed in scoring distribution.
-
-### Layer 3: Simulation (τ²-bench style)
-
-```python
-# Pin a user-simulator LLM, give the agent a tool API,
-# evaluate by comparing final database state to annotated goal state.
-from tau2_bench import RetailEnv
-
-env = RetailEnv(seed=42)
-agent = MyAgent(tools=env.tools)
-trajectory = env.run(agent, user_model="gpt-4o", max_turns=20)
-score = env.compare_state(trajectory.final_db, env.goal_state)  # 0/1 per task
-# Sierra reports pass^k for stability: GPT-4o pass^8 < 0.25 on retail.
-```
-
-The pass^k metric is the load-bearing one. Most agents are unstable, not just inaccurate. A 70% pass-rate over a single run hides a pass^8 of 25%, which is what the user actually experiences when the same agent answers similar tickets all afternoon.
-
-### Layer 2 + 6: Shadow + continuous (production)
-
-```python
-# In your request handler:
-async def serve(req):
-    prod = await prod_agent.run(req)              # served to user
-    asyncio.create_task(shadow_eval(req, prod))   # silent
-    return prod
-
-async def shadow_eval(req, prod):
-    cand = await candidate_agent.run(req)
-    judge_score = await llm_judge(req, prod, cand)   # interleaved blind
-    metrics.emit("shadow.candidate_wins", judge_score.candidate_wins)
-    metrics.emit("shadow.tie_rate",        judge_score.ties)
-    # Promote candidate only when win-rate > prod by N points for K days.
-```
-
-### CI gate (the missing piece in Anthropic's April 23 incident)
-
-```yaml
-# .github/workflows/eval.yml
-- run: deepeval test run tests/eval/         # golden + judge
-- run: pytest tests/eval/test_trajectory.py  # agentevals
-- run: python scripts/run_tau2_subset.py     # 25-task simulation slice
-- run: python scripts/ablate_system_prompt.py # NEW: drop each line, re-run
-```
-
-That last step is the one that would have caught the April 23 regression in CI instead of in user complaints. Automated per-line system-prompt ablation: drop one line at a time, re-run the full suite, flag any line whose removal *improves* a downstream metric. The verbosity instruction would have lit up that script the day it was committed.
-
-## The shadow-testing playbook
-
-Two case studies anchor the production pattern. They are dual because one is the cheap version (small team, light infra, ephemeral guardrails) and one is the heavy version (large team, structured eval surface, frontier-model-day workflow).
-
-**Replit's decision-time guidance** ([blog.replit.com/decision-time-guidance](https://blog.replit.com/decision-time-guidance), 2026). Instead of front-loading rules in the system prompt, Replit injects ephemeral reminders at the moment the agent is about to make a decision. The reminders never persist in conversation history, the cached system prompt never changes, and cost is roughly 90% lower than dynamic system-prompt modification. They tune for recall over precision, on the principle that catching the failure mode is worth the cost of some no-op reminders. This is what shadow testing produces when it works: a release pattern that is cheap, reversible, and tuned against real production distribution rather than a curated test set.
-
-**Notion's frontier-eval pattern** (Sarah Sachs, AI Lead, on the [Braintrust customer page](https://www.braintrust.dev/customers/notion)). Notion went from triaging 3 issues per day to 30 per day after standardizing on a "frontier eval" run the moment a new model ships. They deploy frontier models within hours of release because a structured eval surface immediately surfaces what the new model does *differently*, not just whether it is better on average. Difference is the signal that matters, because the average is a lie that hides regressions and capability lifts in the same number.
-
-The generalized playbook, six steps:
-
-1. **Mirror, do not switch.** Run the candidate in parallel; the user sees prod output; both get scored.
-2. **Score blind.** The LLM-judge sees prod and candidate without provider labels. The Justice-or-Prejudice paper documents how strong models prefer their own outputs by 10 to 15 percentage points above chance.
-3. **Tune for recall over precision.** False alarms are cheaper than missed regressions. This is the Replit lesson.
-4. **Conservative gating.** 0% user-visible, then canary 5 to 10% for 24 to 48 hours, then staged expansion only when shadow win-rate AND SLOs both hold.
-5. **Auto-rollback on probe failure.** A canary drop in any of [task-completion, tool-correctness, refusal-rate, latency-p99] triggers revert without a meeting.
-6. **Ablate every prompt change.** Strip each line, re-run. The line item that would have caught Anthropic's April 16 verbosity bug.
-
-This is the pattern [/blog/shadow-testing](/blog/shadow-testing) covers at the production-distribution level. This post is the deeper sibling: the eval scaffolding *underneath* shadow mode, the layers that produce the score that shadow mode emits. The two posts compose. Shadow testing is the production-traffic version of what Hamel Husain has been teaching at the dev-loop level for three years; the six-layer harness is what makes shadow mode produce useful signal instead of noise. The same composition logic applies up the stack: see [/blog/coding-agent-infrastructure](/blog/coding-agent-infrastructure) for the harness layer that runs the agent, [/blog/swarm-vs-monolith](/blog/swarm-vs-monolith) for how the harness reshapes when the system fans out, and [/blog/below-the-waterline](/blog/below-the-waterline) for why this scaffolding is the part that decides whether the system ships.
-
-## Your eval is your spec
-
-The reframe lifts the [Ankur Goyal](https://www.braintrust.dev) (Braintrust CEO) and [Hamel Husain](https://hamel.dev/blog/posts/evals-faq/) thesis: the best PRD in 2026 is a dataset, a task function, and a scoring function the whole team can run. Not a doc.
-
-Traditional PRDs assumed deterministic systems. Agents are not deterministic. You cannot fully specify desired behavior upfront because the agent will encounter inputs no one wrote down. The eval *becomes* the spec because it is the only artifact that survives contact with reality. This is how Notion's 70 engineers stay aligned. It is how Anthropic actually develops Claude Code; the public methodology post says explicitly that as features stabilized they added evals, first for narrow areas like concision and file edits, then for over-engineering. The eval lags the feature, then leads it.
-
-The Anthropic April 23 postmortem is the proof by negative example. A SOTA shop with every layer except per-line system-prompt ablation shipped a six-week regression. The eval was the spec. The spec did not test the verbosity axis. The agent did exactly what the spec measured, which was the wrong thing to measure. Six weeks of degraded user experience flowed from that gap.
-
-If you can't write the rubric, you don't know what you're shipping. Write the rubric. Make it run in CI. Watch what breaks. That's the spec.
+Want help instrumenting a 25-case Golden Eval suite for your team? Explore [Courses](/courses) or [inquire on Work With Me](/work-with-me).

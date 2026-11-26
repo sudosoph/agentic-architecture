@@ -25,7 +25,6 @@ export default async function BswHandoutPage({ params }: Props) {
   const doc = getBswDoc('handout', slug)
   if (!doc) notFound()
 
-  // Sibling navigation
   const handouts = getBswHandouts()
   const idx = handouts.findIndex(h => h.slug === slug)
   const prev = idx > 0 ? handouts[idx - 1] : null
@@ -33,21 +32,21 @@ export default async function BswHandoutPage({ params }: Props) {
   const showToc = doc.toc.length >= 3
 
   return (
-    <article className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
+    <article className="lg:grid lg:grid-cols-[minmax(0,680px)_220px] lg:justify-between lg:gap-12">
       <div className="min-w-0">
-        <Link href="/bsw/handouts" className="font-mono text-xs text-accent hover:underline">
-          ← all handouts
+        <Link href="/bsw/handouts" className="text-xs font-medium text-muted hover:text-fg">
+          All workshop handouts
         </Link>
 
         {showToc && (
-          <details className="lg:hidden mt-8 border border-border bg-surface p-4">
-            <summary className="font-mono text-xs text-muted uppercase tracking-widest cursor-pointer">
+          <details className="lg:hidden mt-6 rounded-md border border-border bg-surface p-4">
+            <summary className="text-xs font-semibold text-fg cursor-pointer">
               Contents ({doc.toc.length})
             </summary>
             <ul className="mt-3 space-y-1.5">
               {doc.toc.map(item => (
                 <li key={item.id}>
-                  <a href={`#${item.id}`} className="font-mono text-xs text-muted hover:text-accent leading-snug">
+                  <a href={`#${item.id}`} className="text-xs text-muted hover:text-fg leading-snug">
                     {item.text}
                   </a>
                 </li>
@@ -61,23 +60,23 @@ export default async function BswHandoutPage({ params }: Props) {
         <div className="mt-16 pt-8 border-t border-border">
           <NewsletterSignup
             source={`bsw:handout:${slug}`}
-            sub="If this template is useful, weekly notes go deeper on patterns like this."
+            sub="Weekly architecture field notes and practical workflow blueprints by email."
           />
         </div>
 
-        <div className="mt-8 flex items-center justify-between font-mono text-xs gap-4">
+        <div className="mt-8 flex items-center justify-between text-xs text-muted gap-4">
           {prev ? (
-            <Link href={`/bsw/handouts/${prev.slug}`} className="text-accent hover:underline">
-              ← {prev.title}
+            <Link href={`/bsw/handouts/${prev.slug}`} className="hover:text-fg">
+              Previous: {prev.title}
             </Link>
           ) : (
-            <Link href="/bsw/handouts" className="text-accent hover:underline">
-              ← all handouts
+            <Link href="/bsw/handouts" className="hover:text-fg">
+              All handouts
             </Link>
           )}
           {next && (
-            <Link href={`/bsw/handouts/${next.slug}`} className="text-accent hover:underline text-right">
-              {next.title} →
+            <Link href={`/bsw/handouts/${next.slug}`} className="hover:text-fg text-right">
+              Next: {next.title}
             </Link>
           )}
         </div>
@@ -86,13 +85,13 @@ export default async function BswHandoutPage({ params }: Props) {
       {showToc && (
         <aside className="hidden lg:block">
           <div className="sticky top-24">
-            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-4">Contents</p>
+            <p className="text-xs font-semibold text-fg mb-3">On this page</p>
             <ul className="space-y-2 border-l border-border">
               {doc.toc.map(item => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="block pl-4 -ml-px border-l border-transparent hover:border-accent font-mono text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
+                    className="block pl-3.5 -ml-px border-l border-transparent hover:border-fg text-xs text-muted hover:text-fg leading-snug py-0.5 transition-colors"
                   >
                     {item.text}
                   </a>
@@ -105,4 +104,3 @@ export default async function BswHandoutPage({ params }: Props) {
     </article>
   )
 }
-

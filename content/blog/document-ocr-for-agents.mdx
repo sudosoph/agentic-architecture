@@ -1,8 +1,12 @@
 ---
 title: "Getting Reliable Business Data Out of Messy PDFs, Invoices, and Contracts"
 slug: document-ocr-for-agents
-publishedDate: "2026-05-03"
+publishedDate: "2026-08-06"
 description: "90% of enterprise data is locked in PDFs. The 2026 pipeline that gets it out is not RAG, not vision-only, and not the OCR you remember from 2018."
+briefing:
+  - "Feeding raw multi-column PDFs, scanned contracts, or financial tables straight into generic chunking corrupts numbers before reasoning begins."
+  - "Layout-aware OCR and vision-language parsers preserve table coordinates, bounding boxes, and section hierarchy in clean Markdown or JSON."
+  - "Pairing deterministic checksum validation (line-item sums matching invoice totals) with confidence routing prevents silent extraction errors."
 track: "small-business"
 tags: ["ocr", "agents", "documents", "vlm", "llamaindex"]
 draft: false
@@ -106,7 +110,7 @@ For agentic verification on top, **Pydantic AI** ([pydantic.ai](https://pydantic
 
 ParseBench at [parsebench.ai](https://parsebench.ai) is the most comprehensive enterprise document benchmark out today. 2,000 human-verified pages. 167,000 test rules. Measures across tables, charts, content faithfulness, and semantic formatting.
 
-Numbers from the May 2026 leaderboard:
+Numbers from the 2026 leaderboard:
 - Reducto: high (specialized parser, paid)
 - Gemini without thinking: high
 - LlamaParse: high
@@ -125,3 +129,9 @@ Three things to instrument before the document pipeline goes to production:
 ## The takeaway
 
 The 2026 document pipeline is hybrid by design. Deterministic CV for the layout and the tables. VLMs for the long tail. Agentic verification between every step. The teams that ship document-heavy agents at production accuracy are the ones who realized the model harness is the work, and the model itself is interchangeable.
+
+## Related Reading & Next Steps
+
+- **Reference Architecture:** [What Is an Agentic Architect? The 4-Layer Stack](/what-is-an-agentic-architect)
+- **Back-Office Blueprint:** [The 6-Workflow AI Back Office](/blog/ai-back-office) and [How to Build an AI Chief of Staff](/blog/ai-chief-of-staff)
+- **Templates & Hands-On Courses:** Score your own processes in the [20/80 Task Readiness Kit](/starter-kit) or explore [The Agentic Architect Lab](/courses).

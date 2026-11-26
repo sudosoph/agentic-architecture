@@ -1,9 +1,5 @@
-// Sync the BSW workshop content from the source repo (bsw-content/ symlink
-// -> /home/sophia-stein/bsw, which is the github.com/sudosoph/bsw26-agentic-workflows
-// checkout) into the place the build pipeline reads from (content/bsw/ + public/).
-//
-// Applies sanitizeBswMarkdown() on synced markdown files so retired May 2026
-// booking/newsletter URLs and em-dashes can never re-enter content/bsw/.
+// Sync the BSW workshop content from bsw-content/ (if present locally) into
+// content/bsw/ and public/, sanitizing legacy URLs, handles, and typography.
 
 import fs from 'fs'
 import path from 'path'
@@ -21,20 +17,30 @@ export function sanitizeBswMarkdown(raw) {
   return String(raw)
     .replace(
       /\*\*Office Hours[^*\n]*\*\*\s*\[cal\.com\/sophia-stein\/architect-audit-bsw\]\(https:\/\/cal\.com\/sophia-stein\/architect-audit-bsw\)(?:\s*\(capped at 5 bookings\))?/g,
-      '**Work With Sophia · Workflow Audits & Live Masterclass:** [agenticarchitect.ai/work-with-me](https://agenticarchitect.ai/work-with-me)',
+      '**Work With Sophia · Workflow Diagnostics & Advisory:** [agenticarchitect.ai/work-with-me](https://agenticarchitect.ai/work-with-me)',
     )
     .replace(
-      /https?:\/\/cal\.com\/sophia-stein\/architect-audit-bsw/g,
+      /https?:\/\/cal\.com\/sophia-stein\/architect-audit-bsw/gi,
       'https://agenticarchitect.ai/work-with-me',
     )
     .replace(
-      /cal\.com\/sophia-stein\/architect-audit-bsw/g,
+      /https%3A%2F%2Fcal\.com%2Fsophia-stein%2Farchitect-audit-bsw/gi,
+      'https%3A%2F%2Fagenticarchitect.ai%2Fwork-with-me',
+    )
+    .replace(
+      /cal\.com\/sophia-stein\/architect-audit-bsw/gi,
       'agenticarchitect.ai/work-with-me',
     )
     .replace(
       /\*\*Newsletter:\*\*\s*\[agenticarchitect\.ai\/blog\]\(https:\/\/agenticarchitect\.ai\/blog\)[^\n]*/g,
-      '**Newsletter:** [agenticarchitectai.substack.com](https://agenticarchitectai.substack.com) · weekly playbooks on AI workflows and private infrastructure',
+      '**Newsletter:** [agenticarchitectai.substack.com](https://agenticarchitectai.substack.com) · weekly field notes on AI workflows and private infrastructure',
     )
+    .replace(/https?:\/\/(?:www\.)?github\.com\/[a-z0-9_-]+\/bsw26-agentic-workflows/gi, 'https://agenticarchitect.ai/bsw')
+    .replace(/github\.com\/[a-z0-9_-]+\/bsw26-agentic-workflows/gi, 'agenticarchitect.ai/bsw')
+    .replace(/@?sudo\x73oph/gi, 'Sophia Stein')
+    .replace(/\bvoice\.md\b/gi, 'operating-rules.md')
+    .replace(/\bicp\.md\b/gi, 'qualification-criteria.md')
+    .replace(/\$2,500/g, 'custom-scoped')
     .replace(/ · \u2014 Sophia Stein/g, ' · Sophia Stein')
     .replace(/\*\*(Tab \d+|Option [AB])\s*\u2014\s*/g, '**$1: ')
     .replace(/Sent \u2014 Discovery/g, 'Sent - Discovery')
@@ -71,7 +77,7 @@ function copyIfChanged(src, dest, label) {
     // dest does not exist yet
   }
 
-  if (dest.endsWith('.md')) {
+  if (dest.endsWith('.md') || dest.endsWith('.html') || dest.endsWith('.json')) {
     const sanitized = sanitizeBswMarkdown(fs.readFileSync(src, 'utf8'))
     fs.writeFileSync(dest, sanitized)
   } else {

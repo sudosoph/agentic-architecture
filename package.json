@@ -22,7 +22,8 @@
     "preview": "opennextjs-cloudflare preview",
     "start": "next start",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "qc": "node scripts/brand-quality-gate.mjs"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.50",

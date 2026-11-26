@@ -1,185 +1,76 @@
 ---
-title: "Mixing and Matching Open-Weight Models: A Recipe Book"
+title: "Mixing and Matching Open-Weight Models: Six Production Routing Recipes"
 slug: mixing-and-matching-open-weight-models
-publishedDate: "2026-05-07"
-description: "An 84% cost reduction on a real SaaS workload, a 97% reduction on agentic dev loops, and the three-tier mix that actually ships in May 2026."
+publishedDate: "2026-09-15"
+description: "How a lightweight 1B-4B classifier routing 85% of traffic to open-weight 27B-35B workers cuts blended inference bills by 80%+ without degrading user-visible quality."
+briefing:
+  - "No single open-weight model wins simultaneously on vision parsing, fast JSON routing, deep repository edits, and desk-node memory footprint."
+  - "Composing specialized Apache 2.0 and MIT models (`Qwen` for vision/local coding, `DeepSeek` and `Kimi` for long-context reasoning) outperforms single-model setups."
+  - "Standardizing an OpenAI-compatible router layer lets teams swap weights in minutes as stronger open releases ship."
 track: "models-rigs"
 tags: ["local-models", "cost", "open-weights", "agents", "qwen", "kimi", "deepseek"]
 kind: deep-dive
 draft: false
 ---
 
-In May 2026, [Qwen 3.6-27B Dense](https://huggingface.co/Qwen/Qwen3.6-27B) running on a single consumer GPU at home posts 77.2% on SWE-bench Verified, within 0.4 points of Claude Opus 4.6. Electricity cost: roughly $0.0003 per million input tokens. The frontier API equivalent is $5/$25. That four-orders-of-magnitude gap is the arbitrage. The cheapest production stack in 2026 is not the cheapest model. It is a three-tier mix where a 1-4B classifier routes 80% of traffic to a mid-tier 27-35B open-weight worker, and only the residual 5-15% touches a frontier API. Documented savings on real workloads: 60-84% reduction versus frontier-only, with quality drop typically under two percentage points on SWE-bench and MMLU-Pro. The plumbing that makes this practical (vLLM, SGLang, OpenRouter fallbacks, EAGLE-3 speculative decoding, ROCm 7.2+) all landed in the last twelve months.
+The most profitable production AI architecture is not picking the single cheapest model and hoping users do not notice. It is a **three-tier routing pipeline** where a tiny sub-50ms classifier inspects each request, sends eighty to ninety percent of routine work to permissive open-weight workhorses (`Qwen 3.8-27B`, `Gemma 4`, `DeepSeek V4.1 Flash`), and escalates the genuinely hard five to fifteen percent to a flagship frontier model.
 
-The strongest version of this pattern is an agentic dev loop where a Qwen3-4B router sends "edit" and "explain" turns to a local Qwen 3.6-27B and only flags the rare "novel research" turn for Sonnet. Blended cost per million output tokens: ~$0.40 versus $15 frontier-only. **97% reduction.** The rest of this post is six recipes, the cost teardown for each, the implementation patterns, and the six cases where you should not do this.
+Because every major inference server (`vLLM`, `SGLang`, `llama-server`, `OpenRouter`) speaks the same OpenAI-compatible `/v1/chat/completions` contract, wiring this cascade takes less than fifty lines of code.
 
-## The Three-Tier Mix Framework
+## The three-tier routing architecture
 
-The idea is a triage pipeline. A small classifier looks at every incoming prompt, decides what kind of work it is, and routes it to one of three tiers. The tiers map cleanly to model size and price.
+| Tier | Responsibility | Latency Target | Representative Models | Why It Works |
+|---|---|---|---|---|
+| **T0 · Classifier** | Intent bucket, complexity score, PII screen, cache key | `<= 50 ms` | `ModernBERT`, `Qwen 1.7B / 4B` | Costs fractions of a cent per 1,000 calls; never use a frontier model just to route |
+| **T1 · Workhorse** | 80%-90% of turns: code edits, JSON extraction, routine drafts | `<= 1.5 s` TTFT | `Qwen 3.8-27B` (Apache 2.0), `DeepSeek V4.1 Flash` (MIT) | Fits on 24GB-128GB unified memory or low-cost hosted endpoints with constrained JSON decoding |
+| **T2 · Escalation** | 5%-15% tail: cross-system debugging, legal/board synthesis | Deliberate | `Claude Sonnet/Opus`, `Gemini 4 Neon/Carbon`, `Kimi K3.1 Pro` | Reserves premium reasoning strictly for high-ambiguity or high-blast-radius turns |
 
-| Tier | Job | Latency budget | 2026 picks | Why |
-|------|-----|----------------|------------|-----|
-| **T0 · Router/Classifier** | Intent detection, complexity scoring, PII/safety screening, cache-key generation | ≤50ms | Qwen3-1.7B; Qwen3-4B-Instruct-2507; ModernBERT for non-generative classification; Phi-4-mini (3.8B) | A [fine-tuned Qwen3-4B matches GPT-OSS-120B on 7 of 8 classification tasks](https://www.distillabs.ai/blog/we-benchmarked-12-small-language-models-across-8-tasks-to-find-the-best-base-model-for-fine-tuning/). Runs on a single 8GB consumer GPU or even CPU. |
-| **T1 · Workhorse** | The 80-95% of real turns: code edits, structured extraction, tool calls, drafts | ≤2s TTFT | [Qwen 3.6-27B Dense](https://huggingface.co/Qwen/Qwen3.6-27B) (77.2 SWE-bench, 86.2 MMLU-Pro, Apache 2.0) for code; [Gemma 4-31B](https://deepmind.google/models/gemma/gemma-4/) (85.2 MMLU-Pro, 80.0 LiveCodeBench, Apache 2.0) for UI/text; [Qwen3.6-35B-A3B MoE](https://huggingface.co/Qwen/Qwen3.6-35B-A3B) (3-4× faster, 73.4 SWE-bench) when latency dominates | Sweet spot of one or two consumer GPUs at ≤48GB at Q4_K_M. Apache 2.0 means no rev-share. |
-| **T2 · Frontier (rare)** | The 5-15% residual: novel research questions, multi-hour agent loops, anything where wrongness is expensive | TTFT does not matter | Claude Sonnet 4.6 ($3/$15), Claude Opus 4.6 ($5/$25), GPT-5.2 ($1.75/$14), Gemini 3.1 Pro ($2/$12); [Kimi K2.6](https://huggingface.co/moonshotai/Kimi-K2.6) (1T MoE, INT4 native, modified-MIT) when you want frontier-class on-prem | Reserve the spend for things only frontier intelligence solves. Route via OpenRouter for fallback. |
+## Six named routing recipes
 
-The non-obvious property: **routing decisions are made by a model 1/30th the size of the worker, and the routing cost is essentially free relative to the savings.** A Qwen3-1.7B classifier on Groq runs at $0.05 per million tokens. That is roughly $0.0001 per call. Used to redirect a single $0.05 frontier call to a $0.001 local call, the router pays for itself 500 times over on the first redirect.
+### Recipe 1 · The Agentic Coding Loop
+Fine-tune or prompt a `4B` router to label turns across `edit`, `explain`, `test_scaffold`, and `escalate`. Route `edit` and `test_scaffold` to `Qwen 3.8-27B` inside an isolated worktree gated by `tsc` and `vitest` ([see Loop Engineering](/blog/loop-engineering)), escalating only when deterministic checks fail twice or cross-service architecture is touched.
 
-There are two practical implementations of T0. If your routing problem is closed-set (12 intent buckets, 7 document types), train a classifier with [ModernBERT](https://huggingface.co/answerdotai/ModernBERT-base) or fine-tune Qwen3-1.7B on a few thousand labeled examples. If your routing problem is open-set (free-form complexity scoring), use Qwen3-4B-Instruct in zero-shot mode with a structured-output schema. Either way, T0 should never be a frontier model. The reason you are routing in the first place is to avoid frontier costs. Sending every turn to Sonnet to decide where to send it next is a punchline.
+### Recipe 2 · High-Volume Support & Intake Triage
+Classify inbound tickets by intent, urgency, and account tier in under 30ms with `ModernBERT`. Draft standard scheduling, documentation, and status replies on a fast MoE worker staged in Drafts, while routing billing disputes, legal notices, and enterprise escalations straight to Tier 2 plus a senior human owner.
 
-## Six Named Recipes
+### Recipe 3 · Constrained-Grammar Document Extraction
+Pair layout-aware OCR ([see Document OCR for Agents](/blog/document-ocr-for-agents)) with `vLLM` constrained JSON-schema decoding on `Qwen 3.8-27B`. Grammar constraints force emitted tokens to conform to your target schema, Reserve 1M-context frontier endpoints strictly for 200-page packets or double validation failures.
 
-### Recipe A · The Agentic Dev Loop (97% reduction)
+### Recipe 4 · Overnight Research & Signal Sweeps
+Use a small planner prompt to emit `{ search_queries, extraction_schema }`, run parallel retrieval and extraction locally or on cheap batch endpoints, and call a frontier synthesizer once at the end to reconcile contradictions ([see Automated Competitive Intelligence](/blog/automated-competitive-intelligence)).
 
-The single most cost-effective pattern in this post. Use case: AI coding assistant, multi-file refactors, agent workflows in the shape of Cursor Composer or Claude Code.
-
-**Router (T0):** Qwen3-4B fine-tuned on a 5,000-example dataset of `{prompt → "edit" | "explain" | "plan" | "shell" | "escalate"}`. The fine-tune takes a few hours on a single consumer GPU and the resulting classifier hits >95% agreement with human labels.
-
-**Worker (T1):** Qwen 3.6-27B Dense at Q4_K_M GGUF, ~17GB VRAM, on a single 7900 XTX or 4090. 77.2 on SWE-bench Verified. 59.3 on Terminal-Bench 2.0, which matches Claude 4.5 Opus on the latter. The Qwen 3.6-27B model card recommends 8-GPU tensor parallelism for full BF16. At Q4_K_M GGUF it fits on a single 24GB consumer card. Yes, you really can run this at home; see [The 96GB RAM Thesis](/blog/96gb-ram-thesis) for the laptop variant.
-
-**Frontier escalation (T2):** Claude Sonnet 4.6 only when the router classifies a turn as "escalate" (novel debugging, cross-system synthesis, the genuinely hard 5%).
-
-**Token cost per million output, blended:** ~$0.40 versus $15 frontier-only. **97% reduction.** This is the headline number. It assumes 95% of turns route to T1 and 5% to T2; sensitivity analysis suggests the number stays above 90% reduction even if the escalation rate doubles to 10%.
-
-### Recipe B · The Customer Support Classifier (84% reduction)
-
-Use case: SaaS support inbox, 50,000 tickets/month.
-
-**Router (T0):** ModernBERT or Qwen3-1.7B classifier into 12 intent buckets plus sentiment plus urgency. Inference latency under 30ms on CPU. This is the cheapest part of the pipeline.
-
-**Worker (T1):** Gemma 4-9B for short replies, or Qwen3.6-35B-A3B MoE for longer drafts (3-4× faster than the 27B Dense at similar quality, because only 3B parameters are active per token).
-
-**Frontier (T2):** Claude Sonnet 4.6 only when the router flags `urgency=high AND intent IN {billing_dispute, legal, refund_>$X}`.
-
-**Cost teardown:** 85% of tickets handled at ~$0.0003/ticket local. 15% at ~$0.05/ticket frontier. Blended: **~$0.008/ticket vs $0.05/ticket. 84% reduction.** [Red Hat's vLLM Semantic Router benchmarks](https://www.redhat.com/en/blog/bringing-intelligent-efficient-routing-open-source-ai-vllm-semantic-router) report a 47.1% latency drop and 48.5% token-usage drop on similar auto-mode routing. The latency improvement is the part most teams underestimate; the support inbox feels faster, not just cheaper.
-
-### Recipe C · The Document Extraction Pipeline
-
-Use case: pull structured JSON from invoices, contracts, PDFs at volume. The classic enterprise workload that pays for hardware faster than anything else.
-
-**Router (T0):** Document-type classifier (Qwen3-1.7B or XGBoost on layout features). Seven doc types map to seven schemas.
-
-**Worker (T1):** Qwen 3.6-27B (vision-capable, 262K native context) on vLLM with constrained-grammar decoding. Constrained decoding is the load-bearing detail; it forces the model to emit tokens that can only produce valid JSON for the target schema. Hallucination rate on schema fields drops by an order of magnitude versus free-form generation.
-
-**Frontier (T2):** None for 99% of documents. Reserve Gemini 3.1 Pro ($2/$12, 1M context) for documents over 250K tokens or when JSON schema validation fails twice in a row.
-
-**Cost:** Local Qwen 3.6 at ~$7/M tokens amortized hardware versus Gemini 3.1 Pro at $14 blended. At 50M tokens/day this pays for the GPU in roughly 3 months. [AWQ on vLLM hits 98.3% accuracy on HumanEval at 741 tok/s](https://jarvislabs.ai/blog/vllm-quantization-complete-guide-benchmarks), the fastest of all 4-bit formats in current benchmarks.
-
-### Recipe D · The Research Agent (Long Context)
-
-Use case: a research agent that decomposes a question, retrieves, synthesizes, and writes a report. Token budgets are tight here; see [Token Budgeting for Startups](/blog/token-budgeting-for-startups) for why.
-
-**Router (T0):** A query-decomposition prompt to Qwen3-4B that returns `{retrieval_queries, synthesis_plan, escalate_flag}` as structured output. Cheap, deterministic, easy to evaluate.
-
-**Retrieval embedder:** Jina Embeddings v4 or Qwen3-Embedding-8B. Both fit comfortably alongside the worker.
-
-**Worker (T1):** [Kimi K2.6](https://huggingface.co/moonshotai/Kimi-K2.6) at INT4 (~350GB at 2-bit dynamic quant) for synthesis. K2.6 scores 83.2 on BrowseComp solo and 86.3 with a 300-agent swarm. INT4 native means no quantization-error tax. If you do not have the hardware for K2.6, fall back to Qwen 3.6-27B with a tighter retrieval window.
-
-**Frontier (T2):** Claude Opus 4.6 only when synthesis confidence falls below 0.7 or the retrieval pass surfaces contradictions the local model cannot resolve.
-
-This is the recipe that benefits most from running unattended overnight. Because the router and worker are both local, you can let the agent run for hours without watching a meter.
-
-### Recipe E · The Speculative-Decode Coder
-
-Use case: latency-sensitive inline completion, autocomplete, anywhere first-token latency is the bottleneck.
-
-**No router needed.** This is a single-tier pattern with a draft-target pair, not a routing pattern. I include it because it composes cleanly with the other recipes.
-
-**Draft model:** Qwen3-1.7B, or a custom EAGLE-3 head trained on the target.
-
-**Target model:** Qwen 3.6-27B Dense.
-
-**Effect:** 2-3× speedup, [19.4% cost reduction per million output tokens on code-heavy SWE-bench workloads](https://developers.redhat.com/articles/2026/04/16/performance-improvements-speculative-decoding-vllm-gpt-oss) (vLLM benchmarks, April 2026), zero quality change. The reason quality is preserved is structural: rejected drafts are resampled from the target distribution, so the output distribution is identical to running the target alone. You are paying compute to make a guess and accepting it only when the target would have produced the same token. AWS's [P-EAGLE parallel speculative decoding](https://aws.amazon.com/blogs/machine-learning/p-eagle-faster-llm-inference-with-parallel-speculative-decoding-in-vllm/) extends this further on multi-GPU setups.
-
-### Recipe F · The Mixture-of-Agents Committee
-
-Use case: high-stakes single-shot answers where being wrong has a real cost (medical summaries, legal review, board-deck generation, anything you would have a human review before sending).
-
-**Layer 1, in parallel:** Qwen 3.6-27B + Gemma 4-31B + DeepSeek V4-Flash (284B/13B-active MoE). Three diverse open-weight models generate proposals in parallel. The diversity matters; using three checkpoints of the same base model gives you correlated errors.
-
-**Layer 2, synthesizer:** Claude Sonnet 4.6 receives all three drafts plus the original question and produces the final answer. Sonnet is good at reading drafts and finding contradictions. It is overkill at generating from scratch on these tasks, which is why we do not use it for layer 1.
-
-**Quality:** [RMoA, ICLR 2026](https://arxiv.org/html/2505.24442v1), reports MoA outperforms single-frontier on 4 of 6 reasoning benchmarks. Sometimes by enough to matter.
-
-**Cost:** Three open-weight calls at ~$0.50-$1.00 + one Sonnet synthesis at ~$0.10. Total ~$1-2 per answer versus $5-10 for a single Opus call. The committee pattern is cheaper *and* better on benchmarks where it works, which is a result that surprised me when I first ran it.
-
-## Cost Teardown · Same Workload, Two Architectures
-
-Workload: a SaaS company doing 100M tokens/month of input, 30M of output, mixed coding and support and extraction. This is the median small-team workload I see.
-
-| Approach | Total/month | Notes |
-|----------|-------------|-------|
-| Frontier-only (Claude Sonnet 4.6) | **$750** | Single-tier baseline |
-| Frontier-only (GPT-5.2) | **$595** | Cheapest frontier |
-| Hosted Qwen 3.6 Plus (Fireworks) | **$140** | $0.50/$3 per M, single-tier mid |
-| Three-tier mix · hosted T1 + 10% Sonnet escalation | **~$215** | Quality preserved on routing eval |
-| Three-tier mix, self-hosted T1 (one 7900 XTX or 4090) | **~$80 + $1,600 amortized hardware ≈ $124/month over 3 yr** | **84% reduction vs frontier-only** |
-
-The headline: three-tier self-hosted hits **~$1.24/M tokens blended** versus frontier-only at **$5.95-$7.50/M**. Break-even on a $1,600 GPU at 100M tokens/month is roughly 2.6 months. After that the GPU is paying you. See [When to Run Locally and When to Pay Anthropic](/blog/local-vs-cloud-inference) for the broader version of this calculation across workload shapes, and [Three Ways to Run Open Weights for Pennies](/blog/three-ways-to-run-open-weight-models) for the rent-versus-buy decision on the hardware itself.
-
-The thing the spreadsheet misses is the same thing it always misses: behavior. When the marginal cost of a retry is electricity, you stop trimming retries. The critic gets to argue with the executor for three more turns. The router gets re-run with a different prompt to break ties. Quality goes up in ways the spend column does not capture.
-
-## Implementation Patterns
-
-The plumbing has gotten boring, which is the best news in this whole post. Every serious server in 2026 (vLLM, SGLang, llama.cpp's `llama-server`, Ollama, LM Studio, Fireworks, Together, Groq, OpenRouter) speaks OpenAI's `/v1/chat/completions`. One client, swap `base_url` for fallback. The classifier-router lives in fifteen lines of Python:
-
-```python
-intent = router_model.classify(prompt)  # simple | complex | escalate
-
-if intent == "escalate":
-    return frontier_client.complete(prompt, model="claude-sonnet-4.6")
-elif intent == "complex":
-    return worker_client.complete(prompt, model="qwen3.6-27b")
-else:
-    return fast_client.complete(prompt, model="qwen3.6-35b-a3b")
-```
-
-That is the whole pattern. The interesting work is in `router_model.classify`, which is either a fine-tuned classifier head or a structured-output prompt to Qwen3-4B. The interesting *engineering* is in the fallback path, which OpenRouter handles natively with a provider-routing block:
-
-```json
-{
-  "model": "qwen/qwen3.6-plus",
-  "provider": { "sort": "price", "allow_fallbacks": true },
-  "models": [
-    "qwen/qwen3.6-plus",
-    "google/gemma-4-31b",
-    "anthropic/claude-sonnet-4.6"
-  ]
-}
-```
-
-Read the [OpenRouter provider-routing docs](https://openrouter.ai/docs/guides/routing/provider-selection) before deploying. The defaults are reasonable but not optimal for cost-constrained use cases. The `sort: price` flag is the load-bearing detail; without it OpenRouter routes for latency.
-
-The vLLM speculative-decoding setup for Recipe E is one command:
+### Recipe 5 · Speculative Decoding (`EAGLE-3`) for Latency-Critical UX
+When single-model consistency is required, pair your `27B` target model with a `1.7B` speculative draft head in `vLLM`:
 
 ```bash
-vllm serve Qwen/Qwen3.6-27B \
+vllm serve Qwen/Qwen3.8-27B \
   --speculative-config '{"method":"eagle3","model":"Qwen/Qwen3-1.7B","num_speculative_tokens":5}' \
-  --tensor-parallel-size 2 \
   --max-model-len 131072
 ```
 
-Two GPUs, EAGLE-3 with five speculative tokens per step, 131K context. That is the production config; tune `num_speculative_tokens` between 3 and 7 depending on your acceptance rate. Higher is faster when accepted, more wasted compute when rejected. The EAGLE-3 paper has the math.
+Because rejected draft tokens are resampled from the target distribution, output quality remains mathematically identical while decode throughput jumps 2x to 3x.
 
-The remaining implementation pattern that matters in 2026 is request-level caching keyed on the router output. If two requests with different prompts route to the same intent and the same retrieved context, the response is often identical. Caching at the router-output layer (rather than the prompt-string layer) catches an additional 10-25% of traffic in workloads I have measured.
+### Recipe 6 · Diverse Mixture-of-Agents Committee for High-Stakes Review
+For sensitive contract or clinical summaries, generate independent first-pass extractions across two distinct open-weight families (avoiding correlated single-checkpoint blind spots) and have a Tier-2 judge reconcile discrepancies and flag unverified spans.
 
-## When NOT to Mix-and-Match
+## Minimal Python router with provider fallback
 
-The contrarian beat. Every cost-engineering post should have one, because the failure modes of a pattern are usually more interesting than its successes.
+```python
+decision = router.classify(prompt)  # "fast" | "workhorse" | "escalate"
 
-1. **Under 1M tokens/day.** The plumbing isn't worth it. Pick Sonnet 4.6 or Qwen 3.6 Plus on Fireworks and ship. The break-even on routing infrastructure is somewhere around 5M tokens/day; below that you spend more engineering time than you save.
-2. **Uniformly hard tasks.** Long-horizon agents that run for 20+ turns should not downshift the worker mid-run. Routing presupposes that some turns are easier than others. If every turn is hard, route everything to the frontier and stop trying to be clever.
-3. **Conversational coherence matters.** Chatbots feel jarring when style shifts between turns. The user notices when one reply has Sonnet's voice and the next has Qwen's, even if they cannot articulate why. Either pin to one model per session or post-process for style.
-4. **Exact reproducibility (regulated workflows).** Each model in the mix is a separate audit surface. Pharma, finance, legal: the auditor wants one model, one version, one log. The cost savings do not survive the compliance review.
-5. **Tool-calling schema discipline is critical.** Smaller models hallucinate JSON schemas more often than frontier models. If your downstream system breaks on a malformed tool call, the cost of a single bad route exceeds months of savings. Use constrained-grammar decoding, or stay on the frontier.
-6. **Frontier intelligence IS the product.** This is the one most teams refuse to hear. If you are selling "Claude-quality answers," do not ship Qwen-quality answers. The whole pricing premise of your product is that customers cannot get this output anywhere else. The moment a customer notices the answer feels like a smaller model, your moat evaporates. Some products are about cost engineering and some products are about being the smartest thing in the room. Know which one you are selling.
+if decision == "escalate":
+    return frontier_client.chat(prompt, model="claude-sonnet")
+if decision == "workhorse":
+    return worker_client.chat(prompt, model="qwen-3.8-27b", response_format=schema)
+return fast_client.chat(prompt, model="deepseek-v4.1-flash")
+```
 
-## The Closer
+## Five cases where you should NOT mix models
 
-The interesting consequence of all this is not the 84% reduction. It is what happens after.
+1. **Low daily volume (`< 1M` tokens/day):** Engineering maintenance costs more than the API delta; stick to one strong model until volume grows.
+2. **Uniformly hard reasoning:** If every single turn requires deep cross-domain synthesis, a router adds latency without savings.
+3. **Single-voice conversational UX:** Switching models mid-dialogue creates subtle tone shifts unless normalized downstream.
+4. **Strict single-checkpoint regulatory audits:** Certain compliance regimes require pinning one exact model version per validated pipeline.
+5. **Unconstrained tool-call JSON:** Never route tool calls to smaller models without strict grammar/schema validation.
 
-When the median turn costs $0.0003 instead of $0.05, the design constraint changes. You stop asking "can I afford to retry" and start asking "is the loop converging." The critic gets to argue. The fan-out gets wider. The agent runs overnight because there is no reason it shouldn't. This is the same thesis as [The 96GB RAM Thesis](/blog/96gb-ram-thesis), generalized: cheap inference does not just save money, it changes which loops you are willing to design.
-
-The honest exception is recipe-zero, the one I did not name above. If frontier intelligence IS your product, ship it. Don't soft-pedal that. There is a real category of work where Opus 4.6 is genuinely the cheapest answer because it is the only answer that is correct. The recipes in this post are for the 95% of work that isn't that, the work where the model is a substrate and the product is the loop you build on top.
-
-Pick the recipe that matches your workload shape. Wire up the router. Watch the spend column. The arbitrage is real and it has a shelf life; the open models will keep catching up to the closed ones, and the closed ones will keep cutting prices to defend market share. Get on the curve while the curve is steep.
+Compare hosting options in [Three Ways to Run Open-Weight Models](/blog/three-ways-to-run-open-weight-models) and [Local vs. Cloud Inference](/blog/local-vs-cloud-inference), or size hardware in [The Sovereign Stack](/sovereign-stack).

@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-11-25",
+  "empiricalLaws": [
+    {
+      "id": "quarterly-buyer-guide",
+      "headline": "Refresh one opinionated 'Which AI to Use Right Now' guide every quarter",
+      "evidence": "5 of Ethan Mollick's Top 10 all-time Substack posts are refreshed editions of Which AI to Use Right Now."
+    },
+    {
+      "id": "implications-over-specs",
+      "headline": "Lead with organizational, role, and margin implications over pure protocol specs",
+      "evidence": "Gergely Orosz averages 1,124 likes and 115 comments on role/org implication essays vs 552 likes and 43 comments on pure MCP protocol explainers (2.0x likes, 2.7x comments)."
+    },
+    {
+      "id": "bounded-artifact-hooks",
+      "headline": "Put a concrete dollar cost or minute cap directly in build headlines",
+      "evidence": "5 of Nate B. Jones's top 7 all-time issues name a bounded build in the headline ($0.10/mo, 45-min fix; 45-minute prompt; 90-minute guide), converting into 15,000+ paid Substack members."
+    },
+    {
+      "id": "saveable-taxonomy-vs-promo",
+      "headline": "Never publish standalone sales announcements without a saveable visual rubric",
+      "evidence": "ByteByteGo visual system taxonomies earn 1,401 likes (Database Types) and 483 likes (Agentic Patterns) vs 79 likes on pure cohort Last Call posts (17.7x engagement drop)."
+    }
+  ],
+  "creatorAudienceBenchmarks": {
+    "nateBJones": {
+      "asOf": "2026-10-29",
+      "totalFollowers": 1050800,
+      "tiktok": 497600,
+      "youtube": 327000,
+      "substackTotal": 173200,
+      "substackPaid": 15000,
+      "linkedin": 27000,
+      "instagram": 16000,
+      "x": 10000
+    }
+  },
+  "podcasts": [
+    {
+      "show": "How I AI",
+      "host": "Claire Vo",
+      "episodes": 119,
+      "cadence": "1-2x weekly",
+      "durationMinutes": "26-35",
+      "format": "Screen-share workflow demos (70% practitioner guests, 30% solo multi-agent stress tests)",
+      "monetization": "B2B SaaS sponsors (WorkOS, Notion, Lovable) + ChatPRD SaaS + $3,500 Maven Executive Intensive"
+    },
+    {
+      "show": "AI News & Strategy Daily",
+      "host": "Nate B. Jones",
+      "cadence": "5-7x weekly",
+      "durationMinutes": "22-41",
+      "format": "100% solo executive briefing paired 1:1 with Substack guide + 60-sec vertical cuts",
+      "monetization": "15,000+ paid Substack subscribers ($25/mo Core, $450/yr Executive Circle) + enterprise keynotes"
+    },
+    {
+      "show": "Everyday AI",
+      "host": "Jordan Wilson",
+      "episodes": 767,
+      "cadence": "Daily M-F livestream",
+      "durationMinutes": "34",
+      "format": "7:30 AM CST LinkedIn/YouTube live + podcast RSS + daily newsletter",
+      "monetization": "Enterprise sponsors (Google, Microsoft, IBM, Adobe) + corporate training"
+    },
+    {
+      "show": "Exponential View",
+      "host": "Azeem Azhar",
+      "cadence": "Weekly",
+      "durationMinutes": "35-55",
+      "format": "Frontier lab chief and economist interviews + Friday chart packs",
+      "monetization": "Annual Substack subscriptions + executive advisory + board briefings"
+    }
+  ],
+  "courses": [
+    {
+      "creator": "Claire Vo & Zach Davis",
+      "title": "Executive Playbook for AI in EPD",
+      "platform": "Maven",
+      "soloPriceUsd": 3500,
+      "teamDiscount": "20%+ off via Maven for Teams",
+      "totalHours": 7,
+      "structure": "2 half-days (4 live classes + 2 fireside chats)",
+      "rating": 4.7,
+      "reviews": 56
+    },
+    {
+      "creator": "Hamel Husain & Shreya Shankar",
+      "title": "AI Evals For Engineers & PMs",
+      "platform": "Maven",
+      "soloPriceUsd": 2500,
+      "partnerPriceUsd": 1250,
+      "structure": "4-8 weeks (11 lessons, 33 live sessions, 10h+ office hours, lifetime future cohorts)",
+      "rating": 4.7,
+      "reviews": 1056,
+      "students": 5000
+    },
+    {
+      "creator": "Allie K. Miller",
+      "title": "AI-First Academy",
+      "platform": "Custom Academy",
+      "soloPriceUsd": 397,
+      "extraSeatPriceUsd": 127,
+      "totalHours": 6,
+      "structure": "8 lessons, 52 micro-chapters, 8 context packs, 5 workday builds, LinkedIn certificate"
+    },
+    {
+      "creator": "Conor Grennan",
+      "title": "AI for Professionals 2026",
+      "platform": "AI Mindset",
+      "soloPriceUsd": 195,
+      "totalHours": 4,
+      "structure": "84 short videos + Enterprise SCORM/LMS bulk seats",
+      "empiricalProof": "Gap Inc. 388-employee field study: 77% vs 62% top score (2.07x odds ratio)"
+    },
+    {
+      "creator": "Nate B. Jones",
+      "title": "Zero to AI / Core / Executive Circle",
+      "platform": "Substack + Custom",
+      "monthlyPriceUsd": 25,
+      "executiveCircleAnnualUsd": 450,
+      "paidMembers": 15000,
+      "differentiator": "Includes Nate's Library MCP server + weekly Executive Briefing"
+    }
+  ],
+  "posthogLiveDashboard": {
+    "projectId": 528561,
+    "dashboardId": 2415752,
+    "url": "https://us.posthog.com/project/528561/dashboard/2415752",
+    "insights": [
+      { "shortId": "A3R7pmcP", "name": "Daily Pageviews & Unique Visitors (agenticarchitect.ai)" },
+      { "shortId": "dltIczdC", "name": "Visitors by First-Touch UTM Source & Referrer" },
+      { "shortId": "TKnwLP6D", "name": "Buyer & Subscriber Conversion Events" },
+      { "shortId": "LFNvXtGf", "name": "Top Content & Offer Pages by Unique Readers" },
+      { "shortId": "x79Oi6MM", "name": "AI Search Assistants, Crawlers & Human Traffic Split" },
+      { "shortId": "Zudl8qKS", "name": "Double-Down vs. Retire: Essay Read-Depth & Click Matrix" }
+    ]
+  }
+}

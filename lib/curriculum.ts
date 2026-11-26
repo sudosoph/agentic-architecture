@@ -13,9 +13,7 @@ export interface CurriculumMeta {
   title: string
   subtitle: string
   audience: string
-  priceUsd: number
-  checkoutHref: string
-  vaultToken: string
+  waitlistHref: string
   upsellLabel: string
   upsellHref: string
 }
@@ -33,72 +31,107 @@ export interface ModuleFrontmatter {
   upsellBridge: string
 }
 
+export interface SkoolTrack {
+  number: string
+  title: string
+  audience: string
+  summary: string
+  outcomes: string[]
+  freeModuleHref: string
+  freeModuleLabel: string
+}
+
+export const SKOOL_LAB_TRACKS: SkoolTrack[] = [
+  {
+    number: 'Track 01',
+    title: 'Claude Superuser & Cowork OS',
+    audience: 'Non-Technical Operators, Founders & Ambitious Professionals',
+    summary:
+      'Move far beyond browser chat tabs. Master Projects, folder-based Cowork workspaces, structured SKILL.md workflows, MCP connectors, and Claude Code without needing a software engineering background.',
+    outcomes: [
+      'Organize reusable operating context and Socratic intake skills that stop generic outputs',
+      'Automate weekly research dossiers, inbox triage, call prep, and deliverable drafts safely',
+      'Connect calendar, docs, and workspace tools with human sign-off gates',
+    ],
+    freeModuleHref: '/courses/1-1-2026-ai-landscape-model-matrix',
+    freeModuleLabel: 'Read Lesson 1.1 Free',
+  },
+  {
+    number: 'Track 02',
+    title: 'Kill the $200/mo AI Subscription Stack',
+    audience: 'Solo Builders, Lean Teams & Cost-Conscious Operators',
+    summary:
+      'Replace overlapping Max/Ultra seats and thin SaaS wrappers with clean multi-model routing, OpenRouter cascades, open-weight workhorses (DeepSeek, Qwen), and private Tailscale setups.',
+    outcomes: [
+      'Audit every recurring AI subscription and route 80% of tasks to fast, low-cost workhorses',
+      'Stand up open-source workflow automation and encrypted private model endpoints',
+      'Keep sensitive client and company documents inside clear Green, Amber, and Red boundaries',
+    ],
+    freeModuleHref: '/courses/4-1-open-weights-vs-frontier-economics',
+    freeModuleLabel: 'Read Lesson 4.1 Free',
+  },
+  {
+    number: 'Track 03',
+    title: 'Become an AI Architect',
+    audience: 'Operators Upskilling Into AI Roles, PMs & Internal Champions',
+    summary:
+      'Learn how to audit team bottlenecks, separate what to buy from what to compose in-house, design 4-layer agentic workflows with 25-case evaluation suites, and graduate with a real portfolio.',
+    outcomes: [
+      'Decompose messy cross-functional processes using the 20/80 Task Readiness rubric',
+      'Evaluate Vertical AI platforms against lightweight bespoke API harnesses across departments',
+      'Ship production-grade workflows backed by deterministic verification and clear SOP handoffs',
+    ],
+    freeModuleHref: '/courses/2-1-vertical-ai-build-vs-buy-framework',
+    freeModuleLabel: 'Read Lesson 2.1 Free',
+  },
+]
+
 export const CURRICULA: CurriculumMeta[] = [
   {
     id: 'foundations',
-    number: 'Curriculum 01',
-    title: 'AI-Native Work & Role Automation: Ship 5x Faster',
+    number: 'Syllabus 01',
+    title: 'AI-Native Work, Workspace Folders & Reusable Skills',
     subtitle:
-      'Maximize brand-new frontier capabilities the week they drop, break the search-bar mindset, automate 8+ hours/week of research, calls, inbox, data, and decks without Python, and scale habits across your team.',
-    audience: 'Ambitious Employees, Managers, Founders & Non-Technical Operators',
-    priceUsd: 297,
-    checkoutHref: SITE_CONFIG.cal.academy,
-    vaultToken: 'aa-vault-foundations-9f4c2e',
-    upsellLabel: 'Upgrade to Guided Cohort ($1,497) or Corporate Workshop',
-    upsellHref: '/accelerator',
-  },
-  {
-    id: 'departments',
-    number: 'Curriculum 02',
-    title: 'AI for Growth, GTM & Executive Strategy',
-    subtitle:
-      'Drive signal-based pipeline and sales velocity without headcount bloat, reinvent your offers, run an Executive AI Strategy & Decision Room, and deploy high-ROI systems across Marketing, Finance, and Legal.',
-    audience: 'CEOs, Founders, VPs of Revenue/Marketing/Ops & PE Operating Partners',
-    priceUsd: 397,
-    checkoutHref: '/contact?subject=Curriculum%2002%20Growth%20%26%20Strategy%20Enrollment%20(%24397)',
-    vaultToken: 'aa-vault-departments-7b3d1a',
-    upsellLabel: 'Book Half-Day ($7,500) or Full-Day ($15,000) Corporate Lab',
+      'Evaluate new frontier capabilities the week they ship, replace ad-hoc prompting with structured intake skills, and automate recurring research, inbox, and document workflows without Python.',
+    audience: 'Operators, Managers, Founders & Non-Technical Professionals',
+    waitlistHref: '/courses#waitlist',
+    upsellLabel: 'Inquire About a Team Workshop',
     upsellHref: '/teaching',
   },
   {
-    id: 'bespoke-systems',
-    number: 'Curriculum 03',
-    title: 'Custom AI Systems: Multi-API Workflows & Production Agents',
+    id: 'departments',
+    number: 'Syllabus 02',
+    title: 'Department AI Strategy: Build vs. Buy Across GTM, Finance & Legal',
     subtitle:
-      'Connect best-of-breed Search, Enrichment, Voice, OCR, and Workspace APIs, engineer Context-Harness-Verifier loops, route multi-model ensembles, and ship with 25-case Golden Evals.',
-    audience: 'Builders, Product Managers, Solutions Architects & Internal AI Champions',
-    priceUsd: 497,
-    checkoutHref: '/contact?subject=Curriculum%2003%20Custom%20AI%20Systems%20Enrollment%20(%24497)',
-    vaultToken: 'aa-vault-bespoke-4e8a6c',
-    upsellLabel: 'Scope a Forward Deployed Build-For-You Engagement',
+      'Separate durable vertical platforms from overpriced SaaS wrappers, design signal-driven GTM and executive decision rooms, and govern department rollouts.',
+    audience: 'Founders, Functional VPs, COOs & Operating Leaders',
+    waitlistHref: '/courses#waitlist',
+    upsellLabel: 'Book Corporate Lab Scoping',
+    upsellHref: SITE_CONFIG.cal.speaking,
+  },
+  {
+    id: 'bespoke-systems',
+    number: 'Syllabus 03',
+    title: 'Bespoke AI Harnesses, Multi-API Systems & Evaluation Suites',
+    subtitle:
+      'Compose search, OCR, voice, and workspace APIs into state-machine harnesses with tiered model routing, scoped OAuth permissions, and 25-case binary regression suites.',
+    audience: 'Builders, Product Managers, Solutions Architects & AI Champions',
+    waitlistHref: '/courses#waitlist',
+    upsellLabel: 'Scope a Bespoke System Build',
     upsellHref: '/work-with-me',
   },
   {
     id: 'sovereign-stack',
-    number: 'Curriculum 04',
-    title: 'The Sovereign AI Stack: Open-Weights, Private Rigs & Enterprise Security',
+    number: 'Syllabus 04',
+    title: 'The Sovereign AI Stack: Open-Weights, Private Rigs & Mesh Security',
     subtitle:
-      'Deploy $9 Linux VPS stacks, size 96GB to 512GB unified-memory nodes, serve open weights over encrypted Tailscale meshes, and govern regulated Healthcare, Legal, and Finance workloads.',
-    audience: 'CTOs, Engineering Leaders, Regulated Healthcare/Legal Teams & Technical Founders',
-    priceUsd: 497,
-    checkoutHref: '/contact?subject=Curriculum%2004%20Sovereign%20Stack%20Enrollment%20(%24497)',
-    vaultToken: 'aa-vault-sovereign-2c9f5b',
-    upsellLabel: 'Explore Fractional CAIO / AI CTO & 2-Week Diagnostic',
+      'Size unified-memory desk nodes, serve permissive open-weight models over encrypted Tailscale meshes, and enforce strict governance for regulated workloads.',
+    audience: 'CTOs, Technical Leads & Privacy-Sensitive Organizations',
+    waitlistHref: '/courses#waitlist',
+    upsellLabel: 'Explore Fractional CAIO & AI CTO',
     upsellHref: '/fractional-ai-cto',
   },
 ]
-
-export const ALL_ACCESS_PASS: {
-  title: string
-  priceUsd: 997
-  vaultToken: string
-  checkoutHref: string
-} = {
-  title: 'All-Access 4-Curriculum AI Architect Pass (All 20 Modules + Vaults + L&D Kit)',
-  priceUsd: 997,
-  vaultToken: 'aa-vault-architect-all-8d1e3f',
-  checkoutHref: '/contact?subject=All-Access%204-Curriculum%20Architect%20Pass%20(%24997)',
-}
 
 export function getAllCurriculumModules(): Array<{
   slug: string
@@ -135,40 +168,5 @@ export function getPublicModuleView(slug: string): {
     curriculum,
     html: mod.frontmatter.unlocked ? mod.html : null,
     toc: mod.frontmatter.unlocked ? mod.toc : [],
-  }
-}
-
-export function getVaultBundle(token: string): {
-  title: string
-  curricula: Array<{
-    meta: CurriculumMeta
-    modules: Array<{
-      slug: string
-      frontmatter: ModuleFrontmatter
-      html: string
-      toc: { id: string; text: string }[]
-    }>
-  }>
-} | null {
-  if (!token) return null
-  if (token === ALL_ACCESS_PASS.vaultToken) {
-    return {
-      title: ALL_ACCESS_PASS.title,
-      curricula: CURRICULA.map(meta => ({
-        meta,
-        modules: curriculumModules.filter(m => m.frontmatter.curriculumId === meta.id),
-      })),
-    }
-  }
-  const matched = CURRICULA.find(c => c.vaultToken === token)
-  if (!matched) return null
-  return {
-    title: `${matched.number}: ${matched.title}`,
-    curricula: [
-      {
-        meta: matched,
-        modules: curriculumModules.filter(m => m.frontmatter.curriculumId === matched.id),
-      },
-    ],
   }
 }

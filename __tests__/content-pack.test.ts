@@ -24,7 +24,9 @@ describe('Omnichannel Content Pack Generator & Brand Engine Plugin', () => {
     expect(pack.substack).toContain('https://agenticarchitect.ai/masterclass')
 
     expect(pack.linkedinX).toContain('LinkedIn')
-    expect(pack.linkedinX).toContain('@sudosoph')
+    expect(pack.linkedinX).toContain('Agentic Architect')
+    expect(pack.linkedinX).not.toContain('sudosoph')
+    expect(pack.substack).not.toContain('$65,000')
 
     expect(pack.redditHn).toContain('r/smallbusiness')
     expect(pack.redditHn).toContain('9:1')

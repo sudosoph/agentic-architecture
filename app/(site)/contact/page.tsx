@@ -5,7 +5,8 @@ import { ContactForm } from '@/components/site/contact-form'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Send a note. Resource requests, sponsorship inquiries, workshop follow-ups, or general questions all land in the same inbox.',
+  description:
+    'Send a written inquiry regarding advisory, corporate workshops, speaking, sponsorships, or courses.',
   alternates: { canonical: '/contact' },
 }
 
@@ -13,8 +14,9 @@ export default function ContactPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="contact"
-        description="Resource requests, sponsorship inquiries, workshop follow-ups, anything else. All land in the same inbox. Reply usually within a business day."
+        meta="Direct Inbox · Boulder, CO"
+        title="Contact"
+        description="Advisory inquiries, speaking and workshop invitations, sponsorship questions, or general notes all land directly in the same inbox. Replies typically go out within one business day."
       />
       <Suspense fallback={null}>
         <ContactForm />

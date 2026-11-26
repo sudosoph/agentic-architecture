@@ -3,7 +3,7 @@
 
 **Workshop:** Architecting Agentic Workflows for the Lean 2026 Startup
 **Speaker:** Sophia Stein · AI Architect
-**Resources:** agenticarchitect.ai/blog · github.com/sudosoph/bsw26-agentic-workflows
+**Resources:** agenticarchitect.ai/blog · agenticarchitect.ai/bsw
 
 ---
 
@@ -23,7 +23,7 @@ RED    =  low vol   ×  ambiguous      ×  irreversible    → don't automate
 
 ---
 
-## Step 1 — List 5 tasks you do every week
+## Step 1 :  List 5 tasks you do every week
 
 Anything recurring counts. Outbound. Support. Research. Operations. Content. Reporting. Hiring funnel. Pricing decisions.
 
@@ -37,7 +37,7 @@ Anything recurring counts. Outbound. Support. Research. Operations. Content. Rep
 
 ---
 
-## Step 2 — Pick your first agent
+## Step 2 :  Pick your first agent
 
 Look at your Greens. Pick the one that would free up the most time per week. Write it here:
 
@@ -58,7 +58,7 @@ I'll approve / send / accept its output via:
 
 ---
 
-## Step 3 — Sketch the architecture
+## Step 3 :  Sketch the architecture
 
 Every agent has the same 5 boxes. Fill them in for YOUR agent.
 
@@ -81,12 +81,12 @@ Competitor watch:
   Cron (daily) → competitors.csv → scrape changelogs → Haiku diff → email digest
 
 Content repurposer:
-  Webhook (new blog) → voice.md → break into 3 channels → Sonnet rewrite each → drafts in Drive
+  Webhook (new blog) → operating-rules.md → break into 3 channels → Sonnet rewrite each → drafts in Drive
 ```
 
 ---
 
-## Step 4 — Estimate the impact
+## Step 4 :  Estimate the impact
 
 Be specific. Vague numbers don't motivate.
 
@@ -105,31 +105,31 @@ ________________________________________________________________
 
 ---
 
-## Step 5 — Take it home
+## Step 5 :  Take it home
 
 **Tonight:**
 - ☐ Sign up for n8n.cloud (or self-host on a $5 Hetzner VPS)
 - ☐ Get an Anthropic API key with $50 budget
 - ☐ Get a Firecrawl trial key (free tier, 500 credits)
-- ☐ Write your `voice.md` and `icp.md` files (start with the templates from the repo)
+- ☐ Write your `operating-rules.md` and `qualification-criteria.md` files (start with the templates from the repo)
 
 **This weekend:**
-- ☐ Fork github.com/sudosoph/bsw26-agentic-workflows
+- ☐ Fork agenticarchitect.ai/bsw
 - ☐ Import the n8n JSON
 - ☐ Wire up your credentials
 - ☐ Do 3 dry runs
 
 **Next week:**
 - ☐ Let it run daily for 7 days
-- ☐ Review every draft before sending — track approval rate
+- ☐ Review every draft before sending :  track approval rate
 - ☐ When approval rate hits 95%+, you're ready for Stage 3 (conditional auto)
 
 ---
 
 ## Two ways to keep going
 
-**Architecture Audit** — 5 free 30-min audits for BSW attendees. First-come.
-**Agentic Architect Blog** — agenticarchitect.ai/blog · weekly deep-dives.
+**Architecture Audit** :  5 free 30-min audits for BSW attendees. First-come.
+**Agentic Architect Blog** :  agenticarchitect.ai/blog · weekly deep-dives.
 
 ---
 

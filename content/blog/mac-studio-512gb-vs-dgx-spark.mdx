@@ -1,15 +1,19 @@
 ---
 title: "Mac Studio 512GB (M5 Ultra) vs. NVIDIA DGX Spark vs. 128GB Ryzen AI Halo: Local LLM Guide"
 slug: mac-studio-512gb-vs-dgx-spark
-publishedDate: "2026-11-24"
+publishedDate: "2026-10-05"
 description: "A vendor-neutral hardware physics and ROI guide comparing Apple's 512GB M5 Ultra Mac Studio (1.2 TB/s), NVIDIA DGX Spark (128GB), and 128GB AMD Ryzen AI Halo mini-PCs for sparse MoE models and private team inference."
+briefing:
+  - "Local LLM throughput is governed by memory bandwidth (`TB/s`), making dense 405B models sluggish even when they fit inside 512GB RAM."
+  - "512GB unified-memory nodes (`M5 Ultra` at `1.2 TB/s`) shine on 300GB+ sparse MoE weights (`23B-37B` active parameters) and large multi-agent KV caches, while `DGX Spark` leads CUDA prefill."
+  - "Benchmarking real decode tokens/sec and 36-month amortized monthly cost prevents expensive hardware mismatches."
 track: "models-rigs"
 tags: ["hardware", "benchmarks", "local-inference", "open-weights", "economics"]
 kind: deep-dive
 draft: false
 ---
 
-Earlier this year I wrote about running [96GB of DDR5 in a repairable Linux laptop](/blog/96gb-ram-thesis) as a portable daily driver. Since August 2026, however, the desk-side hardware conversation among founders and AI engineers has shifted dramatically: teams are buying **512 GB unified-memory mini computers**, stacking **128 GB desk nodes**, and asking which box actually makes financial sense versus cloud APIs.
+Earlier this year I wrote about running [96GB of DDR5 in a repairable Linux laptop](/blog/mac-studio-512gb-vs-dgx-spark) as a portable daily driver. Since August 2026, however, the desk-side hardware conversation among founders and AI engineers has shifted dramatically: teams are buying **512 GB unified-memory mini computers**, stacking **128 GB desk nodes**, and asking which box actually makes financial sense versus cloud APIs.
 
 Good hardware architecture is never a single-vendor fan club. Whether Apple Silicon, NVIDIA's compact Grace-Blackwell desk node, an AMD Ryzen AI Max mini-PC, or a $9/month Linux VPS wins depends entirely on two numbers: **memory bandwidth (GB/s)** and **active parameters per token**.
 
@@ -24,7 +28,7 @@ Here are the real specifications, memory ceilings, and trade-offs across the fou
 | **NVIDIA DGX Spark** | `128 GB` Unified (`64 GB` OEM SKUs) | **`273 GB/s`** | `$6,950` (`$4,999` 64 GB OEM) | First-class CUDA/vLLM/TensorRT stack, ~1,700 tok/s prompt prefill, ConnectX dual-node link | `4.4x` lower memory bandwidth than M5 Ultra slows single-stream token decode |
 | **AMD Ryzen AI Max+ / Halo Mini-PCs** *(HP Z2 Mini G1a, GMKtec EVO-X2, Framework Desktop)* | `128 GB` LPDDR5X (select `192 GB` configs) | **`~256 GB/s`** | `$1,899` to `$2,699` | Best price-per-GB on native Ubuntu + `llama.cpp` HIP/Vulkan; tiny footprint | Slower prompt prefill than CUDA; 128 GB ceiling requires 2-node split for 400B+ weights |
 
-*(If you need a battery and a repairable keyboard on airplanes, a 96 GB DDR5 Linux laptop like the [Framework 16](/blog/framework-laptop-thesis) or a 128 GB M5 Max MacBook Pro covers travel duty, while the desk nodes above stay wired to gigabit Ethernet at home or the office over [Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide).)*
+*(If you need a battery and a repairable keyboard on airplanes, a 96 GB DDR5 Linux laptop like the [Framework 16](/blog/mac-studio-512gb-vs-dgx-spark) or a 128 GB M5 Max MacBook Pro covers travel duty, while the desk nodes above stay wired to gigabit Ethernet at home or the office over [Tailscale Serve](/blog/autonomous-ai-rig-tailscale-guide).)*
 
 ## The 512 GB physics trap: Dense models vs. Sparse MoE
 

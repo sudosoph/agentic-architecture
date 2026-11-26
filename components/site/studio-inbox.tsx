@@ -34,7 +34,7 @@ type RadarItem = {
 const OWNER_BUYER_FUNNEL_PACKS = [
   {
     id: 'owner-li-bottleneck',
-    channel: 'Audience 1 (Non-Technical Owners) · LinkedIn -> Free Live Build & $297 Academy',
+    channel: 'Audience 1 (Non-Technical Owners) · LinkedIn -> Free Live Build & Agentic Architect Lab',
     url: 'https://agenticarchitect.ai/academy',
     hookTitle: '90% of businesses do not need an autonomous AI agent. They need 1 clean automation.',
     copyBody:
@@ -46,7 +46,7 @@ const OWNER_BUYER_FUNNEL_PACKS = [
     url: 'https://agenticarchitect.ai/fractional-ai-cto',
     hookTitle: 'Subject: Fractional CAIO / AI CTO bench & Substack field notes',
     copyBody:
-      'Hi [First Name],\n\nHope your quarter at [Company] is going smoothly. Quick personal note: alongside my engineering work, I opened two part-time advisory seats through Agentic Architect serving mid-market and scaling teams as a Fractional Chief AI Officer / Fractional AI CTO (helping organizations move past scattered AI chat seats into governed, cost-predictable production workflows across Sales, Ops, and Engineering).\n\nI also publish weekly breakdowns on AI unit economics and practical business automations on Substack (https://agenticarchitectai.substack.com). Overview of the fractional practice is at https://agenticarchitect.ai/fractional-ai-cto if ever useful to you or another founder/COO in your circle.\n\nWarmly,\nSophia',
+      'Hi [First Name],\n\nHope your quarter at [Company] is going smoothly. Quick personal note: I opened two part-time advisory seats through Agentic Architect serving mid-market and scaling teams as a Fractional Chief AI Officer / Fractional AI CTO (helping organizations move past scattered AI chat seats into governed, cost-predictable production workflows across Sales, Ops, and Engineering).\n\nI also publish weekly breakdowns on AI unit economics and practical business automations on Substack (https://agenticarchitectai.substack.com). Overview of the fractional practice is at https://agenticarchitect.ai/fractional-ai-cto if ever useful to you or another founder/COO in your circle.\n\nWarmly,\nSophia',
   },
   {
     id: 'corporate-demo-to-prod',
@@ -54,7 +54,7 @@ const OWNER_BUYER_FUNNEL_PACKS = [
     url: 'https://agenticarchitect.ai/fractional-ai-cto',
     hookTitle: '75% of companies bought AI seats. Fewer than 5% have governed production workflows.',
     copyBody:
-      'Watched three mid-market teams hit the exact same wall this quarter: past the initial ChatGPT demo, stuck before real production. Two paid outside contractors $20K+ for undocumented webhook spaghetti; a CRM field changed six weeks later and nobody in-house knew how to edit it.\n\nMoving an organization from demos to EBITDA impact does not require a $350K full-time hire: it takes clear SOP rules, draft-only external scopes, evaluation guardrails, and building directly inside your own accounts.\n\nPublished how we structure 2-week AI Architecture Diagnostics and Fractional CAIO / AI CTO oversight today (link in first comment).',
+      'Watched three mid-market teams hit the exact same wall this quarter: past the initial ChatGPT demo, stuck before real production. Two paid outside contractors $20K+ for undocumented webhook spaghetti; a CRM field changed six weeks later and nobody in-house knew how to edit it.\n\nMoving an organization from demos to EBITDA impact does not require a full-time executive hire: it takes clear SOP rules, draft-only external scopes, evaluation guardrails, and building directly inside your own accounts.\n\nPublished how we structure 2-week AI Architecture Diagnostics and Fractional CAIO / AI CTO oversight today (link in first comment).',
   },
 ]
 
@@ -303,7 +303,7 @@ export function StudioInbox({
           <h2 className="text-xl font-bold text-fg pt-1">Unlock Cloud Operator Studio</h2>
           <p className="text-sm text-muted leading-relaxed">
             Sign in from any laptop or phone using either a Fine-Grained GitHub Personal Access
-            Token scoped to <code className="font-mono text-fg">sudosoph/agentic-architecture</code>{' '}
+            Token scoped to <code className="font-mono text-fg">owner/agentic-architecture</code>{' '}
             (Contents + Pull Requests + Actions) or your <code className="font-mono text-fg">STUDIO_ACCESS_TOKEN</code>.
           </p>
         </div>
@@ -341,17 +341,15 @@ export function StudioInbox({
             <button
               type="submit"
               disabled={verifying}
-              className="rounded-lg bg-accent px-4 py-2.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+              className="rounded-md bg-fg px-4 py-2.5 text-xs font-medium text-bg hover:opacity-90 cursor-pointer"
             >
-              {verifying ? 'Verifying Repo Access...' : 'Unlock Cloud Studio →'}
+              {verifying ? 'Verifying Repo Access...' : 'Unlock Cloud Studio'}
             </button>
             <a
-              href="https://github.com/sudosoph/agentic-architecture/pulls"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-semibold text-accent hover:underline"
+              href="/blog"
+              className="text-xs font-medium text-muted hover:text-fg underline underline-offset-3"
             >
-              Open GitHub PR Queue Directly ↗
+              Return to Writing
             </a>
           </div>
         </form>
@@ -363,41 +361,25 @@ export function StudioInbox({
     <div className="space-y-12">
       {/* Quick Cloud Links Bar */}
       <Card className="p-4 bg-surface flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold">
-          <a
-            href="https://github.com/sudosoph/agentic-architecture/pulls"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            1-Click Draft PRs on GitHub ↗
-          </a>
-          <a
-            href="https://github.com/sudosoph/agentic-architecture/actions/workflows/weekly-radar.yml"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            Scheduled Weekly Radar Action ↗
-          </a>
-          <a href="/keystatic" className="text-accent hover:underline">
-            Keystatic Visual Editor (/keystatic) →
+        <div className="flex flex-wrap items-center gap-4 text-xs font-medium">
+          <a href="/keystatic" className="text-fg hover:text-accent underline underline-offset-3">
+            Keystatic Visual Editor (/keystatic)
           </a>
           <a
             href="https://agenticarchitectai.substack.com/publish/posts"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent hover:underline"
+            className="text-fg hover:text-accent underline underline-offset-3"
           >
-            Substack Queue ↗
+            Substack Queue
           </a>
           <a
             href="https://medium.com/p/import"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent hover:underline"
+            className="text-fg hover:text-accent underline underline-offset-3"
           >
-            Medium Canonical Import ↗
+            Medium Canonical Import
           </a>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -407,7 +389,7 @@ export function StudioInbox({
             onChange={e => setCrosspostSlug(e.target.value)}
             aria-label="Post slug for official API cross-post"
             placeholder="ai-back-office"
-            className="w-36 rounded-lg border border-border bg-white px-2.5 py-1.5 font-mono text-xs text-fg"
+            className="w-36 rounded-md border border-border bg-white px-2.5 py-1.5 font-mono text-xs text-fg"
           />
           <label className="inline-flex items-center gap-1 text-[11px] font-mono text-muted cursor-pointer">
             <input
@@ -420,16 +402,16 @@ export function StudioInbox({
           <button
             type="button"
             onClick={handleTriggerCrosspost}
-            className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:opacity-95 cursor-pointer"
+            className="rounded-md bg-fg px-3 py-1.5 text-xs font-medium text-bg hover:opacity-90 cursor-pointer"
           >
-            Official Cross-Post →
+            Official Cross-Post
           </button>
           <button
             type="button"
             onClick={() => handleTriggerCloudRadar()}
-            className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-fg hover:border-accent cursor-pointer"
+            className="rounded-md border border-border bg-white px-3 py-1.5 text-xs font-medium text-fg hover:border-fg/45 cursor-pointer"
           >
-            Run Cloud Weekly Radar PR ↻
+            Run Cloud Weekly Radar PR
           </button>
         </div>
       </Card>

@@ -1,10 +1,10 @@
 // Generates research-first, human-reviewed multi-channel outreach packs
-// cleanly separated across Sophia's two buyer audiences:
+// cleanly separated across two buyer audiences:
 // 1. Non-Technical Business Owners (warm-founder, podcast-partner)
 // 2. Mid-Market Executives, Corporate L&D, Fractional CAIO/AI CTO & Universities (fractional-cto, corporate-ld, university)
 //
 // Usage:
-//   npm run outreach:pack -- <warm-founder|corporate-ld|fractional-cto|podcast-partner|university> "<Name>" "<Organization>" "<Specific Signal>"
+//   npm run outreach:pack: <warm-founder|corporate-ld|fractional-cto|podcast-partner|university> "<Name>" "<Organization>" "<Specific Signal>"
 
 import fs from 'fs'
 import path from 'path'
@@ -42,16 +42,15 @@ Saw that ${company} is ${cleanSignal}.
 
 75% of mid-market and scaling companies have AI chat seats right now, yet most stall between isolated demos and governed, cost-predictable production workflows across Sales, Intake, Operations, or product engineering.
 
-My background sits across both rooms: Columbia CS, production engineering at Meta and Section.io, and McKinsey ($70M enterprise SaaS cost reduction + clinical rollouts across 250+ healthcare leaders). Through Agentic Architect, I step in 2 to 4 days a month as a Fractional Chief AI Officer or Fractional AI CTO, starting with a contained 2-week architecture and ROI diagnostic:
+Through Agentic Architect, I partner 2 to 4 days a month as a Fractional Chief AI Officer or Fractional AI CTO, starting with a contained 2-week architecture, security, and ROI diagnostic:
 https://agenticarchitect.ai/fractional-ai-cto
 
-Open to a brief 20-minute scoping call next week to compare notes on ${company}'s Q1 priorities?
+Open to a brief 20-minute scoping call next week to compare notes on ${company}'s priorities?
 https://cal.com/sophia-stein/speaking
 
 Sophia Stein
-Columbia CS · ex-McKinsey · Boulder, CO
-*(Note: I also work in AI Systems & Enablement at Google; all advisory and training work is conducted strictly in my personal capacity, views my own.)*`,
-      linkedinDm: `Hi ${prospectName}, noticed ${company} is ${cleanSignal}. I partner with mid-market executives and CTOs out of Boulder (Columbia CS, ex-McKinsey) on Fractional CAIO / AI CTO oversight and 2-week architecture diagnostics: https://agenticarchitect.ai/fractional-ai-cto. Happy to compare notes if helpful as you map priorities!`,
+Boulder, CO`,
+      linkedinDm: `Hi ${prospectName}, noticed ${company} is ${cleanSignal}. I partner with mid-market executives and CTOs on governed production AI architecture (https://agenticarchitect.ai/fractional-ai-cto). Happy to compare notes if helpful as you map priorities.`,
       followUpDay5: `Subject: Re: Moving ${company} past AI pilots into governed production
 
 Hi ${prospectName},
@@ -74,9 +73,9 @@ Hi ${prospectName},
 
 Noticed ${company} is ${cleanSignal}.
 
-Most leadership teams I speak with here in Colorado and across tech and healthcare have plenty of chat seats, yet lose 6+ hours per person a week because nobody has standardized departmental SOP rules or human-in-the-loop workflow gates.
+Most leadership teams I speak with have plenty of chat seats, yet lose 6+ hours per person a week because nobody has standardized departmental SOP rules or human-in-the-loop workflow gates.
 
-After advising enterprise teams at McKinsey and training 300+ operators live at Boulder Startup Week, I lead focused half-day and full-day Applied AI Workflow Labs where non-technical and technical staff leave with working automations on tools you already use.
+After training 300+ operators live at Boulder Startup Week, I lead focused half-day and full-day Applied AI Workflow Labs where non-technical and technical staff leave with working automations on tools you already use.
 
 Would a brief 20-minute scoping call next week be useful, or should I send over the 1-page workshop sheet first?
 
@@ -84,14 +83,13 @@ Calendar if easiest: https://cal.com/sophia-stein/speaking
 Overview: https://agenticarchitect.ai/boulder
 
 Sophia Stein
-Columbia CS · ex-McKinsey
-*(Note: I also work in AI Systems & Enablement at Google; all external workshops and advisory work are conducted strictly in my personal capacity, views my own.)*`,
-      linkedinDm: `Hi ${prospectName}, loved seeing how ${company} is ${cleanSignal}. I run hands-on corporate AI workflow labs out of Boulder (Columbia CS, ex-McKinsey, 300+ trained at BSW). Happy to share our unlocked 20/80 Bottleneck Readiness Calculator if useful as your team maps priorities: https://agenticarchitect.ai/starter-kit`,
+Boulder, CO`,
+      linkedinDm: `Hi ${prospectName}, loved seeing how ${company} is ${cleanSignal}. I run hands-on corporate AI workflow labs out of Boulder (300+ trained at Boulder Startup Week). Happy to share our unlocked 20/80 Bottleneck Readiness Calculator if useful as your team maps priorities: https://agenticarchitect.ai/starter-kit`,
       followUpDay5: `Subject: Re: Practical AI workflow lab for ${company}
 
 Hi ${prospectName},
 
-Quick follow-up in case a single diagnostic session is cleaner for ${company} first: many COOs and VPs start with a 90-minute Workflow & Cost Roadmap ($750, credited toward a team workshop or sprint within 30 days) or explore Fractional CAIO support on https://agenticarchitect.ai/fractional-ai-cto.
+Quick follow-up in case a single diagnostic session is cleaner for ${company} first: many COOs and VPs start with a 90-minute Workflow & Cost Roadmap or explore Fractional CAIO support on https://agenticarchitect.ai/fractional-ai-cto.
 
 Calendar here if helpful: https://cal.com/sophia-stein/speaking
 
@@ -112,7 +110,7 @@ Big fan of how ${company} serves ${cleanSignal}.
 Most AI interviews stay abstract. After training 300+ founders at Boulder Startup Week and speaking for Women Who Code, I would love to bring your audience a concrete, zero-jargon walkthrough they can run the same afternoon:
 
 1. Why 90% of growing businesses do not need hallucinating autonomous agents, and which 6 back-office workflows actually stick.
-2. The 4-axis Bottleneck Readiness Scorecard for spotting what to automate before hiring a $65k/yr coordinator.
+2. The 4-axis Bottleneck Readiness Scorecard for spotting what to automate before adding admin headcount.
 3. How to build an AI Chief of Staff with draft-first inbox gates so nothing reckless ever auto-sends.
 
 Every listener gets immediate ungated access to the calculator and templates at https://agenticarchitect.ai/starter-kit.
@@ -120,9 +118,8 @@ Every listener gets immediate ungated access to the calculator and templates at 
 Open to a 30-to-45 minute episode or live community workshop next month?
 
 Sophia Stein
-Columbia CS · ex-McKinsey · Boulder, CO
-*(Personal capacity; all views my own.)*`,
-      linkedinDm: `Hi ${prospectName}, really enjoy ${company}. Put together an ungated 20/80 AI Bottleneck Readiness Calculator after training 300+ founders at Boulder Startup Week, and thought a practical live teardown could be a great fit for your audience. Happy to send 3 topic bullets if you are booking guests!`,
+Boulder, CO`,
+      linkedinDm: `Hi ${prospectName}, really enjoy ${company}. Put together an ungated 20/80 AI Bottleneck Readiness Calculator after training 300+ founders at Boulder Startup Week, and thought a practical live teardown could be a great fit for your audience. Happy to send 3 topic bullets if you are booking guests.`,
       followUpDay5: `Subject: Re: Guest workshop / episode idea for ${company}
 
 Hi ${prospectName},
@@ -143,7 +140,7 @@ Sophia`,
 
 Dear ${prospectName},
 
-I am an AI systems architect and educator based here in Boulder (Columbia B.S. in Computer Science, ex-McKinsey, and 300+ founders trained live at Boulder Startup Week, with open-source lab materials at https://agenticarchitect.ai/bsw).
+I am an AI systems architect and educator based here in Boulder (300+ founders trained live at Boulder Startup Week, with open-source lab materials at https://agenticarchitect.ai/bsw).
 
 Seeing your work around ${cleanSignal} at ${company}, I would love to offer a practical 60-to-90 minute guest lecture or hands-on student studio lab this semester on either:
 - Applied AI Workflows, Unit Economics & Human-in-the-Loop Governance for Business Leaders
@@ -155,8 +152,8 @@ Would you have 15 minutes for a coffee in Boulder or a quick call to see if a gu
 
 Warmly,
 Sophia Stein
-*(Writing and teaching in my personal capacity; all views and materials are my own.)*`,
-      linkedinDm: `Hi ${prospectName}, I am based here in Boulder (Columbia CS, ex-McKinsey, 300+ trained at BSW) and put together two applied AI workflow syllabi + open-source student labs at https://agenticarchitect.ai/teaching. Would love to offer a guest lecture for your students at ${company} if ever helpful!`,
+Boulder, CO`,
+      linkedinDm: `Hi ${prospectName}, I am based here in Boulder (300+ trained at Boulder Startup Week) and put together two applied AI workflow syllabi + open-source student labs at https://agenticarchitect.ai/teaching. Would love to offer a guest lecture for your students at ${company} if ever helpful.`,
       followUpDay5: `Subject: Re: Guest lecture offer for ${company}
 
 Dear ${prospectName},
@@ -172,26 +169,26 @@ Sophia`,
   // Default: warm-founder (Non-Technical Business Owner Track)
   return {
     segment: 'warm-founder',
-    offerTarget: 'Free 60-Min Live Build -> $297 Academy or Custom Bottleneck Sprint',
+    offerTarget: 'Free 60-Min Live Build -> Agentic Architect Lab or Custom Bottleneck Sprint',
     emailTouch1: `Subject: Quick workflow idea for ${company}
 
 Hi ${prospectName},
 
 Saw that ${company} is ${cleanSignal}.
 
-I just unlocked our interactive 20/80 Bottleneck Readiness Calculator and Pre-Call Lead Dossier blueprint that we use to help business owners reclaim 8 to 15 hours a week across lead intake, pre-call research, and draft-first inbox follow-up without hiring or coding:
+I just unlocked our interactive 20/80 Bottleneck Readiness Calculator and Pre-Call Lead Dossier blueprint that we use to help business owners recover 8 to 15 hours a week across lead intake, pre-call research, and draft-first inbox follow-up without hiring or coding:
 https://agenticarchitect.ai/starter-kit
 
 I am also hosting a free live 60-minute screen-share build walking through how to wire a working AI Chief of Staff workflow step by step. Save a free seat (or grab the replay) here:
 https://cal.com/sophia-stein/masterclass
 
 Sophia`,
-    linkedinDm: `Hi ${prospectName}! Loved seeing ${company} ${cleanSignal}. Unlocked our interactive 20/80 AI Bottleneck Calculator free at https://agenticarchitect.ai/starter-kit and running a free 60-min live non-coder build soon (https://cal.com/sophia-stein/masterclass) if you want to join!`,
+    linkedinDm: `Hi ${prospectName}, loved seeing ${company} ${cleanSignal}. Unlocked our interactive 20/80 AI Bottleneck Calculator free at https://agenticarchitect.ai/starter-kit and running a free 60-min live non-coder build soon (https://cal.com/sophia-stein/masterclass) if you want to join.`,
     followUpDay5: `Subject: Re: Quick workflow idea for ${company}
 
 Hi ${prospectName},
 
-If you already have a specific operational bottleneck at ${company} you want solved without trial-and-error, you can grab our self-paced $297 Workflow Academy (https://agenticarchitect.ai/academy) or book a free 20-minute 1-Bottleneck Discovery Call here:
+If you already have a specific operational bottleneck at ${company} you want solved without trial-and-error, you can explore the Agentic Architect Lab (https://agenticarchitect.ai/courses) or book a 20-minute 1-Bottleneck Discovery Call here:
 https://cal.com/sophia-stein/scoping
 
 Sophia`,

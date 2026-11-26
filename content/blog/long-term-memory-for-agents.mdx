@@ -1,8 +1,12 @@
 ---
 title: "How Agents Remember, and How They Forget"
 slug: long-term-memory-for-agents
-publishedDate: "2026-05-01"
+publishedDate: "2026-06-17"
 description: "Why agents forget by default, what the four types of memory actually are, and how to build a system that compounds across sessions."
+briefing:
+  - "Stuffing entire conversation histories or unpruned vector dumps into context windows degrades retrieval precision and multiplies latency."
+  - "Durable agent memory separates immutable episodic logs, curated entity facts, and versioned procedural skills with explicit staleness timestamps."
+  - "Scoped retrieval plus periodic memory consolidation keeps long-running workflows accurate without runaway token growth."
 track: "engineering"
 tags: ["memory", "agents", "context-engineering", "neo4j"]
 draft: false
@@ -109,3 +113,9 @@ Three failure modes I have hit. Worth pre-empting.
 ## The takeaway
 
 Memory is not a context-window problem. It is a storage-and-retrieval problem with four different shapes. Pick the right store per type, write deliberately, evict aggressively, and your agent compounds. Skip any of those and your agent forgets you every Monday morning, no matter how big the model gets.
+
+## Related Reading & Next Steps
+
+- **Closed-Loop Design:** [Loop Engineering in Production](/blog/loop-engineering) and [Building a 6-Layer Regression Eval Harness](/blog/eval-harness-catches-regressions)
+- **Tool & Identity Security:** [MCP Server Security Audit](/blog/mcp-server-audit-2026) and [4-Legged OAuth Delegation](/blog/the-4-legged-identity)
+- **Architecture & Advisory:** Read [What Is an Agentic Architect?](/what-is-an-agentic-architect) or inquire on [Work With Me](/work-with-me).

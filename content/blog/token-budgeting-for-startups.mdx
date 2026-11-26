@@ -1,8 +1,12 @@
 ---
 title: "Why AI Bills Spike Overnight (And 6 Simple Controls Every Team Needs)"
 slug: token-budgeting-for-startups
-publishedDate: "2026-05-02"
+publishedDate: "2026-08-21"
 description: "The engineering math behind preventing an agentic loop from burning through your monthly runway in one night."
+briefing:
+  - "Unmetered agent retries, uncached system prompts, and unrouted flagship calls quietly erode gross margin as user adoption grows."
+  - "Prompt caching, structured output caps, 80/20 workhorse routing, and per-tenant dollar circuit breakers stabilize cost per completed task."
+  - "Tracking cost per verified outcome rather than raw cost per million tokens aligns engineering optimization directly with business margin."
 track: "small-business"
 tags: ["agents", "economics", "local-inference", "ops"]
 draft: false
@@ -20,7 +24,7 @@ The behavioral failure mode is the same: the agent did not know how to stop, and
 
 ## Current pricing snapshot
 
-May 2026 list rates:
+2026 list rates:
 
 | Model                  | Input  $/M | Output $/M |
 |------------------------|------------|------------|
@@ -113,3 +117,9 @@ What you get for the tax is the freedom to design loops without flinching. The t
 Token budgeting is engineering, not penny-pinching. A well-architected loop fits inside a known per-session budget. A poorly architected loop is a runway-burning bot waiting for the wrong night.
 
 Six moves pay for themselves on the first session that would have spiraled: prompt caching, tiered models, hard iteration caps, scoped tool catalogs, batch API for non-realtime, and moving the routing-and-tool-calling 80% to local hardware. The teams that flinch and the teams that ship differ by exactly that decision.
+
+## Related Reading & Next Steps
+
+- **Reference Architecture:** [What Is an Agentic Architect? The 4-Layer Stack](/what-is-an-agentic-architect)
+- **Back-Office Blueprint:** [The 6-Workflow AI Back Office](/blog/ai-back-office) and [How to Build an AI Chief of Staff](/blog/ai-chief-of-staff)
+- **Templates & Hands-On Courses:** Score your own processes in the [20/80 Task Readiness Kit](/starter-kit) or explore [The Agentic Architect Lab](/courses).

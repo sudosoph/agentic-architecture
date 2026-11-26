@@ -65,34 +65,19 @@ export default async function GuidePage({ params }: Props) {
           __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
         }}
       />
-      <article className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
+      <article
+        data-article-slug={`guide:${slug}`}
+        className="lg:grid lg:grid-cols-[minmax(0,680px)_220px] lg:justify-between lg:gap-12"
+      >
         <div className="min-w-0">
           <PageHeader
             title={guide.frontmatter.title}
-            meta={dateFormatted}
+            meta={`${DIFFICULTY_LABEL[guide.frontmatter.difficulty] ?? guide.frontmatter.difficulty} · ~${guide.frontmatter.estimatedTime} · ${dateFormatted}`}
             description={guide.frontmatter.description}
           />
 
-          {/* Meta strip: difficulty + time + repo */}
-          <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
-            <Badge variant="tag">
-              {DIFFICULTY_LABEL[guide.frontmatter.difficulty] ?? guide.frontmatter.difficulty}
-            </Badge>
-            <span className="text-muted">~{guide.frontmatter.estimatedTime}</span>
-            {guide.frontmatter.repoUrl && (
-              <a
-                href={guide.frontmatter.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:underline"
-              >
-                Fork the repo ↗
-              </a>
-            )}
-          </div>
-
           {guide.frontmatter.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-4">
+            <div className="flex flex-wrap gap-1.5 mt-5">
               {guide.frontmatter.tags.map(tag => (
                 <Badge key={tag} variant="tag">
                   {tag}
@@ -103,16 +88,16 @@ export default async function GuidePage({ params }: Props) {
 
           {/* Mobile TOC */}
           {showToc && (
-            <details className="lg:hidden mt-8 border border-border bg-surface p-4">
-              <summary className="font-mono text-xs text-muted uppercase tracking-widest cursor-pointer">
-                Contents ({guide.toc.length})
+            <details className="lg:hidden mt-8 rounded-md border border-border bg-surface p-4">
+              <summary className="text-xs font-semibold text-fg cursor-pointer">
+                In this guide ({guide.toc.length})
               </summary>
               <ul className="mt-3 space-y-1.5">
                 {guide.toc.map(item => (
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="font-mono text-xs text-muted hover:text-accent leading-snug"
+                      className="text-xs text-muted hover:text-fg leading-snug"
                     >
                       {item.text}
                     </a>
@@ -122,24 +107,21 @@ export default async function GuidePage({ params }: Props) {
             </details>
           )}
 
-          <div
-            className="prose mt-10"
-            dangerouslySetInnerHTML={{ __html: guide.html }}
-          />
+          <div className="prose mt-10" dangerouslySetInnerHTML={{ __html: guide.html }} />
 
           <div className="mt-16 pt-8 border-t border-border">
             <NewsletterSignup
               source={`guide:${slug}`}
-              sub="Get the next guide as soon as it lands. One email a week, beginner-friendly."
+              sub="Get new step-by-step guides and weekly architecture synthesis by email."
             />
           </div>
 
-          <div className="mt-8 flex items-center justify-between font-mono text-xs">
-            <Link href="/guides" className="text-accent hover:underline">
-              ← all guides
+          <div className="mt-8 flex items-center justify-between text-xs text-muted">
+            <Link href="/guides" className="hover:text-fg">
+              All guides
             </Link>
-            <Link href="/contact" className="text-muted hover:text-accent">
-              stuck? ask a question
+            <Link href="/contact" className="hover:text-fg">
+              Questions? Contact
             </Link>
           </div>
         </div>
@@ -147,15 +129,13 @@ export default async function GuidePage({ params }: Props) {
         {showToc && (
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <p className="font-mono text-xs text-muted uppercase tracking-widest mb-4">
-                Contents
-              </p>
+              <p className="text-xs font-semibold text-fg mb-3">On this page</p>
               <ul className="space-y-2 border-l border-border">
                 {guide.toc.map(item => (
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="block pl-4 -ml-px border-l border-transparent hover:border-accent font-mono text-xs text-muted hover:text-accent leading-snug py-0.5 transition-colors"
+                      className="block pl-3.5 -ml-px border-l border-transparent hover:border-fg text-xs text-muted hover:text-fg leading-snug py-0.5 transition-colors"
                     >
                       {item.text}
                     </a>

@@ -5,9 +5,8 @@
 Founder · AI Systems Architect · Educator: Sophia Stein
 Site: https://agenticarchitect.ai
 Newsletter: https://agenticarchitectai.substack.com
+LinkedIn: https://www.linkedin.com/in/sophiastein
 Email: sophia@agenticarchitect.ai
-X: @sudosoph
-GitHub: @sudosoph
 Location: Boulder, Colorado
 
 /* THANKS */
@@ -18,7 +17,6 @@ The open-source maintainers behind Cal.com, n8n, llama.cpp, Tailscale, Next.js, 
 
 /* SITE */
 
-Last update: 2026-11-24
+Last update: 2026-11-26
 Built with: Next.js 16, React 19, Tailwind CSS v4, MDX, Cloudflare Workers (via OpenNext)
-Workstation: Framework 16 · AMD Ryzen AI 9 HX 370 · 96GB DDR5
-Standards: Semantic HTML5, accessible contrast, portable Markdown
+Standards: Semantic HTML5, OKLCH accessible contrast, portable Markdown

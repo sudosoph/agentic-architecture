@@ -20,7 +20,7 @@ function isAllowedOrigin(request: Request) {
   return origin === 'https://agenticarchitect.ai'
 }
 
-const GITHUB_REPO = 'sudosoph/agentic-architecture'
+const GITHUB_REPO = getWorkerEnv('GITHUB_REPO') || 'agenticarchitect/agentic-architecture'
 const GITHUB_API = `https://api.github.com/repos/${GITHUB_REPO}`
 
 function safeEqual(a: string, b: string) {

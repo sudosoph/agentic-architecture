@@ -5,94 +5,126 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { NewsletterSignup } from '@/components/site/newsletter-signup'
-import { ProductiveFrictionDemo } from '@/components/site/productive-friction-demo'
 import { BespokeStackSelector } from '@/components/site/bespoke-stack-selector'
 import {
-  ALL_ACCESS_PASS,
   CURRICULA,
+  SKOOL_LAB_TRACKS,
   getModulesByCurriculum,
 } from '@/lib/curriculum'
-import { SITE_CONFIG } from '@/lib/site-config'
 import fiveDayChallenge from '@/content/courses/five-day-prompt-to-system.json'
 
 export const metadata: Metadata = {
-  title: 'AI Architecture Curricula: Models, Productive Friction, Bespoke APIs & Sovereign Rigs',
+  title: 'Courses & The Agentic Architect Lab',
   description:
-    'Four structured practitioner curricula (20 modules) spanning late-2026 models and interview-first Skills, department build-vs-buy playbooks, bespoke API harnesses, and private open-weight rigs.',
+    'Hands-on AI courses and Skool community tracks for non-technical operators, founders, and builders: Claude Superuser & Cowork OS, Kill the $200/mo AI Stack, and Become an AI Architect.',
   alternates: { canonical: '/courses' },
 }
 
 export default function CoursesPage() {
   return (
-    <div className="space-y-14">
-      <div className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <Badge variant="online">
-            4 Practitioner Curricula · 20 Modules · Module x.1 Unlocked Free in Every Track
-          </Badge>
-          <a
-            href="/downloads/ld-stipend-approval-letter.md"
-            download
-            className="font-mono text-xs text-accent hover:underline"
-          >
-            Expensing via Corporate L&amp;D Stipend? Download Approval Letter ↓
+    <div className="space-y-16">
+      <PageHeader
+        meta="The Agentic Architect Lab · Hands-On Courses, Unlocked Modules & Live Builds"
+        title="Upskill from chat user to AI systems builder."
+        description="Practical courses and community labs designed for non-technical operators, founders, and builders who want working workflows, lower subscription bills, and durable architectural judgment."
+      />
+
+      {/* 3 Flagship Skool Lab Tracks */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <p className="text-xs font-medium text-muted">Core Learning Paths (Skool Lab)</p>
+            <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+              Three practical tracks built around real outcomes
+            </h2>
+          </div>
+          <a href="#waitlist" className="text-xs font-medium text-fg hover:text-accent">
+            Join the Founding Lab Waitlist
           </a>
         </div>
 
-        <PageHeader
-          meta="Columbia CS · Ex-McKinsey · Built for Ambitious Operators, Executives & Builders"
-          title="The Applied AI Architecture Academy"
-          description="Start free inside Module x.1 of every curriculum. Automate 8+ hours of your role to ship 5x faster, build signal-driven GTM and Executive Strategy Rooms, wire custom multi-API systems, or deploy sovereign open-weight rigs."
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {SKOOL_LAB_TRACKS.map(track => (
+            <Card key={track.number} className="p-6 flex flex-col justify-between space-y-5">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-medium text-muted tabular-nums">
+                    {track.number}
+                  </span>
+                  <Badge variant="tag">Skool Track</Badge>
+                </div>
+                <h3 className="font-serif text-2xl font-normal text-fg leading-snug">
+                  {track.title}
+                </h3>
+                <p className="text-xs font-medium text-fg/80">{track.audience}</p>
+                <p className="text-sm text-muted leading-relaxed">{track.summary}</p>
+                <ul className="space-y-2 pt-3 border-t border-border text-xs text-fg/90">
+                  {track.outcomes.map(outcome => (
+                    <li key={outcome} className="flex items-start gap-2">
+                      <span className="text-muted select-none">·</span>
+                      <span>{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5 pt-3 border-t border-border">
+                <Button variant="primary" size="sm" href={track.freeModuleHref}>
+                  {track.freeModuleLabel}
+                </Button>
+                <Button variant="outline" size="sm" href="#waitlist">
+                  Founding Waitlist
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Real Founding Lab Waitlist Form */}
+      <div id="waitlist" className="scroll-mt-24">
+        <NewsletterSignup
+          source="skool-waitlist"
+          headline="Join the Founding Lab Waitlist"
+          sub="Receive founding cohort invitations when the Agentic Architect Lab opens on Skool, plus immediate inbox delivery of the free 5-day applied architecture primer."
+          buttonLabel="Join Founding Waitlist"
+          placeholder="Enter your email for Founding Lab invites..."
+          successMessage="You are on the Founding Lab Waitlist. Check your inbox for Day 1 of the architecture primer."
         />
       </div>
 
-      {/* All-Access Architect Pass + Substack Founding Executive Circle Banner */}
-      <Card className="p-6 md:p-8 border-accent bg-blue-50/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-        <div className="space-y-2 max-w-2xl">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="rig">Save $691 · Direct Vault or Substack Founding</Badge>
-            <span className="font-mono text-xs text-muted">
-              100% Tuition Credit Toward Cohorts, Corporate Labs &amp; Bespoke Builds
-            </span>
+      {/* Full 20-Module Reference Syllabus + 4 Unlocked Cornerstone Lessons */}
+      <section id="syllabus" className="space-y-6 scroll-mt-24">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <p className="text-xs font-medium text-muted">
+              20 Modules · Lesson x.1 Unlocked Free in Every Syllabus
+            </p>
+            <h2 className="font-serif text-3xl font-normal tracking-[-0.02em] text-fg mt-1">
+              Inspect the full curriculum and start reading free
+            </h2>
           </div>
-          <h2 className="text-2xl font-bold text-fg">{ALL_ACCESS_PASS.title}</h2>
-          <p className="text-sm text-muted leading-relaxed">
-            Unlock all 20 practitioner modules, role-automation and GTM playbooks, API recipes, and
-            our L&amp;D stipend kit directly on this domain for{' '}
-            <strong className="text-fg">${ALL_ACCESS_PASS.priceUsd}</strong> (or join the{' '}
-            <strong className="text-fg">Founding Executive Circle ($997/yr)</strong> on Substack to
-            bundle all 4 curricula with live-updated cheat sheets, subscriber chat, and quarterly
-            executive briefings with zero extra community software).
-          </p>
+          <Link href="/academy" className="text-xs font-medium text-muted hover:text-fg">
+            View Foundations track overview
+          </Link>
         </div>
-        <div className="flex flex-wrap gap-3 shrink-0">
-          <Button variant="primary" size="lg" href={ALL_ACCESS_PASS.checkoutHref}>
-            Get All-Access Pass (${ALL_ACCESS_PASS.priceUsd}) →
-          </Button>
-          <Button variant="outline" size="lg" href="/academy">
-            Start With Curriculum 01 ($297)
-          </Button>
-        </div>
-      </Card>
 
-      {/* 4-Curriculum Grid */}
-      <section id="starter-kit" className="space-y-6 scroll-mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {CURRICULA.map(curr => {
             const modules = getModulesByCurriculum(curr.id)
             const freeMod = modules[0]
             return (
-              <Card key={curr.id} className="p-6 md:p-7 flex flex-col justify-between space-y-5">
+              <Card key={curr.id} className="p-6 flex flex-col justify-between space-y-5">
                 <div className="space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent">
-                      {curr.number} · ${curr.priceUsd}
-                    </span>
-                    <Badge variant="tag">{curr.audience}</Badge>
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+                    <span className="font-medium text-fg">{curr.number}</span>
+                    <span>{curr.audience}</span>
                   </div>
 
                   <div>
-                    <h2 className="text-xl font-bold text-fg leading-snug">{curr.title}</h2>
+                    <h3 className="font-serif text-2xl font-normal text-fg leading-snug">
+                      {curr.title}
+                    </h3>
                     <p className="text-sm text-muted leading-relaxed mt-1.5">{curr.subtitle}</p>
                   </div>
 
@@ -101,20 +133,22 @@ export default function CoursesPage() {
                       <li key={m.slug} className="py-2.5 flex items-center justify-between gap-3">
                         <Link
                           href={`/courses/${m.slug}`}
-                          className="text-xs font-medium text-fg hover:text-accent hover:underline"
+                          className="text-xs font-medium text-fg hover:text-accent transition-colors"
                         >
-                          <span className="font-mono text-accent font-semibold mr-2">
+                          <span className="font-mono text-muted mr-2 tabular-nums">
                             {m.frontmatter.moduleCode}
                           </span>
                           {m.frontmatter.title}
                         </Link>
                         <Link
                           href={`/courses/${m.slug}`}
-                          className={`font-mono text-[11px] shrink-0 hover:underline ${
-                            m.frontmatter.unlocked ? 'text-online font-bold' : 'text-muted'
+                          className={`text-[11px] shrink-0 ${
+                            m.frontmatter.unlocked
+                              ? 'text-accent font-semibold hover:underline'
+                              : 'text-muted hover:text-fg'
                           }`}
                         >
-                          {m.frontmatter.unlocked ? 'Read Free →' : 'Syllabus →'}
+                          {m.frontmatter.unlocked ? 'Unlocked Free' : 'Outline'}
                         </Link>
                       </li>
                     ))}
@@ -124,14 +158,11 @@ export default function CoursesPage() {
                 <div className="flex flex-wrap gap-2.5">
                   {freeMod && (
                     <Button variant="primary" size="sm" href={`/courses/${freeMod.slug}`}>
-                      Read Module {freeMod.frontmatter.moduleCode} Free →
+                      Read Module {freeMod.frontmatter.moduleCode} Free
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" href={curr.checkoutHref}>
-                    Enroll (${curr.priceUsd})
-                  </Button>
-                  <Button variant="ghost" size="sm" href={curr.upsellHref}>
-                    Team / Live Option
+                  <Button variant="outline" size="sm" href={curr.upsellHref}>
+                    {curr.upsellLabel}
                   </Button>
                 </div>
               </Card>
@@ -140,81 +171,80 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* Interactive Methodology Previews */}
-      <ProductiveFrictionDemo />
+      {/* Interactive Department Build-vs-Buy Matrix */}
       <BespokeStackSelector />
 
-      {/* 5-Day Prompt-to-System Free Starter Sequence */}
-      <section className="rounded-2xl border border-border bg-white p-6 md:p-8 space-y-5">
+      {/* 5-Day Free Email Primer */}
+      <section className="rounded-lg border border-border bg-surface p-6 md:p-8 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div className="space-y-1">
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Free 5-Day Email Primer · Delivered Automatically on Signup
+            <p className="text-xs font-medium text-muted">
+              Free 5-Day Email Primer · Sent Automatically on Signup
             </p>
-            <h2 className="text-2xl font-bold text-fg">
-              Inside the Free 5-Day Applied AI Architecture Primer
+            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-fg">
+              Inside the 5-day applied AI architecture primer
             </h2>
           </div>
           <Button variant="outline" size="sm" href="/masterclass">
-            Join Free 60-Min Live Briefing →
+            Free 60-Min Live Briefing
           </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {fiveDayChallenge.map(lesson => (
-            <Card key={lesson.day} className="p-4 flex flex-col justify-between space-y-3 bg-surface">
+            <Card key={lesson.day} className="p-4 flex flex-col justify-between space-y-3 bg-bg">
               <div className="space-y-1.5">
-                <span className="font-mono text-xs font-semibold text-accent">
+                <span className="text-xs font-medium text-muted tabular-nums">
                   Day 0{lesson.day}
                 </span>
-                <h3 className="text-sm font-bold text-fg leading-snug">{lesson.subject}</h3>
+                <h3 className="text-sm font-semibold text-fg leading-snug">{lesson.subject}</h3>
                 <p className="text-xs text-muted leading-relaxed">{lesson.goal}</p>
               </div>
-              <a
+              <Link
                 href={lesson.ctaUrl.replace('https://agenticarchitect.ai', '') || '/'}
-                className="font-mono text-xs font-semibold text-accent hover:underline"
+                className="text-xs font-medium text-fg hover:text-accent transition-colors"
               >
-                Open Day {lesson.day} Resource →
-              </a>
+                Open Day {lesson.day} resource
+              </Link>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* Corporate, Cohort & Sovereign Book Bridge */}
-      <section id="book" className="grid grid-cols-1 lg:grid-cols-2 gap-6 scroll-mt-20">
-        <Card className="p-6 md:p-8 space-y-4 bg-surface">
-          <Badge variant="online">Cohorts · Corporate Labs · Forward Deployed Builds</Badge>
-          <h2 className="text-xl font-bold text-fg">
-            Bringing This Curriculum to Your Organization or Commissioning a Build?
+      {/* Corporate Training & Open Monograph Bridge */}
+      <section id="book" className="grid grid-cols-1 lg:grid-cols-2 gap-6 scroll-mt-24">
+        <Card className="p-6 md:p-8 space-y-4">
+          <p className="text-xs font-medium text-muted">Organizations &amp; Leadership Teams</p>
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            Bringing hands-on AI training or custom workflows to your team?
           </h2>
           <p className="text-sm text-muted leading-relaxed">
-            We run private Half-Day ($7,500) and Full-Day ($15,000) Corporate Labs with Marketing,
-            Finance, Legal, and Ops breakouts, small-group Guided Cohorts ($1,497), and multi-month
-            Forward Deployed bespoke system builds.
+            We run tailored corporate department intensives across Marketing, Finance, Legal, and
+            Operations, alongside embedded architecture sprints where your staff keeps every SOP and
+            configuration.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 pt-1">
             <Button variant="primary" size="md" href="/teaching">
-              Corporate Workshops &amp; Keynotes →
+              Corporate Workshops &amp; Keynotes
             </Button>
             <Button variant="outline" size="md" href="/work-with-me">
-              Forward Deployed Builds
+              Bespoke Systems &amp; Advisory
             </Button>
           </div>
         </Card>
 
         <Card className="p-6 md:p-8 space-y-4">
-          <Badge variant="tag">Open 18-Chapter Engineering Manuscript</Badge>
-          <h2 className="text-xl font-bold text-fg">
-            The Sovereign Stack: Hardware Benchmarks, Loop Verifiers &amp; Field Manuals
+          <p className="text-xs font-medium text-muted">Open Technical Monograph</p>
+          <h2 className="font-serif text-2xl font-normal text-fg">
+            The Sovereign Stack: Hardware Physics, Routing &amp; Field Manuals
           </h2>
           <p className="text-sm text-muted leading-relaxed">
-            Read all 18 live engineering chapters free in your browser, run the 512GB vs. 128GB
-            hardware sizer, and download 3 copy-paste Markdown field manuals.
+            Read our compiled engineering chapters free online, run the interactive unified-memory
+            hardware sizer, and download three copy-paste Markdown field manuals.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 pt-1">
             <Button variant="outline" size="md" href="/sovereign-stack">
-              Open 18-Chapter Book &amp; Sizer →
+              Open Sovereign Stack Monograph
             </Button>
             <Button variant="ghost" size="md" href="/bsw">
               BSW Open Lab Archive
@@ -222,8 +252,6 @@ export default function CoursesPage() {
           </div>
         </Card>
       </section>
-
-      <NewsletterSignup source="courses" />
     </div>
   )
 }

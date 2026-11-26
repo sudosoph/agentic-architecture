@@ -15,71 +15,71 @@ export default function OpenGraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#FFFFFF',
-          padding: '64px 72px',
-          fontFamily: 'sans-serif',
-          borderTop: '12px solid #2563EB',
+          backgroundColor: '#FAF8F5',
+          color: '#181920',
+          padding: '68px 76px',
+          fontFamily: 'Georgia, serif',
+          borderTop: '8px solid #181920',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '12px',
-                backgroundColor: '#2563EB',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '22px',
-                fontWeight: 800,
-              }}
-            >
-              SS
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontSize: '24px', fontWeight: 800, color: '#0F172A' }}>
-                Agentic Architect
-              </span>
-              <span style={{ fontSize: '15px', color: '#475569' }}>
-                Boulder, CO · Workflows, Brand Systems &amp; Private AI
-              </span>
-            </div>
+            <svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+              <rect width="64" height="64" rx="12" fill="#181920" />
+              <rect
+                x="3"
+                y="3"
+                width="58"
+                height="58"
+                rx="9.5"
+                stroke="#FAF8F5"
+                strokeOpacity="0.16"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M14 47L25.5 17L37 47"
+                stroke="#FAF8F5"
+                strokeWidth="4.2"
+                strokeLinejoin="miter"
+              />
+              <path
+                d="M27 47L38.5 17L50 47"
+                stroke="#FAF8F5"
+                strokeOpacity="0.55"
+                strokeWidth="4.2"
+                strokeLinejoin="miter"
+              />
+              <line x1="18.5" y1="37" x2="45.5" y2="37" stroke="#FAF8F5" strokeWidth="3.4" />
+            </svg>
+            <span style={{ fontSize: '26px', fontWeight: 600 }}>Agentic Architect</span>
           </div>
-
-          <div
-            style={{
-              display: 'flex',
-              padding: '8px 18px',
-              borderRadius: '999px',
-              backgroundColor: '#ECFDF5',
-              border: '1px solid #A7F3D0',
-              color: '#047857',
-              fontSize: '16px',
-              fontWeight: 700,
-            }}
-          >
-            Free Starter Kit &amp; Live 60-Min Masterclass
-          </div>
+          <span style={{ fontSize: '18px', color: '#585B68', fontFamily: 'sans-serif' }}>
+            Essays · Skool Lab · Advisory
+          </span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '1020px' }}>
           <div
             style={{
               fontSize: '58px',
-              fontWeight: 800,
-              color: '#0F172A',
+              fontWeight: 400,
+              color: '#181920',
               lineHeight: 1.12,
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.02em',
             }}
           >
-            Hook up AI workflows, build your brand, and own your stack.
+            What new AI makes possible, what it changes for organizations, and how to build with it.
           </div>
-          <div style={{ fontSize: '26px', color: '#475569', lineHeight: 1.4 }}>
-            Plain-English AI systems, executive workshops, and private infrastructure for founders,
-            operators, and modern teams.
+          <div
+            style={{
+              fontSize: '24px',
+              color: '#585B68',
+              lineHeight: 1.45,
+              fontFamily: 'sans-serif',
+            }}
+          >
+            Systems architecture essays, weekly Substack field notes, and hands-on courses by Sophia
+            Stein.
           </div>
         </div>
 
@@ -89,23 +89,14 @@ export default function OpenGraphImage() {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingTop: '24px',
-            borderTop: '2px solid #E2E8F0',
+            borderTop: '1px solid #E3E0D8',
+            fontFamily: 'sans-serif',
+            fontSize: '18px',
+            color: '#585B68',
           }}
         >
-          <div style={{ display: 'flex', gap: '12px', fontSize: '17px', color: '#334155', fontWeight: 600 }}>
-            <span>Sophia Stein</span>
-            <span>·</span>
-            <span>Columbia CS</span>
-            <span>·</span>
-            <span>ex-McKinsey</span>
-            <span>·</span>
-            <span>300+ Trained at BSW</span>
-            <span>·</span>
-            <span>Women Who Code</span>
-          </div>
-          <div style={{ fontSize: '18px', fontWeight: 700, color: '#2563EB' }}>
-            agenticarchitect.ai
-          </div>
+          <span>Sophia Stein · Boulder, CO</span>
+          <span style={{ color: '#181920', fontWeight: 600 }}>agenticarchitect.ai</span>
         </div>
       </div>
     ),

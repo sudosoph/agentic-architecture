@@ -73,28 +73,31 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-8 text-sm font-medium text-green-800">
-        Message sent. I will reply within 1 to 2 business days.
+      <div className="rounded-lg border border-border bg-surface px-6 py-8 text-sm font-medium text-fg">
+        Message received. I will reply within one to two business days.
       </div>
     )
   }
 
   if (status === 'fallback') {
     return (
-      <div className="rounded-xl border border-border bg-surface px-6 py-8 space-y-4">
+      <div className="rounded-lg border border-border bg-surface px-6 py-8 space-y-4">
         <p className="text-sm text-fg leading-relaxed">
-          Your message is ready to send directly to Sophia. Click below to open it pre-filled in
-          your default email client:
+          Your message is ready to send directly. Click below to open it pre-filled in your email
+          client:
         </p>
         <a
           href={mailtoHref}
-          className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-4 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors"
+          className="press-scale inline-flex items-center justify-center rounded-md bg-accent text-white px-4 py-2.5 text-sm font-medium hover:opacity-95"
         >
           Open in Email Client
         </a>
         <p className="text-xs text-muted leading-relaxed">
           Or email directly:{' '}
-          <a href={`mailto:${SITE_CONFIG.email}`} className="text-accent font-medium hover:underline">
+          <a
+            href={`mailto:${SITE_CONFIG.email}`}
+            className="text-fg font-medium underline underline-offset-3 decoration-border"
+          >
             {SITE_CONFIG.email}
           </a>
         </p>
@@ -105,17 +108,15 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 max-w-xl rounded-2xl border border-border bg-surface p-6 md:p-8 shadow-xs"
+      className="space-y-5 max-w-xl rounded-lg border border-border bg-surface p-6 md:p-8"
     >
-      <p className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-        Send a Message
-      </p>
+      <p className="text-xs font-semibold text-fg">Send a Written Inquiry</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Field label="Name" name="name" type="text" required placeholder="Your name" />
         <Field label="Email" name="email" type="email" required placeholder="you@company.com" />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="subject" className="text-xs font-semibold text-fg">
+        <label htmlFor="subject" className="text-xs font-medium text-fg">
           Subject
         </label>
         <input
@@ -124,12 +125,12 @@ export function ContactForm() {
           type="text"
           value={subject}
           onChange={e => setSubject(e.target.value)}
-          placeholder="Corporate workshop, Accelerator cohort, CU lecture, or advisory"
-          className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent"
+          placeholder="Advisory, corporate workshop, university lecture, or sponsorship"
+          className="rounded-md bg-bg border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-muted/70 focus:outline-none focus:border-fg"
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="message" className="text-xs font-semibold text-fg">
+        <label htmlFor="message" className="text-xs font-medium text-fg">
           Message <span className="text-pressure">*</span>
         </label>
         <textarea
@@ -139,8 +140,8 @@ export function ContactForm() {
           rows={5}
           value={message}
           onChange={e => setMessage(e.target.value)}
-          placeholder="Share your goals, team size, or timeline..."
-          className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent resize-none"
+          placeholder="Share your goals, organization context, or timeline..."
+          className="rounded-md bg-bg border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-muted/70 focus:outline-none focus:border-fg resize-none"
         />
       </div>
 
@@ -168,7 +169,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={name} className="text-xs font-semibold text-fg">
+      <label htmlFor={name} className="text-xs font-medium text-fg">
         {label} {required && <span className="text-pressure">*</span>}
       </label>
       <input
@@ -177,7 +178,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="rounded-lg bg-white border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-slate-400 focus:outline-none focus:border-accent"
+        className="rounded-md bg-bg border border-border px-3.5 py-2.5 text-sm text-fg placeholder:text-muted/70 focus:outline-none focus:border-fg"
       />
     </div>
   )

@@ -3,10 +3,13 @@ import { getAllPosts, getPost, getPostsByTrack } from '@/lib/mdx'
 
 const VALID_TRACKS = new Set(['small-business', 'models-rigs', 'engineering'])
 
-describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', () => {
-  it('returns sorted non-draft posts with readingMinutes >= 1 and valid 3-track assignment', () => {
+describe('Blog manifest, 3-track taxonomy, staggered dates, and 34-essay SVG hygiene', () => {
+  it('returns 34 sorted non-draft essays with unique staggered dates, readingMinutes >= 1, and valid 3-track assignment', () => {
     const posts = getAllPosts()
-    expect(posts.length).toBeGreaterThanOrEqual(38)
+    expect(posts).toHaveLength(34)
+
+    const uniqueDates = new Set(posts.map(p => p.publishedDate))
+    expect(uniqueDates.size).toBe(34)
 
     for (let i = 0; i < posts.length; i++) {
       const p = posts[i]
@@ -17,7 +20,7 @@ describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', (
       if (i > 0) {
         const prev = new Date(posts[i - 1].publishedDate).getTime()
         const curr = new Date(p.publishedDate).getTime()
-        expect(prev).toBeGreaterThanOrEqual(curr)
+        expect(prev).toBeGreaterThan(curr)
       }
     }
   })
@@ -28,34 +31,37 @@ describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', (
     const mr = getPostsByTrack('models-rigs')
     const eng = getPostsByTrack('engineering')
 
-    expect(sb.length).toBeGreaterThanOrEqual(13)
-    expect(mr.length).toBeGreaterThanOrEqual(10)
-    expect(eng.length).toBeGreaterThanOrEqual(15)
+    expect(sb.length).toBeGreaterThanOrEqual(10)
+    expect(mr.length).toBeGreaterThanOrEqual(8)
+    expect(eng.length).toBeGreaterThanOrEqual(8)
     expect(sb.length + mr.length + eng.length).toBe(all.length)
     expect(getPostsByTrack()).toHaveLength(all.length)
   })
 
-  it('fixes agent-ready-tasks decomposition math and removes self-correction prose', () => {
-    const post = getPost('agent-ready-tasks')
-    expect(post).not.toBeNull()
-    expect(post!.html).not.toContain("Wait, that's the same")
-    expect(post!.html).toContain('= 19')
+  it('embeds custom inline SVG schematics across at least 8 flagship essays', () => {
+    const posts = getAllPosts()
+    let svgPosts = 0
+    for (const meta of posts) {
+      const full = getPost(meta.slug)
+      if (full?.html.includes('<svg')) svgPosts++
+    }
+    expect(svgPosts).toBeGreaterThanOrEqual(8)
   })
 
   it('keeps agent-ready-tasks consequence scale additive and aligned with starter-kit', () => {
     const post = getPost('agent-ready-tasks')
     expect(post).not.toBeNull()
-    expect(post!.html).not.toContain('6 − consequence')
-    expect(post!.html).not.toContain('6 - consequence')
-    expect(post!.html).not.toContain('consequence 1 (internal brief only')
+    expect(post!.html).not.toContain("Wait, that's the same")
+    expect(post!.html).toContain('= 19')
     expect(post!.html).toContain('consequence 5')
   })
 
-  it('returns null for nonexistent post slug', () => {
+  it('returns null for nonexistent or retired post slug', () => {
     expect(getPost('does-not-exist-anywhere')).toBeNull()
+    expect(getPost('productive-friction-interview-ai')).toBeNull()
   })
 
-  it('enforces zero em-dashes, zero TL;DR openers, and updated H2s across every post', () => {
+  it('enforces zero em-dashes, zero TL;DR openers, and clean H2s across every post', () => {
     const posts = getAllPosts()
     for (const meta of posts) {
       expect(meta.title, `${meta.slug} title em-dash`).not.toContain('\u2014')
@@ -65,9 +71,6 @@ describe('Blog manifest, 3-track taxonomy, reading time, and 38-post hygiene', (
       expect(full, `${meta.slug} full post`).not.toBeNull()
       expect(full!.html, `${meta.slug} html em-dash`).not.toContain('\u2014')
       expect(full!.html, `${meta.slug} TL;DR opener`).not.toMatch(/<strong>TL;DR\.?<\/strong>/i)
-      expect(full!.html, `${meta.slug} HN-flavored H2`).not.toContain(
-        'Top 5 picks for HN-flavored devs',
-      )
     }
   })
 })

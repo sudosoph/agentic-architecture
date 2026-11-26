@@ -332,7 +332,7 @@ function buildFunnelFooterBlocks(slug) {
         },
         {
           type: 'text',
-          text: '. Sophia Stein writes and teaches here in a personal capacity; all views are her own.',
+          text: '.',
           marks: [{ type: 'em' }],
         },
       ],

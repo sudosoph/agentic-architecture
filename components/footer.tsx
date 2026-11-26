@@ -1,32 +1,31 @@
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
 
-const EXPLORE_LINKS = [
-  { href: '/blog', label: 'Owner Playbooks & Reviews' },
-  { href: '/starter-kit', label: 'Free Bottleneck Scorecard & Kit' },
-  { href: '/research', label: 'Systems Research & Benchmarks' },
-  { href: '/sovereign-stack', label: 'The Sovereign Stack (18-Ch. Book)' },
+const WRITING_LINKS = [
+  { href: '/blog', label: 'Essays & Architecture Notes' },
   { href: '/what-is-an-agentic-architect', label: 'What Is an Agentic Architect?' },
-  { href: '/stack', label: 'Stack & Rigs' },
-  { href: '/about', label: 'About Sophia' },
+  { href: '/sovereign-stack', label: 'The Sovereign Stack (Field Monograph)' },
+  { href: '/research', label: 'Systems Benchmarks & Syllabi' },
+  { href: '/starter-kit', label: '20/80 Task Readiness Kit' },
+  { href: '/stack', label: 'Reference Stack & Private Rigs' },
 ]
 
-const PROGRAM_LINKS = [
-  { href: '/courses', label: 'Owner Courses & $297 Academy' },
-  { href: '/masterclass', label: 'Free 60-Min Live Workflow Build' },
-  { href: '/work-with-me', label: 'Custom Bottleneck Sprints' },
+const PRACTICE_LINKS = [
+  { href: '/about', label: 'About Sophia' },
+  { href: '/courses', label: 'Agentic Architect Lab (Courses)' },
+  { href: '/work-with-me', label: 'Bespoke Systems & Advisory' },
   { href: '/fractional-ai-cto', label: 'Fractional CAIO & AI CTO' },
-  { href: '/teaching', label: 'Corporate Training & University' },
-  { href: '/boulder', label: 'Boulder & Denver Team Workshops' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/teaching', label: 'Speaking & University Teaching' },
+  { href: '/boulder', label: 'Boulder & Denver Workshops' },
 ]
 
 const CONNECT_LINKS = [
-  { href: SITE_CONFIG.substackUrl, label: 'Substack Newsletter', accent: true },
-  { href: SITE_CONFIG.linkedinUrl, label: 'LinkedIn', accent: false },
-  { href: SITE_CONFIG.xUrl, label: 'X (@sudosoph)', accent: false },
-  { href: SITE_CONFIG.githubUrl, label: 'GitHub', accent: false },
-  { href: '/rss.xml', label: 'RSS Feed', accent: false },
+  { href: SITE_CONFIG.substackUrl, label: 'Substack Dispatch', external: true },
+  { href: SITE_CONFIG.linkedinUrl, label: 'LinkedIn', external: true },
+  { href: '/contact', label: 'Contact', external: false },
+  { href: '/sponsor', label: 'Sponsorships', external: false },
+  { href: '/now', label: 'Now', external: false },
+  { href: '/rss.xml', label: 'RSS Feed', external: false },
 ]
 
 function FooterCol({
@@ -34,24 +33,28 @@ function FooterCol({
   links,
 }: {
   heading: string
-  links: { href: string; label: string; accent?: boolean }[]
+  links: { href: string; label: string; external?: boolean }[]
 }) {
   return (
     <div>
-      <h4 className="text-fg text-xs font-semibold uppercase tracking-wider mb-3">
-        {heading}
-      </h4>
+      <h4 className="text-fg text-xs font-semibold mb-3">{heading}</h4>
       <ul className="space-y-2">
-        {links.map(({ href, label, accent }) => (
+        {links.map(({ href, label, external }) => (
           <li key={href}>
-            <Link
-              href={href}
-              className={`text-sm transition-colors ${
-                accent ? 'text-accent font-medium hover:underline' : 'text-muted hover:text-fg'
-              }`}
-            >
-              {label}
-            </Link>
+            {external ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted hover:text-fg transition-colors"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link href={href} className="text-sm text-muted hover:text-fg transition-colors">
+                {label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>
@@ -61,18 +64,18 @@ function FooterCol({
 
 export function Footer() {
   return (
-    <footer className="bg-surface border-t border-border">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <footer className="bg-bg border-t border-border mt-16">
+      <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
-          <FooterCol heading="Explore" links={EXPLORE_LINKS} />
-          <FooterCol heading="Programs & Advisory" links={PROGRAM_LINKS} />
+          <FooterCol heading="Writing & Frameworks" links={WRITING_LINKS} />
+          <FooterCol heading="Courses & Practice" links={PRACTICE_LINKS} />
           <FooterCol heading="Connect" links={CONNECT_LINKS} />
         </div>
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-muted">
-          <span>© 2026 {SITE_CONFIG.legalName} · Boulder, CO</span>
           <span>
-            Sophia Stein writes and teaches here in a personal capacity, views my own.
+            © 2026 {SITE_CONFIG.legalName} · {SITE_CONFIG.location}
           </span>
+          <span>Essays, courses, and systems architecture by {SITE_CONFIG.authorName}.</span>
         </div>
       </div>
     </footer>

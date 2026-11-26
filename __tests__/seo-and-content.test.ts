@@ -21,7 +21,6 @@ const KNOWN_STATIC_PATHS = new Set([
   '/courses/4-1-open-weights-vs-frontier-economics',
   '/academy',
   '/masterclass',
-  '/accelerator',
   '/starter-kit',
   '/teaching',
   '/fractional-ai-cto',
@@ -41,13 +40,12 @@ const KNOWN_STATIC_PATHS = new Set([
   '/rss.xml',
 ])
 
-describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
-  it('includes the latest November 2026 buyer, Productive Friction, Bespoke API, and FDE flagship posts at the top of the 50-post archive', () => {
+describe('34-Essay Flagship Archive & SEO / GEO Assets', () => {
+  it('places flagship buyer, Bespoke API, FDE, and Chief of Staff essays at the top of the 34-post archive', () => {
     const posts = getAllPosts()
-    expect(posts).toHaveLength(50)
-    const topSevenSlugs = new Set(posts.slice(0, 7).map(p => p.slug))
+    expect(posts).toHaveLength(34)
+    const topEightSlugs = new Set(posts.slice(0, 8).map(p => p.slug))
     for (const slug of [
-      'productive-friction-interview-ai',
       'vertical-ai-vs-bespoke-api-harnesses',
       'forward-deployed-ai-engineering',
       'ai-back-office',
@@ -55,11 +53,11 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
       'hire-ai-agency-vs-in-house',
       'loop-engineering',
     ]) {
-      expect(topSevenSlugs.has(slug), `missing ${slug} in top 7`).toBe(true)
+      expect(topEightSlugs.has(slug), `missing ${slug} in top 8`).toBe(true)
     }
   })
 
-  it('resolves every internal /... link across all 47 blog posts without broken slugs or em-dashes', () => {
+  it('resolves every internal /... link across all 34 blog posts with >= 3 internal links each', () => {
     const posts = getAllPosts()
     const validSlugs = new Set(posts.map(p => p.slug))
 
@@ -69,6 +67,8 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
       expect(full!.html, `${meta.slug} em-dash`).not.toContain('\u2014')
 
       const hrefMatches = [...full!.html.matchAll(/href="(\/[^"#?]*)/g)]
+      expect(hrefMatches.length, `${meta.slug} internal links`).toBeGreaterThanOrEqual(3)
+
       for (const [, rawHref] of hrefMatches) {
         const cleanHref = rawHref.endsWith('/') && rawHref !== '/' ? rawHref.slice(0, -1) : rawHref
         if (cleanHref.startsWith('/blog/')) {
@@ -87,7 +87,7 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     }
   })
 
-  it('keeps llms.txt, AGENTS.md, and humans.txt clean, accurate, and free of em-dashes or dead routes', () => {
+  it('keeps llms.txt, AGENTS.md, and humans.txt clean, accurate, and free of retired handles or dead routes', () => {
     const llms = fs.readFileSync(path.join(process.cwd(), 'public/llms.txt'), 'utf8')
     const agents = fs.readFileSync(path.join(process.cwd(), 'public/AGENTS.md'), 'utf8')
     const humans = fs.readFileSync(path.join(process.cwd(), 'public/humans.txt'), 'utf8')
@@ -98,27 +98,28 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
       ['humans.txt', humans],
     ] as const) {
       expect(content, `${name} em-dash`).not.toContain('\u2014')
+      expect(content, `${name} sudosoph`).not.toContain('sudosoph')
       expect(content, `${name} dead X handle`).not.toContain('x.com/agenticarchitect')
       expect(content, `${name} dead /benchmarks`).not.toContain('/benchmarks')
       expect(content, `${name} dead /open`).not.toContain('/open')
     }
 
-    expect(llms).toContain('https://x.com/sudosoph')
     expect(llms).toContain('https://agenticarchitectai.substack.com')
     expect(llms).toContain('Women Who Code')
     expect(llms).not.toMatch(/Listmonk/i)
   })
 
-  it('generates sitemap with all funnel, teaching, BSW, and 41 blog post URLs', () => {
+  it('generates sitemap with all active routes, unlocked Lab modules, and 34 blog post URLs', () => {
     const entries = sitemap()
     const urls = new Set(entries.map(e => e.url))
 
     for (const route of [
       'https://agenticarchitect.ai',
-      'https://agenticarchitect.ai/masterclass',
-      'https://agenticarchitect.ai/accelerator',
+      'https://agenticarchitect.ai/about',
+      'https://agenticarchitect.ai/blog',
       'https://agenticarchitect.ai/courses',
       'https://agenticarchitect.ai/academy',
+      'https://agenticarchitect.ai/masterclass',
       'https://agenticarchitect.ai/starter-kit',
       'https://agenticarchitect.ai/teaching',
       'https://agenticarchitect.ai/fractional-ai-cto',
@@ -131,6 +132,7 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     }
 
     expect(urls.has('https://agenticarchitect.ai/library')).toBe(false)
+    expect(urls.has('https://agenticarchitect.ai/accelerator')).toBe(false)
     expect(urls.has('https://agenticarchitect.ai/courses/1-1-2026-ai-landscape-model-matrix')).toBe(true)
     expect(urls.has('https://agenticarchitect.ai/courses/2-1-vertical-ai-build-vs-buy-framework')).toBe(true)
     expect(urls.has('https://agenticarchitect.ai/courses/3-1-production-harnesses-multi-model-routing')).toBe(true)
@@ -143,18 +145,18 @@ describe('November 2026 Flagship Posts & SEO / GEO Assets', () => {
     }
 
     const indexNowUrls = new Set(collectCanonicalUrls())
-    expect(indexNowUrls.has('https://agenticarchitect.ai/academy')).toBe(true)
+    expect(indexNowUrls.has('https://agenticarchitect.ai/courses')).toBe(true)
     expect(indexNowUrls.has('https://agenticarchitect.ai/fractional-ai-cto')).toBe(true)
     expect(indexNowUrls.has('https://agenticarchitect.ai/research')).toBe(true)
   })
 
-  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 50 entries', async () => {
+  it('serves updated Atom feed at /rss.xml with Agentic Architect branding and 34 entries', async () => {
     const res = await getRss()
     const xml = await res.text()
     expect(xml).toContain('<title>Agentic Architect</title>')
     expect(xml).not.toContain('Local-First AI')
     expect(xml).not.toContain('\u2014')
-    expect((xml.match(/<entry>/g) ?? []).length).toBe(50)
+    expect((xml.match(/<entry>/g) ?? []).length).toBe(34)
   })
 
   it('keeps all guides free of retired localfirstai Substack branding', () => {

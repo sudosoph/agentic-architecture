@@ -1,12 +1,6 @@
 import { getWorkerEnv, runInBackground } from '@/lib/cloudflare-env'
 import fiveDayLessons from '@/content/courses/five-day-prompt-to-system.json'
 
-// Custom newsletter & 5-Day Prompt-to-System Challenge signup endpoint:
-// 1. Subscribes the reader to Agentic Architect on Substack.
-// 2. Uses verified Resend domain (agenticarchitect.ai) inside ctx.waitUntil to:
-//    a) Notify Sophia's dual inboxes immediately
-//    b) Send Day 1 immediately + schedule Days 2-5 (+24h..+96h) via Resend Batch API
-//    c) Upsert the contact into Resend Contacts for owned CRM backup
 const SUBSTACK_PUBLICATION = 'agenticarchitectai'
 const SUBSTACK_SIGNUP_URL = `https://${SUBSTACK_PUBLICATION}.substack.com/api/v1/free`
 const SUBSTACK_PUBLICATION_HOME = `https://${SUBSTACK_PUBLICATION}.substack.com/`
@@ -24,22 +18,21 @@ function formatLessonBody(lesson: (typeof fiveDayLessons)[number]): string {
   return [
     `Hi there,`,
     ``,
-    `Welcome to Day ${lesson.day} of the 5-Day Prompt-to-System Business Challenge.`,
-    `Today's goal: ${lesson.goal}`,
+    `Welcome to Day ${lesson.day} of the 5-Day Applied AI Architecture Primer.`,
+    `Today's focus: ${lesson.goal}`,
     ``,
     lesson.body,
     ``,
-    `Next step: ${lesson.ctaUrl}`,
+    `Open today's resource: ${lesson.ctaUrl}`,
     ``,
-    `Want all 5 Foundations modules (or our 4-Curriculum AI Architecture Pass) right now?`,
-    `- Curriculum 01: Applied AI Foundations ($297, 100% creditable): https://agenticarchitect.ai/academy`,
-    `- Explore All 4 Curricula & Free Unlocked Lessons: https://agenticarchitect.ai/courses`,
-    `- Forward Deployed Builds, Fractional CAIO / AI CTO & Corporate Labs: https://agenticarchitect.ai/work-with-me`,
+    `Explore more when ready:`,
+    `- Agentic Architect Lab & Free Unlocked Lessons: https://agenticarchitect.ai/courses`,
+    `- 20/80 Task Readiness Kit: https://agenticarchitect.ai/starter-kit`,
+    `- Bespoke Systems, Speaking & Fractional Advisory: https://agenticarchitect.ai/work-with-me`,
     ``,
     `Best,`,
     `Sophia Stein`,
     `Agentic Architect · https://agenticarchitect.ai`,
-    `(Writing and teaching in a personal capacity; views my own. Reply anytime with your #1 bottleneck.)`,
   ].join('\n')
 }
 
@@ -112,9 +105,9 @@ export async function POST(request: Request) {
         from: NOTIFY_FROM,
         to: NOTIFY_TO,
         reply_to: email,
-        subject: `New subscriber + 5-Day Challenge started: ${email}`,
+        subject: `New subscriber (${source}): ${email}`,
         text: [
-          `New Agentic Architect subscriber enrolled in the 5-Day Prompt-to-System Challenge.`,
+          `New Agentic Architect subscriber enrolled in the 5-Day Primer.`,
           ``,
           `Email: ${email}`,
           `Source: ${source}`,

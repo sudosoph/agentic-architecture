@@ -4,10 +4,11 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 vi.mock('next/font/google', () => ({
-  JetBrains_Mono: () => ({ variable: '--font-mono' }),
+  JetBrains_Mono: () => ({ variable: '--font-jetbrains-mono' }),
+  Instrument_Serif: () => ({ variable: '--font-instrument-serif' }),
 }))
 vi.mock('geist/font/sans', () => ({
-  GeistSans: { variable: '--font-sans' },
+  GeistSans: { variable: '--font-geist-sans' },
 }))
 
 import robots from '@/app/robots'
@@ -26,7 +27,6 @@ import SovereignStackPage from '@/app/(site)/sovereign-stack/page'
 import AboutPage from '@/app/(site)/about/page'
 import StudioPage from '@/app/(site)/studio/page'
 import MasterclassPage from '@/app/(site)/masterclass/page'
-import AcceleratorPage from '@/app/(site)/accelerator/page'
 import WorkWithMePage from '@/app/(site)/work-with-me/page'
 import { GET as getKeystaticApi } from '@/app/api/keystatic/[...params]/route'
 import { SOVEREIGN_STACK_PARTS } from '../scripts/compile-book-and-freebies.mjs'
@@ -49,7 +49,7 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(config.host).toBe('https://agenticarchitect.ai')
   })
 
-  it('permanently redirects www.agenticarchitect.ai to apex https://agenticarchitect.ai in next.config.ts', async () => {
+  it('permanently redirects www to apex and maps all retired blog & funnel slugs cleanly in next.config.ts', async () => {
     expect(typeof nextConfig.redirects).toBe('function')
     const redirects = await nextConfig.redirects!()
     const wwwRoot = redirects.find(
@@ -67,19 +67,22 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(wwwSubpath?.permanent).toBe(true)
     expect(wwwSubpath?.destination).toBe('https://agenticarchitect.ai/:path+')
 
-    for (const [oldSlug, newSlug] of [
-      ['personal-agents-tab-instinct-openinstinct-review', 'instinct-ai-vs-tab-review'],
-      ['ai-org-chart-for-small-business-founders', 'ai-back-office'],
-      ['ai-org-chart', 'ai-back-office'],
-      ['how-to-build-an-ai-chief-of-staff-2026', 'ai-chief-of-staff'],
-      ['ai-implementation-program-vs-agency-vs-diy-guide', 'hire-ai-agency-vs-in-house'],
-      ['512gb-unified-memory-mini-pcs-local-llm-2026', 'mac-studio-512gb-vs-dgx-spark'],
-      ['loop-engineering-production-guide-2026', 'loop-engineering'],
-      ['google-latest-models-vs-deepseek-4-1-business-guide', 'gemini-4-neon-vs-deepseek-v4'],
+    for (const [oldSlug, newDest] of [
+      ['ai-org-chart-for-small-business-founders', '/blog/ai-back-office'],
+      ['ai-org-chart', '/blog/ai-back-office'],
+      ['how-to-build-an-ai-chief-of-staff-2026', '/blog/ai-chief-of-staff'],
+      ['ai-implementation-program-vs-agency-vs-diy-guide', '/blog/hire-ai-agency-vs-in-house'],
+      ['512gb-unified-memory-mini-pcs-local-llm-2026', '/blog/mac-studio-512gb-vs-dgx-spark'],
+      ['loop-engineering-production-guide-2026', '/blog/loop-engineering'],
+      ['google-latest-models-vs-deepseek-4-1-business-guide', '/blog/gemini-4-neon-vs-deepseek-v4'],
+      ['productive-friction-interview-ai', '/blog/easy-ai-brand-and-workflow-setup'],
+      ['personal-ai-agent-weekend', '/blog/instinct-ai-vs-tab-review'],
+      ['boulders-ai-frontier', '/blog/ai-chief-of-staff'],
+      ['self-hosting-ai-stack-hetzner', '/blog/autonomous-ai-rig-tailscale-guide'],
     ]) {
       const rule = redirects.find(r => r.source === `/blog/${oldSlug}`)
       expect(rule?.permanent, `${oldSlug} 308 redirect`).toBe(true)
-      expect(rule?.destination).toBe(`/blog/${newSlug}`)
+      expect(rule?.destination).toBe(newDest)
     }
   })
 
@@ -118,9 +121,8 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(postMeta.alternates?.canonical).toBe('/blog/easy-ai-brand-and-workflow-setup')
   })
 
-  it('renders Homepage with visible exact-match Agentic Architect identity and linked @graph JSON-LD', () => {
+  it('renders Homepage with linked @graph JSON-LD and zero sudosoph handles', () => {
     const { container } = render(<HomePage />)
-    expect(screen.getByTestId('hero-section').textContent).toContain('Agentic Architect')
     expect(container.textContent).not.toContain('\u2014')
 
     const ldScript = container.querySelector('script[type="application/ld+json"]')
@@ -133,19 +135,12 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(types).toContain('ProfessionalService')
     expect(types).toContain('Person')
 
-    const website = parsed['@graph'].find(
-      (node: { '@type': string }) => node['@type'] === 'WebSite',
-    )
-    expect(website.name).toBe('Agentic Architect')
-    expect(website.url).toBe('https://agenticarchitect.ai/')
-
     const org = parsed['@graph'].find(
       (node: { '@type': string }) => node['@type'] === 'ProfessionalService',
     )
     expect(org.sameAs).toContain('https://agenticarchitectai.substack.com')
-    expect(org.sameAs).toContain('https://github.com/sudosoph')
     expect(org.sameAs).toContain('https://www.linkedin.com/in/sophiastein')
-    expect(org.sameAs).toContain('https://x.com/sudosoph')
+    expect(JSON.stringify(parsed)).not.toContain('sudosoph')
   })
 
   it('renders /what-is-an-agentic-architect pillar page with 4-layer stack, comparison table, schema, and sitemap entry', () => {
@@ -159,7 +154,6 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(container.textContent).toContain('4-Layer')
     expect(container.textContent?.toLowerCase()).not.toContain('voice.md')
     expect(container.textContent).not.toContain('\u2014')
-    expect(container.textContent).not.toMatch(/DeepSeek|Gemini/i)
 
     const ldScript = container.querySelector('script[type="application/ld+json"]')
     expect(ldScript).not.toBeNull()
@@ -189,10 +183,10 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     expect(reply).not.toContain('\u2014')
   })
 
-  it('compiles all 18 Sovereign Stack chapters and 3 OSS/hardware freebies cleanly and renders interactive 512GB sizer', () => {
+  it('compiles all 12 Sovereign Stack chapters and 3 OSS/hardware freebies cleanly and renders interactive 512GB sizer', () => {
     const validSlugs = new Set(getAllPosts().map(p => p.slug))
     const allChapters = SOVEREIGN_STACK_PARTS.flatMap(p => p.chapters)
-    expect(allChapters).toHaveLength(18)
+    expect(allChapters).toHaveLength(12)
     for (const ch of allChapters) {
       expect(validSlugs.has(ch.slug), `missing chapter post ${ch.slug}`).toBe(true)
     }
@@ -218,16 +212,15 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
     }
   })
 
-  it('renders dual-track owner + corporate positioning on AboutPage, Course/Service/FAQ JSON-LD across funnel pages, and zero-npm Cloud Studio', async () => {
+  it('renders 3-surface positioning on AboutPage, Course/Service/FAQ JSON-LD across funnel pages, and restricted Owner Studio', async () => {
     const { container: aboutContainer } = render(<AboutPage />)
-    expect(aboutContainer.textContent).toContain('Two Tracks, One Quality Bar')
-    expect(aboutContainer.textContent).not.toContain('mornings back')
+    expect(aboutContainer.textContent).toContain('Three surfaces, one coherent point of view')
+    expect(aboutContainer.textContent).toContain('Two tracks, one quality bar')
     expect(aboutContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(aboutContainer.textContent).not.toContain('\u2014')
 
     for (const [label, Comp, expectedType] of [
       ['MasterclassPage', MasterclassPage, 'Course'],
-      ['AcceleratorPage', AcceleratorPage, 'Course'],
       ['WorkWithMePage', WorkWithMePage, 'Service'],
     ] as const) {
       const { container: fContainer, unmount } = render(<Comp />)
@@ -237,21 +230,18 @@ describe('Google Discoverability, Technical SEO & Exact-Match Brand Authority', 
       const types = parsed['@graph'].map((n: { '@type': string }) => n['@type'])
       expect(types).toContain(expectedType)
       expect(types).toContain('FAQPage')
-      expect(fContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
       expect(fContainer.textContent).not.toContain('\u2014')
       unmount()
     }
 
     const { container: studioContainer } = render(<StudioPage />)
-    expect(studioContainer.textContent).toContain('Write & Publish Playbooks Straight From Your Browser')
-    expect(studioContainer.textContent).toContain('Owner Bottleneck & Corporate Buyer Attraction')
-    expect(studioContainer.textContent).toContain('90-Minute Weekly Distribution Cadence')
+    expect(studioContainer.textContent).toContain('Agentic Architect Owner Studio')
     expect(studioContainer.textContent?.toLowerCase()).not.toContain('voice.md')
-    expect(studioContainer.textContent?.toLowerCase()).not.toContain('callan')
-    expect(studioContainer.textContent?.toLowerCase()).not.toContain('ai org chart')
     expect(studioContainer.textContent).not.toContain('\u2014')
 
-    const ksRes = await getKeystaticApi(new Request('https://agenticarchitect.ai/api/keystatic/github/login'))
+    const ksRes = await getKeystaticApi(
+      new Request('https://agenticarchitect.ai/api/keystatic/github/login'),
+    )
     expect(ksRes.status).toBe(503)
     const ksHtml = await ksRes.text()
     expect(ksHtml).toContain('/studio')

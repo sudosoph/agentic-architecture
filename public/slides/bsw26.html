@@ -651,21 +651,21 @@ section.end .signoff strong { color: var(--text); }
 <body>
 <div class="reveal"><div class="slides">
 
-<!-- 1 — COVER -->
+<!-- 1 :  COVER -->
 <section class="cover">
   <div class="eyebrow"><span class="dot"></span>Boulder Startup Week 2026 · Thu May 7 · RegenHub</div>
   <h1>Architecting<br/><em>Agentic Workflows</em><br/>for the Lean 2026 Startup</h1>
   <div class="author">Sophia Stein <span class="role">· AI Architect · Local LLM &amp; Agentic Workflows</span></div>
-  <div class="meta">agenticarchitect.ai/blog &nbsp;·&nbsp; github.com/sudosoph</div>
+  <div class="meta">agenticarchitect.ai/blog &nbsp;·&nbsp; github.com/Sophia Stein</div>
 </section>
 
-<!-- 2 — THE PROMISE -->
+<!-- 2 :  THE PROMISE -->
 <section class="promise">
   <div class="promise-text">By the end of this hour, you'll have an agent running tomorrow morning that does customer discovery while you sleep.</div>
   <div class="promise-sub">Open source · ~$8&ndash;$15/mo · forkable · yours when you walk out.</div>
 </section>
 
-<!-- 3 — LIVE DEMO -->
+<!-- 3 :  LIVE DEMO -->
 <section class="demo">
   <h1><span class="pulse"></span>LIVE</h1>
   <div class="sub">Switching to n8n + Gmail · the agent is mid-flight · narrating drafts as they populate</div>
@@ -673,17 +673,17 @@ section.end .signoff strong { color: var(--text); }
 </section>
 
 <!-- =====================================================================
-     PART 01 — FOUNDATIONS
+     PART 01 :  FOUNDATIONS
      ===================================================================== -->
 
-<!-- 4 — DIVIDER · FOUNDATIONS -->
+<!-- 4 :  DIVIDER · FOUNDATIONS -->
 <section class="divider">
   <div class="part">PART 01 · 5 MIN · FOUNDATIONS</div>
   <h2 class="question">What is an agent, really?</h2>
   <div class="sub">Same loop in every framework. Same three layers in every system. Worth getting on the same page before we go further.</div>
 </section>
 
-<!-- 5 — REACT LOOP -->
+<!-- 5 :  REACT LOOP -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Foundations · the loop every agent runs</div>
   <h2>The REACT loop.</h2>
@@ -708,7 +708,7 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">leverage</span><span class="cite">ReAct paper · Yao et al. 2022 · standard across 2026 frameworks</span></div>
 </section>
 
-<!-- 6 — MODEL + RUNTIME + TOOLS -->
+<!-- 6 :  MODEL + RUNTIME + TOOLS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Foundations · three layers in every agent</div>
   <h2>An agent has three layers. Pick each one deliberately.</h2>
@@ -727,17 +727,17 @@ section.end .signoff strong { color: var(--text); }
 </section>
 
 <!-- =====================================================================
-     PART 02 — THE 2026 LANDSCAPE
+     PART 02 :  THE 2026 LANDSCAPE
      ===================================================================== -->
 
-<!-- 7 — DIVIDER · STATE OF THE STACK -->
+<!-- 7 :  DIVIDER · STATE OF THE STACK -->
 <section class="divider">
   <div class="part">PART 02 · 8 MIN · THE 2026 LANDSCAPE</div>
   <h2 class="question">What changed in 2026<br/>that makes your agent possible?</h2>
   <div class="sub">Five forces. Each one is something specific that landed in the last 18 months and that you can use today.</div>
 </section>
 
-<!-- 8 — MODEL LANDSCAPE -->
+<!-- 8 :  MODEL LANDSCAPE -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Landscape · Force 03 · The model market · May 2026</div>
   <h2>Models available today.</h2>
@@ -746,20 +746,20 @@ section.end .signoff strong { color: var(--text); }
       <thead><tr><th>Model</th><th>In/M</th><th>Out/M</th><th>Released</th><th>Use for</th></tr></thead>
       <tbody>
         <tr><td><strong>Claude Opus 4.7</strong></td><td class="num">$5</td><td class="num">$25</td><td class="muted">Apr 16</td><td>Hard edges only</td></tr>
-        <tr><td><strong>Claude Sonnet 4.6</strong></td><td class="num">$3</td><td class="num">$15</td><td class="muted">—</td><td>Drafting · nuance · voice match</td></tr>
+        <tr><td><strong>Claude Sonnet 4.6</strong></td><td class="num">$3</td><td class="num">$15</td><td class="muted">: </td><td>Drafting · nuance · voice match</td></tr>
         <tr><td><strong>Claude Haiku 4.5</strong></td><td class="num">$1</td><td class="num">$5</td><td class="muted">Oct 2025</td><td>Routing · classify · extract</td></tr>
         <tr><td>GPT-5.5</td><td class="num">$5</td><td class="num">$30</td><td class="muted">Apr 23</td><td>Doubled price · OAI-locked</td></tr>
-        <tr><td>Gemini 3.1 Pro / Flash</td><td class="num">$2 / $0.50</td><td class="num">$12 / $3</td><td class="muted">—</td><td>If on GCP / budget tier</td></tr>
+        <tr><td>Gemini 3.1 Pro / Flash</td><td class="num">$2 / $0.50</td><td class="num">$12 / $3</td><td class="muted">: </td><td>If on GCP / budget tier</td></tr>
         <tr><td><strong>Qwen 3.6-27B</strong> (local)</td><td class="num">~$0</td><td class="num">~$0</td><td class="muted">Apr 2026</td><td>Classification · claims Sonnet parity</td></tr>
-        <tr><td>DeepSeek V3.2</td><td class="num">$0.14</td><td class="num">$1.10</td><td class="muted">—</td><td>Cheapest frontier reasoning</td></tr>
+        <tr><td>DeepSeek V3.2</td><td class="num">$0.14</td><td class="num">$1.10</td><td class="muted">: </td><td>Cheapest frontier reasoning</td></tr>
       </tbody>
     </table>
-    <p class="kicker">Today's stack: <strong>Sonnet 4.6 + Haiku 4.5</strong>. Two models, one cascade — cost reasoning in Part 5.</p>
+    <p class="kicker">Today's stack: <strong>Sonnet 4.6 + Haiku 4.5</strong>. Two models, one cascade :  cost reasoning in Part 5.</p>
   </div>
   <div class="footer"><span class="tag">cash</span><span class="cite">Vendor pricing pages · May 4, 2026</span></div>
 </section>
 
-<!-- 9 — FOUNDER MATH -->
+<!-- 9 :  FOUNDER MATH -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Landscape · The shape of the lean 2026 team</div>
   <h2>The new founder math.</h2>
@@ -781,7 +781,7 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">leverage</span><span class="cite">Public ARR posts · HN/IH consensus · April 2026</span></div>
 </section>
 
-<!-- 10 — STOP ASKING (real quote) -->
+<!-- 10 :  STOP ASKING (real quote) -->
 <section class="quote">
   <blockquote>Stop asking AI questions.<br/>Start giving AI tasks.</blockquote>
   <div class="attrib">Adapted from Henry Ward, CEO Carta · AI Agent Conference NYC · May 4, 2026</div>
@@ -791,7 +791,7 @@ section.end .signoff strong { color: var(--text); }
   </div>
 </section>
 
-<!-- 11 — WHAT THIS HOUR DELIVERS -->
+<!-- 11 :  WHAT THIS HOUR DELIVERS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Landscape · The contract for this hour</div>
   <h2>What this hour delivers.</h2>
@@ -810,26 +810,26 @@ section.end .signoff strong { color: var(--text); }
       <div class="card accent">
         <h3>HITL standard</h3>
         <p style="font-size:13px; color:var(--text-3);"><strong>HITL</strong> = Human-in-the-Loop</p>
-        <p>The 4-stage trust ladder · voice.md pattern · 10× bandwidth math.</p>
+        <p>The 4-stage trust ladder · operating-rules.md pattern · 10× bandwidth math.</p>
       </div>
     </div>
-    <p class="kicker">Plus — <strong>12 transferable patterns</strong> &amp; <strong>7 other agents</strong> on the same stack.</p>
+    <p class="kicker">Plus :  <strong>12 transferable patterns</strong> &amp; <strong>7 other agents</strong> on the same stack.</p>
   </div>
   <div class="footer"><span class="tag">ROI</span></div>
 </section>
 
 <!-- =====================================================================
-     PART 03 — BLUEPRINT FOR AUTONOMY
+     PART 03 :  BLUEPRINT FOR AUTONOMY
      ===================================================================== -->
 
-<!-- 12 — DIVIDER · BLUEPRINT -->
+<!-- 12 :  DIVIDER · BLUEPRINT -->
 <section class="divider">
   <div class="part">PART 03 · 8 MIN · BLUEPRINT FOR AUTONOMY</div>
   <h2 class="question">Which 20% of your manual tasks<br/>should be 80% automated?</h2>
   <div class="sub">The same question every founder has. We answer it in eight minutes.</div>
 </section>
 
-<!-- 13 — 3-AXIS MATRIX -->
+<!-- 13 :  3-AXIS MATRIX -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Blueprint · The framework · three questions to ask of any task</div>
   <h2>The 20/80 Blueprint.</h2>
@@ -838,17 +838,17 @@ section.end .signoff strong { color: var(--text); }
       <div class="card accent">
         <h3>Volume</h3>
         <p>How often does this task come up?</p>
-        <p style="font-size:14px;"><strong>High</strong> — daily/weekly. <strong>Low</strong> — occasional. <em>Don't automate low-volume; build cost will exceed time saved.</em></p>
+        <p style="font-size:14px;"><strong>High</strong> :  daily/weekly. <strong>Low</strong> :  occasional. <em>Don't automate low-volume; build cost will exceed time saved.</em></p>
       </div>
       <div class="card accent">
         <h3>Determinism</h3>
         <p>Are the steps the same every time?</p>
-        <p style="font-size:14px;"><strong>Deterministic</strong> — rules apply. <strong>Ambiguous</strong> — needs judgment. <em>Ambiguous tasks need a human checkpoint.</em></p>
+        <p style="font-size:14px;"><strong>Deterministic</strong> :  rules apply. <strong>Ambiguous</strong> :  needs judgment. <em>Ambiguous tasks need a human checkpoint.</em></p>
       </div>
       <div class="card accent">
         <h3>Reversibility</h3>
         <p>If the agent's wrong, what breaks?</p>
-        <p style="font-size:14px;"><strong>Low-stakes</strong> — recoverable. <strong>Irreversible</strong> — not. <em>Irreversible tasks should never be fully automated.</em></p>
+        <p style="font-size:14px;"><strong>Low-stakes</strong> :  recoverable. <strong>Irreversible</strong> :  not. <em>Irreversible tasks should never be fully automated.</em></p>
       </div>
     </div>
     <div class="callout">
@@ -858,10 +858,10 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">focus</span></div>
 </section>
 
-<!-- 14 — GREEN / YELLOW / RED EXAMPLES -->
+<!-- 14 :  GREEN / YELLOW / RED EXAMPLES -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Blueprint · Examples for a lean startup</div>
-  <h2>Green / Yellow / Red — pick your first agent.</h2>
+  <h2>Green / Yellow / Red :  pick your first agent.</h2>
   <div class="body">
     <div class="cards-3">
       <div class="card good">
@@ -898,12 +898,12 @@ section.end .signoff strong { color: var(--text); }
         </ul>
       </div>
     </div>
-    <p class="kicker">Today's demo lives in <strong style="color:#D97706;">YELLOW</strong> — cold outreach with a human checkpoint.</p>
+    <p class="kicker">Today's demo lives in <strong style="color:#D97706;">YELLOW</strong> :  cold outreach with a human checkpoint.</p>
   </div>
   <div class="footer"><span class="tag">focus</span></div>
 </section>
 
-<!-- 15 — WORKSHEET -->
+<!-- 15 :  WORKSHEET -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Blueprint · 90 seconds · I'll be quiet · don't watch me · write</div>
   <h2>Your turn. Five tasks.</h2>
@@ -926,10 +926,10 @@ section.end .signoff strong { color: var(--text); }
 </section>
 
 <!-- =====================================================================
-     PART 04 — LIVE BUILD-ALONG
+     PART 04 :  LIVE BUILD-ALONG
      ===================================================================== -->
 
-<!-- 16 — PICK YOUR TRACK -->
+<!-- 16 :  PICK YOUR TRACK -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Before we build · pick your track</div>
   <h2>Two axes · four tracks. Everyone in this room can build this.</h2>
@@ -941,7 +941,7 @@ section.end .signoff strong { color: var(--text); }
       </div>
       <div class="card">
         <h3 style="color:var(--accent);">💎 PAID · ~$6/mo</h3>
-        <p style="font-size:14px;"><strong>Stack:</strong> n8n.cloud · Anthropic Sonnet 4.6 + Haiku 4.5 · Firecrawl. <strong>Cost:</strong> ~$0.21/run · ~$6/mo at default frequency. Best voice match — what the live demo just used.</p>
+        <p style="font-size:14px;"><strong>Stack:</strong> n8n.cloud · Anthropic Sonnet 4.6 + Haiku 4.5 · Firecrawl. <strong>Cost:</strong> ~$0.21/run · ~$6/mo at default frequency. Best voice match :  what the live demo just used.</p>
       </div>
       <div class="card">
         <h3>🧑‍💻 MANUAL build</h3>
@@ -954,17 +954,17 @@ section.end .signoff strong { color: var(--text); }
     </div>
     <p class="kicker"><strong>You'll get the slides · the speaker notes · the workflow JSONs · the autopilot prompts · the tutorials.</strong> Don't memorize anything. Reference. Pick your track this weekend.</p>
   </div>
-  <div class="footer"><span class="tag">inclusion</span><span class="cite">github.com/sudosoph/bsw26-agentic-workflows</span></div>
+  <div class="footer"><span class="tag">inclusion</span><span class="cite">agenticarchitect.ai/bsw</span></div>
 </section>
 
-<!-- 17 — DIVIDER · BUILD -->
+<!-- 17 :  DIVIDER · BUILD -->
 <section class="divider">
   <div class="part">PART 04 · 25 MIN · LIVE BUILD-ALONG</div>
   <h2 class="question">The Founder's<br/>Discovery Engine.</h2>
   <div class="sub">A customer-discovery agent that runs while you sleep. n8n + Claude + Gmail. Open source. ~$8&ndash;$15/mo.</div>
 </section>
 
-<!-- 18 — ONE-SCREEN SPEC -->
+<!-- 18 :  ONE-SCREEN SPEC -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · One-screen spec</div>
   <h2>What we're building.</h2>
@@ -989,7 +989,7 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">time</span><span class="tag">leverage</span><span class="tag">cash</span></div>
 </section>
 
-<!-- 19 — ARCHITECTURE -->
+<!-- 19 :  ARCHITECTURE -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · The architecture · the centerpiece</div>
   <h2>Nine steps · three sub-agents · one workflow.</h2>
@@ -1002,7 +1002,7 @@ section.end .signoff strong { color: var(--text); }
       <div class="arch-arrow">↓</div>
       <div class="arch-step">
         <div class="badge read">2 · READ</div>
-        <div class="desc">Sheets <code>ICP</code> + Drive <code>voice.md</code> &nbsp;·&nbsp; <em>config-as-files pattern</em></div>
+        <div class="desc">Sheets <code>ICP</code> + Drive <code>operating-rules.md</code> &nbsp;·&nbsp; <em>config-as-files pattern</em></div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-step">
@@ -1022,7 +1022,7 @@ section.end .signoff strong { color: var(--text); }
       <div class="arch-arrow">↓</div>
       <div class="arch-step">
         <div class="badge ai">6 · DRAFT</div>
-        <div class="desc"><strong>Sonnet 4.6 + voice.md</strong> · sub-agent #2 · the only premium-token step in the workflow</div>
+        <div class="desc"><strong>Sonnet 4.6 + operating-rules.md</strong> · sub-agent #2 · the only premium-token step in the workflow</div>
       </div>
       <div class="arch-arrow">↓</div>
       <div class="arch-step">
@@ -1042,13 +1042,13 @@ section.end .signoff strong { color: var(--text); }
     </div>
     <p class="kicker"><strong>Three sub-agents · each gets only the context it needs. None see the whole conversation.</strong> Sub-agent decomposition is how you cut cost without losing quality.</p>
   </div>
-  <div class="footer"><span class="tag">durability</span><span class="cite">github.com/sudosoph/bsw26-agentic-workflows · MIT</span></div>
+  <div class="footer"><span class="tag">durability</span><span class="cite">agenticarchitect.ai/bsw · MIT</span></div>
 </section>
 
-<!-- 20 — STEP 1 TRIGGERS -->
+<!-- 20 :  STEP 1 TRIGGERS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 1/8 · ~3 min</div>
-  <h2>Triggers — how your agent wakes up.</h2>
+  <h2>Triggers :  how your agent wakes up.</h2>
   <div class="body">
     <table>
       <thead><tr><th>Trigger</th><th>Plain English</th><th>When it fires</th><th>Founder use case</th></tr></thead>
@@ -1058,22 +1058,22 @@ section.end .signoff strong { color: var(--text); }
         <tr><td><strong>Manual</strong></td><td>You · clicking Run</td><td>You decide</td><td>Testing · ad-hoc demos</td></tr>
       </tbody>
     </table>
-    <div class="callout"><p><strong>Today's choice:</strong> <code>cron(0 13 * * *)</code> — daily at 7am Boulder time (13:00 UTC during MDT) — plus a manual trigger for the live demo. Almost every SMB agent starts as cron.</p></div>
+    <div class="callout"><p><strong>Today's choice:</strong> <code>cron(0 13 * * *)</code> :  daily at 7am Boulder time (13:00 UTC during MDT) :  plus a manual trigger for the live demo. Almost every SMB agent starts as cron.</p></div>
   </div>
   <div class="footer"><span class="tag">durability</span></div>
 </section>
 
-<!-- 21 — STEP 2 CONFIG-AS-FILES -->
+<!-- 21 :  STEP 2 CONFIG-AS-FILES -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 2/8 · the most important pattern in this hour</div>
   <h2>Config-as-files. Not config-as-prompts.</h2>
   <div class="body">
-    <p style="font-size:16px;">Every input that drives the agent — voice, ICP, schemas, examples, exclusion lists — lives as a <strong style="color:var(--good);">versioned editable file</strong> in Drive or Sheets. Not buried in workflow nodes.</p>
+    <p style="font-size:16px;">Every input that drives the agent :  voice, ICP, schemas, examples, exclusion lists :  lives as a <strong style="color:var(--good);">versioned editable file</strong> in Drive or Sheets. Not buried in workflow nodes.</p>
     <table>
       <thead><tr><th>File</th><th>Lives in</th><th>Controls</th><th>Edited by</th></tr></thead>
       <tbody>
-        <tr><td><code>voice.md</code></td><td>Drive</td><td>Tone · words · 5 example emails</td><td>Founder · rarely</td></tr>
-        <tr><td><code>icp.md</code></td><td>Drive</td><td>Who we look for · keywords</td><td>Founder · monthly</td></tr>
+        <tr><td><code>operating-rules.md</code></td><td>Drive</td><td>Tone · words · 5 example emails</td><td>Founder · rarely</td></tr>
+        <tr><td><code>qualification-criteria.md</code></td><td>Drive</td><td>Who we look for · keywords</td><td>Founder · monthly</td></tr>
         <tr><td><code>do-not-contact.csv</code></td><td>Sheets</td><td>Exclusion list</td><td>Anyone · any time</td></tr>
         <tr><td><code>schemas.md</code></td><td>Drive</td><td>Structured JSON output shapes</td><td>Architect · rarely</td></tr>
       </tbody>
@@ -1083,7 +1083,7 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">agility</span></div>
 </section>
 
-<!-- 22 — STEP 3 DISCOVERY -->
+<!-- 22 :  STEP 3 DISCOVERY -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 3/8 · sub-agent #1</div>
   <h2>Discovery: one node, one API, one call.</h2>
@@ -1092,7 +1092,7 @@ section.end .signoff strong { color: var(--text); }
 {
   "model": "claude-haiku-4-5",
   "tools": [{ "type": "web_search_20250305" }],
-  "system": "[ICP keywords from icp.md]",
+  "system": "[ICP keywords from qualification-criteria.md]",
   "messages": [{
     "role": "user",
     "content": "Find founders publicly displaying ICP signals on
@@ -1109,7 +1109,7 @@ section.end .signoff strong { color: var(--text); }
   <div class="footer"><span class="tag">cash</span></div>
 </section>
 
-<!-- 23 — STEP 4 DEDUP -->
+<!-- 23 :  STEP 4 DEDUP -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 4/8 · idempotency = re-run safety</div>
   <h2>Dedup against state.</h2>
@@ -1131,7 +1131,7 @@ return fresh;</span>
   <div class="footer"><span class="tag">durability</span></div>
 </section>
 
-<!-- 24 — STEP 5 ENRICHMENT -->
+<!-- 24 :  STEP 5 ENRICHMENT -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 5/8 · cheap-fast first</div>
   <h2>Progressive enrichment.</h2>
@@ -1152,14 +1152,14 @@ Pass to drafting node
   <div class="footer"><span class="tag">cash</span></div>
 </section>
 
-<!-- 25 — STEP 6 DRAFTING -->
+<!-- 25 :  STEP 6 DRAFTING -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 6/8 · sub-agent #2 · the only premium-token step</div>
-  <h2>Drafting — Sonnet 4.6 + voice.md.</h2>
+  <h2>Drafting :  Sonnet 4.6 + operating-rules.md.</h2>
   <div class="body">
     <pre><code class="language-json">{
   "model": "claude-sonnet-4-6",
-  "system": "[contents of voice.md] + [5 example emails]",
+  "system": "[contents of operating-rules.md] + [5 example emails]",
   "messages": [{
     "role": "user",
     "content": "Draft a customer-discovery email to {person}.
@@ -1167,24 +1167,24 @@ Pass to drafting node
                 Source: {source_url}
                 Their company context: {enriched_summary}
 
-                Follow voice.md exactly. Interview ask, not pitch.
+                Follow operating-rules.md exactly. Interview ask, not pitch.
                 Soft CTA. 80-110 words."
   }]
 }</code></pre>
     <div class="cards-2">
-      <div class="card good"><h3>Why Sonnet here</h3><p>Voice match is where quality matters. Haiku writes generic-friendly. Sonnet reads voice.md and writes like the person who wrote those examples.</p></div>
+      <div class="card good"><h3>Why Sonnet here</h3><p>Voice match is where quality matters. Haiku writes generic-friendly. Sonnet reads operating-rules.md and writes like the person who wrote those examples.</p></div>
       <div class="card good"><h3>Why 5 examples</h3><p>In-context examples beat prompt instructions. The discipline of writing 5 good emails is what makes voice work. Few-shot &gt; zero-shot.</p></div>
     </div>
   </div>
   <div class="footer"><span class="tag">leverage</span></div>
 </section>
 
-<!-- 26 — voice.md content -->
+<!-- 26 :  operating-rules.md content -->
 <section>
-  <div class="eyebrow"><span class="dot"></span>Build · what's in voice.md</div>
+  <div class="eyebrow"><span class="dot"></span>Build · what's in operating-rules.md</div>
   <h2>The file that does the heavy lifting.</h2>
   <div class="body">
-    <pre><code class="language-markdown"># Sophia's voice — for outbound writing
+    <pre><code class="language-markdown"># Sophia's voice :  for outbound writing
 
 ## Posture
 - Direct, no fluff. Short sentences. Cut adverbs.
@@ -1205,13 +1205,13 @@ Pass to drafting node
 5. Soft CTA: "worth 15 minutes Thursday?"
 
 ## Examples
-[5 real emails — see voice-md-template handout]</code></pre>
+[5 real emails :  see voice-md-template handout]</code></pre>
     <p class="kicker">The agent inherits your taste through examples, not adjectives. If you can't write 5 good examples, the agent can't either.</p>
   </div>
   <div class="footer"><span class="tag">agility</span></div>
 </section>
 
-<!-- 27 — STEP 7 HITL GATE -->
+<!-- 27 :  STEP 7 HITL GATE -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 7/8 · the HITL gate</div>
   <h2>Human-in-the-Loop (HITL): the agent drafts. <em>You</em> send.</h2>
@@ -1245,7 +1245,7 @@ You skim · edit ~2 words · hit Send
   <div class="footer"><span class="tag">safety</span><span class="tag">leverage</span></div>
 </section>
 
-<!-- 28 — STEP 8 DIGEST + LOG -->
+<!-- 28 :  STEP 8 DIGEST + LOG -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Step 8/8 · sub-agent #3 · daily wrap</div>
   <h2>Daily digest + audit log.</h2>
@@ -1253,7 +1253,7 @@ You skim · edit ~2 words · hit Send
     <div class="cards-2">
       <div class="card accent">
         <h3>The digest · 7:30am</h3>
-        <pre style="font-size:12px;"><code class="language-text">Subject: Discovery Pulse — May 8
+        <pre style="font-size:12px;"><code class="language-text">Subject: Discovery Pulse :  May 8
 
 Today:
   · 5 new drafts queued
@@ -1281,7 +1281,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">safety</span></div>
 </section>
 
-<!-- 29 — FOLLOW-UP -->
+<!-- 29 :  FOLLOW-UP -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Bonus · same architecture · different inputs</div>
   <h2>Follow-up sub-workflow.</h2>
@@ -1289,7 +1289,7 @@ Your move:   approve before 5pm</code></pre>
     <div class="diagram">
 <span class="lbl">SECOND CRON</span> · daily 8am
 
-  Query Gmail label "Sent — Discovery"
+  Query Gmail label "Sent :  Discovery"
        ↓
   For each thread:
     · elapsed days since last message
@@ -1309,7 +1309,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">leverage</span></div>
 </section>
 
-<!-- 30 — POST-DEMO RECAP · WHAT YOU JUST CONNECTED -->
+<!-- 30 :  POST-DEMO RECAP · WHAT YOU JUST CONNECTED -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Recap · zoomed-out view of what we just connected</div>
   <h2>What you just built · in plain terms.</h2>
@@ -1317,41 +1317,41 @@ Your move:   approve before 5pm</code></pre>
     <div class="cards-3" style="gap:16px;">
       <div class="card">
         <h3>1 · The brain</h3>
-        <p style="font-size:14px;"><strong>Claude API</strong> — Haiku 4.5 routes &amp; scores · Sonnet 4.6 drafts in your voice. Cascade cuts cost 60–70%. <em style="color:var(--text-3);">Free: Llama 4 Scout on Groq.</em></p>
+        <p style="font-size:14px;"><strong>Claude API</strong> :  Haiku 4.5 routes &amp; scores · Sonnet 4.6 drafts in your voice. Cascade cuts cost 60–70%. <em style="color:var(--text-3);">Free: Llama 4 Scout on Groq.</em></p>
       </div>
       <div class="card">
         <h3>2 · The eyes</h3>
-        <p style="font-size:14px;"><strong>web_search</strong> + <strong>Firecrawl</strong> — Claude finds prospects, Firecrawl extracts company sites. <em style="color:var(--text-3);">Free: HN Algolia + Reddit JSON + Jina Reader, no auth.</em></p>
+        <p style="font-size:14px;"><strong>web_search</strong> + <strong>Firecrawl</strong> :  Claude finds prospects, Firecrawl extracts company sites. <em style="color:var(--text-3);">Free: HN Algolia + Reddit JSON + Jina Reader, no auth.</em></p>
       </div>
       <div class="card">
         <h3>3 · The body</h3>
-        <p style="font-size:14px;"><strong>n8n</strong> — open-source orchestrator. Visual nodes wire up the steps. Self-host on a $5 VPS or use n8n.cloud trial.</p>
+        <p style="font-size:14px;"><strong>n8n</strong> :  open-source orchestrator. Visual nodes wire up the steps. Self-host on a $5 VPS or use n8n.cloud trial.</p>
       </div>
       <div class="card">
         <h3>4 · The memory</h3>
-        <p style="font-size:14px;"><strong>Google Sheets</strong> — three tabs: <code>ICP</code> (your config), <code>Sent</code> (idempotency), <code>Runs</code> (audit log). Edit the sheet, agent inherits.</p>
+        <p style="font-size:14px;"><strong>Google Sheets</strong> :  three tabs: <code>ICP</code> (your config), <code>Sent</code> (idempotency), <code>Runs</code> (audit log). Edit the sheet, agent inherits.</p>
       </div>
       <div class="card">
         <h3>5 · The voice</h3>
-        <p style="font-size:14px;"><strong>voice.md</strong> in Drive — your writing samples. Cached on every Sonnet call. Edit it; the next run sounds more like you.</p>
+        <p style="font-size:14px;"><strong>operating-rules.md</strong> in Drive :  your writing samples. Cached on every Sonnet call. Edit it; the next run sounds more like you.</p>
       </div>
       <div class="card">
         <h3>6 · The gate</h3>
-        <p style="font-size:14px;"><strong>Gmail Drafts</strong> — the agent NEVER sends. You read each draft, edit, hit send. Stage 2 of the trust ladder.</p>
+        <p style="font-size:14px;"><strong>Gmail Drafts</strong> :  the agent NEVER sends. You read each draft, edit, hit send. Stage 2 of the trust ladder.</p>
       </div>
     </div>
     <p class="kicker" style="font-size:14px;">
       <strong>To run · 4 free accounts:</strong> n8n.cloud · Anthropic ($5 credit) · Firecrawl (500 free) · Google. ·
-      <strong>To customize for your business · 4 things in your Sheet:</strong> <code>voice.md</code> (style) · <code>icp_description</code> (target) · <code>signal_keywords</code> (listen for) · <code>subreddits</code> (where they hang out). No redeploy.
+      <strong>To customize for your business · 4 things in your Sheet:</strong> <code>operating-rules.md</code> (style) · <code>icp_description</code> (target) · <code>signal_keywords</code> (listen for) · <code>subreddits</code> (where they hang out). No redeploy.
     </p>
   </div>
   <div class="footer"><span class="tag">recap</span></div>
 </section>
 
-<!-- 31 — PLUMBING PRIMITIVES -->
+<!-- 31 :  PLUMBING PRIMITIVES -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · Summary · what we just used</div>
-  <h2>Plumbing primitives <span style="font-size:18px; font-weight:500; color:var(--text-3);">— reusable building blocks every agent needs.</span></h2>
+  <h2>Plumbing primitives <span style="font-size:18px; font-weight:500; color:var(--text-3);">:  reusable building blocks every agent needs.</span></h2>
   <div class="body">
     <table>
       <thead><tr><th>Primitive</th><th>Purpose</th><th>Where</th></tr></thead>
@@ -1371,7 +1371,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">durability</span></div>
 </section>
 
-<!-- 32 — 12 PATTERNS GRID -->
+<!-- 32 :  12 PATTERNS GRID -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · 12 transferable patterns · yours to keep</div>
   <h2>Walked in for one agent. Walking out with 12 Lego pieces.</h2>
@@ -1395,7 +1395,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">strategy</span></div>
 </section>
 
-<!-- 33 — 7 OTHER AGENTS -->
+<!-- 33 :  7 OTHER AGENTS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Build · The multiplier · same stack, different agents</div>
   <h2>7 other agents you can build &lt; 30 minutes each.</h2>
@@ -1418,17 +1418,17 @@ Your move:   approve before 5pm</code></pre>
 </section>
 
 <!-- =====================================================================
-     PART 05 — TOKEN ECONOMICS + OSS
+     PART 05 :  TOKEN ECONOMICS + OSS
      ===================================================================== -->
 
-<!-- 34 — DIVIDER · COST -->
+<!-- 34 :  DIVIDER · COST -->
 <section class="divider">
   <div class="part">PART 05 · 6 MIN · TOKEN ECONOMICS + OSS</div>
   <h2 class="question">Same agent. $135/month or $8/month.<br/>The difference is one weekend.</h2>
   <div class="sub">Three cost levers stacked. Plus the open-source growth playbook your tools used.</div>
 </section>
 
-<!-- 35 — CASCADE PATTERN -->
+<!-- 35 :  CASCADE PATTERN -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Cost · Lever 01 · the cascade</div>
   <h2>Sub-agent decomposition for cost.</h2>
@@ -1450,12 +1450,12 @@ Your move:   approve before 5pm</code></pre>
         <p style="font-size:54px; font-weight:900; color:var(--good); line-height:1; margin-top:14px;">$6<span style="font-size:0.36em; color:var(--text-3); font-weight:500;">/month</span></p>
       </div>
     </div>
-    <p class="kicker" style="text-align:center;"><strong style="color:var(--good);">60–70% reduction.</strong> Same workflow, same output quality. The most underused cost lever in 2026. Free path follows the same logic — Llama 3.1 8B Instant for cheap, Llama 4 Scout for the heavy work.</p>
+    <p class="kicker" style="text-align:center;"><strong style="color:var(--good);">60–70% reduction.</strong> Same workflow, same output quality. The most underused cost lever in 2026. Free path follows the same logic :  Llama 3.1 8B Instant for cheap, Llama 4 Scout for the heavy work.</p>
   </div>
   <div class="footer"><span class="tag">cash</span></div>
 </section>
 
-<!-- 36 — 5-TIER COST MATRIX -->
+<!-- 36 :  5-TIER COST MATRIX -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Cost · Roadmap · from FREE to fully paid</div>
   <h2>Same workflow · five cost tiers.</h2>
@@ -1492,7 +1492,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">cash</span></div>
 </section>
 
-<!-- 37 — LOCAL HARDWARE -->
+<!-- 37 :  LOCAL HARDWARE -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Cost · Lever 03 · the local inflection</div>
   <h2>2026 changed the local hardware math.</h2>
@@ -1500,7 +1500,7 @@ Your move:   approve before 5pm</code></pre>
     <table>
       <thead><tr><th>Build</th><th>Price</th><th>Runs</th><th>Throughput</th></tr></thead>
       <tbody>
-        <tr><td><strong>AMD Strix Halo</strong> (Framework Desktop)</td><td class="num">$1,499 — $2,500</td><td>Llama 3 70B Q4</td><td>14–18 t/s</td></tr>
+        <tr><td><strong>AMD Strix Halo</strong> (Framework Desktop)</td><td class="num">$1,499 :  custom-scoped</td><td>Llama 3 70B Q4</td><td>14–18 t/s</td></tr>
         <tr><td>Mac Studio M3 Ultra 96GB</td><td class="num">$3,999</td><td>Qwen 3.6-27B</td><td>17–18 t/s</td></tr>
         <tr><td>RTX 5090 32GB</td><td class="num">~$3,600</td><td>Qwen 3.6-27B Q4 · Gemma 4 31B</td><td>5,200 t/s prefill</td></tr>
       </tbody>
@@ -1512,17 +1512,17 @@ Your move:   approve before 5pm</code></pre>
 </section>
 
 <!-- =====================================================================
-     PART 06 — HITL + PRODUCTIONIZATION
+     PART 06 :  HITL + PRODUCTIONIZATION
      ===================================================================== -->
 
-<!-- 38 — DIVIDER · HITL -->
+<!-- 38 :  DIVIDER · HITL -->
 <section class="divider">
   <div class="part">PART 06 · 3 MIN · HITL + PRODUCTIONIZATION</div>
   <h2 class="question">Maintain brand voice and ethical oversight<br/>while scaling output 10×.</h2>
   <div class="sub">Direct from the workshop description. We covered HITL in the build · now what comes after, and how to graduate.</div>
 </section>
 
-<!-- 39 — TRUST LADDER + GUARDRAILS -->
+<!-- 39 :  TRUST LADDER + GUARDRAILS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>HITL · From human-in-the-loop today to full auto tomorrow</div>
   <h2>The 4-stage trust ladder.</h2>
@@ -1543,7 +1543,7 @@ Your move:   approve before 5pm</code></pre>
   <div class="footer"><span class="tag">safety</span><span class="tag">durability</span></div>
 </section>
 
-<!-- 40 — BAIN SHADOW CASE -->
+<!-- 40 :  BAIN SHADOW CASE -->
 <section>
   <div class="eyebrow"><span class="dot"></span>HITL · Real proof · Bain HR Services payroll agent · April 2026</div>
   <h2>From 70% to 98% accuracy through shadow testing.</h2>
@@ -1565,9 +1565,9 @@ Your move:   approve before 5pm</code></pre>
       </div>
       <div class="card good">
         <h3>The lesson</h3>
-        <p style="font-size:16px; font-style:italic;">"The secret to successful agents in Enterprise is not the agents — it's the scaffolding around the agents."</p>
-        <p style="font-size:13px; color:var(--text-3); margin-top:8px;">— Sanjin Bicanic, Bain &amp; Co · Apr 29, 2026</p>
-        <p style="font-size:15px; margin-top:12px;">Same lesson at startup scale: <strong>the agent is 20%.</strong> Your dedup, HITL gate, voice.md, audit log — that's the 80%.</p>
+        <p style="font-size:16px; font-style:italic;">"The secret to successful agents in Enterprise is not the agents :  it's the scaffolding around the agents."</p>
+        <p style="font-size:13px; color:var(--text-3); margin-top:8px;">:  Sanjin Bicanic, Bain &amp; Co · Apr 29, 2026</p>
+        <p style="font-size:15px; margin-top:12px;">Same lesson at startup scale: <strong>the agent is 20%.</strong> Your dedup, HITL gate, operating-rules.md, audit log :  that's the 80%.</p>
       </div>
     </div>
   </div>
@@ -1578,23 +1578,23 @@ Your move:   approve before 5pm</code></pre>
      CLOSE
      ===================================================================== -->
 
-<!-- 41 — RECAP · 5 CORE TAKEAWAYS -->
+<!-- 41 :  RECAP · 5 CORE TAKEAWAYS -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Close · 5 things to remember</div>
   <h2>What to remember when you walk out.</h2>
   <div class="body">
     <div class="recap-grid" style="grid-template-columns: 1fr; gap: 14px 22px;">
       <div class="recap-item"><div class="icon">1</div><div><h3>The REACT loop is in every agent.</h3><p>Reason → Action → Observation → loop. When you debug an agent, one of these three is broken. Memorize the loop, not the framework.</p></div></div>
-      <div class="recap-item"><div class="icon">2</div><div><h3>Config-as-files. Not config-as-prompts.</h3><p><code>voice.md</code> in Drive. ICP description in a Sheet cell. Edit a file — the next run inherits. The single most important pattern in this hour.</p></div></div>
+      <div class="recap-item"><div class="icon">2</div><div><h3>Config-as-files. Not config-as-prompts.</h3><p><code>operating-rules.md</code> in Drive. ICP description in a Sheet cell. Edit a file :  the next run inherits. The single most important pattern in this hour.</p></div></div>
       <div class="recap-item"><div class="icon">3</div><div><h3>Cascade your models. Cut 60–70% off the bill.</h3><p>Haiku for cheap classification. Sonnet for the one step that needs voice nuance. Free path: Llama 3.1 8B Instant for cheap, Llama 4 Scout for the heavy work.</p></div></div>
-      <div class="recap-item"><div class="icon">4</div><div><h3>HITL via Gmail drafts.</h3><p>The agent drafts. You send. ~10 seconds per draft. ~10 hours/week back. Brand voice protected. Stage 2 of the trust ladder is the default — earn higher autonomy through the audit log over weeks.</p></div></div>
+      <div class="recap-item"><div class="icon">4</div><div><h3>HITL via Gmail drafts.</h3><p>The agent drafts. You send. ~10 seconds per draft. ~10 hours/week back. Brand voice protected. Stage 2 of the trust ladder is the default :  earn higher autonomy through the audit log over weeks.</p></div></div>
       <div class="recap-item"><div class="icon">5</div><div><h3>Same architecture · 7 other agents.</h3><p>Inbound triage · competitor pulse · support draft · content repurposer · call notes → CRM · investor update · onboarding personalizer. Different trigger, different search, different output. Same six pieces.</p></div></div>
     </div>
   </div>
   <div class="footer"><span class="tag">takeaways</span></div>
 </section>
 
-<!-- 42 — CTAs -->
+<!-- 42 :  CTAs -->
 <section>
   <div class="eyebrow"><span class="dot"></span>Close · two ways to keep going · both free</div>
   <h2>Take this further.</h2>
@@ -1604,8 +1604,8 @@ Your move:   approve before 5pm</code></pre>
         <h3>1 · Architect's Office Hours</h3>
         <p class="lead">5 free 30-min audits for BSW attendees.</p>
         <p>You bring your bottleneck. I'll tell you what to automate, what to leave alone, and which 3 tools to use.</p>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=https%3A%2F%2Fcal.com%2Fsophia-stein%2Farchitect-audit-bsw" alt="QR · Office Hours Cal link"/></div>
-        <div class="qr-label">cal.com/sophia-stein/architect-audit-bsw</div>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=https%3A%2F%2Fagenticarchitect.ai%2Fwork-with-me" alt="QR · Work With Me link"/></div>
+        <div class="qr-label">agenticarchitect.ai/work-with-me</div>
       </div>
       <div class="cta-box">
         <h3>2 · Agentic Architect Blog</h3>
@@ -1615,12 +1615,12 @@ Your move:   approve before 5pm</code></pre>
         <div class="qr-label">agenticarchitect.ai/blog</div>
       </div>
     </div>
-    <p class="kicker" style="text-align:center;">Repo: <code>github.com/sudosoph/bsw26-agentic-workflows</code> &nbsp;·&nbsp; MIT · fork · ship yours</p>
+    <p class="kicker" style="text-align:center;">Repo: <code>agenticarchitect.ai/bsw</code> &nbsp;·&nbsp; MIT · fork · ship yours</p>
   </div>
   <div class="footer"><span class="tag">pipeline</span></div>
 </section>
 
-<!-- 43 — CLOSE -->
+<!-- 43 :  CLOSE -->
 <section class="end">
   <h1>Bring an <em>agent</em> next month.</h1>
   <p style="font-size:18px; color:var(--text-3); max-width:64%;">Boulder is the lean-founder agentic capital, and you're already here.</p>

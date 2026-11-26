@@ -1,37 +1,37 @@
 [
   {
     "day": 1,
-    "subject": "Day 1: The Late-2026 Model Matrix (What to Use for What)",
-    "goal": "Stop using one chat subscription for everything and route steps across reasoning, workhorse, fast subagent, and open-weight tiers.",
-    "body": "Most organizations overpay on routine tasks while under-specifying high-stakes reasoning. Today takes 10 minutes: read Unlocked Module 1.1 to map your recurring workflows across Frontier Reasoning, High-Throughput Workhorse, Fast Subagent, and Private Open-Weight tiers based on cost per verified completed task at https://agenticarchitect.ai/courses/1-1-2026-ai-landscape-model-matrix.",
+    "subject": "Day 1: The Model Matrix (Routing Reasoning, Workhorses, and Open Weights)",
+    "goal": "Stop using one chat subscription for everything and route tasks across reasoning, fast workhorse, and private open-weight tiers.",
+    "body": "Most teams overpay on routine tasks while under-specifying complex synthesis. Today takes 10 minutes: read Unlocked Lesson 1.1 to map your recurring workflows across Frontier Reasoning, High-Throughput Workhorse, Fast Subagent, and Private Open-Weight tiers based on cost per verified completed task at https://agenticarchitect.ai/courses/1-1-2026-ai-landscape-model-matrix.",
     "ctaUrl": "https://agenticarchitect.ai/courses/1-1-2026-ai-landscape-model-matrix"
   },
   {
     "day": 2,
-    "subject": "Day 2: Productive Friction & Interview-First Skills Over Ad-Hoc Prompting",
-    "goal": "Eliminate sycophantic hallucinations by making AI interview and prod the user for missing constraints before generating.",
-    "body": "Twelve-word ad-hoc prompts force models to guess 85% of your business rules. Flip the loop with Productive Friction: engineer Socratic SKILL.md folders and intake gates that ask 3 to 5 targeted questions, extract unwritten SOPs from your team, and verify constraints before drafting. Test the live interactive comparison at https://agenticarchitect.ai/courses.",
+    "subject": "Day 2: Structured Intake Skills Over One-Line Prompts",
+    "goal": "Eliminate generic guesses by making your workspace gather missing constraints before drafting.",
+    "body": "Twelve-word chat prompts force models to invent 85% of your operating rules. Flip the workflow: build reusable SKILL.md folders and intake checklists that ask 3 to 5 targeted questions, capture unwritten team standards, and verify constraints before generating a draft. Explore the full syllabus at https://agenticarchitect.ai/courses.",
     "ctaUrl": "https://agenticarchitect.ai/courses"
   },
   {
     "day": 3,
-    "subject": "Day 3: Privacy Boundaries, Local Cowork Folders & Scoped Permissions",
-    "goal": "Classify Green, Amber, and Red company data across Enterprise Cloud, Zero-Retention APIs, and Private Open-Weight Rigs.",
-    "body": "Saying 'we opted out of training' is only 20% of data governance. Learn when unified Enterprise workspaces suffice, when regulated Legal/Finance/Healthcare workflows require Zero-Data-Retention (ZDR) or 3P VPC gateways, and why external actions stay strictly at Level-2 Draft-First approval.",
+    "subject": "Day 3: Privacy Boundaries, Workspace Folders, and Scoped Permissions",
+    "goal": "Classify Green, Amber, and Red company data across enterprise cloud, zero-retention APIs, and private rigs.",
+    "body": "Saying 'we opted out of training' is only the start of AI governance. Learn when folder-based workspaces suffice, when legal, finance, or clinical workflows require zero-data-retention APIs or private open-weight nodes, and why outbound actions stay at Draft-First human sign-off.",
     "ctaUrl": "https://agenticarchitect.ai/starter-kit"
   },
   {
     "day": 4,
-    "subject": "Day 4: Vertical AI SaaS vs. Best-of-Breed Bespoke API Harnesses",
-    "goal": "Spot overpriced $50/seat wrappers across Marketing, Finance, Legal, and Ops and compose connected systems you own.",
-    "body": "Before signing six disconnected department AI contracts that cannot share context, apply our 3-tier 2026 Build-vs-Buy matrix: when mature vertical platforms earn their fee, when to 'Build With' an Agent OS, and how best-of-breed Search, OCR, Voice, and Sandbox APIs replace SaaS bloat at 1/10th the cost. Read Module 2.1 free at https://agenticarchitect.ai/courses/2-1-vertical-ai-build-vs-buy-framework.",
+    "subject": "Day 4: Vertical AI Platforms vs. Connected In-House Workflows",
+    "goal": "Separate durable category platforms from thin SaaS wrappers across Marketing, Finance, Legal, and Ops.",
+    "body": "Before signing six disconnected department tools that cannot share company context, apply our 3-way Build-vs-Buy matrix: when mature vertical platforms earn their seat, when to build on an Agent OS, and how lightweight search, OCR, and webhook connectors replace wrapper bloat. Read Lesson 2.1 free at https://agenticarchitect.ai/courses/2-1-vertical-ai-build-vs-buy-framework.",
     "ctaUrl": "https://agenticarchitect.ai/courses/2-1-vertical-ai-build-vs-buy-framework"
   },
   {
     "day": 5,
-    "subject": "Day 5: Choose Your Track: 4-Curriculum Academy, Corporate Lab, or Forward Deployed Build",
-    "goal": "Put this architecture into production solo, across your leadership team, or engineered Done-For-You.",
-    "body": "You now have the architectural spine behind reliable enterprise and founder AI: right-sized models, Productive-Friction interview skills, deterministic verifiers, and connected APIs. Ready to go deep? Enroll in Curriculum 01 ($297, 100% creditable) or the All-Access 4-Curriculum Pass ($997) at https://agenticarchitect.ai/courses, or book a 20-minute scoping call for Corporate Training or a Forward Deployed Build at https://agenticarchitect.ai/work-with-me.",
+    "subject": "Day 5: Next Steps Across the Lab, Team Workshops, and Bespoke Builds",
+    "goal": "Put the 4-layer architecture into daily operation solo, across your team, or alongside us.",
+    "body": "You now have the architectural spine behind dependable AI workflows: portable context, right-sized model routing, deterministic checks, and human sign-off gates. Explore the Agentic Architect Lab tracks at https://agenticarchitect.ai/courses, or inquire about team workshops and bespoke systems at https://agenticarchitect.ai/work-with-me.",
     "ctaUrl": "https://agenticarchitect.ai/courses"
   }
 ]

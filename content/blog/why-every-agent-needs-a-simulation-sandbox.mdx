@@ -1,8 +1,12 @@
 ---
 title: "Simulation Sandboxes for Agents"
 slug: why-every-agent-needs-a-simulation-sandbox
-publishedDate: "2026-04-30"
+publishedDate: "2026-06-12"
 description: "The fastest 2026 teams are testing autonomous agents in synthetic enterprise environments before any customer is exposed. With the case for it and the open-source pieces to build one."
+briefing:
+  - "Testing tool-calling agents directly against live CRMs, payment APIs, or production databases guarantees eventual data corruption."
+  - "A deterministic simulation sandbox replays realistic customer threads, API timeouts, and adversarial edge cases against stateful mock tools."
+  - "Verifying multi-step trajectories offline before granting production credentials catches destructive failure modes at zero operational risk."
 track: "engineering"
 tags: ["agents", "testing", "simulation", "evals", "production"]
 draft: false
@@ -105,11 +109,11 @@ Pieces of the simulation stack you can use in 2026:
 
 The simulation pattern is the natural complement to two other practices on this site.
 
-[Shadow testing](/blog/shadow-testing) is what comes after simulation: once the agent passes simulation at high fidelity, run it in shadow mode against real production traffic with no customer exposure. The Bain HR Services payroll agent went simulation → offline historical → shadow → ramped production over six months. The simulation phase caught the failure modes before any real customer was exposed.
+[Shadow testing](/blog/eval-harness-catches-regressions) is what comes after simulation: once the agent passes simulation at high fidelity, run it in shadow mode against real production traffic with no customer exposure. The Bain HR Services payroll agent went simulation → offline historical → shadow → ramped production over six months. The simulation phase caught the failure modes before any real customer was exposed.
 
 [The HITL standard](/blog/the-hitl-standard) is about who approves what during graduated rollouts. Simulation is what makes the graduation criteria meaningful. Without simulation, you are graduating the agent based on hope. With simulation, you are graduating it based on coverage of failure modes.
 
-[Below the waterline](/blog/below-the-waterline) is about the infrastructure that decides whether agents make it to production at all. The simulation harness is one of the three foundations (alongside identity and token-factory economics).
+[Below the waterline](/blog/eval-harness-catches-regressions) is about the infrastructure that decides whether agents make it to production at all. The simulation harness is one of the three foundations (alongside identity and token-factory economics).
 
 ## The takeaway
 

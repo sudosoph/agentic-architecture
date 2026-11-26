@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import {
-  ALL_ACCESS_PASS,
   getAllCurriculumModules,
   getModulesByCurriculum,
   getPublicModuleView,
@@ -11,6 +10,7 @@ import { PageHeader } from '@/components/ui/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { NewsletterSignup } from '@/components/site/newsletter-signup'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -74,60 +74,60 @@ export default async function CourseModulePage({ params }: Props) {
         />
       )}
 
-      <div className="space-y-12">
+      <article
+        data-article-slug={`course:${slug}`}
+        data-reading-minutes={frontmatter.durationMinutes}
+        className="space-y-12"
+      >
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant={frontmatter.unlocked ? 'online' : 'rig'}>
-                {frontmatter.unlocked ? 'Unlocked Free Lesson' : 'Syllabus Preview · Enrolled Vault'}
+            <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted tabular-nums">
+              <Badge variant={frontmatter.unlocked ? 'online' : 'tag'}>
+                {frontmatter.unlocked ? 'Unlocked Free Lesson' : 'Syllabus Preview'}
               </Badge>
-              <span className="font-mono text-xs text-muted">
-                {curriculum.number} · Module {frontmatter.moduleCode} · {frontmatter.durationMinutes} mins
+              <span>
+                {curriculum.number} · Module {frontmatter.moduleCode} · {frontmatter.durationMinutes}{' '}
+                mins
               </span>
             </div>
-            <Link href="/courses" className="font-mono text-xs text-accent hover:underline">
-              ← Back to All 4 Curricula
+            <Link href="/courses" className="text-xs font-medium text-muted hover:text-fg">
+              Back to Courses &amp; Lab
             </Link>
           </div>
 
           <PageHeader
-            meta={`${curriculum.title} · Artifact: ${frontmatter.artifact}`}
+            meta={`${curriculum.title} · Deliverable: ${frontmatter.artifact}`}
             title={`Module ${frontmatter.moduleCode}: ${frontmatter.title}`}
             description={frontmatter.summary}
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Lesson or Syllabus Preview */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-8 min-w-0 space-y-8">
-            <Card className="p-6 bg-surface space-y-3">
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                What You Build &amp; Master in This Module
-              </p>
-              <ul className="space-y-2 text-sm text-fg">
+            <div className="briefing-box space-y-3">
+              <p className="text-xs font-semibold text-fg">What You Build &amp; Master</p>
+              <ul className="space-y-1.5 text-sm text-fg/90">
                 {frontmatter.learningOutcomes.map(outcome => (
                   <li key={outcome} className="flex items-start gap-2.5">
-                    <span className="text-online font-bold mt-0.5">✓</span>
+                    <span className="text-muted select-none">·</span>
                     <span>{outcome}</span>
                   </li>
                 ))}
               </ul>
-              <p className="font-mono text-xs text-muted pt-2 border-t border-border">
-                Deliverable Artifact: <strong className="text-fg">{frontmatter.artifact}</strong>
+              <p className="text-xs text-muted pt-2 border-t border-border">
+                Deliverable artifact: <strong className="text-fg">{frontmatter.artifact}</strong>
               </p>
-            </Card>
+            </div>
 
             {frontmatter.unlocked && html ? (
               <>
                 {toc.length > 1 && (
                   <Card className="p-5 space-y-2">
-                    <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-                      In This Lesson
-                    </p>
-                    <ul className="space-y-1 text-sm">
+                    <p className="text-xs font-semibold text-fg">In this lesson</p>
+                    <ul className="space-y-1.5 text-sm">
                       {toc.map(item => (
                         <li key={item.id}>
-                          <a href={`#${item.id}`} className="text-accent hover:underline">
+                          <a href={`#${item.id}`} className="text-muted hover:text-fg">
                             {item.text}
                           </a>
                         </li>
@@ -137,22 +137,22 @@ export default async function CourseModulePage({ params }: Props) {
                 )}
 
                 {slug === '1-1-2026-ai-landscape-model-matrix' && (
-                  <Card className="p-5 bg-blue-50/40 border-blue-200 flex flex-wrap items-center justify-between gap-3">
+                  <Card className="p-5 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="text-sm font-bold text-fg">
-                        Prefer Slide Format? Open the 1280x720 Presentation Deck
+                      <p className="text-sm font-semibold text-fg">
+                        Prefer slide format? Open the presentation deck
                       </p>
                       <p className="text-xs text-muted">
-                        Keyboard-navigable HTML slide deck built for executive briefings and team reviews.
+                        Keyboard-navigable HTML slide deck for executive briefings and team reviews.
                       </p>
                     </div>
                     <a
                       href="/slides/curriculum-01-models-and-landscape.html"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-3.5 py-2 text-xs font-semibold text-fg hover:border-accent hover:text-accent transition-colors shrink-0"
+                      className="press-scale inline-flex items-center justify-center rounded-md border border-border bg-surface px-3.5 py-2 text-xs font-medium text-fg hover:border-fg/45 shrink-0"
                     >
-                      Open Slide Deck ↗
+                      Open Slide Deck
                     </a>
                   </Card>
                 )}
@@ -160,81 +160,70 @@ export default async function CourseModulePage({ params }: Props) {
                 <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
               </>
             ) : (
-              <Card className="p-6 md:p-8 border-accent space-y-5">
+              <Card className="p-6 md:p-8 space-y-5">
                 <div className="space-y-2">
-                  <Badge variant="online">
-                    Included in {curriculum.number} (${curriculum.priceUsd}) &amp; All-Access Pass ($
-                    {ALL_ACCESS_PASS.priceUsd})
-                  </Badge>
-                  <h2 className="text-2xl font-bold text-fg">
-                    Unlock Full Written Walkthroughs, Copy-Paste Skills &amp; Architecture Templates
+                  <Badge variant="online">Agentic Architect Lab · Founding Cohort</Badge>
+                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-fg">
+                    Join the Founding Lab Waitlist to unlock all full modules and templates
                   </h2>
                   <p className="text-sm text-muted leading-relaxed">
-                    Module {frontmatter.moduleCode} is part of the enrolled student vault for{' '}
-                    <strong className="text-fg">{curriculum.title}</strong>. Enrollment includes all
-                    5 full modules, reusable <code className="font-mono">SKILL.md</code> and schema
-                    packs, our L&amp;D Stipend Reimbursement Kit, and 100% tuition credit within 60
-                    days toward a Live Cohort ($1,497), Corporate Department Lab ($7,500+), or
-                    Forward Deployed Build-For-You engagement.
+                    Module {frontmatter.moduleCode} is part of{' '}
+                    <strong className="text-fg">{curriculum.title}</strong> inside the Agentic
+                    Architect Lab, including full written and screen-share walkthroughs, reusable{' '}
+                    <code className="font-mono">SKILL.md</code> configurations, and live build
+                    sessions. Join the waitlist below for founding invitations and immediate access
+                    to our 5-day architecture primer.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" size="lg" href={curriculum.checkoutHref}>
-                    Enroll in {curriculum.number} (${curriculum.priceUsd}) →
-                  </Button>
-                  <Button variant="outline" size="lg" href={ALL_ACCESS_PASS.checkoutHref}>
-                    All-Access 4-Curriculum Pass (${ALL_ACCESS_PASS.priceUsd})
-                  </Button>
-                  <Button variant="ghost" size="lg" href={SITE_CONFIG.cal.scoping}>
-                    Book 20-Min Team / Custom Scoping Call
-                  </Button>
-                </div>
+                <NewsletterSignup
+                  source={`course-module:${slug}`}
+                  variant="inline"
+                  buttonLabel="Join Founding Waitlist"
+                  placeholder="Enter your email for Founding Lab invites..."
+                  successMessage="You are on the Founding Lab Waitlist. Check your inbox for Day 1 of the primer."
+                />
 
-                <p className="text-xs text-muted pt-3 border-t border-border">
-                  Using an annual corporate learning stipend?{' '}
+                <div className="pt-3 border-t border-border flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
+                  <span>Bringing a team or planning an L&amp;D cohort?</span>
                   <a
-                    href="/downloads/ld-stipend-approval-letter.md"
-                    download
-                    className="font-semibold text-accent hover:underline"
+                    href={SITE_CONFIG.cal.scoping}
+                    className="font-medium text-fg hover:text-accent underline underline-offset-3"
                   >
-                    Download the 1-page Manager &amp; L&amp;D Approval Template ↓
+                    Schedule a 20-minute team scoping call
                   </a>
-                </p>
+                </div>
               </Card>
             )}
 
-            {/* Contextual High-Ticket Bridge */}
-            <Card className="p-6 md:p-8 bg-surface space-y-4">
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                Cohorts · Corporate Department Trainings · Forward Deployed Builds
+            {/* Contextual Team & Advisory Bridge */}
+            <Card className="p-6 md:p-8 space-y-4">
+              <p className="text-xs font-medium text-muted">
+                Corporate Workshops &amp; Bespoke Systems
               </p>
-              <h2 className="text-xl font-bold text-fg">
-                Want Your Team Trained Live or Want Us to Engineer This System For You?
+              <h2 className="font-serif text-2xl font-normal text-fg">
+                Want your team trained live or want this system engineered with you?
               </h2>
               <p className="text-sm text-muted leading-relaxed">{frontmatter.upsellBridge}</p>
               <div className="flex flex-wrap gap-3">
                 <Button variant="primary" size="md" href={curriculum.upsellHref}>
-                  {curriculum.upsellLabel} →
+                  {curriculum.upsellLabel}
                 </Button>
                 <Button variant="outline" size="md" href="/work-with-me">
-                  Forward Deployed Build-For-You
-                </Button>
-                <Button variant="ghost" size="md" href={SITE_CONFIG.cal.speaking}>
-                  Corporate Training &amp; Speaking
+                  Bespoke Systems &amp; Advisory
                 </Button>
               </div>
             </Card>
           </div>
 
-          {/* Curriculum Module Rail */}
+          {/* Syllabus Rail */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
             <Card className="p-5 space-y-4">
               <div>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                  {curriculum.number}
-                </p>
-                <h2 className="text-base font-bold text-fg mt-0.5">{curriculum.title}</h2>
+                <p className="text-xs font-medium text-muted">{curriculum.number}</p>
+                <h2 className="font-serif text-lg font-normal text-fg mt-0.5">
+                  {curriculum.title}
+                </h2>
                 <p className="text-xs text-muted mt-1">{curriculum.audience}</p>
               </div>
 
@@ -246,20 +235,16 @@ export default async function CourseModulePage({ params }: Props) {
                       <Link
                         href={`/courses/${item.slug}`}
                         className={`block space-y-1 ${
-                          active ? 'text-accent font-semibold' : 'text-fg hover:text-accent'
+                          active ? 'text-fg font-semibold' : 'text-muted hover:text-fg'
                         }`}
                       >
-                        <div className="flex items-center justify-between gap-2 font-mono text-[11px]">
+                        <div className="flex items-center justify-between gap-2 text-[11px] tabular-nums">
                           <span>Module {item.frontmatter.moduleCode}</span>
-                          <span
-                            className={
-                              item.frontmatter.unlocked ? 'text-online font-semibold' : 'text-muted'
-                            }
-                          >
-                            {item.frontmatter.unlocked ? 'Free Lesson' : 'Vault'}
+                          <span className={item.frontmatter.unlocked ? 'text-accent font-medium' : ''}>
+                            {item.frontmatter.unlocked ? 'Unlocked' : 'Lab'}
                           </span>
                         </div>
-                        <p className="text-xs leading-snug">{item.frontmatter.title}</p>
+                        <p className="text-xs text-fg leading-snug">{item.frontmatter.title}</p>
                       </Link>
                     </li>
                   )
@@ -267,17 +252,17 @@ export default async function CourseModulePage({ params }: Props) {
               </ul>
 
               <div className="pt-2 border-t border-border flex flex-col gap-2">
-                <Button variant="primary" size="sm" href={curriculum.checkoutHref}>
-                  Unlock Full {curriculum.number} (${curriculum.priceUsd})
+                <Button variant="primary" size="sm" href="/courses#waitlist">
+                  Join Founding Waitlist
                 </Button>
                 <Button variant="outline" size="sm" href="/courses">
-                  Compare All 4 Curricula
+                  All Tracks &amp; Syllabi
                 </Button>
               </div>
             </Card>
           </aside>
         </div>
-      </div>
+      </article>
     </>
   )
 }

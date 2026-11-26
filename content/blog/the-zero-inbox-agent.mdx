@@ -1,8 +1,12 @@
 ---
 title: "Stop Summarizing Your Inbox: The 4-Bucket System That Drafts Your Replies"
 slug: the-zero-inbox-agent
-publishedDate: "2026-04-19"
+publishedDate: "2026-08-26"
 description: "Triage that does not just summarize. It prepares the drafts and fetches the data, and you approve. The 60-line config that actually works."
+briefing:
+  - "Handing an AI bot direct `gmail.send` permissions risks embarrassing misfires to clients, investors, or partners on the very first ambiguous thread."
+  - "A Draft-First inbox pipeline classifies incoming mail, pulls workspace context, and stages replies strictly inside Gmail Drafts."
+  - "Clearing 40+ routine threads in ten minutes of human review recovers hours every week with zero auto-send risk."
 track: "small-business"
 tags: ["agents", "n8n", "ollama", "inbox", "automation"]
 draft: false
@@ -112,7 +116,7 @@ The fetcher prompt is short. The agent decides which sources to query based on c
 
 Stage 3 is where Qwen 3.6 27B earns its disk space. The classifier picked the bucket. The fetcher returned the artifacts. The drafter combines them with two more inputs: the conversation history with this sender, and the voice rules.
 
-Voice rules live in `voice.md`. Mine includes things like:
+Voice rules live in `operating-rules.md`. Mine includes things like:
 
 ```
 - Do not start emails with "I hope this finds you well."
@@ -167,3 +171,9 @@ The frontier API is still on the menu for the rare case where Qwen 3.6 cannot dr
 ## The takeaway
 
 A summarizer tells you what is in your inbox. A zero-inbox agent finishes the work. The architecture is five stages, three local models, two MCP servers. The first useful version takes a weekend to build and recovers an hour and a half a day. The voice rules are the part that decides whether it sounds like you. Write them.
+
+## Related Reading & Next Steps
+
+- **Reference Architecture:** [What Is an Agentic Architect? The 4-Layer Stack](/what-is-an-agentic-architect)
+- **Back-Office Blueprint:** [The 6-Workflow AI Back Office](/blog/ai-back-office) and [How to Build an AI Chief of Staff](/blog/ai-chief-of-staff)
+- **Templates & Hands-On Courses:** Score your own processes in the [20/80 Task Readiness Kit](/starter-kit) or explore [The Agentic Architect Lab](/courses).
