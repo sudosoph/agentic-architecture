@@ -129,10 +129,14 @@ describe('Funnel, Accelerator, Teaching, Stack, and Legacy Pages', () => {
     const courseLinks = Array.from(coursesContainer.querySelectorAll('a')).map(a =>
       a.getAttribute('href'),
     )
+    expect(coursesContainer.textContent).toMatch(/Founding Executive Circle/i)
     expect(courseLinks).toContain('/courses/1-1-2026-ai-landscape-model-matrix')
     expect(courseLinks).toContain('/courses/2-1-vertical-ai-build-vs-buy-framework')
     expect(courseLinks).toContain('/courses/3-1-production-harnesses-multi-model-routing')
     expect(courseLinks).toContain('/courses/4-1-open-weights-vs-frontier-economics')
+
+    const { container: teachingContainer } = render(<TeachingPage />)
+    expect(teachingContainer.textContent).toMatch(/Executive Education/i)
   })
 
   it('renders AcceleratorPage with 6 business systems, $65,000 hire anchor, and Approach 2 accessible cohort floor', () => {
