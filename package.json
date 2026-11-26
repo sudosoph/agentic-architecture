@@ -14,6 +14,7 @@
     "seo:ping": "node scripts/ping-search-engines.mjs",
     "radar": "node scripts/brand-radar.mjs",
     "radar:substack": "node scripts/substack-buyer-radar.mjs",
+    "newsroom": "node scripts/editorial-newsroom.mjs",
     "comments": "node scripts/comment-copilot.mjs",
     "book:build": "node scripts/compile-book-and-freebies.mjs",
     "record:deck": "node scripts/record-linux-walkthrough.mjs",

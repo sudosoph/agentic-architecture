@@ -140,6 +140,41 @@ function tableToBulletList(tableNode) {
   return listItems.length > 0 ? { type: 'bullet_list', content: listItems } : null
 }
 
+function imageNodeToProseMirror(imgNode) {
+  const src = absolutizeHref(imgNode.url)
+  const captionText = (imgNode.alt || imgNode.title || '').trim()
+  const children = [
+    {
+      type: 'image2',
+      attrs: {
+        src,
+        fullscreen: false,
+        imageSize: 'normal',
+        height: 900,
+        width: 1600,
+        resizeWidth: null,
+        bytes: null,
+        alt: captionText,
+        title: imgNode.title || captionText,
+        type: 'image/png',
+        href: null,
+        belowTheFold: false,
+        internalRedirect: null,
+      },
+    },
+  ]
+  if (captionText) {
+    children.push({
+      type: 'caption',
+      content: [{ type: 'text', text: captionText }],
+    })
+  }
+  return {
+    type: 'captionedImage',
+    content: children,
+  }
+}
+
 function blockMdastToProseMirror(nodes = []) {
   const blocks = []
   for (const node of nodes) {
@@ -149,10 +184,16 @@ function blockMdastToProseMirror(nodes = []) {
       if (content.length > 0) {
         blocks.push({ type: 'heading', attrs: { level }, content })
       }
+    } else if (node.type === 'image') {
+      blocks.push(imageNodeToProseMirror(node))
     } else if (node.type === 'paragraph') {
-      const content = inlineMdastToProseMirror(node.children)
-      if (content.length > 0) {
-        blocks.push({ type: 'paragraph', content })
+      if (Array.isArray(node.children) && node.children.length === 1 && node.children[0].type === 'image') {
+        blocks.push(imageNodeToProseMirror(node.children[0]))
+      } else {
+        const content = inlineMdastToProseMirror(node.children)
+        if (content.length > 0) {
+          blocks.push({ type: 'paragraph', content })
+        }
       }
     } else if (node.type === 'blockquote') {
       const inner = blockMdastToProseMirror(node.children)
@@ -271,6 +312,12 @@ function buildFunnelFooterBlocks(slug) {
       ],
     },
   ]
+}
+
+export function convertMarkdownBodyToProseMirror(markdown) {
+  const stripped = String(markdown || '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+  const tree = unified().use(remarkParse).use(remarkGfm).parse(stripped)
+  return blockMdastToProseMirror(tree.children)
 }
 
 export function convertMdxToSubstackPayload(slug) {
